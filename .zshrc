@@ -1,4 +1,4 @@
-local DOTFILES="dotfiles.new"
+local DOTFILES="dotfiles"
 local DOTFILES_PATH="$(dirname ~/projects/$DOTFILES)/$DOTFILES"
 
 # Set custom prompt
