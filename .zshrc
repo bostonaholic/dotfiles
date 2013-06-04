@@ -1,4 +1,5 @@
-local DOTFILES="~/projects/dotfiles.new"
+local DOTFILES="dotfiles.new"
+local DOTFILES_PATH="$(dirname ~/projects/$DOTFILES)/$DOTFILES"
 
 # Set custom prompt
 setopt PROMPT_SUBST
@@ -64,4 +65,4 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
 
-source "$DOTFILES/termsupport.zsh"
+source "$DOTFILES_PATH/termsupport.zsh"
