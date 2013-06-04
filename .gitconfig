@@ -20,7 +20,6 @@
   head = !git l -1
   l = "!. ~/.githelpers && pretty_git_log"
   la = !git l --all
-  pom = push origin master
   r = !git l -30
   ra = !git r --all
   st = status
