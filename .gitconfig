@@ -16,7 +16,13 @@
   dc = diff --cached
   di = diff
   fa = fetch --all
+  h = head
+  head = !git l -1
+  l = "!. ~/.githelpers && pretty_git_log"
+  la = !git l --all
   pom = push origin master
+  r = !git l -30
+  ra = !git r --all
   st = status
-  u = "!git upstream"
+  u = !git upstream
   upstream = "!git fetch upstream; git merge upstream/master"
