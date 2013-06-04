@@ -1,3 +1,5 @@
+local DOTFILES="~/projects/dotfiles.new"
+
 # Set custom prompt
 setopt PROMPT_SUBST
 autoload -U promptinit
@@ -61,3 +63,5 @@ ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
+
+source "$DOTFILES/termsupport.zsh"
