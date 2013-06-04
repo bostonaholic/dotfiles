@@ -18,6 +18,7 @@ export GREP_OPTIONS="--color"
 
 # Add paths
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH # for homebrew
+export PATH=/usr/local/share/npm/bin:$PATH # for npm
 
 # Use vim as the editor
 export EDITOR=vim
