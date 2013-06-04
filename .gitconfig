@@ -1,0 +1,22 @@
+[user]
+  name = Matthew Boston
+  email = matthew.boston@gmail.com
+[github]
+  user = bostonaholic
+[color]
+  ui = auto
+[push]
+  default = matching
+[alias]
+  aa = add --all
+  ammend = commit --amend
+  b = branch
+  ci = commit
+  co = checkout
+  dc = diff --cached
+  di = diff
+  fa = fetch --all
+  pom = push origin master
+  st = status
+  u = "!git upstream"
+  upstream = "!git fetch upstream; git merge upstream/master"
