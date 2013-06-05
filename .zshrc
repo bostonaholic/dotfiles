@@ -66,4 +66,7 @@ function parse_git_dirty() {
 
 PROMPT='%{$fg_bold[red]%}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
 
-source "$DOTFILES_PATH/termsupport.zsh"
+# Load all .zsh config files
+for config_file ($DOTFILES_PATH/lib/*.zsh); do
+  source $config_file
+done
