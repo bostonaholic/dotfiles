@@ -61,6 +61,9 @@ function parse_git_dirty() {
 
 PROMPT='%{$fg_bold[red]%}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
 
+# To enable rbenv shims and autocompletion
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
 # Load all .zsh config files
 for config_file ($DOTFILES_PATH/lib/*.zsh); do
   source $config_file
