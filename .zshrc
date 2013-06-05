@@ -23,11 +23,6 @@ export PATH=/usr/local/share/npm/bin:$PATH # for npm
 # Use vim as the editor
 export EDITOR=vim
 
-# Aliases
-alias t="script/test $*"
-alias f="script/features $*"
-alias z="zeus $*"
-
 ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗%{$reset_color%}"
