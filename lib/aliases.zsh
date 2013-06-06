@@ -4,6 +4,7 @@ alias la="ls -lha"
 # Git
 alias gs="git status $*"
 alias gd="git diff $*"
+alias gr="git remote -v $*"
 
 # Ruby
 alias bi="bundle install $*"
