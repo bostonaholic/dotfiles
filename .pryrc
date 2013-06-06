@@ -42,3 +42,17 @@ class Hash
     Hash[Array.toy(n).zip(Array.toy(n){|c| (96+(c+1)).chr})]
   end
 end
+
+def time
+  start = Time.now
+  yield if block_given?
+  (Time.now - start) * 1_000
+end
+
+def avg_time(num_samples=100)
+  durs = []
+  num_samples.times do
+    durs << time { yield }
+  end
+  durs.reduce(:+) / durs.size.to_f
+end
