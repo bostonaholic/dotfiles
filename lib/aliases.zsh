@@ -8,6 +8,7 @@ alias gd="git diff $*"
 # Ruby
 alias bi="bundle install $*"
 alias be="bundle exec $*"
+alias fs="foreman start $*"
 
 # Rails
 alias t="script/test $*"
