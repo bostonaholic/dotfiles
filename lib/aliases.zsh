@@ -1,5 +1,6 @@
 # CLI
 alias la="ls -lha"
+alias rl="source ~/.zshrc"
 
 # Git
 alias gs="git status $*"
