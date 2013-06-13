@@ -1,5 +1,6 @@
 # CLI
 alias la="ls -lha"
+alias p="pygmentize $*"
 alias reload="source ~/.zshrc"
 alias rl="reload"
 
