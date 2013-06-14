@@ -27,7 +27,7 @@
   default = matching
 [alias]
   aa = add --all
-  ammend = commit --amend
+  amend = commit --amend
   b = branch
   ci = commit
   co = checkout
