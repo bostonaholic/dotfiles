@@ -4,4 +4,6 @@ Staying as minimal as possible with my config. I'm only adding libraries and ali
 
 ## Dependencies
 
+`$ brew install hub`
+
 `$ easy_install Pygments`

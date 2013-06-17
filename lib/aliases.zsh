@@ -5,6 +5,7 @@ alias reload="source ~/.zshrc"
 alias rl="reload"
 
 # Git
+eval "$(hub alias -s)" # alias git='hub $*'
 alias gs="git status $*"
 alias gd="git diff $*"
 alias gr="git remote -v $*"
