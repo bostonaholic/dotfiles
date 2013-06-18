@@ -1,4 +1,5 @@
 # CLI
+alias ..="cd .."
 alias la="ls -lha"
 alias p="pygmentize $*"
 alias reload="source ~/.zshrc"
