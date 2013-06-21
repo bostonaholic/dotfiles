@@ -1,23 +1,27 @@
+function aliaz {
+  alias $1="echo $2 && $2"
+}
+
 # CLI
-alias ..="cd .."
-alias la="ls -lha"
-alias p="pygmentize $*"
-alias reload="source ~/.zshrc"
-alias rl="reload"
+aliaz .. "cd .."
+aliaz la "ls -lha"
+aliaz p "pygmentize $*"
+aliaz reload "source ~/.zshrc"
+aliaz rl "reload"
 
 # Git
 eval "$(hub alias -s)" # alias git='hub $*'
-alias gs="git status $*"
-alias gd="git diff $*"
-alias gr="git remote -v $*"
+aliaz gs "git status $*"
+aliaz gd "git diff $*"
+aliaz gr "git remote -v $*"
 
 # Ruby
-alias bi="bundle install $*"
-alias be="bundle exec $*"
-alias fs="foreman start $*"
+aliaz bi "bundle install $*"
+aliaz be "bundle exec $*"
+aliaz fs "foreman start $*"
+aliaz rr "rbenv rehash $*"
 
 # Rails
-alias t="script/test $*"
-alias f="script/features $*"
-alias z="zeus $*"
-
+aliaz t "script/test $*"
+aliaz f "script/features $*"
+aliaz z "zeus $*"
