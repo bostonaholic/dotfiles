@@ -8,6 +8,9 @@ aliaz la "ls -lha"
 aliaz p "pygmentize $*"
 aliaz reload "source ~/.zshrc"
 aliaz rl "reload"
+alias sudo="sudo " # allow running sudo against an alias
+aliaz redo '`\history -n | tail -n1`' # run last command again
+aliaz now "sudo redo" # I meant sudo on that last command
 
 # Git
 eval "$(hub alias -s)" # alias git='hub $*'
