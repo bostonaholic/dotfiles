@@ -23,6 +23,7 @@ export PATH=/usr/local/share/npm/bin:$PATH # for npm
 # Use vim as the editor
 export EDITOR=vim
 
+# ZSH PROMPT
 ZSH_THEME_GIT_PROMPT_PREFIX="git:(%{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗%{$reset_color%}"
