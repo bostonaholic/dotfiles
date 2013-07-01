@@ -7,3 +7,7 @@ Staying as minimal as possible with my config. I'm only adding libraries and ali
 `$ brew install hub`
 
 `$ easy_install Pygments`
+
+`$ gem install pry-plus`
+
+`$ gem install awesome_print`
