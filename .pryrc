@@ -50,10 +50,14 @@ def time
   (Time.now - start) * 1_000
 end
 
-def avg_time(num_samples=100)
-  durs = []
-  num_samples.times do
-    durs << time { yield }
+def times(num_samples=1_000)
+  durations = num_samples.times.inject([]) do |acc, _|
+    acc << time { yield }
   end
-  durs.reduce(:+) / durs.size.to_f
+  mean = durations.reduce(:+) / durations.size.to_f
+  mean_square = durations.map{|n| n * n}.reduce(:+) / durations.size.to_f
+  { num_samples: num_samples,
+    mean: mean,
+    mean_square: mean_square,
+    variance: (mean_square - (mean * mean)) }
 end
