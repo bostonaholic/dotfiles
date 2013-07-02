@@ -12,6 +12,10 @@ Staying as minimal as possible with my config. I'm only adding libraries and ali
 
 `$ chsh -s /bin/zsh`
 
+##### Git, of course
+
+`$ brew install git`
+
 ##### Hub instead of git
 
 `$ brew install hub`
