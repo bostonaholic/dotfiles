@@ -1,5 +1,5 @@
 local DOTFILES="dotfiles"
-local DOTFILES_PATH="$(dirname ~/projects/$DOTFILES)/$DOTFILES"
+local DOTFILES_PATH="$(dirname ~/code/$DOTFILES)/$DOTFILES"
 
 # Set custom prompt
 setopt PROMPT_SUBST
