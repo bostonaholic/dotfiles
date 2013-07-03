@@ -30,6 +30,8 @@ $ rake # symlink all files to ~
 
 ##### for highlighting source in cat
 
+`$ brew install python`
+
 `$ easy_install Pygments`
 
 ##### better pry
