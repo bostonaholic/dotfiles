@@ -1,5 +1,5 @@
 function aliaz {
-  alias $1="echo $2 && $2"
+  alias $1="echo '$2' && $2"
 }
 
 # CLI
