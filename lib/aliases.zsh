@@ -13,7 +13,7 @@ aliaz redo '`\history -n | tail -n1`' # run last command again
 aliaz now "sudo redo" # I meant sudo on that last command
 
 # Git
-eval "$(hub alias -s)" # alias git='hub $*'
+if which hub > /dev/null; then eval "$(hub alias -s)"; fi # alias git='hub $*'
 aliaz gs "git status $*"
 aliaz gd "git diff $*"
 aliaz gr "git remote -v $*"
