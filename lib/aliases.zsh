@@ -23,6 +23,7 @@ aliaz bi "bundle install $*"
 aliaz be "bundle exec $*"
 aliaz fs "foreman start $*"
 aliaz rr "rbenv rehash $*"
+aliaz ri "cat .ruby-version | rbenv install"
 
 # Rails
 aliaz t "script/test $*"
