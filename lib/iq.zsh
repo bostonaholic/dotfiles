@@ -1,7 +1,7 @@
 function colorize() { echo "$fg_bold[green]$1$fg[white]=$2" }
 
 function tomcat_startup() { $CATALINA_HOME/bin/startup.sh }
-function tomcat_shutdown() { $CATALINA_HOME/bin/startup.sh }
+function tomcat_shutdown() { $CATALINA_HOME/bin/shutdown.sh }
 function tomcat_restart() {
   tomcat_shutdown
   sleep 5
