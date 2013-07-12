@@ -8,6 +8,9 @@ function tomcat_restart() {
   tomcat_startup
 }
 
+function solr_startup() { $SOLR_HOME/bin/startup.sh }
+function solr_shutdown() { $SOLR_HOME/bin/startup.sh }
+
 function iq() {
   cd ~/code/iqity
 
