@@ -12,6 +12,7 @@ function tomcat_shutdown() {
 
 function tomcat_restart() {
   tomcat_shutdown
+  sleep 5
   tomcat_startup
 }
 
