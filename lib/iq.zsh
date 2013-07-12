@@ -8,8 +8,13 @@ function tomcat_restart() {
   tomcat_startup
 }
 
-function solr_startup() { $SOLR_HOME/bin/startup.sh }
-function solr_shutdown() { $SOLR_HOME/bin/startup.sh }
+function solr_startup() {
+  CATALINA_HOME=$SOLR_HOME
+  colorize "CATALINA_HOME" $CATALINA_HOME
+  $SOLR_HOME/bin/startup.sh
+}
+
+function solr_shutdown() { $SOLR_HOME/bin/shutdown.sh }
 
 function iq() {
   cd ~/code/iqity
