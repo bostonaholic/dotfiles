@@ -4,3 +4,8 @@
 .DS_Store?
 .Trashes
 Thumbs.db
+
+# IntelliJ files #
+##################
+.idea/
+*.iml
