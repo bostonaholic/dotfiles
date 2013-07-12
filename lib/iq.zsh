@@ -29,9 +29,11 @@ function iq() {
 
   # APACHE TOMCAT
   export CATALINA_HOME='/usr/local/bin/apache-tomcat-6.0.29'
+  export SOLR_HOME='/usr/local/bin/apache-tomcat-6.0.29-solr'
   export CATALINA_OPTS='-server -d64 -Xms1g -Xmx2g -XX:MaxPermSize=1024m'
   colorize "CATALINA_HOME" $CATALINA_HOME
   colorize "CATALINA_OPTS" $CATALINA_OPTS
+  colorize "SOLR_HOME" $SOLR_HOME
 
   # GROOVY
   # export GROOVY_HOME='/usr/local/Cellar/groovy/2.1.5'
