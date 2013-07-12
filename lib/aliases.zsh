@@ -17,6 +17,7 @@ if which hub > /dev/null; then eval "$(hub alias -s)"; fi # alias git='hub $*'
 aliaz gs "git status $*"
 aliaz gd "git diff $*"
 aliaz gr "git remote -v $*"
+aliaz gp "git push"
 
 # Ruby
 aliaz bi "bundle install $*"
