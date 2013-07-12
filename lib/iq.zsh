@@ -1,15 +1,7 @@
-function colorize() {
-  echo "$fg_bold[green]$1$fg[white]=$2"
-}
+function colorize() { echo "$fg_bold[green]$1$fg[white]=$2" }
 
-function tomcat_startup() {
-  $CATALINA_HOME/bin/startup.sh
-}
-
-function tomcat_shutdown() {
-  $CATALINA_HOME/bin/startup.sh
-}
-
+function tomcat_startup() { $CATALINA_HOME/bin/startup.sh }
+function tomcat_shutdown() { $CATALINA_HOME/bin/startup.sh }
 function tomcat_restart() {
   tomcat_shutdown
   sleep 5
@@ -45,6 +37,7 @@ function iq() {
   # export GROOVY_HOME='/usr/local/Cellar/groovy/2.1.5'
   # colorize "GROOVY_HOME" $GROOVY_HOME
 
+  # PATH
   export PATH=$MYSQL_HOME/bin:$M2_HOME/bin:$CATALINA_HOME/bin:$JAVA_HOME/bin:$GROOVY_HOME/bin:$PATH
 
   # PWD
