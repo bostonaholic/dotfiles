@@ -1,8 +1,8 @@
-function colorize() { echo "$fg_bold[green]$1$fg[white]=$2" }
+function colorize() { echo "$fg_bold[green]$1$fg[white]=`printenv $1`" }
 
 function setter() {
   export $1=$2
-  colorize $1 $2
+  colorize $1
 }
 
 function tomcat_startup() { $CATALINA_HOME/bin/startup.sh }
@@ -14,9 +14,8 @@ function tomcat_restart() {
 }
 
 function solr_startup() {
-  CATALINA_HOME=$SOLR_HOME
-  colorize "CATALINA_HOME" $CATALINA_HOME
-  $SOLR_HOME/bin/startup.sh
+  setter CATALINA_HOME $SOLR_HOME
+  $CATALINA_HOME/bin/startup.sh
 }
 
 function solr_shutdown() { $SOLR_HOME/bin/shutdown.sh }
@@ -47,5 +46,5 @@ function iq() {
   export PATH=$MYSQL_HOME/bin:$M2_HOME/bin:$CATALINA_HOME/bin:$JAVA_HOME/bin:$GROOVY_HOME/bin:$PATH
 
   # PWD
-  colorize "PWD" $PWD
+  colorize PWD
 }
