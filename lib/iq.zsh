@@ -23,7 +23,7 @@ function solr_shutdown() { $SOLR_HOME/bin/shutdown.sh }
 function iq() {
   cd ~/code/iqity
 
-  # JAVA_HOME
+  # JAVA
   setter JAVA_HOME '/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home'
   setter JAVA_OPTS '-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m'
 
