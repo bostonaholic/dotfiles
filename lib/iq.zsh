@@ -48,3 +48,7 @@ function iq() {
   # PWD
   colorize PWD
 }
+
+function iq_repos() {
+  ssh git@git.iq-ity.org
+}
