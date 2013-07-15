@@ -1,8 +1,8 @@
-function colorize() { echo "$fg_bold[green]$1$fg[white]=`printenv $1`" }
+function show_env_var() { echo "$fg_bold[green]$1$fg[white]=`printenv $1`" }
 
-function setter() {
+function set_env_var() {
   export $1=$2
-  colorize $1
+  show_env_var $1
 }
 
 function tomcat_startup() { $CATALINA_HOME/bin/startup.sh }
@@ -14,7 +14,7 @@ function tomcat_restart() {
 }
 
 function solr_startup() {
-  setter CATALINA_HOME $SOLR_HOME
+  set_env_var CATALINA_HOME $SOLR_HOME
   $CATALINA_HOME/bin/startup.sh
 }
 
@@ -24,29 +24,29 @@ function iq() {
   cd ~/code/iqity
 
   # JAVA
-  setter JAVA_HOME '/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home'
-  setter JAVA_OPTS '-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m'
+  set_env_var JAVA_HOME '/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home'
+  set_env_var JAVA_OPTS '-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m'
 
   # MYSQL
-  setter MYSQL_HOME '/usr/local/Cellar/mysql/5.6.12'
+  set_env_var MYSQL_HOME '/usr/local/Cellar/mysql/5.6.12'
 
   # MAVEN
-  setter M2_HOME '/usr/share/maven'
-  setter MAVEN_OPTS '-Xms512m -Xmx1g -XX:PermSize=512m -XX:MaxPermSize=1g'
+  set_env_var M2_HOME '/usr/share/maven'
+  set_env_var MAVEN_OPTS '-Xms512m -Xmx1g -XX:PermSize=512m -XX:MaxPermSize=1g'
 
   # APACHE TOMCAT
-  setter CATALINA_HOME '/usr/local/bin/apache-tomcat-6.0.29'
-  setter SOLR_HOME '/usr/local/bin/apache-tomcat-6.0.29-solr'
-  setter CATALINA_OPTS '-server -d64 -Xms1g -Xmx2g -XX:MaxPermSize=1024m'
+  set_env_var CATALINA_HOME '/usr/local/bin/apache-tomcat-6.0.29'
+  set_env_var SOLR_HOME '/usr/local/bin/apache-tomcat-6.0.29-solr'
+  set_env_var CATALINA_OPTS '-server -d64 -Xms1g -Xmx2g -XX:MaxPermSize=1024m'
 
   # GROOVY
-  # setter GROOVY_HOME '/usr/local/Cellar/groovy/2.1.5'
+  # set_env_var GROOVY_HOME '/usr/local/Cellar/groovy/2.1.5'
 
   # PATH
   export PATH=$MYSQL_HOME/bin:$M2_HOME/bin:$CATALINA_HOME/bin:$JAVA_HOME/bin:$GROOVY_HOME/bin:$PATH
 
   # PWD
-  colorize PWD
+  show_env_var PWD
 }
 
 function iq_repos() {
