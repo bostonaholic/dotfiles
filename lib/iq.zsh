@@ -49,6 +49,4 @@ function iq() {
   show_env_var PWD
 }
 
-function iq_repos() {
-  ssh git@git.iq-ity.org
-}
+function iq_repos() { ssh git@git.iq-ity.org }
