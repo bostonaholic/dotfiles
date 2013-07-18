@@ -29,3 +29,6 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 for config_file ($DOTFILES_PATH/lib/*.zsh); do
   source $config_file
 done
+
+# Save PATH to go back to later
+ORIGINAL_PATH=$PATH
