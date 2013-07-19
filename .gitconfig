@@ -43,3 +43,4 @@
   st = status
   u = !git upstream
   upstream = "!git fetch upstream; git merge upstream/master"
+  churn = "!sh -c 'git --no-pager log --name-only --oneline | grep -F $1 | sort | uniq -c | sort -nr | head' -"
