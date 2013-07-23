@@ -17,7 +17,8 @@ alias ls='ls -G'
 export GREP_OPTIONS="--color"
 
 # Add paths
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH # for homebrew
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH # homebrew
+export PATH=/usr/local/heroku/bin:$PATH # heroku toolbelt
 
 # Use vim as the editor
 export EDITOR=vim
