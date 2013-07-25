@@ -37,7 +37,7 @@ function iq() {
   # set_env_var GROOVY_HOME '/usr/local/Cellar/groovy/2.1.5'
 
   # PATH
-  export PATH=$MYSQL_HOME/bin:$M2_HOME/bin:$CATALINA_HOME/bin:$JAVA_HOME/bin:$GROOVY_HOME/bin:$PATH
+  export PATH=$MYSQL_HOME/bin:$M2_HOME/bin:$CATALINA_HOME/bin:$JAVA_HOME/bin:$PATH
 
   # PWD
   show_env_var PWD
