@@ -22,6 +22,7 @@ aliaz gp "git push"
 # Ruby
 aliaz bi "bundle install $*"
 aliaz be "bundle exec $*"
+aliaz bu "bundle update $*"
 aliaz fs "foreman start $*"
 aliaz rr "rbenv rehash $*"
 aliaz ri "cat .ruby-version | rbenv install"
