@@ -22,7 +22,7 @@ function iq() {
 
   # MYSQL
   set_env_var MYSQL_HOME '/usr/local/Cellar/mysql/5.6.12'
-  set_env_var MYSQL_CONFIG "${MYSQL_HOME}/my.cnf"
+  set_env_var MYSQL_CONFIG "$MYSQL_HOME/my.cnf"
 
   # MAVEN
   set_env_var M2_HOME '/usr/share/maven'
