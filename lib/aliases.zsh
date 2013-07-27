@@ -13,6 +13,7 @@ aliaz redo '`\history -n | tail -n1`' # run last command again
 aliaz now "sudo redo" # I meant sudo on that last command
 aliaz v "mvim $*"
 alias e="emacs $*"
+aliaz mci "mvn clean install $*"
 
 # Git
 if which hub > /dev/null; then eval "$(hub alias -s)"; fi # alias git='hub $*'
