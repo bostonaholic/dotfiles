@@ -11,7 +11,16 @@ function solr_startup() {
   $CATALINA_HOME/bin/startup.sh
 }
 
-function solr_shutdown() { $SOLR_HOME/bin/shutdown.sh }
+function solr_shutdown() {
+  $CATALINA_HOME/bin/shutdown.sh
+  set_env_var CATALINA_HOME $ORIGINAL_CATALINA_HOME
+}
+
+function solr_restart() {
+  solr_shutdown
+  sleep 5
+  solr_startup
+}
 
 function iq() {
   cd ~/code/iqity
@@ -30,6 +39,7 @@ function iq() {
 
   # APACHE TOMCAT
   set_env_var CATALINA_HOME '/usr/local/bin/apache-tomcat-6.0.29'
+  export ORIGINAL_CATALINA_HOME=$CATALINA_HOME
   set_env_var SOLR_HOME '/usr/local/bin/apache-tomcat-6.0.29-solr'
   set_env_var CATALINA_OPTS '-server -d64 -Xms1g -Xmx2g -XX:MaxPermSize=1024m'
 
