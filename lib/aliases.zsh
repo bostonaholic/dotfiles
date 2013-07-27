@@ -15,7 +15,7 @@ alias mci="mvn clean install $*"
 # Git
 if which hub > /dev/null; then eval "$(hub alias -s)"; fi # alias git='hub $*'
 alias ga="git add $*"
-alias gd="git diff $*"
+alias gd="git di $*"
 alias gp="git push"
 alias gr="git remote -v $*"
 alias gs="git status $*"
