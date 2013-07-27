@@ -43,7 +43,3 @@
   st = status
   u = !git upstream
   upstream = "!git fetch upstream; git merge upstream/master"
-  # git churn returns a list of files with the highest commit references
-  churn = "!git --no-pager log --name-only --oneline | grep -v ' ' | sort | uniq -c | sort -nr | head"
-  # git churn-ftype .java
-  churn-ftype = "!sh -c 'git --no-pager log --name-only --oneline | grep -F $1 | sort | uniq -c | sort -nr | head' -"
