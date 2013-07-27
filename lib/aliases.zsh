@@ -3,31 +3,32 @@ function aliaz {
 }
 
 # CLI
-aliaz .. "cd .."
-aliaz la "ls -lha"
-aliaz p "pygmentize $*"
-aliaz reload "source ~/.zshrc"
-aliaz rl "reload"
-aliaz v "mvim $*"
+alias ..="cd .."
+alias la="ls -lha"
+alias p="pygmentize $*"
+alias reload="source ~/.zshrc"
+alias rl="reload"
+alias v="mvim $*"
 alias e="emacs $*"
-aliaz mci "mvn clean install $*"
+alias mci="mvn clean install $*"
 
 # Git
 if which hub > /dev/null; then eval "$(hub alias -s)"; fi # alias git='hub $*'
-aliaz gs "git status $*"
-aliaz gd "git diff $*"
-aliaz gr "git remote -v $*"
-aliaz gp "git push"
+alias ga="git add $*"
+alias gd="git diff $*"
+alias gp="git push"
+alias gr="git remote -v $*"
+alias gs="git status $*"
 
 # Ruby
-aliaz bi "bundle install $*"
-aliaz be "bundle exec $*"
-aliaz bu "bundle update $*"
-aliaz fs "foreman start $*"
-aliaz rr "rbenv rehash $*"
-aliaz ri "cat .ruby-version | rbenv install"
+alias be="bundle exec $*"
+alias bi="bundle install $*"
+alias bu="bundle update $*"
+alias fs="foreman start $*"
+alias ri="cat .ruby-version | rbenv install"
+alias rr="rbenv rehash $*"
 
 # Rails
-aliaz t "script/test $*"
-aliaz f "script/features $*"
-aliaz z "zeus $*"
+alias f="script/features $*"
+alias t="script/test $*"
+alias z="zeus $*"
