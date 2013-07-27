@@ -34,12 +34,13 @@
   dc = diff --cached
   di = diff
   fa = fetch --all
-  h = !git head
   head = !git l -1
+  h = !git head
   l = "!. ~/.githelpers && pretty_git_log"
   la = !git l --all
-  r = !git l -30
+  recent = !git l -30
+  r = !git recent
   ra = !git r --all
   st = status
-  u = !git upstream
   upstream = "!git fetch upstream; git merge upstream/master"
+  u = !git upstream
