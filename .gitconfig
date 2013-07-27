@@ -34,7 +34,7 @@
   dc = diff --cached
   di = diff
   fa = fetch --all
-  h = head
+  h = !git head
   head = !git l -1
   l = "!. ~/.githelpers && pretty_git_log"
   la = !git l --all
