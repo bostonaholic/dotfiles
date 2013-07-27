@@ -37,7 +37,7 @@ function iq() {
   # set_env_var GROOVY_HOME '/usr/local/Cellar/groovy/2.1.5'
 
   # SCALA
-  set_env_var SCALA_HOME "$HOME/bin/scala-2.9.3"
+  set_env_var SCALA_HOME "/opt/scala-2.9.3"
 
   # PATH
   export PATH=$MYSQL_HOME/bin:$M2_HOME/bin:$CATALINA_HOME/bin:$JAVA_HOME/bin:$SCALA_HOME/bin:$PATH
