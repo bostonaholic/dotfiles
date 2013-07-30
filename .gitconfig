@@ -38,7 +38,7 @@
   h = !git head
   l = "!. ~/.githelpers && pretty_git_log"
   la = !git l --all
-  recent = !git l -30
+  recent = !git --no-pager l -30
   r = !git recent
   ra = !git r --all
   st = status
