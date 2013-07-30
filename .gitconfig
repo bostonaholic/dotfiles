@@ -22,7 +22,7 @@
   untracked = cyan
 [core]
   excludesfile = ~/.gitignore_global
-  editor = vim
+  editor = emacs
 [push]
   default = matching
 [alias]
