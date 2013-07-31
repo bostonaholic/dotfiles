@@ -25,6 +25,7 @@ alias be="bundle exec $*"
 alias bi="bundle install $*"
 alias bu="bundle update $*"
 alias fs="foreman start $*"
+alias ms="middleman server $*"
 alias ri="cat .ruby-version | rbenv install"
 alias rr="rbenv rehash $*"
 
