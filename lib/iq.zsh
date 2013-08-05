@@ -22,6 +22,10 @@ function solr_restart() {
   solr_startup
 }
 
+function gatling() {
+  $GATLING_HOME/bin/recorder.sh &
+}
+
 function iq() {
   cd ~/code/iqity
 
@@ -48,6 +52,7 @@ function iq() {
 
   # SCALA
   set_env_var SCALA_HOME "/opt/scala-2.9.3"
+  set_env_var GATLING_HOME "/opt/gatling-charts-highcharts-1.5.2"
 
   # PATH
   export PATH=$MYSQL_HOME/bin:$M2_HOME/bin:$CATALINA_HOME/bin:$JAVA_HOME/bin:$SCALA_HOME/bin:$PATH
