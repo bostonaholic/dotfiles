@@ -24,7 +24,9 @@
   excludesfile = ~/.gitignore_global
   editor = emacs
 [push]
-  default = matching
+  default = tracking
+[pull]
+  default = tracking
 [alias]
   aa = add --all
   amend = commit --amend
