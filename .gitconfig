@@ -28,21 +28,23 @@
 [pull]
   default = tracking
 [alias]
-  aa = add --all
-  amend = commit --amend
-  b = branch
+  st = status
   ci = commit
   co = checkout
   dc = diff --cached
   di = diff
+  amend = commit --amend
+  aa = add --all
   fa = fetch --all
-  head = !git l -1
-  h = !git head
-  l = "!. ~/.githelpers && pretty_git_log"
-  la = !git l --all
-  recent = !git --no-pager l -30
-  r = !git recent
-  ra = !git r --all
-  st = status
+  b = branch
+
   upstream = "!git fetch upstream; git merge upstream/master"
   u = !git upstream
+
+  head = !git l -1
+  h = !git head
+
+  l = "!source ~/.githelpers && pretty_git_log"
+  la = !git l --all
+  r = !git l -30
+  ra = !git r --all
