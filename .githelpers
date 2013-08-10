@@ -50,6 +50,10 @@ function pretty_git_log() {
         # Color merge commits specially
         sed -Ee "s/(Merge branch .* into .*$)/$(printf $ANSI_RED)\1$(printf $ANSI_RESET)/" |
         # Page only if we need to
+        # -F quit if 1 screen
+        # -X don't clear the screen on quit
+        # -R retain color control codes
+        # -S chop long lines
         less -FXRS
 }
 
