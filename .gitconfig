@@ -41,6 +41,8 @@
   upstream = "!git fetch upstream; git merge upstream/master"
   u = !git upstream
 
+  unpull = reset --hard HEAD@{1}
+
   head = !git l -1
   h = !git head
 
