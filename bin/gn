@@ -29,16 +29,15 @@ def get_modified_files(diff_lines):
     return set(map(file_name, modified_files))
 
 if __name__ == '__main__':
-    DIFF = '\033[93m'
-    ADDED = '\033[92m'
-    REMOVED = '\033[91m'
-    NET = '\033[94m'
+    YELLOW = '\033[93m'
+    GREEN = '\033[92m'
+    RED = '\033[91m'
+    PURPLE = '\033[94m'
     WHITE = '\033[0m'
     diff_lines = list(fileinput.input())
     added_lines, removed_lines = get_lines(diff_lines)
     modified_files = get_modified_files(diff_lines)
-    print WHITE + '%i modified files' % len(modified_files)
-    print DIFF + '%i lines of diff' % len(diff_lines)
-    print ADDED + '%i lines added' % len(added_lines)
-    print REMOVED + '%i lines removed' % len(removed_lines)
-    print NET + '%+i lines net change' % (len(added_lines) - len(removed_lines))
+    print YELLOW + ' %i modified files' % len(modified_files)
+    print GREEN + ' %i lines added' % len(added_lines)
+    print RED + ' %i lines removed' % len(removed_lines)
+    print PURPLE + '%+i lines net change' % (len(added_lines) - len(removed_lines))
