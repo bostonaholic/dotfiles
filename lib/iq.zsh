@@ -27,7 +27,8 @@ function gatling() {
 }
 
 function iq() {
-  cd ~/code/iqity
+  set_env_var IQ_HOME $HOME'/code/iqity'
+  cd $IQ_HOME
 
   # JAVA
   set_env_var JAVA_HOME '/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home'
@@ -62,3 +63,13 @@ function iq() {
 }
 
 function iq_repos() { ssh git@git.iq-ity.org }
+
+function iq_import() {
+  mysql -u root cls -p < $IQ_HOME/lms-db/cls-schema/src/main/helper-scripts/development_school_data.sql
+  if [ $? -eq 0 ]
+  then
+    echo "Success!"
+  else
+    echo "Failure..."
+  fi
+}
