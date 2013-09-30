@@ -22,7 +22,7 @@ export PATH=/usr/local/heroku/bin:$PATH # heroku toolbelt
 export PATH=$HOME/bin:$PATH # user bin overrides
 
 # Default CLI editor
-export EDITOR=emacs
+export EDITOR=vim
 
 # To enable rbenv shims and autocompletion
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
