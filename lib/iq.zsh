@@ -73,3 +73,5 @@ function iq_import() {
     echo "Failure..."
   fi
 }
+
+alias mvn_phudson='mvn clean install -Phudson && mvn install -PjasmineDesktop && mvn install -PjasmineResponsive'
