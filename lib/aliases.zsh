@@ -29,6 +29,7 @@ alias ms="middleman server $*"
 alias mb="middleman build $*"
 alias ri="cat .ruby-version | rbenv install"
 alias rr="rbenv rehash $*"
+alias rv="ruby -v $*"
 
 # Rails
 alias f="script/features $*"
