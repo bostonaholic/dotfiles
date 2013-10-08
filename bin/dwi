@@ -1,0 +1,25 @@
+#! /bin/bash
+
+IFS="
+"
+echo
+for FRAME in \
+  "B            :^)" \
+  " B           :^)" \
+  "  B          :^)" \
+  "   B         :^)" \
+  "    B        :^)" \
+  "     B       :^)" \
+  "      B      :^)" \
+  "       B     :^)" \
+  "        B    :^)" \
+  "         B   :^)" \
+  "          B  :^)" \
+  "           B :^)" \
+  "            B:^)" \
+  "Deal with it B^)"; do
+  echo -en "$FRAME\r"
+  sleep .1
+done
+sleep 2
+echo
