@@ -74,4 +74,5 @@ function iq_import() {
   fi
 }
 
-alias mvn_phudson='mvn clean install -Phudson && mvn install -PjasmineDesktop && mvn install -PjasmineResponsive'
+alias mvn_kitchen_sink='mvn clean install -Phudson && mvn install -PjasmineDesktop && mvn install -PjasmineResponsive'
+alias mk="mvn_kitchen_sink"
