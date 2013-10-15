@@ -14,11 +14,19 @@ alias mci="mvn clean install $*"
 
 # Git
 if which hub > /dev/null; then eval "$(hub alias -s)"; fi # alias git='hub $*'
-alias ga="git add $*"
-alias gd="git di $*"
-alias gp="git push"
-alias gr="git remote -v $*"
-alias gs="git status $*"
+alias ga="git add "
+alias gaa="git add --all"
+alias gap="git add --patch"
+alias gb="git branch "
+alias gd="git diff "
+alias gdc="git diff --cached "
+alias gf="git fetch "
+alias gfa="git fetch --all"
+alias gg="git grep "
+alias gl="git l"
+alias gp="git push "
+alias gr="git remote -v"
+alias gs="git status "
 
 # Ruby
 alias be="bundle exec $*"
