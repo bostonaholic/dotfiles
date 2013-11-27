@@ -44,3 +44,7 @@ alias rv="ruby -v $*"
 alias f="script/features $*"
 alias t="script/test $*"
 alias z="zeus $*"
+
+# Lineman
+alias lr="lineman run $*"
+alias lb="lineman build $*"
