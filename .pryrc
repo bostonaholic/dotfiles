@@ -5,16 +5,25 @@ Pry.prompt = [
     "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }
 ]
 
-Pry.editor = 'mvim'
+Pry.editor = 'vim'
+
+def with_gem(gem)
+  begin
+    require "#{gem}"
+    yield if block_given?
+  rescue LoadError => err
+    puts "gem install #{gem}  # <-- highly recommended"
+  end
+end
 
 # == Pry-Nav - Using pry as a debugger ==
-Pry.commands.alias_command 'c', 'continue'
-Pry.commands.alias_command 'f', 'finish'
-Pry.commands.alias_command 'n', 'next'
-Pry.commands.alias_command 's', 'step'
+with_gem 'pry-nav' do
+  Pry.commands.alias_command 'c', 'continue'
+  Pry.commands.alias_command 's', 'step'
+  Pry.commands.alias_command 'n', 'next'
+end
 
-begin
-  require 'awesome_print'
+with_gem 'awesome_print' do
   # The following line enables awesome_print for all pry output,
   # and it also enables paging
   Pry.config.print = proc { |output, value|
@@ -25,8 +34,6 @@ begin
   # Pry.config.print = proc { |output, value|
   #   output.puts value.ai
   # }
-rescue LoadError => err
-  puts "gem install awesome_print  # <-- highly recommended"
 end
 
 # === CONVENIENCE METHODS ===
