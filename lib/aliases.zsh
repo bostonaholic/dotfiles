@@ -8,8 +8,6 @@ alias la="ls -lha"
 alias p="pygmentize $*"
 alias reload="source ~/.zshrc"
 alias rl="reload"
-alias v="mvim $*"
-alias e="memacs $*"
 alias mci="mvn clean install $*"
 
 # Git
