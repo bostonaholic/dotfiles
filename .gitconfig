@@ -41,6 +41,8 @@
   head = !git l -1
   h = !git head
 
+  fa = !git fetch --all
+
   l = "!source ~/.githelpers && pretty_git_log"
   la = !git l --all
   recent = !git l -30

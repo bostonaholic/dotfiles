@@ -19,12 +19,8 @@ alias gb="git branch "
 alias gba="git branch --all "
 alias gd="git diff "
 alias gdc="git diff --cached "
-alias gf="git fetch "
-alias gfa="git fetch --all"
-alias gg="git grep "
-alias gl="git l"
 alias gp="git push "
-alias gr="git remote -v"
+alias gr="git remote --verbose"
 alias gs="git status "
 
 # Ruby
@@ -37,7 +33,7 @@ alias ms="middleman server $*"
 alias mb="middleman build $*"
 alias ri="cat .ruby-version | rbenv install"
 alias rr="rbenv rehash $*"
-alias rv="ruby -v $*"
+alias rv="ruby --version $*"
 
 # Rails
 alias f="script/features $*"
@@ -47,3 +43,6 @@ alias z="zeus $*"
 # Lineman
 alias lr="lineman run $*"
 alias lb="lineman build $*"
+
+# Clojure
+alias clj="lein repl $*"
