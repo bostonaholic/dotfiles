@@ -1,3 +1,5 @@
+[init]
+  templatedir = ~/.git_template
 [user]
   name = Matthew Boston
   email = matthew.boston@gmail.com
@@ -32,6 +34,7 @@
   amend = commit --amend
   ci = commit
   co = checkout
+  ctags = "!.git/hooks/ctags"
 
   upstream = "!git fetch upstream; git merge upstream/master"
   u = !git upstream
