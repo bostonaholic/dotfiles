@@ -18,6 +18,7 @@ $ rake # symlink all files to ~
 
 ##### ZSH as default shell
 
+`$ vi /etc/shells`
 `$ chsh -s /bin/zsh`
 
 ##### Git, of course
@@ -47,3 +48,7 @@ $ rake # symlink all files to ~
 ##### tree command to get a directory tree
 
 `$ brew install tree`
+
+##### tmux
+
+`$ brew install tmux`
