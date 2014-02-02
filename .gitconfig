@@ -5,6 +5,8 @@
   email = matthew.boston@gmail.com
 [github]
   user = bostonaholic
+[help]
+  autocorrect = 1
 [color]
   branch = auto
   diff = auto
