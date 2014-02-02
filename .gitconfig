@@ -33,10 +33,25 @@
   default = tracking
   rebase = true
 [alias]
+  aa = add --all
+  ap = add --patch
+
+  br = branch
+
   amend = commit --amend
+  cl = clone
   ci = commit
   co = checkout
+  pu = push
+
   ctags = "!.git/hooks/ctags"
+
+  diff = diff --word-diff
+  di = diff
+  dc = diff --cached
+  ds = diff --staged
+
+  fa = fetch --all
 
   upstream = "!git fetch upstream; git merge upstream/master"
   u = !git upstream
@@ -53,3 +68,7 @@
   recent = !git l -30
   r = !git recent
   ra = !git recent --all
+
+  rv = remote verbose
+
+  st = status -sb
