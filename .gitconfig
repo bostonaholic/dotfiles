@@ -40,7 +40,7 @@
 
   amend = commit --amend
   cl = clone
-  ci = commit
+  ci = commit --verbose
   co = checkout
   pu = push
 
