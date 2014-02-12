@@ -6,3 +6,11 @@
         :dependencies [[slamhound "RELEASE"]
                        [criterium "RELEASE"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}}}
+
+(defn wat
+  "prints a listing of all namespaces and count of interns in the repl"
+  []
+  (->> (all-ns)
+       (map #(vector (str %) (count (ns-interns %))))
+       sort
+       clojure.pprint/pprint))
