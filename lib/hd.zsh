@@ -3,6 +3,11 @@ function datomic_start() {
   ./bin/transactor -Xmx4g config/immutant.properties
 }
 
+function datomic_console() {
+  cd $DATOMIC_HOME
+  ./bin/console -p 11222 inf datomic:inf://localhost:11222/
+}
+
 function hd() {
   set_env_var HENDRICK_HOME $HOME'/code/hendrick'
   cd $HENDRICK_HOME
