@@ -37,6 +37,7 @@
   ap = add --patch
 
   br = branch
+  bra = branch --all
 
   amend = commit --amend
   cl = clone
