@@ -9,7 +9,7 @@ function datomic_console() {
 }
 
 function hd() {
-  set_env_var HENDRICK_HOME $HOME'/code/hendrick'
+  set_env_var HENDRICK_HOME $HOME'/code/Hendrick'
   cd $HENDRICK_HOME
 
   # JAVA
