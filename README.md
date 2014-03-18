@@ -25,10 +25,6 @@ $ rake # symlink all files to ~
 
 `$ brew install git`
 
-##### Hub instead of git
-
-`$ brew install hub`
-
 ##### for highlighting source in cat
 
 `$ brew install python`

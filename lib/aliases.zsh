@@ -11,7 +11,6 @@ alias rl="reload"
 alias mci="mvn clean install $*"
 
 # Git
-if which hub > /dev/null; then eval "$(hub alias -s)"; fi # alias git='hub $*'
 
 # Ruby
 alias be="bundle exec $*"
