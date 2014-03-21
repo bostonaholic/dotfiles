@@ -47,7 +47,6 @@
 
   ctags = "!.git/hooks/ctags"
 
-  diff = diff --word-diff
   di = diff
   dc = diff --cached
   ds = diff --staged
