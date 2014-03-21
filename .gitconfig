@@ -32,6 +32,8 @@
 [pull]
   default = tracking
   rebase = true
+[rerere]
+  enabled = true
 [alias]
   aa = add --all
   ap = add --patch
