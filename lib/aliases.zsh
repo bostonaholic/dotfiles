@@ -30,8 +30,9 @@ alias t="script/test $*"
 alias z="zeus $*"
 
 # Lineman
-alias lr="lineman run $*"
-alias lb="lineman build $*"
+alias lnr="lineman run $*"
+alias lns="lineman spec $*"
+alias lnb="lineman build $*"
 
 # Clojure
 alias clj="lein repl $*"
