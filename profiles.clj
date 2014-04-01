@@ -4,7 +4,8 @@
                   [lein-exec "RELEASE"]
                   [lein-immutant "1.2.0"]]
         :dependencies [[slamhound "RELEASE"]
-                       [criterium "RELEASE"]]
+                       [criterium "RELEASE"]
+                       [com.datomic/datomic-free "RELEASE"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}}}
 
 (defn wat
