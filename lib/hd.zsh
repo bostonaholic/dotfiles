@@ -17,6 +17,7 @@ function hd() {
 
   # DATOMIC
   set_env_var DATOMIC_HOME '/opt/datomic-pro-0.9.4556'
+  alias ds=datomic_start
 
   # PATH
   export PATH=$DATOMIC_HOME/bin:$PATH
