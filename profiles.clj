@@ -6,7 +6,7 @@
                   [lein-ns-dep-graph "0.1.0-SNAPSHOT"]]
         :dependencies [[slamhound "RELEASE"]
                        [criterium "RELEASE"]
-                       [com.datomic/datomic-free "RELEASE"]]
+                       #_[com.datomic/datomic-free "RELEASE"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}}}
 
 (defn wat
