@@ -56,4 +56,3 @@ function pretty_git_log() {
         # -S chop long lines
         less -FXRS
 }
-
