@@ -58,6 +58,7 @@
   upstream = "!git fetch upstream; git merge upstream/master"
   u = !git upstream
 
+  unmerge = reset --hard HEAD@{1}
   unpull = reset --hard HEAD@{1}
 
   head = !git l -1
