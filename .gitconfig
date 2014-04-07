@@ -73,6 +73,8 @@
   ra = !git recent --all
   iteration = log --pretty='tformat:%h (%ar) -- %d %s' --since='2 weeks ago' --author='matthew.boston'
 
+  productivity = !git log --pretty="%aN" | sort | uniq -c | sort -nr
+
   rv = remote --verbose
 
   st = status -sb
