@@ -73,6 +73,6 @@
   ra = !git recent --all
   iteration = log --pretty='tformat:%h (%ar) -- %d %s' --since='2 weeks ago' --author='matthew.boston'
 
-  rv = remote verbose
+  rv = remote --verbose
 
   st = status -sb
