@@ -11,6 +11,7 @@ alias rl="reload"
 alias mci="mvn clean install $*"
 
 # Git
+alias gti=git
 
 # Ruby
 alias be="bundle exec $*"
