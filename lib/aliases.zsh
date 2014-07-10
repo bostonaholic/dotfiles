@@ -37,3 +37,6 @@ alias lnb="lineman build $*"
 
 # Clojure
 alias clj="lein repl $*"
+
+# Homebrew
+alias brewup="echo '==> brew update' && brew update && echo '==> brew doctor' && brew doctor && echo '==> brew outdated' && brew outdated"
