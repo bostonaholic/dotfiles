@@ -52,6 +52,7 @@
   di = diff
   dc = diff --cached
   ds = diff --staged
+  dw = diff --word-diff
 
   fa = fetch --all
 
