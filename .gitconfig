@@ -54,7 +54,7 @@
   ds = diff --staged
   dw = diff --word-diff
 
-  fa = fetch --all
+  fa = fetch --all --tags
 
   upstream = "!git fetch upstream; git merge upstream/master"
   u = !git upstream
