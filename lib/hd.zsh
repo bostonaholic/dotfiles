@@ -22,6 +22,9 @@ function hd() {
   # PATH
   export PATH=$DATOMIC_HOME/bin:$PATH
 
+  # NOMAD_ENV
+  set_env_var NOMAD_ENV 'dev'
+
   # PWD
   show_env_var PWD
 }
