@@ -1,5 +1,10 @@
 #!/bin/bash
 #
+# List files in a project in order of number of commits
+#
+# This often times helps identify classes which are touched often,
+# violating Open/closed principle.
+#
 # Show churn for whole repo:
 #   $ git churn
 #
@@ -15,6 +20,4 @@
 # (These are all standard arguments to `git log`.)
 
 set -e
-# git log --all -M -C --name-only --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print "count\tfile"} {print $1 "\t" $2}' | sort -g
-
 git --no-pager log --all --find-renames --find-copies --name-only --format='format:' "$@" | grep -v '^$' | sort | uniq -c | sort -nr | head
