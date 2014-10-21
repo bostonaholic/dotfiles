@@ -1,11 +1,13 @@
 function datomic_start() {
-  cd $DATOMIC_HOME
-  ./bin/transactor -Xmx4g config/immutant.properties
+  pushd $DATOMIC_HOME
+  ./bin/transactor -Xmx4g config/dev-transactor.properties
+  popd
 }
 
 function datomic_console() {
-  cd $DATOMIC_HOME
-  ./bin/console -p 11222 inf datomic:inf://localhost:11222/
+  pushd $DATOMIC_HOME
+  ./bin/console -p 4334 dev datomic:dev://localhost:4334/
+  popd
 }
 
 function hd() {
