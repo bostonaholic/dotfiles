@@ -21,13 +21,11 @@ $ rake # symlink all files to ~
 `$ vi /etc/shells`
 `$ chsh -s /bin/zsh`
 
-##### Git, of course
+#### Homebrew to install them all
 
-`$ brew install git`
+`$ brew bundle`
 
 ##### for highlighting source in cat
-
-`$ brew install python`
 
 `$ easy_install Pygments`
 
@@ -38,13 +36,3 @@ $ rake # symlink all files to ~
 ##### awesome print to make pry that much better
 
 `$ gem install awesome_print`
-
-## Nice to Haves
-
-##### tree command to get a directory tree
-
-`$ brew install tree`
-
-##### tmux
-
-`$ brew install tmux`
