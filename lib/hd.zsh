@@ -18,7 +18,7 @@ function hd() {
   set_env_var JAVA_HOME '/Library/Java/JavaVirtualMachines/jdk1.7.0_72.jdk/Contents/Home/'
 
   # DATOMIC
-  set_env_var DATOMIC_HOME '/opt/datomic-pro-0.9.4815.12'
+  set_env_var DATOMIC_HOME '/opt/datomic-pro-0.9.4899'
   alias ds=datomic_start
 
   # PATH
