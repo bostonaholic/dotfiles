@@ -1,6 +1,5 @@
 ;; ln -s $PWD/profiles.clj ~/.lein/profiles.clj
-{:user {:plugins [;[cider/cider-nrepl "0.7.0"]
-                  ;[org.clojure/tools.nrepl "0.2.3"]
+{:user {:plugins [[cider/cider-nrepl "0.7.0"]
                   [lein-cloverage "1.0.2"]
                   [lein-kibit "0.0.8"]
                   [lein-pprint "1.1.1"]
