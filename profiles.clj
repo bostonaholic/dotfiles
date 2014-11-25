@@ -14,11 +14,3 @@
                        #_[datomic-schema-grapher.core "0.0.1" :exclusions [com.datomic/datomic-free]]
                        [com.datomic/datomic-free "0.9.4956" :exclusions [joda-time]]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}}}
-
-(defn wat
-  "prints a listing of all namespaces and count of interns in the repl"
-  []
-  (->> (all-ns)
-       (map #(vector (str %) (count (ns-interns %))))
-       sort
-       clojure.pprint/pprint))
