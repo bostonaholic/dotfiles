@@ -7,7 +7,7 @@
                   [lein-immutant "1.2.2"]
                   [lein-ns-dep-graph "0.1.0-SNAPSHOT"]
                   [lein-cljsbuild "1.0.3"]]
-        :dependencies [[org.clojure/tools.nrepl "0.2.5"]
+        :dependencies [[org.clojure/tools.nrepl "0.2.6"]
                        [slamhound "1.5.5"]
                        [criterium "0.4.3"]
                        #_[datomic-schema-grapher.core "0.0.1" :exclusions [com.datomic/datomic-free]]
