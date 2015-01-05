@@ -41,4 +41,4 @@ alias lnb="lineman build $*"
 alias clj="lein repl $*"
 
 # Homebrew
-alias brewup="echo '==> brew update' && brew update && echo '==> brew doctor' && brew doctor && echo '==> brew outdated' && brew outdated"
+alias brewup="echo '==> brew update\n' && brew update && echo '\n==> brew doctor\n' && brew doctor && echo '\n==> brew outdated\n' && brew outdated && echo '\n==> brew cleanup\n' && brew cleanup"
