@@ -13,9 +13,10 @@
 #
 
 FIRSTNAME=$1
-COMPANY=$2
+shift
+COMPANY=$@
 
-if [ $COMPANY ]
+if [ $# -gt 0 ]
 then
    echo "
 Hi $FIRSTNAME,
