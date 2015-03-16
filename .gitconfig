@@ -29,6 +29,8 @@
   editor = vim
 [diff]
   renames = true
+[fetch]
+  prune = true
 [push]
   default = tracking
 [pull]
