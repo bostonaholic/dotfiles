@@ -10,6 +10,12 @@ function datomic_console() {
   popd
 }
 
+function datomic_log() {
+  pushd $DATOMIC_HOME/log
+  tail -f `ls -tr | tail -n 1`
+  popd
+}
+
 function hd() {
   set_env_var HENDRICK_HOME $HOME'/code/Hendrick'
   cd $HENDRICK_HOME
@@ -18,8 +24,9 @@ function hd() {
   set_env_var JAVA_HOME '/Library/Java/JavaVirtualMachines/jdk1.7.0_72.jdk/Contents/Home/'
 
   # DATOMIC
-  set_env_var DATOMIC_HOME '/opt/datomic-pro-0.9.5078'
+  set_env_var DATOMIC_HOME '/opt/datomic-pro-0.9.5130'
   alias ds=datomic_start
+  alias dl=datomic_log
 
   # PATH
   export PATH=$DATOMIC_HOME/bin:$PATH
