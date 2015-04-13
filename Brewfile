@@ -17,6 +17,9 @@ install tmux
 tap caskroom/cask
 install brew-cask
 
+# AWS CLI
+install awscli
+
 # CloudApp
 cask install cloud
 
