@@ -10,6 +10,9 @@ install python
 # tree
 install tree
 
+# count lines of code
+install cloc
+
 # tmux
 install tmux
 
