@@ -2,7 +2,7 @@
 {:user {:plugins [[cider/cider-nrepl "0.8.2"]
                   [lein-ancient "0.5.5"]
                   [lein-cloverage "1.0.2"]
-                  [lein-kibit "0.0.8"]
+                  [lein-kibit "0.1.2"]
                   [lein-pprint "1.1.1"]
                   [lein-exec "0.3.4"]
                   [lein-immutant "1.2.2"]
