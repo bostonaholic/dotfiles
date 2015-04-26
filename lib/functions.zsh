@@ -1,4 +1,4 @@
-function show_env_var() { echo "$fg_bold[green]$1$fg[white]=`printenv $1`" }
+function show_env_var() { echo "$1=`printenv $1`" }
 
 function set_env_var() {
   export $1=$2
