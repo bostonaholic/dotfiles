@@ -21,7 +21,7 @@ function hd() {
   cd $HENDRICK_HOME
 
   # JAVA
-  set_env_var JAVA_HOME '/Library/Java/JavaVirtualMachines/jdk1.7.0_72.jdk/Contents/Home/'
+  set_env_var JAVA_HOME '/Library/Java/JavaVirtualMachines/jdk1.7.0_72.jdk/Contents/Home'
 
   # DATOMIC
   set_env_var DATOMIC_HOME '/opt/datomic-pro-0.9.5130'
@@ -29,7 +29,7 @@ function hd() {
   alias dl=datomic_log
 
   # PATH
-  export PATH=$DATOMIC_HOME/bin:$PATH
+  export PATH=$DATOMIC_HOME/bin:$JAVA_HOME/bin:$PATH
 
   # NOMAD_ENV
   set_env_var NOMAD_ENV 'dev'
