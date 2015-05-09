@@ -4,6 +4,12 @@ install git
 # leiningen
 install leiningen
 
+# aspell
+install aspell --lang=en
+
+# coreutils
+install coreutils
+
 # python
 install python
 
