@@ -1,0 +1,54 @@
+#!/bin/sh
+
+old_head_ref=$1
+new_head_ref=$2
+
+null_ref=0000000000000000000000000000000000000000
+
+magenta="\033[1;31m"
+cyan="\033[0;37m"
+reset="\033[0m"
+
+modified_files () {
+  if [ $old_head_ref = $null_ref ]; then
+    # initial checkout (clone). all files are 'modified'
+    echo $(git ls-files)
+  else
+    # list files that changed between the old head and new head
+    echo $(git diff-tree --name-only --no-color -m $old_head_ref $new_head_ref)
+  fi
+}
+
+modified () {
+  # files to check for modifications, as an array
+  local -a files=( $@ )
+
+  # prefix with '-e' arg
+  files=( "${files[@]/#/ -e }" )
+
+  # grep for specified files in list of modied files
+  modified_files | fgrep ${files[@]} >/dev/null 2>&1
+
+  return $?
+}
+
+remind () {
+  local file=$1
+  local cmd=$2
+
+  printf "\n${magenta}> %s modified, run: \`${cyan}%s${magenta}\`${reset}\n" "$file" "$cmd"
+}
+
+
+
+if modified 'package.json'; then
+  remind 'Package.json' 'npm install'
+fi
+
+if modified 'Gemfile' 'Gemfile.lock'; then
+  remind 'Gemfile' 'bundle install'
+fi
+
+if modified 'db/migrate' 'db/schema.rb' 'db/structure.sql'; then
+  remind 'Schema' 'rake db:migrate'
+fi
