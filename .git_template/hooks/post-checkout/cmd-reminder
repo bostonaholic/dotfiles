@@ -45,6 +45,10 @@ if modified 'package.json'; then
   remind 'Package.json' 'npm install'
 fi
 
+if modified 'project.clj'; then
+  remind 'Project.clj' 'lein deps'
+fi
+
 if modified 'Gemfile' 'Gemfile.lock'; then
   remind 'Gemfile' 'bundle install'
 fi
