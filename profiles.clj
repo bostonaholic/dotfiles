@@ -1,5 +1,5 @@
 ;; ln -s $PWD/profiles.clj ~/.lein/profiles.clj
-{:user {:plugins [[cider/cider-nrepl "0.8.2"]
+{:user {:plugins [[cider/cider-nrepl "0.9.1"]
                   [lein-ancient "0.5.5"]
                   [lein-cloverage "1.0.2"]
                   [lein-kibit "0.1.2"]
