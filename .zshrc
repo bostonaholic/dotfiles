@@ -34,3 +34,6 @@ done
 
 # Save PATH to go back to later
 ORIGINAL_PATH=$PATH
+
+# added by travis gem
+[ -f /Users/matthew/.travis/travis.sh ] && source /Users/matthew/.travis/travis.sh
