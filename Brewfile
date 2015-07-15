@@ -1,3 +1,6 @@
+# autoenv
+install autoenv
+
 # git
 install git
 
