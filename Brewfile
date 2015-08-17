@@ -1,6 +1,9 @@
 # autoenv
 install autoenv
 
+# gpg
+install gpg
+
 # git
 install git
 
