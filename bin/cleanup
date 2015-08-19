@@ -1,3 +1,10 @@
 #!/bin/bash
+#
+# Recusively remove files matching <pattern>
+#
+# $ cleanup ".DS_Store"
+#
+# $ cleanup "*.elc"
+#
 
-find . -type f -name ".DS_Store" -print0 | xargs -0 rm
+find . -type f -name $1 -print0 | xargs -0 rm
