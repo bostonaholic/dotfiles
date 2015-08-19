@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Recusively remove files matching <pattern>
+# Recursively remove files matching <pattern>
 #
 # $ cleanup ".DS_Store"
 #
