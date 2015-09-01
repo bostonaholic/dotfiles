@@ -9,6 +9,8 @@ alias p="pygmentize $*"
 alias reload="source ~/.zshrc"
 alias rl="reload"
 alias mci="mvn clean install $*"
+alias e="emacs $*"
+alias ed="emacs --debug-init $*"
 alias et="emacsclient -t $*"
 alias ec="emacsclient -c $*"
 
