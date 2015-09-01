@@ -7,4 +7,4 @@
 # $ cleanup "*.elc"
 #
 
-find . -type f -name $1 -print0 | xargs -0 rm
+find . -type f -name $1 -delete
