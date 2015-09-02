@@ -1,11 +1,31 @@
+tap caskroom/cask
+
+# aspell
+install aspell --lang=en
+
 # autoenv
 install autoenv
 
-# gpg
-install gpg
+# AWS CLI
+install awscli
+
+# cask
+install brew-cask
+
+# CloudApp
+cask install cloud
+
+# count lines of code
+install cloc
+
+# coreutils
+install coreutils
 
 # git
 install git
+
+# gpg
+install gpg
 
 # leiningen
 install leiningen
@@ -13,33 +33,14 @@ install leiningen
 # planck
 install planck
 
-# aspell
-install aspell --lang=en
-
-# coreutils
-install coreutils
-
 # python
 install python
 
-# tree
-install tree
-
-# count lines of code
-install cloc
+# Teensy for ErgoDox
+cask install teensy
 
 # tmux
 install tmux
 
-# cask
-tap caskroom/cask
-install brew-cask
-
-# AWS CLI
-install awscli
-
-# CloudApp
-cask install cloud
-
-# Teensy for ErgoDox
-cask install teensy
+# tree
+install tree
