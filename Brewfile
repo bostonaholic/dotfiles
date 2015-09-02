@@ -10,6 +10,9 @@ install git
 # leiningen
 install leiningen
 
+# planck
+install planck
+
 # aspell
 install aspell --lang=en
 
