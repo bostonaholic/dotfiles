@@ -27,6 +27,9 @@ install git
 # gpg
 install gpg
 
+# keybase
+install keybase
+
 # leiningen
 install leiningen
 
