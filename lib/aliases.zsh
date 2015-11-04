@@ -13,6 +13,7 @@ alias e="emacs $*"
 alias ed="emacs --debug-init $*"
 alias et="emacsclient -t $*"
 alias ec="emacsclient -c $*"
+alias gpg=gpg2
 
 # Git
 alias gti=git

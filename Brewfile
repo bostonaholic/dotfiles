@@ -25,7 +25,7 @@ install coreutils
 install git
 
 # gpg
-install gpg
+install gpg2
 
 # keybase
 install keybase
