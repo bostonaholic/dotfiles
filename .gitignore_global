@@ -9,3 +9,7 @@ Thumbs.db
 ##################
 .idea/
 *.iml
+
+# Clojure files #
+################
+.nrepl-port
