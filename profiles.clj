@@ -4,6 +4,6 @@
                   [lein-kibit "0.1.2"]
                   [lein-pprint "1.1.2"]]
         :dependencies [[com.datomic/datomic-free "0.9.5206" :exclusions [joda-time]]
-                       [org.clojure/tools.nrepl "0.2.11"]
+                       [org.clojure/tools.nrepl "0.2.12"]
                        [slamhound "1.5.5"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}}}
