@@ -2,6 +2,8 @@
 #
 # Recursively remove files matching <pattern>
 #
+# $ cleanup <pattern>
+#
 # $ cleanup ".DS_Store"
 #
 # $ cleanup "*.elc"
