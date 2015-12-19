@@ -14,7 +14,7 @@ TO_WORD = {"a" => "alpha", "b" => "bravo", "c" => "charlie", "d" => "delta", "e"
            "6" => "six", "7" => "seven", "8" => "eight", "9" => "niner"}
 
 def to_word(letter)
-  TO_WORD[letter]
+  TO_WORD[letter.downcase]
 end
 
 unless ARGV.length == 0
