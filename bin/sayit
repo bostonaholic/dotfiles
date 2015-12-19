@@ -18,7 +18,7 @@ def to_word(letter)
 end
 
 unless ARGV.length == 0
-  puts ARGV[0].split("").inject("") { |result, arg|
-    result + " " + to_word(arg)
+  puts ARGV[0].split("").inject("") { |result, letter|
+    result + " " + to_word(letter)
   }.strip
 end
