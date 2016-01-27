@@ -21,7 +21,7 @@ function hd() {
   cd $HENDRICK_HOME
 
   # JAVA
-  set_env_var JAVA_HOME '/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home'
+  set_env_var JAVA_HOME '/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home'
 
   # DATOMIC
   set_env_var DATOMIC_HOME '/opt/datomic-pro-0.9.5327'
