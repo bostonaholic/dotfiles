@@ -1,16 +1,16 @@
-# OS generated files #
+# OS generated #
 ######################
 .DS_Store
 .DS_Store?
 .Trashes
 Thumbs.db
 
-# IntelliJ files #
+# IntelliJ #
 ##################
 .idea/
 *.iml
 
-# Clojure files #
+# Clojure #
 ################
 .nrepl-port
 .cljs_rhino_repl/
