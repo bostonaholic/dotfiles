@@ -3,8 +3,6 @@ function aliaz {
 }
 
 # CLI
-export EDITOR="emacsclient -c"
-export VISUAL="emacsclient -c"
 alias ..="cd .."
 alias la="ls -lha"
 alias p="pygmentize $*"
