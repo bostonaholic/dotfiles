@@ -1,5 +1,6 @@
 ;; ln -s $PWD/profiles.clj ~/.lein/profiles.clj
 {:user {:plugins [[lein-ancient "0.6.8"]
+                  [lein-hiera "0.9.5"]
                   [lein-kibit "0.1.2"]
                   [lein-pprint "1.1.2"]]
         :dependencies [[slamhound "1.5.5"]]
