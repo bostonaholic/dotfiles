@@ -37,3 +37,7 @@ ORIGINAL_PATH=$PATH
 
 # added by travis gem
 [ -f /Users/matthew/.travis/travis.sh ] && source /Users/matthew/.travis/travis.sh
+
+# used for nvm from homebrew
+export NVM_DIR=~/.nvm
+. $(brew --prefix nvm)/nvm.sh
