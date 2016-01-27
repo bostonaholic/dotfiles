@@ -13,3 +13,4 @@ Thumbs.db
 # Clojure files #
 ################
 .nrepl-port
+.cljs_rhino_repl/
