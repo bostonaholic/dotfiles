@@ -11,12 +11,13 @@ alias rl="reload"
 
 alias mci="mvn clean install $*"
 
+alias gpg=gpg2
+
+# Emacs
 alias e="emacs $*"
 alias ed="emacs --debug-init $*"
 alias et="emacsclient --tty $*" # open a new Emacs frame on the current terminal
 alias ec="emacsclient --create-frame $*" # create a new frame instead of trying to use the current Emacs frame
-
-alias gpg=gpg2
 
 # Git
 alias gti=git
