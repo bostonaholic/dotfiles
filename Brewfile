@@ -39,6 +39,9 @@ install planck
 # python
 install python
 
+# rlwrap
+install rlwrap
+
 # Teensy for ErgoDox
 cask install teensy
 
