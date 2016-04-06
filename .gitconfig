@@ -2,7 +2,8 @@
   templatedir = ~/.git_template
 [user]
   name = Matthew Boston
-  email = matthew.boston@gmail.com
+  email = matthew@matthewboston.com
+  signingkey = 7CC4ABD7
 [github]
   user = bostonaholic
 [help]
@@ -24,6 +25,8 @@
   added = yellow
   changed = green
   untracked = cyan
+[commit]
+	gpgsign = true
 [core]
   excludesfile = ~/.gitignore_global
   editor = vim
