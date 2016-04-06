@@ -1,19 +1,26 @@
-tap caskroom/cask
+# How to use the Brewfile
+#
+# $ brew tap homebrew/bundle
+# $ brew bundle
+#
 
-install aspell --lang=en
-install autoenv
-install awscli
-install brew-cask
-cask install cloud
-install cloc
-install coreutils
-install git
-install gpg2
-install keybase
-install leiningen
-install planck
-install python
-install rlwrap
-cask install teensy
-install tmux
-install tree
+tap "caskroom/cask"
+
+# brew "aspell --with-lang-en"
+brew "autoenv"
+brew "awscli"
+# brew "brew-cask"
+# cask "cloud"
+brew "cloc"
+brew "coreutils"
+# brew "emacs" --with-cocoa --with-gnutls
+brew "git"
+brew "gpg2"
+brew "keybase"
+brew "leiningen"
+brew "planck"
+brew "python"
+brew "rlwrap"
+# cask "teensy"
+brew "tmux"
+brew "tree"
