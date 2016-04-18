@@ -57,33 +57,3 @@ alias brewup="brew_command update &&
               brew_command doctor &&
               brew_command outdated &&
               brew_command cleanup"
-
-# taken from https://github.com/deanius/tilde/blob/clean-slate/dotfiles/bash_aliases
-function tickle {
-    if [ -n "$1" ] && [ ! -f "$1" ]; then
-        path=$(dirname $1)
-        file=$(basename $1)
-
-        [ ! -d "$path" ] && mkdir -p $path
-        /usr/bin/touch "$1"
-    else
-        echo "tickle will mkdir -p and touch the file at the end of the path"
-        echo
-        echo "Usage:"
-        echo "  tickle path/to/filename.ext"
-    fi
-}
-
-# taken from https://github.com/deanius/tilde/blob/clean-slate/dotfiles/bash_aliases
-function touch {
-    if [ "$1" == "-p" ]; then # fuck with the touch command
-        if [ -n "$2" ]; then
-            tickle "$2"
-        else
-            echo "Usage:"
-            echo "  touch -p /non/existent/path/to/filename.ext"
-        fi
-    else # pass through to the real touch command
-        /usr/bin/touch "$@"
-    fi
-}
