@@ -52,14 +52,11 @@ function brew_command {
     echo "\n==> brew $1\n" && brew $1
 }
 
-function brew_cask_command {
-    echo "\n==> brew cask $1\n" && brew cask $1
-}
-
-alias brewup="brew_command update && brew_cask_command update &&
-              brew_command doctor && brew_cask_command doctor &&
+alias brewup="brew_command update &&
+              brew_command upgrade &&
+              brew_command doctor &&
               brew_command outdated &&
-              brew_command cleanup && brew_cask_command cleanup"
+              brew_command cleanup"
 
 # taken from https://github.com/deanius/tilde/blob/clean-slate/dotfiles/bash_aliases
 function tickle {
