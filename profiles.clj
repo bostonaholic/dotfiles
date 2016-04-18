@@ -7,5 +7,5 @@
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}}
  :repl {:dependencies [[org.clojure/tools.nrepl "0.2.12"]
                        [com.cemerick/piggieback "0.2.1"]]
-        :plugins [[cider/cider-nrepl "0.11.0"]]
+        :plugins [[cider/cider-nrepl "0.12.0"]]
         :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}}
