@@ -6,22 +6,31 @@
 
 tap "caskroom/cask"
 
+# Programming
 # brew "aspell --with-lang-en"
-brew "autoenv"
 brew "awscli"
-# brew "brew-cask"
-# cask "cloud"
 brew "cloc"
-brew "coreutils"
 # brew "emacs" --with-cocoa --with-gnutls
 brew "git"
+brew "python"
+brew "tmux"
+
+# Security
 brew "gpg2"
 brew "keybase"
-brew "leiningen"
+
+# Clojure
 brew "planck"
-brew "python"
+brew "leiningen"
+
+# Unix
+brew "autoenv"
 brew "rlwrap"
-# cask "teensy"
 brew "the_silver_searcher"
-brew "tmux"
 brew "tree"
+
+# Other
+# brew "brew-cask"
+# cask "cloud"
+brew "coreutils"
+# cask "teensy"
