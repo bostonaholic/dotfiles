@@ -7,10 +7,10 @@
 tap "caskroom/cask"
 
 # Programming
-# brew "aspell --with-lang-en"
+brew "aspell", args: ["with-lang-en"]
 brew "awscli"
 brew "cloc"
-# brew "emacs" --with-cocoa --with-gnutls
+brew "emacs", args: ["with-cocoa", "with-gnutls"]
 brew "git"
 brew "python"
 brew "tmux"
