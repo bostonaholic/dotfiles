@@ -46,6 +46,7 @@ alias lnb="lineman build $*"
 
 # Clojure
 alias clj="lein repl $*"
+alias cljs="planck $*"
 
 # Homebrew
 function brew_command {
