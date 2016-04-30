@@ -13,6 +13,7 @@ brew "cloc"
 brew "emacs", args: ["with-cocoa", "with-gnutls"]
 brew "git"
 brew "python"
+brew "ruby-build"
 brew "tmux"
 
 # Security
