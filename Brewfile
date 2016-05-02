@@ -21,6 +21,7 @@ brew "gpg2"
 brew "keybase"
 
 # Clojure
+brew "boot-clj"
 brew "planck"
 brew "leiningen"
 
