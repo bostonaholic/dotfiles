@@ -16,8 +16,7 @@ def with_gem(gem)
   end
 end
 
-# == Pry-Nav - Using pry as a debugger ==
-with_gem 'pry-nav' do
+with_gem 'pry-byebug' do
   Pry.commands.alias_command 'c', 'continue'
   Pry.commands.alias_command 's', 'step'
   Pry.commands.alias_command 'n', 'next'
