@@ -51,14 +51,14 @@ class Hash
   end
 end
 
-def time
+def time(&block)
   start = Time.now
   yield if block_given?
   (Time.now - start) * 1_000
 end
 
-def times(num_samples=1_000)
   durations = num_samples.times.inject([]) do |acc, _|
+def times(num_samples=1_000, &block)
     acc << time { yield }
   end
   mean = durations.reduce(:+) / durations.size.to_f
