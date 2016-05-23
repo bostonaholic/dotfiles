@@ -11,7 +11,7 @@ def with_gem(gem)
   begin
     require "#{gem}"
     yield if block_given?
-  rescue LoadError => err
+  rescue LoadError
     puts "gem install #{gem}  # <-- highly recommended"
   end
 end
