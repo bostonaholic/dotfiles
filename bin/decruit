@@ -5,11 +5,11 @@
 # Usage:
 #  $ decruit firstname [company]
 #
-# Send a nicely worded response to a company recuiter
-#  $ decruit Mike Microsoft
-#
 # Send a nicely worded response to an outsourced recruiting agency
 #  $ decruit Mike
+#
+# Send a nicely worded response to a company recuiter
+#  $ decruit Mike Microsoft
 #
 
 FIRSTNAME=$1
