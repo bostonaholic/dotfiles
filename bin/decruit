@@ -12,14 +12,16 @@
 #  $ decruit Mike Microsoft
 #
 
-FIRSTNAME=$1
+MY_FIRSTNAME=$(git config --global user.name | cut -d ' ' -f 1)
+
+RECRUITER_FIRSTNAME=$1
 shift
 COMPANY=$@
 
 if [ $# -gt 0 ]
 then
    echo "
-Hi $FIRSTNAME,
+Hi $RECRUITER_FIRSTNAME,
 
 Thanks for contacting me regarding the open position with $COMPANY.
 
@@ -28,10 +30,10 @@ However, I am extremely happy where I am now; a software agency called Test Doub
 Please let me know if $COMPANY would be interested in contracting with Test Double and I'd be happy to set up a time to chat.
 
 Cheers,
-Matthew"
+$MY_FIRSTNAME"
 else
     echo "
-Hi $FIRSTNAME,
+Hi $RECRUITER_FIRSTNAME,
 
 Thanks for contacting me regarding the open position.
 
@@ -40,5 +42,5 @@ However, I am extremely happy where I am now; a software agency called Test Doub
 Please let me know if your client would be interested in contracting with Test Double and I'd be happy to set up a time to chat.
 
 Cheers,
-Matthew"
+$MY_FIRSTNAME"
 fi
