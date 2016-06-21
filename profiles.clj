@@ -3,7 +3,8 @@
                   [lein-hiera "0.9.5"]
                   [lein-kibit "0.1.2"]
                   [lein-pprint "1.1.2"]]
-        :dependencies [[slamhound "1.5.5"]]
+        :dependencies [[criterium "0.4.4"]
+                       [slamhound "1.5.5"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}}
  :repl {:dependencies [[org.clojure/tools.nrepl "0.2.12"]
                        [com.cemerick/piggieback "0.2.1"]]
