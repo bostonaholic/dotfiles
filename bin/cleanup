@@ -9,4 +9,4 @@
 # $ cleanup "*.elc"
 #
 
-find . -type f -name $1 -delete
+find . -type f -name "$1" -delete
