@@ -6,7 +6,7 @@ function datomic_start() {
 
 function datomic_console() {
   pushd $DATOMIC_HOME
-  ./bin/console -p 4334 dev datomic:dev://localhost:4334/
+  ./bin/console -p 3000 dev datomic:dev://localhost:4334/
   popd
 }
 
