@@ -6,7 +6,7 @@
         :dependencies [[criterium "0.4.4"]
                        [slamhound "1.5.5"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}}
- :repl {:dependencies [^:displace [org.clojure/clojure "1.9.0-alpha7"]
+ :repl {:dependencies [^:displace [org.clojure/clojure "1.9.0-alpha8"]
                        [org.clojure/tools.nrepl "0.2.12"]
                        [com.cemerick/piggieback "0.2.1"]]
         :plugins [[cider/cider-nrepl "0.12.0"]]
