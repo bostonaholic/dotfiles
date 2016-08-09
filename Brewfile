@@ -10,20 +10,35 @@ tap "caskroom/cask"
 brew "aspell", args: ["with-lang-en"]
 brew "awscli"
 brew "cloc"
-brew "emacs", args: ["with-cocoa", "with-gnutls"]
+brew "emacs", args: ["with-cocoa", "with-gnutls", "with-librsvg", "with-imagemagick"]
 brew "git"
-brew "python"
-brew "ruby-build"
+brew "heroku"
+brew "libyaml"
+brew "nginx"
 brew "tmux"
 
 # Security
-brew "gpg2"
+brew "gnupg"
+brew "gnupg2"
+brew "gnutls"
 brew "keybase"
 
 # Clojure
 brew "boot-clj"
 brew "planck"
 brew "leiningen"
+
+# JavaScript
+brew "jsl"
+brew "phantomjs"
+brew "v8"
+
+# Ruby
+brew "rbenv"
+brew "ruby-build"
+
+# Python
+brew "python"
 
 # Unix
 brew "autoenv"
