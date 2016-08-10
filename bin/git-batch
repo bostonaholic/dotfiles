@@ -5,6 +5,10 @@
 # $ git batch status -sb
 #
 
+#
+# TODO: nested directories
+#
+
 DIRECTORIES=`ls -d */`
 
 for d in $DIRECTORIES
