@@ -29,7 +29,7 @@ brew "planck"
 brew "leiningen"
 
 # JavaScript
-brew "jsl"
+brew "jslint4java"
 brew "phantomjs"
 brew "v8"
 
