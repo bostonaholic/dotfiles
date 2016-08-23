@@ -261,6 +261,7 @@ you should place your code here."
         user-full-name "Matthew Boston"
         user-mail-address "matthew@matthewboston.com"
 
+        git-magit-status-fullscreen t
         magit-commit-arguments (quote ("--gpg-sign=CD9714F07CC4ABD7"))))
 
 ;; Do not write anything past this comment. This is where Emacs will
