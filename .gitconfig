@@ -1,5 +1,4 @@
 [init]
-  templatedir = ~/.git_template
 [user]
   name = Matthew Boston
   email = matthew@matthewboston.com
