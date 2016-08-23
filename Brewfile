@@ -21,6 +21,7 @@ brew "tmux"
 brew "gnupg"
 brew "gnupg2"
 brew "gnutls"
+brew "pinentry-mac"
 brew "keybase"
 
 # Clojure

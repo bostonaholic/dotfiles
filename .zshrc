@@ -34,3 +34,4 @@ for config_file ($DOTFILES_PATH/lib/*.zsh); do
   source $config_file
 done
 
+export GPG_TTY=$(tty)
