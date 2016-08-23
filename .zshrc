@@ -34,5 +34,3 @@ for config_file ($DOTFILES_PATH/lib/*.zsh); do
   source $config_file
 done
 
-# added by travis gem
-[ -f /Users/matthew/.travis/travis.sh ] && source /Users/matthew/.travis/travis.sh
