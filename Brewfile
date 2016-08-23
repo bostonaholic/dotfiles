@@ -15,6 +15,7 @@ brew "git"
 brew "heroku"
 brew "libyaml"
 brew "nginx"
+brew "node"
 brew "tmux"
 
 # Security
