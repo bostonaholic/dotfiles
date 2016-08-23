@@ -1,6 +1,9 @@
 local DOTFILES="dotfiles"
 local DOTFILES_PATH="$(dirname ~/code/$DOTFILES)/$DOTFILES"
 
+# Save PATH to go back to later
+ORIGINAL_PATH=$PATH
+
 # Set custom prompt
 setopt PROMPT_SUBST
 autoload -U promptinit
@@ -31,9 +34,6 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 for config_file ($DOTFILES_PATH/lib/*.zsh); do
   source $config_file
 done
-
-# Save PATH to go back to later
-ORIGINAL_PATH=$PATH
 
 # added by travis gem
 [ -f /Users/matthew/.travis/travis.sh ] && source /Users/matthew/.travis/travis.sh
