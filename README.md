@@ -10,19 +10,26 @@ $ cd dotfiles
 $ rake # symlink all files to ~
 ```
 
+Symlink non-standard configuration files
+
+```
+$ ln -s $PWD/bin ~/bin
+$ ln -s $PWD/gpg-agent.conf ~/.gnupg/gpg-agent.conf
+$ ln -s $PWD/launchd.conf /etc/launchd.conf
+$ ln -s $PWD/profiles.clj ~/.lein/profiles.clj
+```
+
 ## Dependencies
 
-- Xcode Command Line Tools
-- Homebrew
-- Rbenv
+- [Homebrew](http://brew.sh/)
 
 ##### ZSH as default shell
 
-`$ vi /etc/shells`
 `$ chsh -s /bin/zsh`
 
 #### Homebrew to install them all
 
+`$ brew tap homebrew/bundle`
 `$ brew bundle`
 
 ##### for highlighting source in cat
