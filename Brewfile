@@ -10,12 +10,16 @@ tap "caskroom/cask"
 brew "aspell", args: ["with-lang-en"]
 brew "awscli"
 brew "cloc"
-brew "emacs", args: ["with-cocoa", "with-gnutls", "with-librsvg", "with-imagemagick"]
+brew "emacs", args: ["with-cocoa", "with-gnutls", "with-librsvg", "with-imagemagick"], restart_service: :changed
 brew "git"
 brew "heroku"
 brew "libyaml"
-brew "nginx"
+brew "mongodb", args: ["with-openssl"], restart_service: :changed
+brew "nginx", restart_service: :changed
 brew "node"
+brew "postgres", restart_service: :changed
+brew "rabbitmq", restart_service: :changed
+brew "redis", restart_service: :changed
 brew "tmux"
 
 # Security
@@ -23,7 +27,7 @@ brew "gnupg"
 brew "gnupg2"
 brew "gnutls"
 brew "pinentry-mac"
-brew "keybase"
+brew "keybase", restart_service: :changed
 
 # Clojure
 brew "boot-clj"
