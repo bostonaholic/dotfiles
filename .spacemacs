@@ -262,7 +262,10 @@ you should place your code here."
         user-mail-address "matthew@matthewboston.com"
 
         git-magit-status-fullscreen t
-        magit-commit-arguments (quote ("--gpg-sign=CD9714F07CC4ABD7"))))
+        magit-commit-arguments (quote ("--gpg-sign=CD9714F07CC4ABD7"))
+
+        (global-set-key (kbd "M-n") 'scroll-up-line)
+        (global-set-key (kbd "M-p") 'scroll-down-line)))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
