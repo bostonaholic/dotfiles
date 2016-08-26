@@ -262,7 +262,7 @@ you should place your code here."
         ispell-program-name "/usr/local/bin/aspell"
 
         git-magit-status-fullscreen t
-        magit-commit-arguments (quote ("--gpg-sign=CD9714F07CC4BAD"))
+        magit-commit-arguments (quote ("--gpg-sign=CD9714F07CC4ABD7")))
 
         (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 
