@@ -256,13 +256,13 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (setq ispell-program-name "/usr/local/bin/aspell"
-
-        user-full-name "Matthew Boston"
+  (setq user-full-name "Matthew Boston"
         user-mail-address "matthew@matthewboston.com"
 
+        ispell-program-name "/usr/local/bin/aspell"
+
         git-magit-status-fullscreen t
-        magit-commit-arguments (quote ("--gpg-sign=CD9714F07CC4ABD7"))
+        magit-commit-arguments (quote ("--gpg-sign=CD9714F07CC4BAD"))
 
         (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 
