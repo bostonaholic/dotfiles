@@ -264,24 +264,24 @@ you should place your code here."
         git-magit-status-fullscreen t
         magit-commit-arguments (quote ("--gpg-sign=CD9714F07CC4ABD7")))
 
-        (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
+  (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 
-        (global-set-key (kbd "M-n") 'scroll-up-line)
-        (global-set-key (kbd "M-p") 'scroll-down-line)
+  (global-set-key (kbd "M-n") 'scroll-up-line)
+  (global-set-key (kbd "M-p") 'scroll-down-line)
 
-        (global-set-key (kbd "C-S-<up>")     'buf-move-up)
-        (global-set-key (kbd "C-S-<down>")   'buf-move-down)
-        (global-set-key (kbd "C-S-<left>")   'buf-move-left)
-        (global-set-key (kbd "C-S-<right>")  'buf-move-right)
+  (global-set-key (kbd "C-S-<up>")     'buf-move-up)
+  (global-set-key (kbd "C-S-<down>")   'buf-move-down)
+  (global-set-key (kbd "C-S-<left>")   'buf-move-left)
+  (global-set-key (kbd "C-S-<right>")  'buf-move-right)
 
-        ;; join line below to current line
-        (global-set-key (kbd "M-j")
-                        (lambda () (interactive)
-                          (join-line -1)))
+  ;; join line below to current line
+  (global-set-key (kbd "M-j")
+                  (lambda () (interactive)
+                    (join-line -1)))
 
-        ;; font size
-        (global-set-key (kbd "C-+") 'text-scale-increase)
-        (global-set-key (kbd "C--") 'text-scale-decrease)))
+  ;; font size
+  (global-set-key (kbd "C-+") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
