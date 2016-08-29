@@ -6,17 +6,21 @@
 set +x
 set -e
 
+function pids_for_port {
+    lsof -t -i :$1
+}
+
 case "$1" in
     info)
         lsof -i :$2
-        for pid in $(lsof -t -i :$2)
         echo ""
+        for pid in $(pids_for_port $2)
         do
             ps -ef | grep --regexp=$pid
         done
         ;;
     kill)
-        for pid in $(lsof -t -i :$2)
+        for pid in $(pids_for_port $2)
         do
             echo "kill $pid"
             kill $pid
