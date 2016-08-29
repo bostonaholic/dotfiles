@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# $ porty info 3000
+# $ porty kill 3000
+
 set +x
 set -e
 
@@ -19,7 +22,10 @@ case "$1" in
         done
         ;;
     *)
+        echo "porty is a tool used to work with unix processes in the context of ports"
+        echo ""
         echo "Usage:"
-        echo "porty info $port"
+        echo -e "info <port>\t Show process information"
+        echo -e "kill <port>\t Kill all processes"
         ;;
 esac
