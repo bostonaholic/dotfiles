@@ -4,19 +4,18 @@ set +x
 set -e
 
 case "$1" in
-  info)
-    lsof -i :$2
-    for pid in $(lsof -t -i :$2)
-    do
-      # echo $pid
-      ps -ef | grep --regexp=$pid
-    done
-    ;;
-  kill)
-    lsof -t -i :$2
-    ;;
-  *)
-    echo "Usage:"
-    echo "porty info $port"
-    ;;
+    info)
+        lsof -i :$2
+        for pid in $(lsof -t -i :$2)
+        do
+            ps -ef | grep --regexp=$pid
+        done
+        ;;
+    kill)
+        lsof -t -i :$2
+        ;;
+    *)
+        echo "Usage:"
+        echo "porty info $port"
+        ;;
 esac
