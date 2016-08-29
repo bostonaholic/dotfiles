@@ -12,7 +12,11 @@ case "$1" in
         done
         ;;
     kill)
-        lsof -t -i :$2
+        for pid in $(lsof -t -i :$2)
+        do
+            echo "kill $pid"
+            kill $pid
+        done
         ;;
     *)
         echo "Usage:"
