@@ -10,6 +10,7 @@ case "$1" in
     info)
         lsof -i :$2
         for pid in $(lsof -t -i :$2)
+        echo ""
         do
             ps -ef | grep --regexp=$pid
         done
