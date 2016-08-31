@@ -11,6 +11,8 @@ brew "aspell", args: ["with-lang-en"]
 brew "awscli"
 brew "cloc"
 brew "docker"
+brew "docker-compose"
+brew "docker-machine", restart_services: :changed
 brew "emacs", args: ["with-cocoa", "with-gnutls", "with-librsvg", "with-imagemagick"], restart_service: :changed
 brew "git"
 brew "heroku"
