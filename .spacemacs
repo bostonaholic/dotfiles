@@ -266,6 +266,11 @@ you should place your code here."
 
   (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 
+  (global-set-key (kbd "C-<right>")   'paredit-forward-slurp-sexp)
+  (global-set-key (kbd "C-<left>")    'paredit-forward-barf-sexp)
+  (global-set-key (kbd "C-M-<left>")  'paredit-backward-slurp-sexp)
+  (global-set-key (kbd "C-M-<right>") 'paredit-backward-barf-sexp)
+
   (global-set-key (kbd "M-n") 'scroll-up-line)
   (global-set-key (kbd "M-p") 'scroll-down-line)
 
