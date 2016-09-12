@@ -24,6 +24,7 @@ brew "postgres", restart_service: :changed
 brew "rabbitmq", restart_service: :changed
 brew "redis", restart_service: :changed
 brew "tmux"
+brew "vim"
 
 # Security
 brew "gnupg"
