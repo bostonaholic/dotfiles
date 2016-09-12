@@ -52,6 +52,7 @@ brew "python"
 
 # Unix
 brew "autoenv"
+brew "htop"
 brew "rlwrap"
 brew "the_silver_searcher"
 brew "tree"
