@@ -1,4 +1,4 @@
-function ci() {
+function cci() {
   set_env_var CIRCLECI_HOME $HOME'/code/circleci'
   cd $CIRCLECI_HOME
 
