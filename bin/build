@@ -29,7 +29,7 @@ if [ -z $TOKEN ]; then
     exit 1
 fi
 
-if [ -z $PROJECT]; then PROJECT="test-github-project"; fi
+if [ -z $PROJECT ]; then PROJECT="test-github-project"; fi
 if [ -z $VCS ]; then VCS="github"; fi
 if [ -z $OWNER ]; then OWNER="bostonaholic"; fi
 if [ -z $BRANCH ]; then BRANCH="master"; fi
