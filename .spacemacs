@@ -263,6 +263,9 @@ you should place your code here."
         git-magit-status-fullscreen t
         magit-commit-arguments (quote ("--gpg-sign=CD9714F07CC4ABD7"))
 
+        cider-repl-display-help-banner nil
+        cider-repl-pop-to-buffer-on-connect t
+
         css-indent-offset 2)
 
   (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
