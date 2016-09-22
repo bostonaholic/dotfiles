@@ -267,7 +267,10 @@ you should place your code here."
         cider-repl-display-help-banner nil
         cider-repl-pop-to-buffer-on-connect t
 
-        css-indent-offset 2)
+        css-indent-offset 2
+
+        js2-basic-offset 2
+        js-indent-level 2)
 
   (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 
