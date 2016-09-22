@@ -270,7 +270,9 @@ you should place your code here."
         css-indent-offset 2
 
         js2-basic-offset 2
-        js-indent-level 2)
+        js-indent-level 2
+
+        vc-follow-symlinks t)
 
   (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 
