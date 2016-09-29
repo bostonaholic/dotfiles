@@ -20,6 +20,7 @@ brew "heroku"
 brew "libyaml"
 brew "mongodb", args: ["with-openssl"], restart_service: :changed
 brew "nginx", restart_service: :changed
+cask "ngrok"
 brew "node"
 brew "postgres", restart_service: :changed
 brew "rabbitmq", restart_service: :changed
