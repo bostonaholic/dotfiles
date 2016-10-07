@@ -61,7 +61,6 @@ brew "the_silver_searcher"
 brew "tree"
 
 # Other
-# brew "brew-cask"
 # cask "cloud"
 brew "coreutils"
 brew "graphviz"
