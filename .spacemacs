@@ -26,6 +26,7 @@ values."
      auto-completion
      ;; better-defaults
      clojure
+     deft
      emacs-lisp
      git
      github
@@ -268,6 +269,9 @@ you should place your code here."
         cider-repl-pop-to-buffer-on-connect t
 
         css-indent-offset 2
+
+        deft-extensions '("org" "md")
+        deft-directory "~/Dropbox (Personal)/Notes"
 
         js2-basic-offset 2
         js-indent-level 2
