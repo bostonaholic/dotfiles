@@ -272,6 +272,7 @@ you should place your code here."
 
         deft-extensions '("org" "md")
         deft-directory "~/Dropbox (Personal)/Notes"
+        deft-recursive t
 
         js2-basic-offset 2
         js-indent-level 2
