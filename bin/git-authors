@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# List files in a project in order of number of committers
+#
+# This often times helps identify classes which are touched often,
+# violating Open/closed principle.
+#
+# Show authors for whole repo:
+#   $ git authors
+
+set -e
+git ls-files | xargs -n1 -I foo sh -c 'echo "$(git blame -w --line-porcelain foo | grep "^author " | sort -u | wc -l) foo"' | sort -nr | head
