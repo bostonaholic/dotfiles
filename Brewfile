@@ -17,7 +17,6 @@ tap "d12frosted/emacs-plus"
 brew "emacs-plus", args: ["with-cocoa", "with-gnutls", "with-librsvg", "with-imagemagick", "with-spacemacs-icon"], restart_service: :changed
 brew "git"
 brew "heroku"
-brew "hub"
 brew "libyaml"
 brew "mongodb", args: ["with-openssl"], restart_service: :changed
 brew "nginx", restart_service: :changed

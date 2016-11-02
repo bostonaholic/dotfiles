@@ -22,7 +22,6 @@ alias et="emacsclient --tty $*" # open a new Emacs frame on the current terminal
 alias ec="emacsclient --create-frame $*" # create a new frame instead of trying to use the current Emacs frame
 
 # Git
-alias git=hub
 alias gti=git
 
 # Ruby
