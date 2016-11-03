@@ -11,6 +11,7 @@
  :repl {:dependencies [^:displace [org.clojure/clojure "1.9.0-alpha14"]
                        [org.clojure/data.csv "0.1.3"]
                        [org.clojure/tools.nrepl "0.2.12"]
+                       [org.clojure/tools.namespace "0.2.11"]
                        [com.cemerick/piggieback "0.2.1"]
                        [criterium "0.4.4"]]
         :plugins [[cider/cider-nrepl "0.14.0"]]}}
