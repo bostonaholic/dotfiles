@@ -33,7 +33,6 @@ brew "gnupg"
 brew "gnupg2"
 brew "gnutls"
 brew "pinentry-mac"
-brew "keybase", restart_service: :changed
 
 # Clojure
 brew "boot-clj"
