@@ -7,7 +7,7 @@
 tap "caskroom/cask"
 
 # Programming
-brew "aspell", args: ["with-lang-en"]
+brew "aspell"
 brew "awscli"
 brew "cloc"
 brew "docker"
