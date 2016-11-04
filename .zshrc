@@ -22,9 +22,6 @@ export GREP_OPTIONS="--color"
 # Default CLI editor
 export EDITOR=vim
 
-# To enable rbenv shims and autocompletion
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
 # Load all .zsh config files
 for config_file ($DOTFILES_PATH/lib/*.zsh); do
   source $config_file
