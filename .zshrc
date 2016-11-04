@@ -19,9 +19,6 @@ colors
 alias ls='ls -G'
 export GREP_OPTIONS="--color"
 
-# Default CLI editor
-export EDITOR=vim
-
 # Load all .zsh config files
 for config_file ($DOTFILES_PATH/lib/*.zsh); do
   source $config_file
