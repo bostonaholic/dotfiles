@@ -3,7 +3,7 @@ require 'rake'
 
 desc "symlink all dot files"
 task :default do
-  files = Dir.glob('.*') - ['.git', '.gitmodules', '.', '..']
+  files = Dir.glob('.*') + ['bin', 'gpg-agent.conf'] - ['.git', '.gitmodules', '.', '..']
   symlink_files files
 end
 
