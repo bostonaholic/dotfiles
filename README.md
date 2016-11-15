@@ -23,14 +23,14 @@ $ ln -s $PWD/profiles.clj ~/.lein/profiles.clj
 
 - [Homebrew](http://brew.sh/)
 
-##### ZSH as default shell
-
-`$ chsh -s /bin/zsh`
-
 #### Homebrew to install them all
 
 `$ brew tap homebrew/bundle`
 `$ brew bundle`
+
+##### ZSH as default shell
+
+`sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh`
 
 ##### for highlighting source in cat
 
