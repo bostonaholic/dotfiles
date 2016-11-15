@@ -263,7 +263,7 @@ you should place your code here."
         ispell-program-name "/usr/local/bin/aspell"
 
         git-magit-status-fullscreen t
-        magit-commit-arguments (quote ("--gpg-sign=88519FAD3D921357"))
+        magit-commit-arguments (quote ("--gpg-sign=76D1E98162B00F5A"))
 
         cider-repl-display-help-banner nil
         cider-repl-pop-to-buffer-on-connect t
