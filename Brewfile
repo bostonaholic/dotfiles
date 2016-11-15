@@ -36,6 +36,7 @@ brew "gnutls"
 brew "pinentry-mac"
 
 # Clojure
+cask "java"
 brew "boot-clj"
 brew "planck"
 brew "leiningen"
