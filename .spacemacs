@@ -281,6 +281,7 @@ you should place your code here."
 
   (global-set-key (kbd "C-;")         'comment-or-uncomment-region)
 
+  ;; Be sure to turn off macOS Keyboard > Shortcuts
   (global-set-key (kbd "C-<right>")   'paredit-forward-slurp-sexp)
   (global-set-key (kbd "C-<left>")    'paredit-forward-barf-sexp)
   (global-set-key (kbd "C-M-<left>")  'paredit-backward-slurp-sexp)
