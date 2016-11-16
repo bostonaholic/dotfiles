@@ -271,7 +271,7 @@ you should place your code here."
         css-indent-offset 2
 
         deft-extensions '("org" "md")
-        deft-directory "~/Dropbox (Personal)/Notes"
+        deft-directory "~/Dropbox/Notes"
         deft-recursive t
 
         js2-basic-offset 2
