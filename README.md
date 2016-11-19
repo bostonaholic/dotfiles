@@ -14,9 +14,6 @@ $ rake # symlink all files to ~
 Symlink non-standard configuration files
 
 ```
-$ ln -s $PWD/bin ~/bin
-$ ln -s $PWD/gpg-agent.conf ~/.gnupg/gpg-agent.conf
-$ ln -s $PWD/launchd.conf /etc/launchd.conf
 $ ln -s $PWD/profiles.clj ~/.lein/profiles.clj
 ```
 
