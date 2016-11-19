@@ -5,6 +5,7 @@ Staying as minimal as possible with my config. I'm only adding libraries and ali
 ## Setup
 
 ```
+$ mkdir code && cd code
 $ git clone git@github.com:bostonaholic/dotfiles.git
 $ cd dotfiles
 $ rake # symlink all files to ~
