@@ -1,4 +1,4 @@
-# The New Hotness (TM)
+# There's no place like ~
 
 Staying as minimal as possible with my config. I'm only adding libraries and aliases as I come across inefficiencies in my development process.
 
