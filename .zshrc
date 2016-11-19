@@ -25,3 +25,6 @@ for config_file ($DOTFILES_PATH/lib/*.zsh); do
 done
 
 export GPG_TTY=$(tty)
+
+# rbenv
+eval "$(rbenv init -)"
