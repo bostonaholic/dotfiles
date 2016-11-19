@@ -32,6 +32,10 @@ $ ln -s $PWD/profiles.clj ~/.lein/profiles.clj
 
 `sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh`
 
+##### Powerline fonts
+
+[https://github.com/powerline/fonts](https://github.com/powerline/fonts)
+
 ##### for highlighting source in cat
 
 `$ easy_install Pygments`

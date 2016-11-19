@@ -115,8 +115,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+   dotspacemacs-default-font '("Fura Powerline"
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -276,6 +276,9 @@ you should place your code here."
 
         js2-basic-offset 2
         js-indent-level 2
+
+        powerline-default-separator 'arrow
+        ns-use-srgb-colorspace nil
 
         vc-follow-symlinks t)
 
