@@ -15,6 +15,7 @@ Symlink non-standard configuration files
 
 ```
 $ ln -s $PWD/profiles.clj ~/.lein/profiles.clj
+$ ln -s $PWD/boot.properties ~/.boot/boot.properties
 ```
 
 ## Dependencies
