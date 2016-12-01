@@ -2,7 +2,7 @@
 {:user {:plugins [[lein-ancient "0.6.10"]
                   [atroche/lein-ns-dep-graph "0.2.0-SNAPSHOT"]
                   [lein-hiera "0.9.5"]
-                  [lein-kibit "0.1.2"]
+                  [lein-kibit "0.1.3"]
                   [lein-pprint "1.1.2"]]
         :dependencies [[criterium "0.4.4"]
                        [slamhound "1.5.5"]]
