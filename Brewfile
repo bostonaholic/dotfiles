@@ -8,20 +8,15 @@ tap "caskroom/cask"
 
 # Programming
 brew "aspell"
-brew "awscli"
 brew "cloc"
 tap "d12frosted/emacs-plus"
 brew "emacs-plus", args: ["with-cocoa", "with-gnutls", "with-librsvg", "with-imagemagick", "with-spacemacs-icon"], restart_service: :changed
 brew "git"
-brew "heroku"
 brew "libyaml"
-brew "mongodb", args: ["with-openssl"], restart_service: :changed
 brew "nginx", restart_service: :changed
 cask "ngrok"
 brew "node"
 brew "postgres", restart_service: :changed
-brew "rabbitmq", restart_service: :changed
-brew "redis", restart_service: :changed
 brew "tmux"
 brew "vim"
 brew "zsh"
@@ -47,9 +42,6 @@ brew "v8"
 brew "rbenv"
 brew "ruby-build"
 
-# Python
-brew "python"
-
 # Unix
 brew "autoenv"
 brew "htop"
@@ -58,7 +50,5 @@ brew "the_silver_searcher"
 brew "tree"
 
 # Other
-# cask "cloud"
 brew "coreutils"
 brew "graphviz"
-# cask "teensy"
