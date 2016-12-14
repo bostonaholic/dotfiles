@@ -36,5 +36,5 @@ function parse_git_dirty() {
   fi
 }
 
-PROMPT="\$(repeat \$COLUMNS printf '-')"
+PROMPT="\$(repeat \$COLUMNS printf %s '-')"
 PROMPT+='%{$fg_bold[red]%}%{$fg_bold[green]%}%p%{$fg[cyan]%}%2c%{$fg_bold[blue]%} $(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%} '
