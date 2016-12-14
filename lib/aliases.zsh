@@ -5,9 +5,6 @@ function aliaz {
 # CLI
 alias ..="cd .."
 alias la="ls -lha"
-alias p="pygmentize $*"
-alias reload="source ~/.zshrc"
-alias rl="reload"
 
 alias mci="mvn clean install $*"
 
@@ -32,19 +29,11 @@ alias bundle_close="bundle exec gem pristine $*"
 alias fs="foreman start $*"
 alias ms="middleman server $*"
 alias mb="middleman build $*"
+
+# rbenv
 alias ri="cat .ruby-version | rbenv install"
 alias rr="rbenv rehash $*"
 alias rv="ruby --version $*"
-
-# Rails
-alias f="script/features $*"
-alias t="script/test $*"
-alias z="zeus $*"
-
-# Lineman
-alias lnr="lineman run $*"
-alias lns="lineman spec $*"
-alias lnb="lineman build $*"
 
 # Clojure
 alias clj="lein repl $*"
