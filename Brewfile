@@ -9,8 +9,7 @@ tap "caskroom/cask"
 # Programming
 brew "aspell"
 brew "cloc"
-tap "d12frosted/emacs-plus"
-brew "emacs-plus", args: ["with-cocoa", "with-gnutls", "with-librsvg", "with-imagemagick", "with-spacemacs-icon"], restart_service: :changed
+brew "emacs", args: ["with-cocoa", "with-ctags", "with-gnutls", "with-librsvg", "with-imagemagick"], restart_service: :changed
 brew "git"
 brew "libyaml"
 brew "nginx", restart_service: :changed
