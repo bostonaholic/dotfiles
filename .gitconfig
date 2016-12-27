@@ -59,7 +59,7 @@
   di = diff
   dc = diff --cached
   ds = diff --staged
-  dw = diff --word-diff
+  dw = diff --word-diff=plain
 
   ff = fetch --tags
   fa = fetch --all --tags
