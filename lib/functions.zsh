@@ -4,4 +4,3 @@ function set_env_var() {
   export $1=$2
   show_env_var $1
 }
-
