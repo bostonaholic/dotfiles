@@ -10,6 +10,7 @@ alias mci="mvn clean install $*"
 
 alias gpg=gpg2
 
+# Docker
 alias dk=docker-compose
 
 # Emacs
