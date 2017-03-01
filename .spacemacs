@@ -264,7 +264,6 @@ you should place your code here."
 
         git-magit-status-fullscreen t
         magit-commit-arguments (quote ("--gpg-sign=76D1E98162B00F5A"))
-        magit-diff-arguments (quote ("--word-diff=plain"))
 
         cider-repl-display-help-banner nil
         cider-repl-pop-to-buffer-on-connect t
