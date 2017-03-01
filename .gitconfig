@@ -1,93 +1,105 @@
 [init]
 [user]
-  name = Matthew Boston
-  email = matthew@matthewboston.com
-  signingkey = 62B00F5A
+	name = Matthew Boston
+	email = matthew@matthewboston.com
+	signingkey = 62B00F5A
 [github]
-  user = bostonaholic
+	user = bostonaholic
 [help]
-  autocorrect = 1
+	autocorrect = 1
 [color]
-  branch = auto
-  diff = auto
-  status = auto
+	branch = auto
+	diff = auto
+	status = auto
 [color "branch"]
-  current = yellow reverse
-  local = yellow
-  remote = green
+	current = green bold
+	local = green
+	remote = yellow
 [color "diff"]
-  meta = yellow bold
-  frag = magenta bold
-  old = red bold
-  new = green bold
+	frag = magenta
+	meta = yellow
+	new = green
+	old = red
+[color "diff-highlight"]
+	oldNormal = "red bold"
+	oldHighlight = "red bold 52"
+	newNormal = "green bold"
+	newHighlight = "green bold 22"
 [color "status"]
-  added = yellow
-  changed = green
-  untracked = cyan
+	added = green bold
+	changed = yellow bold
+	untracked = red bold
 [commit]
-  gpgsign = true
+	gpgsign = true
 [core]
-  excludesfile = ~/.gitignore_global
-  editor = vim
+	excludesfile = ~/.gitignore_global
+	editor = vim
 [diff]
-  renames = true
+	renames = true
 [fetch]
-  prune = true
+	prune = true
+[pretty]
+	custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
+	#                     │        │            │            │             └─ author name
+	#                     │        │            │            └─ message
+	#                     │        │            └─ date (relative)
+	#                     │        └─ decorations (branch, heads or tags)
+	#                     └─ hash (abbreviated)
 [push]
-  default = tracking
+	default = tracking
 [pull]
-  default = tracking
-  rebase = preserve
-  tags = true
+	default = tracking
+	rebase = preserve
+	tags = true
 [rerere]
-  enabled = true
+	enabled = true
 [alias]
-  aa = add --all
-  ap = add --patch
+	aa = add --all
+	ap = add --patch
 
-  br = branch
-  bra = branch --all
+	br = branch
+	bra = branch --all
 
-  amend = commit --amend
-  cl = clone
-  ci = commit --verbose
-  co = checkout
-  pu = push
+	amend = commit --amend
+	cl = clone
+	ci = commit --verbose
+	co = checkout
+	pu = push
 
-  ctags = "!.git/hooks/ctags"
+	ctags = "!.git/hooks/ctags"
 
-  di = diff
-  dc = diff --cached
-  ds = diff --staged
-  dw = diff --word-diff=plain
+	di = diff
+	dc = diff --cached
+	ds = diff --staged
+	dw = diff --word-diff=plain
 
-  ff = fetch --tags
-  fa = fetch --all --tags
+	ff = fetch --tags
+	fa = fetch --all --tags
 
-  upstream = "!git fetch upstream; git merge upstream/master"
-  u = !git upstream
+	upstream = "!git fetch upstream; git merge upstream/master"
+	u = !git upstream
 
-  unmerge = reset --hard HEAD@{1}
-  unpull = reset --hard HEAD@{1}
+	unmerge = reset --hard HEAD@{1}
+	unpull = reset --hard HEAD@{1}
 
-  head = !git l -1
-  h = !git head
+	head = !git l -1
+	h = !git head
 
-  fa = !git fetch --all
+	fa = !git fetch --all
 
-  l = "!source ~/.githelpers && pretty_git_log"
-  la = !git l --all
-  recent = !git l -30
-  r = !git recent
-  ra = !git recent --all
+	l = "!source ~/.githelpers && pretty_git_log"
+	la = !git l --all
+	recent = !git l -30
+	r = !git recent
+	ra = !git recent --all
 
-  refresh = !git stash && git checkout master && git pull origin master && git checkout - && git rebase master && git stash pop
+	refresh = !git stash && git checkout master && git pull origin master && git checkout - && git rebase master && git stash pop
 
-  iteration = "!git log --pretty='tformat:%h (%ar) -- %d %s' --since='2 weeks ago' --author=`git config user.email`"
-  week = "!git log --pretty='tformat:%h (%ar) -- %d %s' --since='1 weeks ago' --author=`git config user.email`"
+	iteration = "!git log --pretty='tformat:%h (%ar) -- %d %s' --since='2 weeks ago' --author=`git config user.email`"
+	week = "!git log --pretty='tformat:%h (%ar) -- %d %s' --since='1 weeks ago' --author=`git config user.email`"
 
-  productivity = !git log --pretty="%aN" | sort | uniq -c | sort -nr
+	productivity = !git log --pretty="%aN" | sort | uniq -c | sort -nr
 
-  rv = remote --verbose
+	rv = remote --verbose
 
-  st = status -sb
+	st = status -sb
