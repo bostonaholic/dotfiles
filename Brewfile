@@ -49,5 +49,7 @@ brew "the_silver_searcher"
 brew "tree"
 
 # Other
+brew "awscli"
 brew "coreutils"
+brew "dfu-util"
 brew "graphviz"
