@@ -12,18 +12,6 @@ function remove_all_images {
     docker images --all | sed '1 d' | awk '{print $3}' | xargs -L1 docker rmi --force
 }
 
-function ask {
-    local f=$1
-
-    read -p "Do you want to call '$f'? (y/n) "
-    echo
-
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-        eval $f
-    fi
-}
-
 ask remove_dangling_volumes
 ask remove_all_containers
 ask remove_all_images
