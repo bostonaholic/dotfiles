@@ -24,6 +24,7 @@ brew "libyaml"
 brew "nginx", restart_service: :changed
 cask "ngrok"
 brew "node"
+cask "paw"
 brew "postgres", restart_service: :changed
 brew "tmux"
 brew "vim"
