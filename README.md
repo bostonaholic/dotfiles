@@ -31,7 +31,7 @@ $ brew bundle
 
 ##### ZSH as default shell
 
-`$ sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh`
+`$ chsh -s $(which zsh)`
 
 ##### Powerline fonts
 
