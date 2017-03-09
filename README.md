@@ -24,12 +24,14 @@ $ ln -s $PWD/boot.properties ~/.boot/boot.properties
 
 #### Homebrew to install them all
 
-`$ brew tap homebrew/bundle`
-`$ brew bundle`
+```
+$ brew tap homebrew/bundle
+$ brew bundle
+```
 
 ##### ZSH as default shell
 
-`sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh`
+`$ sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh`
 
 ##### Powerline fonts
 
