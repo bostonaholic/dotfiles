@@ -5,6 +5,15 @@
 #
 
 tap "caskroom/cask"
+tap "caskroom/versions"
+
+# Browsers
+cask "google-chrome"
+cask "google-chrome-canary"
+cask "firefox"
+cask "firefox-beta"
+cask "firefoxdeveloperedition"
+cask "safari-technology-preview"
 
 # Programming
 brew "aspell"
