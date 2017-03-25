@@ -32,7 +32,7 @@ $ brew bundle
 
 ##### ZSH as default shell
 
-`$ chsh -s $(which zsh)`
+`$ sudo dscl . -create /Users/$USER UserShell $(which zsh)`
 
 ##### Powerline fonts
 
