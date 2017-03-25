@@ -21,7 +21,7 @@ $ ln -s $PWD/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 
 ## Dependencies
 
-- [Homebrew](http://brew.sh/)
+- [Homebrew](https://brew.sh)
 
 #### Homebrew to install them all
 
