@@ -16,6 +16,7 @@ Symlink non-standard configuration files
 ```
 $ ln -s $PWD/profiles.clj ~/.lein/profiles.clj
 $ ln -s $PWD/boot.properties ~/.boot/boot.properties
+$ ln -s $PWD/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 ```
 
 ## Dependencies
