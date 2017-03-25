@@ -35,6 +35,7 @@ values."
      markdown
      org
      osx
+     react
      ruby
      ;; (shell :variables
      ;;        shell-default-height 30
@@ -281,7 +282,12 @@ you should place your code here."
         powerline-default-separator 'arrow
         ns-use-srgb-colorspace nil
 
-        vc-follow-symlinks t)
+        vc-follow-symlinks t
+
+        web-mode-markup-indent-offset 2
+        web-mode-css-indent-offset 2
+        web-mode-code-indent-offset 2
+        web-mode-attr-indent-offset 2)
 
   (global-set-key (kbd "C-;")         'comment-or-uncomment-region)
 
