@@ -38,15 +38,3 @@ $ brew bundle
 ##### Powerline fonts
 
 [https://github.com/powerline/fonts](https://github.com/powerline/fonts)
-
-##### for highlighting source in cat
-
-`$ easy_install Pygments`
-
-##### better pry
-
-`$ gem install pry-plus`
-
-##### awesome print to make pry that much better
-
-`$ gem install awesome_print`
