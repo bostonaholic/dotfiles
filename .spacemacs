@@ -313,35 +313,35 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (setq user-full-name "Matthew Boston"
-        user-mail-address "matthew@matthewboston.com"
+  (setq-default user-full-name "Matthew Boston"
+                user-mail-address "matthew@matthewboston.com"
 
-        ispell-program-name "/usr/local/bin/aspell"
+                ispell-program-name "/usr/local/bin/aspell"
 
-        git-magit-status-fullscreen t
-        magit-commit-arguments (quote ("--gpg-sign=DF992BF274208062"))
+                git-magit-status-fullscreen t
+                magit-commit-arguments (quote ("--gpg-sign=DF992BF274208062"))
 
-        cider-repl-display-help-banner nil
-        cider-repl-pop-to-buffer-on-connect t
+                cider-repl-display-help-banner nil
+                cider-repl-pop-to-buffer-on-connect t
 
-        css-indent-offset 2
+                css-indent-offset 2
 
-        deft-extensions '("org" "md")
-        deft-directory "~/Dropbox/Notes"
-        deft-recursive t
+                deft-extensions '("org" "md")
+                deft-directory "~/Dropbox/Notes"
+                deft-recursive t
 
-        js2-basic-offset 2
-        js-indent-level 2
+                js2-basic-offset 2
+                js-indent-level 2
 
-        powerline-default-separator 'arrow
-        ns-use-srgb-colorspace nil
+                powerline-default-separator 'arrow
+                ns-use-srgb-colorspace nil
 
-        vc-follow-symlinks t
+                vc-follow-symlinks t
 
-        web-mode-markup-indent-offset 2
-        web-mode-css-indent-offset 2
-        web-mode-code-indent-offset 2
-        web-mode-attr-indent-offset 2)
+                web-mode-markup-indent-offset 2
+                web-mode-css-indent-offset 2
+                web-mode-code-indent-offset 2
+                web-mode-attr-indent-offset 2)
 
   (global-set-key (kbd "C-;")         'comment-or-uncomment-region)
 
