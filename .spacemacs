@@ -341,7 +341,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
                 web-mode-markup-indent-offset 2
                 web-mode-css-indent-offset 2
                 web-mode-code-indent-offset 2
-                web-mode-attr-indent-offset 2)
+                web-mode-attr-indent-offset 2
+
+                winum-scope 'frame-local)
 
   (global-set-key (kbd "C-;")         'comment-or-uncomment-region)
 
