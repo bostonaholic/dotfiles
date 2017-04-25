@@ -64,6 +64,9 @@ defaults write com.apple.ActivityMonitor SortDirection -int 0
 # Set a really fast keyboard repeat rate.
 defaults write NSGlobalDomain KeyRepeat -int 0
 
+# Set the delay until keyboard repeat
+defaults write NSGlobalDomain InitialKeyRepeat -int 25
+
 # Disable press-and-hold for keys in favor of key repeat.
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
