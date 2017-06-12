@@ -14,6 +14,8 @@ alias date_seconds="date +%s"
 
 alias camera_restart="sudo killall VDCAssistant"
 
+alias ip="curl https://www.icanhazip.com"
+
 # Docker
 alias dk=docker-compose
 
