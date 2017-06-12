@@ -10,6 +10,8 @@ alias mci="mvn clean install $*"
 
 alias gpg=gpg2
 
+alias date_seconds="date +%s"
+
 # Docker
 alias dk=docker-compose
 
