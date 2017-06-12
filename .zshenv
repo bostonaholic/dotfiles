@@ -7,5 +7,9 @@ export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 # rbenv
 eval "$(rbenv init -)"
 
+# nvm
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
+
 # Default CLI editor
 export EDITOR=vim
