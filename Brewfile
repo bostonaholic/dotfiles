@@ -29,6 +29,7 @@ cask "paw"
 brew "postgres", restart_service: :changed
 brew "tmux"
 brew "vim"
+brew "wireshark", args: ["with-qt"]
 brew "zsh"
 
 # Security
