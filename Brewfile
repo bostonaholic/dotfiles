@@ -52,6 +52,9 @@ brew "v8"
 # Ruby
 brew "rbenv"
 brew "ruby-build"
+# ruby-build suggests using these
+brew "openssl"
+brew "readline"
 
 # Unix
 brew "autoenv"
