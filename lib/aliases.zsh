@@ -12,6 +12,8 @@ alias gpg=gpg2
 
 alias date_seconds="date +%s"
 
+alias camera_restart="sudo killall VDCAssistant"
+
 # Docker
 alias dk=docker-compose
 
