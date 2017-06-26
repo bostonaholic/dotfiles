@@ -29,7 +29,7 @@ function hd() {
   alias dl=datomic_log
 
   # PATH
-  export PATH=$DATOMIC_HOME/bin:$JAVA_HOME/bin:$PATH
+  set_env_var PATH $DATOMIC_HOME/bin:$JAVA_HOME/bin:$PATH
 
   # NOMAD_ENV
   set_env_var NOMAD_ENV 'dev'
