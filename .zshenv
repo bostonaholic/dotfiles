@@ -13,3 +13,5 @@ export NVM_DIR="$HOME/.nvm"
 
 # Default CLI editor
 export EDITOR=vim
+export GREP_OPTIONS="--color"
+export GPG_TTY=$(tty)
