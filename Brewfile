@@ -29,6 +29,7 @@ brew "postgres", restart_service: :changed
 brew "tmux"
 brew "vim"
 brew "wireshark", args: ["with-qt"]
+cask "wireshark-chmodbpf"
 brew "zsh"
 
 # Security
