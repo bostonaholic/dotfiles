@@ -21,7 +21,6 @@ brew "cloc"
 brew "emacs", args: ["with-cocoa", "with-ctags", "with-gnutls", "with-librsvg", "with-imagemagick"], restart_service: :changed
 brew "git"
 brew "libyaml"
-brew "nginx", restart_service: :changed
 cask "ngrok"
 brew "node"
 brew "nodenv"
