@@ -1,3 +1,6 @@
+# Save PATH to go back to later
+ORIGINAL_PATH=$PATH
+
 # user scripts
 export PATH=$HOME/bin:$PATH
 

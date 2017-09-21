@@ -1,9 +1,6 @@
 local DOTFILES="dotfiles"
 local DOTFILES_PATH="$(dirname ~/code/bostonaholic/$DOTFILES)/$DOTFILES"
 
-# Save PATH to go back to later
-ORIGINAL_PATH=$PATH
-
 # rbenv
 eval "$(rbenv init -)"
 
