@@ -1,12 +1,6 @@
 local DOTFILES="dotfiles"
 local DOTFILES_PATH="$(dirname ~/code/bostonaholic/$DOTFILES)/$DOTFILES"
 
-# rbenv
-eval "$(rbenv init -)"
-
-# nodenv
-eval "$(nodenv init -)"
-
 # Set custom prompt
 setopt PROMPT_SUBST
 autoload -U promptinit
