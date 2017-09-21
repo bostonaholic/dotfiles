@@ -346,6 +346,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
                 winum-scope 'frame-local)
 
+  (add-to-list 'auto-mode-alist '("\\.bats\\'" . shell-script-mode))
+
   (global-set-key (kbd "C-;")         'comment-or-uncomment-region)
 
   ;; Be sure to turn off macOS Keyboard > Shortcuts
