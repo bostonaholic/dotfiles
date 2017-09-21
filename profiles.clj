@@ -8,8 +8,8 @@
                        [slamhound "1.5.5"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}
         :injections [(defn hello [name] (println (str "Hello, " name)))]}
- :repl {:dependencies [^:displace [org.clojure/clojure "1.9.0-alpha14"]
                        [org.clojure/data.csv "0.1.3"]
+ :repl {:dependencies [^:displace [org.clojure/clojure "1.9.0-beta1"]
                        [org.clojure/tools.nrepl "0.2.12"]
                        [org.clojure/tools.namespace "0.2.11"]
                        [com.cemerick/piggieback "0.2.1"]
