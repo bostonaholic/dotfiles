@@ -1,5 +1,5 @@
 ;; ln -s $PWD/profiles.clj ~/.lein/profiles.clj
-{:user {:plugins [[lein-ancient "0.6.10"]
+{:user {:plugins [[lein-ancient "0.6.12"]
                   [atroche/lein-ns-dep-graph "0.2.0-SNAPSHOT"]
                   [lein-hiera "0.9.5"]
                   [lein-kibit "0.1.5"]
