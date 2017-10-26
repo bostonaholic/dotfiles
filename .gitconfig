@@ -80,8 +80,7 @@
 	head = !git l -1
 	h = !git head
 
-
-	l = "!source ~/.githelpers && pretty_git_log"
+	l = "!. ~/.githelpers && pretty_git_log"
 	la = !git l --all
 	recent = !GIT_NO_PAGER=1 git l -30
 	r = !git recent
