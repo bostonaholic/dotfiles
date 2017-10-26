@@ -92,7 +92,7 @@
 	iteration = "!git log --pretty='tformat:%h (%ar) -- %d %s' --since='2 weeks ago' --author=`git config user.email`"
 	week      = "!git log --pretty='tformat:%h (%ar) -- %d %s' --since='1 weeks ago' --author=`git config user.email`"
 
-	productivity = !git log --pretty="%aN" | sort | uniq -c | sort -nr
+	productivity = "!git log --pretty='%aN' | sort | uniq -c | sort -nr"
 
 	rv = remote --verbose
 
