@@ -89,7 +89,7 @@
 
 	l = "!source ~/.githelpers && pretty_git_log"
 	la = !git l --all
-	recent = !git l -30
+	recent = !GIT_NO_PAGER=1 git l -30
 	r = !git recent
 	ra = !git recent --all
 
