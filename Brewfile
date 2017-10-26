@@ -58,6 +58,7 @@ brew "readline"
 
 # Unix
 brew "autoenv"
+brew "curl"
 brew "htop"
 brew "rlwrap"
 brew "the_silver_searcher"
