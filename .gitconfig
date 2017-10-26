@@ -66,8 +66,6 @@
 	co = checkout
 	pu = push
 
-	ctags = "!.git/hooks/ctags"
-
 	di = diff
 	dc = diff --cached
 	ds = diff --staged
