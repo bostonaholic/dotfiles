@@ -96,4 +96,4 @@
 
 	rv = remote --verbose
 
-	st = status -sb
+	st = status --short --branch
