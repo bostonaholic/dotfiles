@@ -36,6 +36,7 @@ brew "zsh"
 brew "gnupg"
 brew "gnupg2"
 brew "gnutls"
+cask "keybase"
 brew "pinentry-mac"
 
 # Clojure
