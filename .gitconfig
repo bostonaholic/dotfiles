@@ -97,3 +97,5 @@
 	rv = remote --verbose
 
 	st = status --short --branch
+[gpg]
+	program = /usr/local/bin/gpg
