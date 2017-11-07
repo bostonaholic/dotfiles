@@ -5,6 +5,8 @@
 	signingkey = DF992BF274208062
 [github]
 	user = bostonaholic
+[gpg]
+	program = /usr/local/bin/gpg
 [help]
 	autocorrect = 1
 [color]
@@ -77,5 +79,3 @@
 	rv = remote --verbose
 
 	st = status --short --branch
-[gpg]
-	program = /usr/local/bin/gpg
