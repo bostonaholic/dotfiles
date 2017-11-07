@@ -8,7 +8,7 @@
 [help]
 	autocorrect = 1
 [color]
-        ui = auto
+	ui = auto
 [commit]
 	gpgsign = true
 [core]
