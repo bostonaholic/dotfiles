@@ -332,7 +332,10 @@ you should place your code here."
 
                 powerline-default-separator nil
 
-                winum-scope 'frame-local))
+                winum-scope 'frame-local)
+
+  (global-set-key (kbd "M-n") 'scroll-up-line)
+  (global-set-key (kbd "M-p") 'scroll-down-line))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
