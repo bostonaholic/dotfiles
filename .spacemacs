@@ -310,12 +310,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (setq-default ispell-program-name "/usr/local/bin/aspell")
-
-  (global-set-key (kbd "C-S-<up>")    'buf-move-up)
-  (global-set-key (kbd "C-S-<down>")  'buf-move-down)
-  (global-set-key (kbd "C-S-<left>")  'buf-move-left)
-  (global-set-key (kbd "C-S-<right>") 'buf-move-right))
+  (setq-default ispell-program-name "/usr/local/bin/aspell"))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -334,8 +329,13 @@ you should place your code here."
 
                 winum-scope 'frame-local)
 
-  (global-set-key (kbd "M-n") 'scroll-up-line)
-  (global-set-key (kbd "M-p") 'scroll-down-line))
+  (global-set-key (kbd "C-S-<up>")    'buf-move-up)
+  (global-set-key (kbd "C-S-<down>")  'buf-move-down)
+  (global-set-key (kbd "C-S-<left>")  'buf-move-left)
+  (global-set-key (kbd "C-S-<right>") 'buf-move-right)
+
+  (global-set-key (kbd "M-n")         'scroll-up-line)
+  (global-set-key (kbd "M-p")         'scroll-down-line))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
