@@ -38,3 +38,7 @@ $ brew bundle
 ##### Powerline fonts
 
 [https://github.com/powerline/fonts](https://github.com/powerline/fonts)
+
+#### Tern JavaScript Analyzer
+
+`npm install -g tern`
