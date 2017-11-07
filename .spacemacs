@@ -330,7 +330,9 @@ you should place your code here."
 
                 magit-commit-arguments (list (concat "--gpg-sign=" my/gpg-signing-key))
 
-                powerline-default-separator nil))
+                powerline-default-separator nil
+
+                winum-scope 'frame-local))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
