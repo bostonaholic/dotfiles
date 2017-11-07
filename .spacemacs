@@ -341,7 +341,12 @@ you should place your code here."
   (global-set-key (kbd "C-M-<right>") 'paredit-backward-barf-sexp)
 
   (global-set-key (kbd "M-n")         'scroll-up-line)
-  (global-set-key (kbd "M-p")         'scroll-down-line))
+  (global-set-key (kbd "M-p")         'scroll-down-line)
+
+  ;; join line below to current line
+  (global-set-key (kbd "M-j")
+                  (lambda () (interactive)
+                    (join-line -1))))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
