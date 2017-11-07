@@ -31,11 +31,11 @@ $ brew tap homebrew/bundle
 $ brew bundle
 ```
 
-##### ZSH as default shell
+#### ZSH as default shell
 
 `$ chsh -s $(which zsh)`
 
-##### Powerline fonts
+#### Powerline fonts
 
 [https://github.com/powerline/fonts](https://github.com/powerline/fonts)
 
