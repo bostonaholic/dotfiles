@@ -328,7 +328,9 @@ you should place your code here."
   (setq-default user-full-name my/user-full-name
                 user-mail-address my/user-mail-address
 
-                magit-commit-arguments (list (concat "--gpg-sign=" my/gpg-signing-key))))
+                magit-commit-arguments (list (concat "--gpg-sign=" my/gpg-signing-key))
+
+                powerline-default-separator nil))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
