@@ -329,6 +329,8 @@ you should place your code here."
 
                 winum-scope 'frame-local)
 
+  (add-to-list 'auto-mode-alist '("Brewfile" . ruby-mode))
+
   (global-set-key (kbd "C-S-<up>")    'buf-move-up)
   (global-set-key (kbd "C-S-<down>")  'buf-move-down)
   (global-set-key (kbd "C-S-<left>")  'buf-move-left)
