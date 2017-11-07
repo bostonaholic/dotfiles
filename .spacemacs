@@ -346,7 +346,11 @@ you should place your code here."
   ;; join line below to current line
   (global-set-key (kbd "M-j")
                   (lambda () (interactive)
-                    (join-line -1))))
+                    (join-line -1)))
+
+  ;; font size
+  (global-set-key (kbd "C-+") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
