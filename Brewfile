@@ -40,7 +40,7 @@ cask "keybase"
 brew "pinentry-mac"
 
 # Clojure
-cask "java"
+cask "java8"
 brew "boot-clj"
 brew "planck"
 brew "leiningen"
