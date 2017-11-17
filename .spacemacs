@@ -327,6 +327,8 @@ you should place your code here."
 
                 powerline-default-separator nil
 
+                vc-follow-symlinks t
+
                 winum-scope 'frame-local)
 
   (add-to-list 'auto-mode-alist '("Brewfile" . ruby-mode))
