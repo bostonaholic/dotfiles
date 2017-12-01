@@ -1,17 +1,17 @@
 # OS generated #
-######################
+################
 .DS_Store
 .DS_Store?
 .Trashes
 Thumbs.db
 
 # IntelliJ #
-##################
+############
 .idea/
 *.iml
 
 # Clojure #
-################
+###########
 .nrepl-port
 .cljs_rhino_repl/
 
