@@ -14,3 +14,7 @@ Thumbs.db
 ################
 .nrepl-port
 .cljs_rhino_repl/
+
+# Progamming #
+##############
+scratch*
