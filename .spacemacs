@@ -325,6 +325,8 @@ you should place your code here."
 
                 cider-repl-display-help-banner nil
 
+                css-indent-offset 2
+
                 magit-commit-arguments (list (concat "--gpg-sign=" my/gpg-signing-key))
 
                 powerline-default-separator nil
