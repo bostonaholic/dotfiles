@@ -323,6 +323,8 @@ you should place your code here."
   (setq-default user-full-name my/user-full-name
                 user-mail-address my/user-mail-address
 
+                cider-repl-display-help-banner nil
+
                 magit-commit-arguments (list (concat "--gpg-sign=" my/gpg-signing-key))
 
                 powerline-default-separator nil
