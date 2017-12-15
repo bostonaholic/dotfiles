@@ -350,6 +350,9 @@ you should place your code here."
 
   (global-set-key (kbd "M-n")         'scroll-up-line)
   (global-set-key (kbd "M-p")         'scroll-down-line)
+  (with-eval-after-load 'markdown-mode
+    (define-key markdown-mode-map (kbd "M-n") nil)
+    (define-key markdown-mode-map (kbd "M-p") nil))
 
   ;; join line below to current line
   (global-set-key (kbd "M-j")
