@@ -32,6 +32,10 @@ brew "wireshark", args: ["with-qt"]
 cask "wireshark-chmodbpf"
 brew "zsh"
 
+# docker
+brew "docker"
+brew "kubectl"
+
 # Security
 brew "gnupg"
 brew "gnupg2"
