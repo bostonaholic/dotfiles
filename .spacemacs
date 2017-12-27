@@ -361,7 +361,12 @@ you should place your code here."
 
   ;; font size
   (global-set-key (kbd "C-+") 'text-scale-increase)
-  (global-set-key (kbd "C--") 'text-scale-decrease))
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+
+  (define-clojure-indent
+    ;; truckerpath.more-monads.error-m/attempt-all
+    (truckerpath.more-monads.error-m/attempt-all 1)
+    (attempt-all 1)))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
