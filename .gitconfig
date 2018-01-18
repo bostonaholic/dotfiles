@@ -12,6 +12,7 @@
 [color]
 	ui = auto
 [commit]
+	verbose = true
 	gpgsign = true
 [core]
 	excludesfile = ~/.gitignore_global
@@ -44,7 +45,7 @@
 
 	amend = commit --amend
 	cl = clone
-	ci = commit --verbose
+	ci = commit
 	co = checkout
 	pu = push
 
