@@ -327,6 +327,8 @@ you should place your code here."
 
                 css-indent-offset 2
 
+                js-indent-level 2
+
                 magit-commit-arguments (list (concat "--gpg-sign=" my/gpg-signing-key))
 
                 powerline-default-separator nil
