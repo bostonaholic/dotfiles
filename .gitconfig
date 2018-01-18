@@ -35,6 +35,7 @@
 	rebase = preserve
 	tags = true
 [rerere]
+	autoupdate = true
 	enabled = true
 [alias]
 	aa = add --all
