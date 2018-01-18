@@ -369,7 +369,11 @@ you should place your code here."
     (define-clojure-indent
       ;; truckerpath.more-monads.error-m/attempt-all
       (truckerpath.more-monads.error-m/attempt-all 1)
-      (attempt-all 1))))
+      (attempt-all 1)
+
+      ;; compojure.core/context
+      (compojure.core/context 1)
+      (context 1))))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
