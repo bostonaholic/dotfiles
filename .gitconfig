@@ -21,13 +21,6 @@
 	renames = true
 [fetch]
 	prune = true
-[pretty]
-	custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
-	#                     │        │            │            │             └─ author name
-	#                     │        │            │            └─ message
-	#                     │        │            └─ date (relative)
-	#                     │        └─ decorations (branch, heads or tags)
-	#                     └─ hash (abbreviated)
 [push]
 	default = tracking
 [pull]
@@ -72,9 +65,6 @@
 	ra = !git recent --all
 
 	refresh = !git stash && git checkout master && git pull origin master && git checkout - && git rebase master && git stash pop
-
-	iteration = "!git log --pretty='tformat:%h (%ar) -- %d %s' --since='2 weeks ago' --author=`git config user.email`"
-	week      = "!git log --pretty='tformat:%h (%ar) -- %d %s' --since='1 weeks ago' --author=`git config user.email`"
 
 	productivity = "!git log --pretty='%aN' | sort | uniq -c | sort -nr"
 
