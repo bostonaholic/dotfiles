@@ -63,6 +63,7 @@ brew "openssl"
 brew "readline"
 
 # Unix
+brew "ack"
 brew "autoenv"
 brew "curl"
 brew "htop"
