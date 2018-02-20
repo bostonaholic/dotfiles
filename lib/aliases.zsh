@@ -10,6 +10,8 @@ alias mci="mvn clean install $*"
 
 alias gpg=gpg2
 
+alias rgrep=grep --recursive
+
 alias date_seconds="date +%s"
 
 alias camera_restart="sudo killall VDCAssistant"
