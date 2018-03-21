@@ -3,7 +3,7 @@
 # List files in a project in order of number of commits
 #
 # This often times helps identify classes which are touched often,
-# violating Open/closed principle.
+# violating Open/Closed principle.
 #
 # Show churn for whole repo:
 #   $ git churn
