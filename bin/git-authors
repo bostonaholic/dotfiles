@@ -9,5 +9,5 @@
 #   $ git authors
 
 set -e
-git shortlog -s \
+git shortlog -s "$@" \
     | sort -nr
