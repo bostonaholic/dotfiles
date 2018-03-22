@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# Show the age of a file
+#   $ git age <file>
+
+set -e
+git log -1 --format="%ad" -- "$@"
