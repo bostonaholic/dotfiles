@@ -20,6 +20,7 @@ alias ip="curl https://www.icanhazip.com"
 
 # Docker
 alias dk=docker-compose
+alias kc=kubectl
 
 # Emacs
 alias e="emacs $*"
