@@ -10,3 +10,7 @@ function cci() {
   # PWD
   show_env_var PWD
 }
+
+function graylog_connect () {
+    ssh -f -N -L 9000:graylog-primary.infra.circleci.com:80 jump.circleci.com
+}
