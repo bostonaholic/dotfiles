@@ -6,78 +6,78 @@
 # $ brew bundle
 #
 
-tap "caskroom/cask"
-tap "caskroom/versions"
+tap 'caskroom/cask'
+tap 'caskroom/versions'
 
 # Browsers
-cask "google-chrome"
-cask "google-chrome-canary"
-cask "firefox"
-# cask "firefox-beta"
-cask "firefoxdeveloperedition"
-cask "safari-technology-preview"
+cask 'google-chrome'
+cask 'google-chrome-canary'
+cask 'firefox'
+# cask 'firefox-beta'
+cask 'firefoxdeveloperedition'
+cask 'safari-technology-preview'
 
 # Programming
-brew "aspell"
-brew "cloc"
-cask "emacs"
-brew "git"
-brew "libyaml"
-cask "ngrok"
-brew "node"
-brew "nodenv"
-cask "paw"
-brew "postgres", restart_service: :changed
-brew "tmux"
-brew "vim"
-brew "wireshark", args: ["with-qt"]
-cask "wireshark-chmodbpf"
-brew "zsh"
+brew 'aspell'
+brew 'cloc'
+cask 'emacs'
+brew 'git'
+brew 'libyaml'
+cask 'ngrok'
+brew 'node'
+brew 'nodenv'
+cask 'paw'
+brew 'postgres', restart_service: :changed
+brew 'tmux'
+brew 'vim'
+brew 'wireshark', args: ['with-qt']
+cask 'wireshark-chmodbpf'
+brew 'zsh'
 
 # docker
-brew "docker"
-brew "kubectl"
+brew 'docker'
+brew 'kubectl'
 
 # Security
-brew "gnupg"
-brew "gnupg2"
-brew "gnutls"
-cask "keybase"
-brew "pinentry-mac"
+brew 'gnupg'
+brew 'gnupg2'
+brew 'gnutls'
+cask 'keybase'
+brew 'pinentry-mac'
 
 # Clojure
-cask "grenchman"
-cask "java8"
-brew "boot-clj"
-brew "planck"
-brew "leiningen"
+cask 'grenchman'
+cask 'java8'
+brew 'boot-clj'
+brew 'planck'
+brew 'leiningen'
 
 # JavaScript
-brew "jslint4java"
-brew "phantomjs"
-brew "v8"
+brew 'jslint4java'
+brew 'phantomjs'
+brew 'v8'
 
 # Ruby
-brew "rbenv"
-brew "ruby-build"
+brew 'rbenv'
+brew 'ruby-build'
 # ruby-build suggests using these
-brew "openssl"
-brew "readline"
+brew 'openssl'
+brew 'readline'
 
 # Unix
-brew "ack"
-brew "autoenv"
-brew "curl"
-brew "rlwrap"
-brew "the_silver_searcher"
-brew "tree"
+brew 'ack'
+brew 'autoenv'
+brew 'curl'
+brew 'rlwrap'
+brew 'the_silver_searcher'
+brew 'tree'
 
 # Other
-brew "awscli"
-brew "coreutils"
-brew "dfu-util"
-brew "graphviz"
-brew "ossp-uuid"
-cask "spotify"
-brew "watchman"
-cask "vlc"
+brew 'awscli'
+brew 'coreutils'
+brew 'dfu-util'
+brew 'graphviz'
+brew 'ossp-uuid'
+cask 'spotify'
+brew 'watchman'
+cask 'vlc'
