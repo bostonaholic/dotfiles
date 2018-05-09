@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # How to use the Brewfile
 #
 # $ brew tap homebrew/bundle
