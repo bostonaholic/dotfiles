@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+ssh -f -N -L 9000:graylog-primary.infra.circleci.com:80 jump.circleci.com
