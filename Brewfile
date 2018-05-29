@@ -20,7 +20,7 @@ cask 'safari-technology-preview'
 # Programming
 brew 'aspell'
 brew 'cloc'
-cask 'emacs'
+brew "emacs", args: ["with-cocoa", "with-ctags", "with-gnutls", "with-librsvg", "with-imagemagick"], restart_service: :changed
 brew 'git'
 brew 'libyaml'
 cask 'ngrok'
