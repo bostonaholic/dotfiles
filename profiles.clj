@@ -9,6 +9,15 @@
                        [slamhound "1.5.5"]]
         :injections [(defn hello [name] (println (str "Hello, " name)))
                      (defn spongebobify [s] (apply str (map #((rand-nth [clojure.string/upper-case clojure.string/lower-case]) %) s)))
+                     (defn median [coll]
+                       (let [sorted (sort coll)
+                             halfway (/ (count coll) 2)]
+                         (if (odd? (count coll))
+                           (nth sorted halfway)
+                           (let [a (nth sorted (dec halfway))
+                                 b (nth sorted halfway)
+                                 average (fn [x y] (/ (+ x y) 2))]
+                             (average a b)))))
 
                      (require 'pjstadig.humane-test-output)
                      (pjstadig.humane-test-output/activate!)]
