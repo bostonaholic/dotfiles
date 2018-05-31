@@ -73,6 +73,7 @@ brew 'the_silver_searcher'
 brew 'tree'
 
 # Other
+brew 'adr-tools'
 brew 'awscli'
 brew 'coreutils'
 brew 'dfu-util'
