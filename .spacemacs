@@ -45,7 +45,11 @@ values."
           erc-server-list '(("irc.freenode.net"
                              :port "6697"
                              :ssl t
-                             :nick my/irc-nick)))
+                             :nick my/irc-nick)
+                            (my/circleci-irc-server
+                             :port my/circleci-irc-port
+                             :nick my/irc-nick
+                             :password my/circleci-irc-pwd)))
      git
      github
      helm
