@@ -1,7 +1,18 @@
 # taken from https://github.com/jsahlen/nodenv.plugin.zsh
 
+_homebrew-installed() {
+    type brew &> /dev/null
+}
+
 FOUND_NODENV=0
-nodenvdirs=("$HOME/.nodenv" "$HOME/.local/nodenv" "/usr/local/opt/nodenv" "/usr/local/nodenv" "/opt/nodenv")
+nodenvdirs=("$HOME/.nodenv" "/usr/local/nodenv" "/opt/nodenv" "/usr/local/opt/nodenv")
+if _homebrew-installed && nodenv_homebrew_path=$(brew --prefix nodenv 2>/dev/null); then
+    nodenvdirs=($nodenv_homebrew_path "${nodenvdirs[@]}")
+    unset nodenv_homebrew_path
+    if [[ $NODENV_ROOT = '' ]]; then
+        NODENV_ROOT="$HOME/.nodenv"
+    fi
+fi
 
 for nodenvdir in "${nodenvdirs[@]}" ; do
     if [ -d $nodenvdir/bin -a $FOUND_NODENV -eq 0 ] ; then
