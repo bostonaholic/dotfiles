@@ -12,5 +12,5 @@
 #   $ git authors <file>
 
 set -e
-git shortlog -s "$@" \
+git shortlog --summary "$@" \
     | sort -nr
