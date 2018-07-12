@@ -1,12 +1,15 @@
 #!/bin/bash
 #
-# List files in a project in order of number of committers
-#
-# This often times helps identify classes which are touched often,
-# violating Open/Closed principle.
+# List committers in a project/directory/file in order of number of commits
 #
 # Show authors for whole repo:
 #   $ git authors
+#
+# Show authors for an entire directory:
+#   $ git authors <dir>
+#
+# Show authors for a single file:
+#   $ git authors <file>
 
 set -e
 git shortlog -s "$@" \
