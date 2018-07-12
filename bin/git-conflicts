@@ -2,4 +2,5 @@
 
 # Usage: git conflicts
 # Show list of files in a conflict state.
-git ls-files -u | awk '{print $4}' | sort -u
+
+git ls-files --unmerged | awk '{print $4}' | sort --unique
