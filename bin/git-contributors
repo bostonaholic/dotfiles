@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Get a list of contributors to all the orgs' public projects
+#
+#   git contributors <org>
+#
+
+GH_TOKEN=""
+ORG_NAME=$1
+
+curl --silent -H "Authorization: token ${GH_TOKEN}" https://api.github.com/orgs/${ORG_NAME}/repos | jq --raw-output '.[].url' > /tmp/repos
+
+rm /tmp/users 2>/dev/null
+while read REPO;do
+    curl -H "Authorization: token ${GH_TOKEN}" ${REPO}/contributors 2>/dev/null | jq --raw-output '.[].login' >> /tmp/users
+done < /tmp/repos
+
+cat /tmp/users | sort --unique
