@@ -8,7 +8,9 @@
 GH_TOKEN=""
 ORG_NAME=$1
 
-curl --silent -H "Authorization: token ${GH_TOKEN}" https://api.github.com/orgs/${ORG_NAME}/repos | jq --raw-output '.[].url' > /tmp/repos
+curl --silent -H "Authorization: token ${GH_TOKEN}" https://api.github.com/orgs/${ORG_NAME}/repos \
+    | jq --raw-output '.[] | select(.private == false) | .url' \
+         > /tmp/repos
 
 rm /tmp/users 2>/dev/null
 while read REPO;do
