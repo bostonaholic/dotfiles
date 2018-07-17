@@ -27,6 +27,8 @@
 	default = tracking
 	rebase = preserve
 	tags = true
+[rebase]
+	autoStash = true
 [rerere]
 	autoupdate = true
 	enabled = true
