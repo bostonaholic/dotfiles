@@ -1,7 +1,7 @@
 ;; ln -s $PWD/profiles.clj ~/.lein/profiles.clj
 {:user {:pedantic? :ranges
         :plugins [[lein-ancient "0.6.15"]
-                  [lein-kibit "0.1.5"]
+                  [lein-kibit "0.1.6"]
                   [atroche/lein-ns-dep-graph "0.2.0-SNAPSHOT"]
                   [lein-nsorg "0.1.3"]]
         :dependencies [[jonase/eastwood "0.2.5"]
