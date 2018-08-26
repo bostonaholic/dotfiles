@@ -33,17 +33,23 @@
 	autoupdate = true
 	enabled = true
 [alias]
+	aliases = config --get-regexp "alias.*"
+
 	aa = add --all
 	ap = add --patch
 
 	br = branch
 	bra = branch --all
+	bd = branch -d
+	bdd = branch -D
+	brr = branch --move
 
 	amend = commit --amend
 	cl = clone
-	ci = commit
+	ci = commit -m
 	co = checkout
 	pu = push
+	psu = push --set-upstream
 
 	di = diff
 	dc = diff --cached
@@ -56,20 +62,28 @@
 	upstream = "!git fetch upstream; git merge upstream/master"
 	u = !git upstream
 
-	head = !git l -1
-	h = !git head
-	hp = "!. ~/.githelpers && show_git_head"
-
 	l = "!. ~/.githelpers && pretty_git_log"
 	la = !git l --all
 	recent = !GIT_NO_PAGER=1 git l -30
 	r = !git recent
 	ra = !git recent --all
 
+	head = !git l -1
+	h = !git head
+	hp = "!. ~/.githelpers && show_git_head"
+
+	ra = rebase --abort
+	rc = rebase --continue
+
+	remotes = remote --verbose
+
+	stashes = stash list
+
+	st = status --short --branch
+
+
 	refresh = !git stash && git checkout master && git pull origin master && git checkout - && git rebase master && git stash pop
 
 	productivity = "!git log --pretty='%aN' | sort | uniq -c | sort -nr"
 
-	rv = remote --verbose
-
-	st = status --short --branch
+	laf = fsck --lost-found
