@@ -5,7 +5,7 @@ _homebrew-installed() {
 }
 
 FOUND_NODENV=0
-nodenvdirs=("$HOME/.nodenv" "/usr/local/nodenv" "/opt/nodenv" "/usr/local/opt/nodenv")
+nodenvdirs=("$HOME/.nodenv" "$HOME/.local/nodenv" "/usr/local/nodenv" "/opt/nodenv" "/usr/local/opt/nodenv")
 if _homebrew-installed && nodenv_homebrew_path=$(brew --prefix nodenv 2>/dev/null); then
     nodenvdirs=($nodenv_homebrew_path "${nodenvdirs[@]}")
     unset nodenv_homebrew_path
