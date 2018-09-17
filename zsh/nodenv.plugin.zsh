@@ -22,7 +22,7 @@ for nodenvdir in "${nodenvdirs[@]}" ; do
         fi
         export NODENV_ROOT
         export PATH=${nodenvdir}/bin:$PATH
-        eval "$(nodenv init --no-rehash -)"
+        eval "$(nodenv init --no-rehash - zsh)"
 
         function current_node() {
             echo "$(nodenv version-name)"
