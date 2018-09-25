@@ -1,8 +1,8 @@
 ;; ln -s $PWD/profiles.clj ~/.lein/profiles.clj
 {:user {:pedantic? :ranges
-        :plugins [[lein-ancient "0.6.15"]
+        :plugins [[atroche/lein-ns-dep-graph "0.2.0-SNAPSHOT"]
+                  [lein-ancient "0.6.15"]
                   [lein-kibit "0.1.6"]
-                  [atroche/lein-ns-dep-graph "0.2.0-SNAPSHOT"]
                   [lein-nsorg "0.2.0"]]
         :dependencies [[jonase/eastwood "0.2.9"]
                        [pjstadig/humane-test-output "0.8.3"]
@@ -24,7 +24,7 @@
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}}
  :repl {:plugins [[cider/cider-nrepl "0.17.0"]]
         :dependencies [#_^:displace [org.clojure/clojure "1.9.0"]
-                       [criterium "0.4.4"]
                        [cheshire "5.8.0"]
+                       [criterium "0.4.4"]
                        [org.clojure/tools.nrepl "0.2.13"]]
         :injections [(require '[cheshire.core :as json])]}}
