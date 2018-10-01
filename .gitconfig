@@ -32,6 +32,8 @@
 [rerere]
 	autoupdate = true
 	enabled = true
+[remote "origin"]
+	prune = true
 [alias]
 	aliases = config --get-regexp "alias.*"
 
