@@ -34,7 +34,7 @@ brew 'tmux'
 brew 'vim'
 brew 'zsh'
 
-# docker
+# Docker & Kubernetes
 brew 'docker'
 brew 'kubectl'
 
@@ -73,11 +73,11 @@ brew 'the_silver_searcher'
 brew 'tree'
 
 # Other
-brew 'adr-tools'
+brew 'adr-tools' # Archite Decision Records tool
 brew 'awscli'
-brew 'coreutils'
-brew 'dfu-util'
+brew 'coreutils' # GNU core utilities
+brew 'dfu-util'  # Device Firmware Upgrade Utilities
 brew 'graphviz'
-brew 'ossp-uuid'
+brew 'ossp-uuid' # ISO-C API and CLI for generating UUIDs
 cask 'spotify'
 cask 'vlc'
