@@ -29,12 +29,9 @@ brew 'libyaml'
 cask 'ngrok'
 brew 'node'
 brew 'nodenv'
-cask 'paw'
 brew 'postgres', restart_service: :changed
 brew 'tmux'
 brew 'vim'
-brew 'wireshark', args: ['with-qt']
-cask 'wireshark-chmodbpf'
 brew 'zsh'
 
 # docker
@@ -83,5 +80,4 @@ brew 'dfu-util'
 brew 'graphviz'
 brew 'ossp-uuid'
 cask 'spotify'
-brew 'watchman'
 cask 'vlc'
