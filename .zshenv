@@ -10,9 +10,6 @@ export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 # rbenv
 eval "$(rbenv init -)"
 
-# nodenv
-eval "$(nodenv init -)"
-
 export GREP_OPTIONS="--color"
 export GPG_TTY=$(tty)
 export PAGER=less
