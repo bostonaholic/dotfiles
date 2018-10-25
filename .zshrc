@@ -1,3 +1,5 @@
+# superseded by oh-my-zsh
+
 local DOTFILES="dotfiles"
 local DOTFILES_PATH="$(dirname ~/code/bostonaholic/$DOTFILES)/$DOTFILES"
 
