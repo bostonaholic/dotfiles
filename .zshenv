@@ -13,7 +13,6 @@ eval "$(rbenv init -)"
 # nodenv
 eval "$(nodenv init -)"
 
-export EDITOR=vim
 export GREP_OPTIONS="--color"
 export GPG_TTY=$(tty)
 export PAGER=less
