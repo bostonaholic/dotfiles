@@ -51,11 +51,28 @@ ZSH_THEME="msb"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(msb nodenv
+plugins=(
+    # custom
+    msb
+    nodenv
 
-         brew bundler docker gem gpg-agent git lein node npm rails rbenv ruby
-         ssh-agent thefuck yarn
-	 )
+    # built-in
+    brew
+    bundler
+    docker
+    gem
+    git
+    gpg-agent
+    lein
+    node
+    npm
+    rails
+    rbenv
+    ruby
+    ssh-agent
+    thefuck
+    yarn
+)
 
 source $ZSH/oh-my-zsh.sh
 
