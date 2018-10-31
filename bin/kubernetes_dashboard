@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+echo "Opening tunnel at http://localhost:8001"
+echo "Visit http://localhost:8001/ui"
+
+ssh -L 8001:localhost:8080 -N kube-kubectl-us-east-1-b.infra.circleci.com
