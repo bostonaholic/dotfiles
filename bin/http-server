@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+pushd /Users/matthew/code/bostonaholic/http-server
+yarn run start
+popd
