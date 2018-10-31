@@ -60,6 +60,7 @@ plugins=(
     brew
     bundler
     docker
+    emacs
     gem
     git
     gpg-agent
