@@ -5,9 +5,7 @@
                   [lein-ancient "0.6.15"]
                   [lein-kibit "0.1.6"]
                   [lein-nsorg "0.2.0"]]
-        :dependencies [[clj-time "0.15.0"]
-                       [jonase/eastwood "0.2.9"]
-                       [pjstadig/humane-test-output "0.8.3"]
+        :dependencies [[pjstadig/humane-test-output "0.8.3"]
                        [slamhound "1.5.5"]]
         :injections [(defn hello [name] (println (str "Hello, " name)))
                      (defn spongebobify [s] (apply str (map #((rand-nth [clojure.string/upper-case clojure.string/lower-case]) %) s)))
