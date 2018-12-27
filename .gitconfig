@@ -89,3 +89,8 @@
 	productivity = "!git log --pretty='%aN' | sort | uniq -c | sort -nr"
 
 	laf = fsck --lost-found
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
