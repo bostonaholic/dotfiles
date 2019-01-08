@@ -54,7 +54,7 @@ brew 'leiningen'
 
 # JavaScript
 brew 'jslint4java'
-brew 'phantomjs'
+cask 'phantomjs'
 brew 'v8'
 
 # Ruby
