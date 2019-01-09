@@ -79,6 +79,7 @@ brew 'awscli'
 brew 'coreutils' # GNU core utilities
 brew 'dfu-util'  # Device Firmware Upgrade Utilities
 brew 'graphviz'
+brew 'markdown'
 brew 'ossp-uuid' # ISO-C API and CLI for generating UUIDs
 cask 'spotify'
 cask 'vlc'
