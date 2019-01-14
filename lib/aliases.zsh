@@ -56,6 +56,9 @@ function brew_command {
 
 alias brewup="brew_command update &&
               brew_command upgrade &&
+              brew_command cask upgrade &&
               brew_command doctor &&
+              brew_command cask doctor &&
               brew_command outdated &&
+              brew_command cask outdated &&
               brew_command cleanup"
