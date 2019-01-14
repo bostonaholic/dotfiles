@@ -45,8 +45,7 @@ alias brewup="brew_command update &&
               brew_command cask doctor &&
               brew_command outdated &&
               brew_command cask outdated &&
-              brew_command cleanup &&
-              brew_command prune"
+              brew_command cleanup"
 
 function show_env_var() { echo "$1=`printenv $1`" }
 
