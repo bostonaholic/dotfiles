@@ -8,6 +8,7 @@
 
 tap 'caskroom/cask'
 tap 'caskroom/versions'
+tap 'AdoptOpenJDK/openjdk'
 
 # Browsers
 cask 'google-chrome'
@@ -47,7 +48,7 @@ brew 'pinentry-mac'
 
 # Clojure
 cask 'grenchman'
-cask 'java8'
+cask 'adoptopenjdk8'
 brew 'boot-clj'
 brew 'planck'
 brew 'leiningen'
