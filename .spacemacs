@@ -398,7 +398,15 @@ you should place your code here."
 
       ;; compojure.core/context
       (compojure.core/context 1)
-      (context 1))))
+      (context 1)))
+
+  ;; fixed in spacemacs 0.300 https://github.com/syl20bnr/spacemacs/pull/11755
+  (add-to-list 'auto-mode-alist '("\\.dot\\'" . graphviz-dot-mode))
+  ;; fix for https://github.com/luxbock/graphviz-dot-mode/pull/2
+  (defcustom graphviz-dot-indent-width tab-width
+    "*Indentation width in Graphviz Dot mode buffers."
+    :type 'integer
+    :group 'graphviz))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
