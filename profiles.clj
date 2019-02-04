@@ -22,7 +22,7 @@
                      (require 'pjstadig.humane-test-output)
                      (pjstadig.humane-test-output/activate!)]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}}
- :repl {:dependencies [#_^:displace [org.clojure/clojure "1.9.0"]
+ :repl {:dependencies [#_^:displace [org.clojure/clojure "1.10.0"]
                        [cheshire "5.8.0"]
                        [criterium "0.4.4"]
                        [org.clojure/tools.nrepl "0.2.13"]]
