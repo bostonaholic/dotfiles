@@ -74,7 +74,7 @@ brew 'the_silver_searcher'
 brew 'tree'
 
 # Other
-brew 'adr-tools' # Archite Decision Records tool
+brew 'adr-tools' # Architecture Decision Records tool
 brew 'awscli'
 brew 'coreutils' # GNU core utilities
 brew 'dfu-util'  # Device Firmware Upgrade Utilities
