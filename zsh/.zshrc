@@ -67,6 +67,7 @@ plugins=(
     lein
     node
     npm
+    postgres
     rails
     rbenv
     ruby
