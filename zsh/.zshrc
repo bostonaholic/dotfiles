@@ -72,7 +72,6 @@ plugins=(
     rbenv
     ruby
     ssh-agent
-    thefuck
     yarn
 )
 
