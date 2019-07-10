@@ -1,3 +1,5 @@
+EDITOR=vi
+
 ### ALIASES ###
 
 # --quit-if-one-screen causes it to quit if the content is less than one screen
