@@ -9,6 +9,7 @@
 tap 'caskroom/cask'
 tap 'caskroom/versions'
 tap 'AdoptOpenJDK/openjdk'
+tap 'd12frosted/emacs-plus'
 
 # Browsers
 cask 'google-chrome'
@@ -21,9 +22,8 @@ cask 'safari-technology-preview'
 # Programming
 brew 'aspell'
 brew 'cloc'
-brew 'emacs',
-     args: ['with-cocoa', 'with-ctags', 'with-gnutls',
-            'with-librsvg', 'with-imagemagick@6'],
+brew 'emacs-plus',
+     args: ['with-ctags'],
      restart_service: :changed
 brew 'git'
 brew 'libyaml'
