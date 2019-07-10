@@ -55,7 +55,10 @@ values."
                              :port my/circleci-irc-port
                              :nick my/irc-nick
                              :password my/circleci-irc-pwd)))
-     git
+     (git :variables
+          git-magit-status-fullscreen t
+          git-enable-github-support t
+          git-gutter-use-fringe t)
      github
      graphviz
      helm
