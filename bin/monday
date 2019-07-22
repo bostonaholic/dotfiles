@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+echo "Updating homebrew packages"
+brewup
+
+echo "Updating emacs"
+pushd ~/.emacs.d
+git pull --rebase
+popd
