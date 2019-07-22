@@ -35,20 +35,6 @@ alias mb="middleman build $*"
 alias clj="lein repl $*"
 alias cljs="planck $*"
 
-# Homebrew
-function brew_command {
-    echo "\n==> brew $*\n" && brew $*
-}
-
-alias brewup="brew_command update &&
-              brew_command upgrade &&
-              brew_command cask upgrade &&
-              brew_command doctor &&
-              brew_command cask doctor &&
-              brew_command outdated &&
-              brew_command cask outdated &&
-              brew_command cleanup"
-
 function show_env_var() { echo "$1=`printenv $1`" }
 
 function set_env_var() {
