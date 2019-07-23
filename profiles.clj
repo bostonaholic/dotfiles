@@ -1,7 +1,7 @@
 ;; ln -s $PWD/profiles.clj ~/.lein/profiles.clj
 {:user {:pedantic? :ranges
         :plugins [[atroche/lein-ns-dep-graph "0.2.0-SNAPSHOT"]
-                  [cider/cider-nrepl "0.20.0"]
+                  [cider/cider-nrepl "0.21.1"]
                   [lein-ancient "0.6.15"]
                   [lein-kibit "0.1.6"]
                   [lein-nsorg "0.2.0"]]
