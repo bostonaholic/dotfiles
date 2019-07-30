@@ -22,18 +22,8 @@ alias camera_restart="sudo killall VDCAssistant"
 
 alias ip="curl https://www.icanhazip.com"
 
-# Docker
-alias dk=docker-compose
-
-# Emacs
-alias de="emacs --debug-init $*"
-
 # Ruby
-alias bu="bundle update $*"
 alias bundle_close="bundle exec gem pristine $*"
-alias fs="foreman start $*"
-alias ms="middleman server $*"
-alias mb="middleman build $*"
 
 # Clojure
 alias clj="lein repl $*"
