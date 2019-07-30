@@ -1,3 +1,5 @@
+export PATH=:~/code/bostonaholic/dotfiles/bin:~/code/circleci/ops-tools/bin:~/code/circleci/scripts/bin:$PATH
+
 EDITOR=vi
 
 ### ALIASES ###
