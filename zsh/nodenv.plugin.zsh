@@ -1,4 +1,4 @@
-# taken from https://github.com/jsahlen/nodenv.plugin.zsh
+# https://github.com/bostonaholic/nodenv.plugin.zsh
 
 _homebrew-installed() {
     type brew &> /dev/null
