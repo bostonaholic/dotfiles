@@ -13,6 +13,8 @@ export LESS="--quit-if-one-screen --no-init $LESS"
 alias ..="cd .."
 alias la="ls -lha"
 
+alias rgrep=grep --recursive
+
 alias date_seconds="date +%s"
 alias rand="date | md5"
 
