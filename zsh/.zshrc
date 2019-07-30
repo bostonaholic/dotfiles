@@ -60,10 +60,12 @@ plugins=(
     brew
     bundler
     docker
+    docker-compose
     emacs
     gem
     git
     gpg-agent
+    kubectl
     lein
     node
     npm
