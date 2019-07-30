@@ -42,3 +42,11 @@ $ brew bundle
 #### Tern JavaScript Analyzer
 
 `npm install -g tern`
+
+## Tips
+
+Errors with `ssh-agent`:
+
+> Error connecting to agent: No such file or directory
+
+Add `zstyle :omz:plugins:ssh-agent agent-forwarding on`
