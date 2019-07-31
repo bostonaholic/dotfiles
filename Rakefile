@@ -10,10 +10,10 @@ end
 def symlink_files(files)
   files.each do |file|
     case
-      when file_identical?(file) then skip_identical_file(file)
-      when replace_all_files?    then link_file(file)
-      when file_missing?(file)   then link_file(file)
-      else                            prompt_to_link_file(file)
+    when file_identical?(file) then skip_identical_file(file)
+    when replace_all_files?    then link_file(file)
+    when file_missing?(file)   then link_file(file)
+    else                            prompt_to_link_file(file)
     end
   end
 end
