@@ -7,7 +7,7 @@ desc 'symlink all dot files'
 task :default do
   files = Dir.glob('.*') \
     + ['bin'] \
-    - ['.git', '.gitmodules', '.', '..']
+    - ['.git', '.gitignore', '.gitmodules', '.env', '.env.sample', '.', '..']
   symlink_files files
 
   # files that need symlinked somewhere other than ~
