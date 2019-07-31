@@ -1,26 +1,31 @@
+# frozen_string_literal: true
+
 require 'rubygems'
 require 'rake'
 
-desc "symlink all dot files"
+desc 'symlink all dot files'
 task :default do
-  files = Dir.glob('.*') + ['bin', 'gpg-agent.conf'] - ['.git', '.gitmodules', '.', '..']
+  files = Dir.glob('.*') \
+    + ['bin', 'gpg-agent.conf'] \
+    - ['.git', '.gitmodules', '.', '..']
   symlink_files files
 end
 
 def symlink_files(files)
   files.each do |file|
-    case
-    when file_identical?(file) then skip_identical_file(file)
-    when replace_all_files?    then link_file(file)
-    when file_missing?(file)   then link_file(file)
-    else                            prompt_to_link_file(file)
+    if file_identical?(file)
+      skip_identical_file(file)
+    elsif replace_all_files?
+      link_file(file)
+    elsif file_missing?(file)
+      prompt_to_link_file(file)
     end
   end
 end
 
 # FILE CHECKS
 def file_exists?(file)
-  File.exists?("#{ENV['HOME']}/#{file}")
+  File.exist?("#{ENV['HOME']}/#{file}")
 end
 
 def file_missing?(file)
@@ -28,7 +33,7 @@ def file_missing?(file)
 end
 
 def file_identical?(file)
-  File.identical? file, File.join(ENV['HOME'], "#{file}")
+  File.identical? file, File.join(ENV['HOME'], file.to_s)
 end
 
 def replace_all_files?
@@ -39,17 +44,17 @@ end
 def prompt_to_link_file(file)
   print "overwrite? ~/#{file} [ynaq]  "
   case $stdin.gets.chomp
-    when 'y' then replace_file(file)
-    when 'a' then replace_all(file)
-    when 'q' then exit
-    else       skip_file(file)
+  when 'y' then replace_file(file)
+  when 'a' then replace_all(file)
+  when 'q' then exit
+  else skip_file(file)
   end
 end
 
 def link_file(file)
   puts " => symlinking #{file}"
   directory = File.dirname(__FILE__)
-  File.symlink("#{File.join(directory, file)}", "#{ENV['HOME']}/#{file}")
+  File.symlink(File.join(directory, file).to_s, "#{ENV['HOME']}/#{file}")
 end
 
 def replace_file(file)
