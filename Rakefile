@@ -6,9 +6,12 @@ require 'rake'
 desc 'symlink all dot files'
 task :default do
   files = Dir.glob('.*') \
-    + ['bin', 'gpg-agent.conf'] \
+    + ['bin'] \
     - ['.git', '.gitmodules', '.', '..']
   symlink_files files
+
+  # files that need symlinked somewhere other than ~
+  link_file 'gpg-agent.conf', "#{ENV['HOME']}/.gnupg"
 end
 
 def symlink_files(files)
@@ -51,10 +54,10 @@ def prompt_to_link_file(file)
   end
 end
 
-def link_file(file)
-  puts " => symlinking #{file}"
+def link_file(file, destination = ENV['HOME'])
+  puts " => symlinking #{file} to #{destination}"
   directory = File.dirname(__FILE__)
-  File.symlink(File.join(directory, file).to_s, "#{ENV['HOME']}/#{file}")
+  File.symlink(File.join(directory, file).to_s, "#{destination}/#{file}")
 end
 
 def replace_file(file)
