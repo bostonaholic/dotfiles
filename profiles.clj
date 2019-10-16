@@ -1,12 +1,13 @@
 ;; ln -s $PWD/profiles.clj ~/.lein/profiles.clj
 {:user {:pedantic? :ranges
         :plugins [[atroche/lein-ns-dep-graph "0.2.0-SNAPSHOT"]
-                  [cider/cider-nrepl "0.21.1"]
+                  [cider/cider-nrepl "0.22.3"]
                   [lein-ancient "0.6.15"]
                   [lein-kibit "0.1.6"]
                   [lein-nsorg "0.2.0"]]
         :dependencies [[slamhound "1.5.5"]
-                       [org.clojure/tools.nrepl "0.2.13"]]
+                       [org.clojure/tools.nrepl "0.2.13"]
+                       [nrepl "0.6.0"]]
         :injections [(defn hello [name] (println (str "Hello, " name)))
                      (defn spongebobify [s] (apply str (map #((rand-nth [clojure.string/upper-case clojure.string/lower-case]) %) s)))
                      (defn median [coll]
