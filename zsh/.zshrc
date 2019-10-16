@@ -64,6 +64,7 @@ plugins=(
     emacs
     gem
     git
+    golang
     gpg-agent
     kubectl
     lein
