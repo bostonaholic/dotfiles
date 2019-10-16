@@ -19,6 +19,7 @@
 	editor = vim
 [diff]
 	renames = true
+	noprefix = true
 [fetch]
 	prune = true
 [push]
