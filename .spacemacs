@@ -60,6 +60,7 @@ values."
           git-enable-github-support t
           git-gutter-use-fringe t)
      github
+     go
      graphviz
      helm
      html
