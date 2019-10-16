@@ -9,8 +9,8 @@
                        [org.clojure/tools.nrepl "0.2.13"]
                        [nrepl "0.6.0"]]
         :injections [(defn hello [name] (println (str "Hello, " name)))
-                     (defn spongebobify [s] (apply str (map #((rand-nth [clojure.string/upper-case clojure.string/lower-case]) %) s)))
                      (defn median [coll]
+                     (defn spongemock [s] (apply str (map #((rand-nth [clojure.string/upper-case clojure.string/lower-case]) %) s)))
                        (let [sorted (sort coll)
                              halfway (/ (count coll) 2)]
                          (if (odd? (count coll))
