@@ -26,7 +26,7 @@ alias ip="curl https://www.icanhazip.com"
 alias bundle_close="bundle exec gem pristine $*"
 
 # Clojure
-alias clj="lein repl $*"
+#alias clj="lein repl $*"
 alias cljs="planck $*"
 
 function show_env_var() { echo "$1=`printenv $1`" }
