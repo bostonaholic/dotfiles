@@ -76,6 +76,7 @@ plugins=(
     ruby
     ssh-agent
     yarn
+    zsh_reload
 )
 
 # agent forwarding support
