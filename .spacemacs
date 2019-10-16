@@ -403,7 +403,11 @@ you should place your code here."
 
       ;; compojure.core/context
       (compojure.core/context 1)
-      (context 1)))
+      (context 1)
+
+      ;; circleci.backplane.context/with-context
+      (circleci.backplane.context/with-context 1)
+      (with-context 1)))
 
   ;; ;; fixed in spacemacs 0.300 https://github.com/syl20bnr/spacemacs/pull/11755
   ;; (add-to-list 'auto-mode-alist '("\\.dot\\'" . graphviz-dot-mode))
