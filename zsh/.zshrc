@@ -79,9 +79,6 @@ plugins=(
     zsh_reload
 )
 
-# agent forwarding support
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
