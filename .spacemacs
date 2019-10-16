@@ -82,6 +82,7 @@ values."
      sql
      syntax-checking
      ;; version-control
+     vimscript
      yaml
      )
    ;; List of additional packages that will be installed without being
