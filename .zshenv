@@ -1,3 +1,5 @@
+# superseded by oh-my-zsh
+
 # Save PATH to go back to later
 ORIGINAL_PATH=$PATH
 
