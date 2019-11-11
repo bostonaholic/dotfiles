@@ -12,12 +12,7 @@ tap 'AdoptOpenJDK/openjdk'
 tap 'd12frosted/emacs-plus'
 
 # Browsers
-cask 'google-chrome'
-cask 'google-chrome-canary'
 cask 'firefox'
-# cask 'firefox-beta'
-cask 'firefoxdeveloperedition'
-cask 'safari-technology-preview'
 
 # Programming
 brew 'aspell'
