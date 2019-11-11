@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # $ porty info 3000
 # $ porty kill 3000

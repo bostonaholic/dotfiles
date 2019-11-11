@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 function rand_mac() {
     openssl rand -hex 6 | \

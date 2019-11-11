@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 for formula in $(brew list); do
   if [ "$(brew uses --installed $formula)" = "" ]; then

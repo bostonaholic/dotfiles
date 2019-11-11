@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 function remove_dangling_volumes {
     docker volume rm $(docker volume ls --quiet --filter dangling=true)

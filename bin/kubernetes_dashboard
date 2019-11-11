@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 echo "Opening tunnel at http://localhost:8001"
 echo "Visit http://localhost:8001/ui"
