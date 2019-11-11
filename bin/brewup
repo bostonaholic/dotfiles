@@ -1,15 +1,10 @@
 #!/usr/bin/env bash
 
-function brew_command () {
-    echo -e '\n==>' brew $* '\n'
-    brew $*
-}
-
-brew_command update && \
-  brew_command upgrade && \
-  brew_command cask upgrade && \
-  brew_command doctor && \
-  brew_command cask doctor && \
-  brew_command outdated && \
-  brew_command cask outdated && \
-  brew_command cleanup
+brew update && \
+  brew upgrade && \
+  brew cask upgrade && \
+  brew doctor && \
+  brew cask doctor && \
+  brew outdated && \
+  brew cask outdated && \
+  brew cleanup
