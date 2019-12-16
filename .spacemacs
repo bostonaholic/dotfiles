@@ -49,6 +49,7 @@ This function should only modify configuration layer settings."
      dash
      docker
      emacs-lisp
+     emoji
      (erc :variables
           erc-server-list '(("irc.freenode.net"
                              :port "6697"
