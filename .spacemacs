@@ -85,6 +85,8 @@ This function should only modify configuration layer settings."
      spell-checking
      sql
      syntax-checking
+     (typescript :variables
+                 typescript-fmt-on-save t)
      ;; version-control
      vimscript
      yaml
