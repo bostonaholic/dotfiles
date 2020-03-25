@@ -20,7 +20,7 @@ alias rand="date | md5"
 
 alias camera_restart="sudo killall VDCAssistant"
 
-alias ip="curl https://www.icanhazip.com"
+alias ip="curl https://icanhazip.com"
 
 # Ruby
 alias bundle_close="bundle exec gem pristine $*"
