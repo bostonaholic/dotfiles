@@ -70,7 +70,9 @@ This function should only modify configuration layer settings."
      html
      ibuffer
      javascript
-     (markdown :variables markdown-live-preview-engine 'vmd)
+     (markdown :variables
+               markdown-live-preview-engine 'vmd
+               markdown-fontify-code-blocks-natively t)
      nginx
      org
      python
