@@ -75,6 +75,7 @@ This function should only modify configuration layer settings."
                markdown-fontify-code-blocks-natively t)
      nginx
      org
+     plantuml
      python
      react
      (ruby :variables
