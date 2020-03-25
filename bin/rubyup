@@ -11,7 +11,7 @@
 
 for i in $( rbenv versions --bare );
 do
-    RBENV_VERSION=$i && \
+    export RBENV_VERSION=$i && \
         gem update --system && \
-        echo "\n$(ruby -v) using rubygems $(gem --version)\n"
+        echo "$(ruby -v) using rubygems $(gem --version)"
 done
