@@ -423,6 +423,10 @@ you should place your code here."
       (circleci.backplane.context/with-context 1)
       (with-context 1)))
 
+  (add-hook 'js2-mode-hook 'prettier-js-mode)
+  (add-hook 'web-mode-hook 'prettier-js-mode)
+  (add-hook 'typescript-mode-hook 'prettier-js-mode)
+
   ;; ;; fixed in spacemacs 0.300 https://github.com/syl20bnr/spacemacs/pull/11755
   ;; (add-to-list 'auto-mode-alist '("\\.dot\\'" . graphviz-dot-mode))
   ;; ;; fix for https://github.com/luxbock/graphviz-dot-mode/pull/2
