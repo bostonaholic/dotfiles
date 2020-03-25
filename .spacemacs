@@ -88,6 +88,7 @@ This function should only modify configuration layer settings."
      spell-checking
      sql
      syntax-checking
+     terraform
      (typescript :variables
                  typescript-fmt-on-save t)
      ;; version-control
