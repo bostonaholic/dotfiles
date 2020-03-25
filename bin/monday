@@ -1,9 +1,24 @@
 #!/bin/bash
 
-echo "Updating homebrew packages"
+echo && echo "Updating homebrew packages"
 brewup
 
-echo "Updating emacs"
+echo && echo "Updating Rubygems"
+#rubyup
+
+# https://github.com/syl20bnr/spacemacs
+echo && echo "Updating spacemacs from https://github.com/syl20bnr/spacemacs"
 pushd ~/.emacs.d
+git pull --rebase
+popd
+
+# https://github.com/amix/vimrc
+echo && echo "Updating vimrc from https://github.com/amix/vimrc"
+pushd ~/.vim_runtime
+git pull --rebase
+popd
+
+echo && echo "Updating circleci/ops-tools"
+pushd ~/code/circleci/ops-tools
 git pull --rebase
 popd
