@@ -553,10 +553,7 @@ before packages are loaded."
   (global-set-key (kbd "C-S-<right>") 'buf-move-right)
 
   ;; Be sure to turn off macOS Keyboard > Shortcuts
-  ;; (global-set-key (kbd "C-<right>")   'sp-forward-slurp-sexp)
-  ;; (global-set-key (kbd "C-<left>")    'sp-forward-barf-sexp)
-  ;; (global-set-key (kbd "C-M-<left>")  'sp-backward-slurp-sexp)
-  ;; (global-set-key (kbd "C-M-<right>") 'sp-backward-barf-sexp)
+  (sp-use-smartparens-bindings)
 
   (global-set-key (kbd "M-n")         'scroll-up-line)
   (global-set-key (kbd "M-p")         'scroll-down-line)
