@@ -21,7 +21,7 @@ end
 desc 'symlink all dot files'
 task :legacy do
   files = Dir.glob('.*') \
-    + ['bin'] \
+    + ['homefiles/bin'] \
     - ['.git', '.gitignore', '.gitmodules', '.env', '.env.sample', '.', '..']
   symlink_files files
 
