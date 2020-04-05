@@ -5,6 +5,19 @@ require 'rake'
 
 task default: [:legacy]
 
+desc 'Symlink all dot files'
+task :install do
+  # symlink homefiles
+
+  # symlink directories
+
+  # symlink misc
+
+  # symlink samples
+
+  # symlink oh-my-zsh
+end
+
 desc 'symlink all dot files'
 task :legacy do
   files = Dir.glob('.*') \
