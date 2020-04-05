@@ -1,5 +1,5 @@
 (ns user.datomic-scratch
-  (:require '[datomic.api :as d]))
+  (:require [datomic.api :as d]))
 
 (def url "datomic:mem://scratch")
 (d/delete-database url)
