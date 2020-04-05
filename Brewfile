@@ -6,6 +6,7 @@
 # $ brew bundle
 #
 
+# Taps
 tap 'caskroom/cask'
 tap 'caskroom/versions'
 tap 'AdoptOpenJDK/openjdk'
