@@ -8,6 +8,7 @@ GEM
     parser (2.7.0.5)
       ast (~> 2.4.0)
     rainbow (3.0.0)
+    rake (13.0.1)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
@@ -35,6 +36,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  rake
   rubocop
   scss_lint
   scss_lint_reporter_checkstyle
