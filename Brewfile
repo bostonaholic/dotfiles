@@ -47,6 +47,7 @@ cask 'adoptopenjdk8'
 brew 'boot-clj'
 brew 'planck'
 brew 'leiningen'
+brew 'borkdude/brew/clj-kondo'
 
 # JavaScript
 brew 'jslint4java'
