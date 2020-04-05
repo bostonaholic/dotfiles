@@ -8,8 +8,7 @@
 
 # Taps
 tap 'caskroom/cask'
-tap 'caskroom/versions'
-tap 'AdoptOpenJDK/openjdk'
+tap 'homebrew/cask-versions'
 tap 'd12frosted/emacs-plus'
 
 # Browsers
