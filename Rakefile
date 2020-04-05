@@ -3,8 +3,10 @@
 require 'rubygems'
 require 'rake'
 
+task default: [:legacy]
+
 desc 'symlink all dot files'
-task :default do
+task :legacy do
   files = Dir.glob('.*') \
     + ['bin'] \
     - ['.git', '.gitignore', '.gitmodules', '.env', '.env.sample', '.', '..']
