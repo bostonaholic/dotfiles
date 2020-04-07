@@ -29,15 +29,19 @@ task :legacy do
   link_file 'gpg-agent.conf', "#{ENV['HOME']}/.gnupg"
 end
 
+def symlink_file(file)
+  if file_identical?(file)
+    skip_identical_file(file)
+  elsif replace_all_files?
+    link_file(file)
+  elsif file_missing?(file)
+    prompt_to_link_file(file)
+  end
+end
+
 def symlink_files(files)
   files.each do |file|
-    if file_identical?(file)
-      skip_identical_file(file)
-    elsif replace_all_files?
-      link_file(file)
-    elsif file_missing?(file)
-      prompt_to_link_file(file)
-    end
+    symlink_file file
   end
 end
 
