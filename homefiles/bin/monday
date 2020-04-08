@@ -16,6 +16,7 @@ popd
 echo && echo "Updating vimrc from https://github.com/amix/vimrc"
 pushd ~/.vim_runtime
 git pull --rebase
+python update_plugins.py
 popd
 
 echo && echo "Updating circleci/ops-tools"
