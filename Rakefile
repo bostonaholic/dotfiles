@@ -15,17 +15,32 @@ task :install do
   symlink_files files
 
   # symlink bin
-  #link_file 'bin', ENV['HOME'].to_s
+  # link_file 'bin', ENV['HOME'].to_s
 
   # symlink misc
-  link_file 'boot.properties', "#{ENV['HOME']}/.boot"
-  link_file 'gpg-agent.conf', "#{ENV['HOME']}/.gnupg"
-  link_file 'profiles.clj', "#{ENV['HOME']}/.lein"
+  boot_dir = "#{ENV['HOME']}/.boot"
+  Dir.mkdir boot_dir unless Dir.exist?(boot_dir)
+  link_file 'boot.properties', boot_dir
+
+  gnupg_dir = "#{ENV['HOME']}/.gnupg"
+  Dir.mkdir gnupg_dir unless Dir.exist?(gnupg_dir)
+  link_file 'gpg-agent.conf', gnupg_dir
+
+  lein_dir = "#{ENV['HOME']}/.lein"
+  Dir.mkdir lein_dir unless Dir.exist?(lein_dir)
+  link_file 'profiles.clj', lein_dir
+
   link_file 'qwerty.txt', ENV['HOME'].to_s
 
   # symlink oh-my-zsh
-  link_file 'msb.plugin.zsh', "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/msb"
-  link_file 'nodenv.plugin.zsh', "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/nodenv"
+  msb_plugin_dir = "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/msb"
+  Dir.mkdir msb_plugin_dir unless Dir.exist?(msb_plugin_dir)
+  link_file 'msb.plugin.zsh', msb_plugin_dir
+
+  nodenv_plugin_dir = "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/nodenv"
+  Dir.mkdir nodenv_plugin_dir unless Dir.exist?(nodenv_plugin_dir)
+  link_file 'nodenv.plugin.zsh', nodenv_plugin_dir
+
   link_file 'msb.zsh-theme', "#{ENV['HOME']}/.oh-my-zsh/custom/themes"
 
   # symlink samples
