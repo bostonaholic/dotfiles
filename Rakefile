@@ -11,9 +11,7 @@ task :install do
   files = Dir.glob('.*').sort \
     - ['.', '..'] \
     - ['.git', '.gitignore', '.gitmodules'] \
-    - ['boot.properties', 'gpg-agent.conf', 'profiles.clj', 'qwerty.txt',
-       'msb.plugin.zsh', 'msb.zsh-theme', 'nodenv.plugin.zsh',
-       '.env.sample', 'secret.sample.el', 'datomic_scratch.clj']
+    - ['.env.sample']
   symlink_files files
 
   # symlink bin
