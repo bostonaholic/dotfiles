@@ -3,7 +3,7 @@
 require 'rubygems'
 require 'rake'
 
-task default: [:legacy]
+task default: [:install]
 
 desc 'Symlink all dot files'
 task :install do
@@ -29,17 +29,6 @@ task :install do
   link_file 'msb.zsh-theme', "#{ENV['HOME']}/.oh-my-zsh/custom/themes"
 
   # symlink samples
-end
-
-desc 'symlink all dot files'
-task :legacy do
-  files = Dir.glob('.*') \
-    + ['homefiles/bin'] \
-    - ['.git', '.gitignore', '.gitmodules', '.env', '.env.sample', '.', '..']
-  symlink_files files
-
-  # files that need symlinked somewhere other than ~
-  link_file 'gpg-agent.conf', "#{ENV['HOME']}/.gnupg"
 end
 
 def symlink_file(file)
