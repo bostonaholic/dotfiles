@@ -7,15 +7,30 @@ task default: [:legacy]
 
 desc 'Symlink all dot files'
 task :install do
-  # symlink homefiles
+  # symlink dot files
+  files = Dir.glob('.*').sort \
+    - ['.', '..'] \
+    - ['.git', '.gitignore', '.gitmodules'] \
+    - ['boot.properties', 'gpg-agent.conf', 'profiles.clj', 'qwerty.txt',
+       'msb.plugin.zsh', 'msb.zsh-theme', 'nodenv.plugin.zsh',
+       '.env.sample', 'secret.sample.el', 'datomic_scratch.clj']
+  symlink_files files
 
-  # symlink directories
+  # symlink bin
+  #link_file 'bin', ENV['HOME'].to_s
 
   # symlink misc
-
-  # symlink samples
+  link_file 'boot.properties', "#{ENV['HOME']}/.boot"
+  link_file 'gpg-agent.conf', "#{ENV['HOME']}/.gnupg"
+  link_file 'profiles.clj', "#{ENV['HOME']}/.lein"
+  link_file 'qwerty.txt', ENV['HOME'].to_s
 
   # symlink oh-my-zsh
+  link_file 'msb.plugin.zsh', "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/msb"
+  link_file 'nodenv.plugin.zsh', "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/nodenv"
+  link_file 'msb.zsh-theme', "#{ENV['HOME']}/.oh-my-zsh/custom/themes"
+
+  # symlink samples
 end
 
 desc 'symlink all dot files'
@@ -47,7 +62,7 @@ end
 
 # FILE CHECKS
 def file_exists?(file)
-  File.exist?("#{ENV['HOME']}/#{file}")
+  File.exist?("#{ENV['HOME']}/#{file}") # FIXME
 end
 
 def file_missing?(file)
@@ -55,7 +70,7 @@ def file_missing?(file)
 end
 
 def file_identical?(file)
-  File.identical? file, File.join(ENV['HOME'], file.to_s)
+  File.identical? file, File.join(ENV['HOME'], file.to_s) # FIXME
 end
 
 def replace_all_files?
@@ -64,7 +79,7 @@ end
 
 # FILE ACTIONS
 def prompt_to_link_file(file)
-  print "overwrite? ~/#{file} [ynaq]  "
+  print "overwrite? ~/#{file} [ynaq]  " # FIXME
   case $stdin.gets.chomp
   when 'y' then replace_file(file)
   when 'a' then replace_all(file)
@@ -80,7 +95,7 @@ def link_file(file, destination = ENV['HOME'])
 end
 
 def replace_file(file)
-  `rm -rf #{ENV['HOME']}/#{file}`
+  `rm -rf #{ENV['HOME']}/#{file}` # FIXME
   link_file(file)
 end
 
@@ -90,9 +105,9 @@ def replace_all(file)
 end
 
 def skip_file(file)
-  puts " => skipping ~/#{file}"
+  puts " => skipping ~/#{file}" # FIXME
 end
 
 def skip_identical_file(file)
-  puts " => skipping identical ~/#{file}"
+  puts " => skipping identical ~/#{file}" # FIXME
 end
