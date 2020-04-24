@@ -19,6 +19,7 @@ git pull --rebase
 python update_plugins.py
 popd
 
+# https://github.com/circleci/ops-tools
 echo && echo "Updating circleci/ops-tools"
 pushd ~/code/circleci/ops-tools
 git pull --rebase
