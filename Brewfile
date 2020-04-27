@@ -9,7 +9,6 @@
 # Taps
 tap 'AdoptOpenJDK/openjdk'
 tap 'd12frosted/emacs-plus'
-tap 'homebrew/cask-versions'
 tap 'mongodb/brew'
 
 # Browsers
