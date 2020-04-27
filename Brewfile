@@ -42,7 +42,6 @@ cask 'keybase'
 brew 'pinentry-mac'
 
 # Clojure
-cask 'grenchman'
 cask 'adoptopenjdk8' # tap AdoptOpenJDK/openjdk
 brew 'boot-clj'
 brew 'planck'
