@@ -10,6 +10,7 @@
 tap 'AdoptOpenJDK/openjdk'
 tap 'd12frosted/emacs-plus'
 tap 'homebrew/cask-versions'
+tap 'mongodb/brew'
 
 # Browsers
 cask 'firefox' # tap homebrew-cask
@@ -22,6 +23,7 @@ brew 'emacs-plus', # tap d12frosted/emacs-plus
      restart_service: :changed
 brew 'git'
 brew 'libyaml'
+brew 'mongodb-community', restart_service: :changed # tap mongodb/brew
 cask 'ngrok' # tap homebrew-cask
 brew 'node'
 brew 'nodenv'
