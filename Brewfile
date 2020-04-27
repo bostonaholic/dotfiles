@@ -12,17 +12,17 @@ tap 'd12frosted/emacs-plus'
 tap 'homebrew/cask-versions'
 
 # Browsers
-cask 'firefox'
+cask 'firefox' # tap homebrew-cask
 
 # Programming
 brew 'aspell'
 brew 'cloc'
-brew 'emacs-plus',
+brew 'emacs-plus', # tap d12frosted/emacs-plus
      args: ['with-ctags'],
      restart_service: :changed
 brew 'git'
 brew 'libyaml'
-cask 'ngrok'
+cask 'ngrok' # tap homebrew-cask
 brew 'node'
 brew 'nodenv'
 brew 'postgres', restart_service: :changed
@@ -38,7 +38,7 @@ brew 'kubectl'
 brew 'gnupg'
 brew 'gnupg2'
 brew 'gnutls'
-cask 'keybase'
+cask 'keybase' # tap homebrew-cask
 brew 'pinentry-mac'
 
 # Clojure
@@ -50,7 +50,7 @@ brew 'borkdude/brew/clj-kondo'
 
 # JavaScript
 brew 'jslint4java'
-cask 'phantomjs'
+cask 'phantomjs' # tap homebrew-cask
 brew 'v8'
 
 # Ruby
@@ -78,6 +78,6 @@ brew 'dfu-util'  # Device Firmware Upgrade Utilities
 brew 'graphviz'
 brew 'markdown'
 brew 'ossp-uuid' # ISO-C API and CLI for generating UUIDs
-cask 'macdown'
-cask 'spotify'
-cask 'vlc'
+cask 'macdown' # tap homebrew-cask
+cask 'spotify' # tap homebrew-cask
+cask 'vlc' # tap homebrew-cask
