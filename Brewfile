@@ -7,7 +7,6 @@
 #
 
 # Taps
-tap 'caskroom/cask'
 tap 'homebrew/cask-versions'
 tap 'd12frosted/emacs-plus'
 
