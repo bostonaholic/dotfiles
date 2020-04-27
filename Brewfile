@@ -9,6 +9,7 @@
 # Taps
 tap 'homebrew/cask-versions'
 tap 'd12frosted/emacs-plus'
+tap 'AdoptOpenJDK/openjdk'
 
 # Browsers
 cask 'firefox'
@@ -42,7 +43,7 @@ brew 'pinentry-mac'
 
 # Clojure
 cask 'grenchman'
-cask 'adoptopenjdk8'
+cask 'adoptopenjdk8' # tap AdoptOpenJDK/openjdk
 brew 'boot-clj'
 brew 'planck'
 brew 'leiningen'
