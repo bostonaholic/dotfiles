@@ -51,8 +51,6 @@ brew 'borkdude/brew/clj-kondo'
 
 # JavaScript
 brew 'jslint4java'
-cask 'phantomjs' # tap homebrew-cask
-brew 'v8'
 
 # Ruby
 brew 'rbenv'
