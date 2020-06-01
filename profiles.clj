@@ -1,9 +1,9 @@
 ;; ln -s $PWD/profiles.clj ~/.lein/profiles.clj
 {:user {:plugins [[atroche/lein-ns-dep-graph "0.2.0-SNAPSHOT"]
-                  [cider/cider-nrepl "0.24.0"]
+                  [cider/cider-nrepl "0.25.0"]
                   [lein-ancient "0.6.15"]]
         :dependencies [[org.clojure/tools.nrepl "0.2.13"]
-                       [nrepl "0.6.0"]]
+                       [nrepl "0.7.0"]]
         :injections [(defn hello [name] (println (str "Hello, " name)))
                      (defn spongemock [s] (apply str (map #((rand-nth [clojure.string/upper-case clojure.string/lower-case]) %) s)))
                      (defn median [coll] ;; FIXME: why?
