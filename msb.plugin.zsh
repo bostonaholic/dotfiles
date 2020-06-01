@@ -11,7 +11,6 @@ export LESS="--quit-if-one-screen --no-init $LESS"
 
 # CLI
 alias ..="cd .."
-alias la="ls -lha"
 
 alias rgrep=grep --recursive
 
