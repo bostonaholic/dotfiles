@@ -15,8 +15,10 @@ popd
 # https://github.com/amix/vimrc
 echo && echo "Updating vimrc from https://github.com/amix/vimrc"
 pushd ~/.vim_runtime
+git stash push --keep-index --include-untracked --message "stashing before update"
 git pull --rebase
 python update_plugins.py
+git stash pop
 popd
 
 # https://github.com/circleci/ops-tools
