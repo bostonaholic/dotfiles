@@ -92,6 +92,7 @@ This function should only modify configuration layer settings."
      terraform
      ;; treemacs
      (typescript :variables
+                 typescript-fmt-tool 'prettier
                  typescript-fmt-on-save t)
      ;; version-control
      vimscript
