@@ -528,6 +528,8 @@ before packages are loaded."
   (setq-default user-full-name my/user-full-name
                 user-mail-address my/user-mail-address
 
+                confirm-kill-emacs 'y-or-n-p
+
                 cider-repl-display-help-banner nil
 
                 css-indent-offset 2
