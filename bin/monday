@@ -4,7 +4,7 @@ echo && echo "Updating homebrew packages"
 brewup
 
 echo && echo "Updating Rubygems"
-#rubyup
+rubyup
 
 # https://github.com/syl20bnr/spacemacs
 echo && echo "Updating spacemacs from https://github.com/syl20bnr/spacemacs"
