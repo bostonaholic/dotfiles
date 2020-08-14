@@ -66,7 +66,6 @@ plugins=(
     git
     golang
     gpg-agent
-    kubectl
     lein
     node
     npm
