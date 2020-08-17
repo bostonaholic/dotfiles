@@ -1,40 +1,45 @@
 # https://github.com/bostonaholic/nodenv.plugin.zsh
 
-_homebrew-installed() {
-    type brew &> /dev/null
-}
+# This plugin loads nodenv into the current shell and provides prompt info via
+# the 'nodenv_prompt_info' function.
 
-FOUND_NODENV=0
-nodenvdirs=("$HOME/.nodenv" "$HOME/.local/nodenv" "/usr/local/nodenv" "/opt/nodenv" "/usr/local/opt/nodenv")
-if _homebrew-installed && nodenv_homebrew_path=$(brew --prefix nodenv 2>/dev/null); then
-    nodenvdirs=($nodenv_homebrew_path "${nodenvdirs[@]}")
-    unset nodenv_homebrew_path
-    if [[ $NODENV_ROOT = '' ]]; then
-        NODENV_ROOT="$HOME/.nodenv"
-    fi
-fi
+FOUND_NODENV=$+commands[nodenv]
 
-for nodenvdir in "${nodenvdirs[@]}" ; do
-    if [ -d $nodenvdir/bin -a $FOUND_NODENV -eq 0 ] ; then
-        FOUND_NODENV=1
-        if [[ $NODENV_ROOT = '' ]]; then
-            NODENV_ROOT=$nodenvdir
+if [[ $FOUND_NODENV -ne 1 ]]; then
+    nodenvdirs=("$HOME/.nodenv" "/usr/local/nodenv" "/opt/nodenv" "/usr/local/opt/nodenv")
+    for dir in $nodenvdirs; do
+        if [[ -d $dir/bin ]]; then
+            export PATH="$dir/bin:$PATH"
+            FOUND_NODENV=1
+            breakp
         fi
-        export NODENV_ROOT
-        export PATH=${nodenvdir}/bin:$PATH
-        eval "$(nodenv init --no-rehash - zsh)"
-
-        function current_node() {
-            echo "$(nodenv version-name)"
-        }
-
-        function nodenv_prompt_info() {
-            echo "$(current_node)"
-        }
-    fi
-done
-unset nodenvdir
-
-if [ $FOUND_NODENV -eq 0 ] ; then
-    function nodenv_prompt_info() { echo "system: $(node --version)" }
+    done
 fi
+
+if [[ $FOUND_NODENV -ne 1 ]]; then
+    if (( $+commands[brew] )) && dir=$(brew --prefix nodenv 2>/dev/null); then
+        if [[ -d $dir/bin ]]; then
+            export PATH="$dir/bin:$PATH"
+            FOUND_NODENV=1
+        fi
+    fi
+fi
+
+if [[ $FOUND_NODENV -eq 1 ]]; then
+    eval "$(nodenv init --no-rehash - zsh)"
+
+    function current_node() {
+        echo "$(nodenv version-name)"
+    }
+
+    function nodenv_prompt_info() {
+        echo "$(current_node)"
+    }
+else
+    function current_node() { echo "not supported" }
+    function nodenv_prompt_info() {
+        echo -n "system: $(node --version)"
+    }
+fi
+
+unset FOUND_NODENV nodenvdirs dir
