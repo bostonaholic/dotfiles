@@ -18,7 +18,7 @@ cask 'firefox' # tap homebrew-cask
 brew 'aspell'
 brew 'cloc'
 brew 'emacs-plus', # tap d12frosted/emacs-plus
-     args: ['with-ctags'],
+     args: ['with-ctags', 'with-spacemacs-icon'],
      restart_service: :changed
 brew 'git'
 brew 'libyaml'
