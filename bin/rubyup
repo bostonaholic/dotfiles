@@ -12,10 +12,4 @@
 # Taken from:
 # https://gist.github.com/odlp/c6d5ef861bc9c6a29bcff413f6453e9a
 
-for i in $( rbenv versions --bare );
-do
-    RBENV_VERSION=$i \
-        echo "updating rubygems for $(ruby -v)\n"
-        gem update --system && \
-        echo "\n$(ruby -v) using rubygems $(gem --version)\n"
-done
+for i in $( rbenv versions --bare ); do RBENV_VERSION=$i gem update --system && echo "\n$(ruby -v) using rubygems $(gem --version)\n"; done
