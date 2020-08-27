@@ -33,7 +33,10 @@ if [[ $FOUND_NODENV -eq 1 ]]; then
     }
 
     function nodenv_prompt_info() {
-        echo "$(current_node)"
+        local node=$(current_node)
+        echo -n "${ZSH_THEME_NODE_PROMPT_PREFIX}"
+        echo -n "${node}"
+        echo "${ZSH_THEME_NODE_PROMPT_SUFFIX}"
     }
 else
     function current_node() { echo "not supported" }
