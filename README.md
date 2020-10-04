@@ -19,6 +19,11 @@ $ ln -s $PWD/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 $ ln -s $PWD/profiles.clj ~/.lein/profiles.clj
 ```
 
+## Editor Configs
+
+- [Spacemacs](https://www.spacemacs.org/)
+- [The Ultimate vimrc](https://github.com/amix/vimrc)
+
 ## Dependencies
 
 - [Homebrew](https://brew.sh)
