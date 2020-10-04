@@ -49,7 +49,6 @@ This function should only modify configuration layer settings."
      dash
      docker
      emacs-lisp
-     emoji
      (erc :variables
           erc-server-list '(("irc.freenode.net"
                              :port "6697"
@@ -64,7 +63,6 @@ This function should only modify configuration layer settings."
           git-enable-github-support t
           git-gutter-use-fringe t)
      github
-     go
      graphviz
      helm
      html
@@ -76,8 +74,6 @@ This function should only modify configuration layer settings."
      multiple-cursors
      nginx
      org
-     plantuml
-     python
      react
      (ruby :variables
            ruby-version-manager 'rbenv
@@ -89,7 +85,6 @@ This function should only modify configuration layer settings."
      spell-checking
      sql
      syntax-checking
-     terraform
      ;; treemacs
      (typescript :variables
                  typescript-fmt-tool 'prettier
