@@ -9,9 +9,7 @@
 # Taps
 tap 'AdoptOpenJDK/openjdk'
 tap 'd12frosted/emacs-plus'
-
-# Browsers
-cask 'firefox' # tap homebrew-cask
+tap 'borkdude/brew'
 
 # Programming
 brew 'aspell'
@@ -24,14 +22,9 @@ brew 'libyaml'
 cask 'ngrok' # tap homebrew-cask
 brew 'node'
 brew 'nodenv'
-brew 'postgres', restart_service: :changed
 brew 'tmux'
 brew 'vim'
 brew 'zsh'
-
-# Docker & Kubernetes
-brew 'docker'
-brew 'kubectl'
 
 # Security
 brew 'gnupg'
@@ -41,11 +34,11 @@ cask 'keybase' # tap homebrew-cask
 brew 'pinentry-mac'
 
 # Clojure
-cask 'adoptopenjdk8' # tap AdoptOpenJDK/openjdk
+cask 'adoptopenjdk11' # tap AdoptOpenJDK/openjdk
 brew 'boot-clj'
 brew 'planck'
 brew 'leiningen'
-brew 'borkdude/brew/clj-kondo'
+cask 'clj-kondo'
 
 # JavaScript
 brew 'jslint4java'
@@ -77,5 +70,4 @@ brew 'graphviz'
 brew 'markdown'
 brew 'ossp-uuid' # ISO-C API and CLI for generating UUIDs
 cask 'macdown' # tap homebrew-cask
-cask 'spotify' # tap homebrew-cask
 cask 'vlc' # tap homebrew-cask
