@@ -67,6 +67,7 @@ plugins=(
     emacs
     gem
     git
+    gitfast
     golang
     gpg-agent
     lein
