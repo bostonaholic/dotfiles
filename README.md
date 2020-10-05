@@ -40,6 +40,22 @@ $ brew bundle
 
 `$ chsh -s $(which zsh)`
 
+### Configure oh-my-zsh
+
+Install [oh-my-zsh](https://ohmyz.sh/)
+
+Symlink my theme
+
+```
+$ ln -s $PWD/zsh/bostonaholic.zsh-theme ~/.oh-my-zsh/custom/themes/bostonaholic.zsh-theme
+```
+
+Symlink my plugin
+
+```
+$ ln -s $PWD/zsh/bostonaholic.plugin.zsh ~/.oh-my-zsh/custom/plugins/bostonaholic/bostonaholic.plugin.zsh
+```
+
 #### Powerline fonts
 
 [https://github.com/powerline/fonts](https://github.com/powerline/fonts)
