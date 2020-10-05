@@ -33,9 +33,9 @@ task :install do
   link_file 'qwerty.txt', ENV['HOME'].to_s
 
   # symlink oh-my-zsh
-  msb_plugin_dir = "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/msb"
-  Dir.mkdir msb_plugin_dir unless Dir.exist?(msb_plugin_dir)
-  link_file 'msb.plugin.zsh', msb_plugin_dir
+  bostonaholic_plugin_dir = "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/bostonaholic"
+  Dir.mkdir bostonaholic_plugin_dir unless Dir.exist?(bostonaholic_plugin_dir)
+  link_file 'bostonaholic.plugin.zsh', bostonaholic_plugin_dir
 
   nodenv_plugin_dir = "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/nodenv"
   Dir.mkdir nodenv_plugin_dir unless Dir.exist?(nodenv_plugin_dir)

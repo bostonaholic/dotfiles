@@ -73,7 +73,7 @@ ZSH_THEME="bostonaholic"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     # custom
-    msb
+    bostonaholic
     nodenv
 
     # built-in
