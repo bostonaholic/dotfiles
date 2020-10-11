@@ -24,4 +24,4 @@ function git_prompt_info() {
 
 local ret_status="%(?:%{$fg[green]%}> :%{$fg[red]%}> )"
 
-PROMPT=' ${ret_status} %{$fg[cyan]%}%2~%{$reset_color%} $(git_prompt_info)'
+PROMPT='${ret_status}%{$fg[cyan]%}%2~%{$reset_color%} $(git_prompt_info)'
