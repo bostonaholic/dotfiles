@@ -2,7 +2,6 @@
 
 # How to use the Brewfile
 #
-# $ brew tap homebrew/bundle
 # $ brew bundle
 #
 

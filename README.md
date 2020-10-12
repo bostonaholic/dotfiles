@@ -32,7 +32,6 @@ $ ln -s $PWD/profiles.clj ~/.lein/profiles.clj
 #### Homebrew to install them all
 
 ```
-$ brew tap homebrew/bundle
 $ brew bundle
 ```
 
