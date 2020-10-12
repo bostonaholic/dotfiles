@@ -19,7 +19,7 @@ brew 'emacs-plus', # tap d12frosted/emacs-plus
      restart_service: :changed
 brew 'git'
 brew 'libyaml'
-cask 'ngrok' # tap homebrew-cask
+cask 'ngrok'
 brew 'node'
 brew 'nodenv'
 brew 'tmux'
@@ -30,7 +30,7 @@ brew 'zsh'
 brew 'gnupg'
 brew 'gnupg2'
 brew 'gnutls'
-cask 'keybase' # tap homebrew-cask
+cask 'keybase'
 brew 'pinentry-mac'
 
 # Clojure
@@ -69,5 +69,5 @@ brew 'dfu-util'  # Device Firmware Upgrade Utilities
 brew 'graphviz'
 brew 'markdown'
 brew 'ossp-uuid' # ISO-C API and CLI for generating UUIDs
-cask 'macdown' # tap homebrew-cask
-cask 'vlc' # tap homebrew-cask
+cask 'macdown'
+cask 'vlc'
