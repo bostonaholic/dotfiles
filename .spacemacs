@@ -74,6 +74,7 @@ This function should only modify configuration layer settings."
      multiple-cursors
      nginx
      org
+     plantuml
      react
      (ruby :variables
            ruby-version-manager 'rbenv
