@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pushd /Users/matthew/code/bostonaholic/http-server
+pushd $HOME/code/bostonaholic/http-server
 yarn run start
 popd
