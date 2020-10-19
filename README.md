@@ -32,7 +32,7 @@ $ ln -s $PWD/profiles.clj ~/.lein/profiles.clj
 #### Homebrew to install them all
 
 ```
-$ brew bundle
+$ brew bundle --no-lock
 ```
 
 #### ZSH as default shell

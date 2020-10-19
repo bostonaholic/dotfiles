@@ -2,7 +2,7 @@
 
 # How to use the Brewfile
 #
-# $ brew bundle
+# $ brew bundle --no-lock
 #
 
 # Taps
