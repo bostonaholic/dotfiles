@@ -8,7 +8,6 @@
 # Taps
 tap 'AdoptOpenJDK/openjdk'
 tap 'd12frosted/emacs-plus'
-tap 'borkdude/brew'
 
 # Programming
 brew 'aspell'
@@ -37,7 +36,7 @@ cask 'adoptopenjdk11' # tap AdoptOpenJDK/openjdk
 brew 'boot-clj'
 brew 'planck'
 brew 'leiningen'
-cask 'clj-kondo'
+brew 'borkdude/brew/clj-kondo'
 
 # JavaScript
 brew 'jslint4java'
