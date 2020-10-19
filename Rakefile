@@ -43,6 +43,8 @@ task :install do
 
   link_file 'msb.zsh-theme', "#{ENV['HOME']}/.oh-my-zsh/custom/themes"
 
+  link_file 'my_configs.zsh', "#{ENV['HOME']}/.vim_runtime"
+
   # symlink samples
 end
 
