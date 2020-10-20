@@ -12,7 +12,8 @@ source_files = {
   rspec: "#{ENV['PWD']}/rspec/rspec",
   ruby_version: "#{ENV['PWD']}/ruby/ruby-version",
   signature: "#{ENV['PWD']}/signature/signature",
-  spacemacs: "#{ENV['PWD']}/spacemacs/spacemacs"
+  spacemacs: "#{ENV['PWD']}/spacemacs/spacemacs",
+  zshrc: "#{ENV['PWD']}/zsh/zshrc"
 }
 
 target_files = {
@@ -25,7 +26,8 @@ target_files = {
   rspec: "#{ENV['HOME']}/.rspec",
   ruby_version: "#{ENV['HOME']}/.ruby-version",
   signature: "#{ENV['HOME']}/.signature",
-  spacemacs: "#{ENV['HOME']}/.spacemacs"
+  spacemacs: "#{ENV['HOME']}/.spacemacs",
+  zshrc: "#{ENV['HOME']}/.zshrc"
 }
 
 tasks = [
