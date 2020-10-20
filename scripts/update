@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+################################################################################
+#
+# Update
+#
+################################################################################
+
+# Homebrew and Homebrew Packages
+echo && echo "--> Updating Homebrew and Homebrew Packages"
+brewup
+
+# Gems
+echo && echo "--> Updating Ruby Gems"
+rubyup
+
+# Git Submodules
+echo && echo "--> Updating Git Submodules"
+git submodule foreach git pull
+
+# Vimrc
+# https://github.com/amix/vimrc
+echo && echo "--> Updating Vimrc from https://github.com/amix/vimrc"
+pushd $HOME/.vim_runtime
+git stash push --keep-index --include-untracked --message "stashing before update"
+git pull --rebase
+python update_plugins.py
+git stash pop
+popd
+
+# Spacemacs
+# https://github.com/syl20bnr/spacemacs
+echo && echo "--> Updating Spacemacs from https://github.com/syl20bnr/spacemacs"
+pushd $HOME/.emacs.d
+git pull --rebase
+popd

@@ -152,6 +152,18 @@ namespace :install do
   end
 end
 
+desc 'Update bostonaholic/dotfiles'
+task :update do
+  puts '---------------------------------------------'
+  puts ' Update bostonaholic/dotfiles'
+  puts " --> Type 'start'"
+  puts '---------------------------------------------'
+
+  if response?('start')
+    system 'bash scripts/update'
+  end
+end
+
 def message(string)
   puts
   puts "--> #{string}"
