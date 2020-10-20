@@ -4,6 +4,7 @@ require 'rake'
 
 tasks = [
   'symlinks',
+  'homebrew',
   'rbenv'
 ]
 
