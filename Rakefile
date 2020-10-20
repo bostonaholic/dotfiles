@@ -7,7 +7,8 @@ source_files = {
   githelpers: "#{ENV['PWD']}/git/githelpers",
   gitignore_global: "#{ENV['PWD']}/git/gitignore_global",
   ignore: "#{ENV['PWD']}/ignore/ignore",
-  pryrc: "#{ENV['PWD']}/pryrc/pryrc"
+  pryrc: "#{ENV['PWD']}/pryrc/pryrc",
+  node_version: "#{ENV['PWD']}/node/node-version"
 }
 
 target_files = {
@@ -15,7 +16,8 @@ target_files = {
   githelpers: "#{ENV['HOME']}/.githelpers",
   gitignore_global: "#{ENV['HOME']}/.gitignore_global",
   ignore: "#{ENV['HOME']}/.ignore",
-  pryrc: "#{ENV['HOME']}/.pryrc"
+  pryrc: "#{ENV['HOME']}/.pryrc",
+  node_version: "#{ENV['HOME']}/.node-version"
 }
 
 tasks = [
