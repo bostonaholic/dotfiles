@@ -6,7 +6,7 @@
 
 ```
 $ mkdir code && cd code
-$ git clone git@github.com:bostonaholic/dotfiles.git
+$ git clone --recurse-submodules git@github.com:bostonaholic/dotfiles.git
 ```
 
 Symlink non-standard configuration files
