@@ -160,6 +160,8 @@ namespace :install do
       message 'Installing vimrc'
 
       system 'bash scripts/vimrc'
+
+      symlink_file "#{ENV['PWD']}/vim/my_configs.vim", "#{ENV['HOME']}/.vim_runtime/my_configs.vim"
     end
   end
 
