@@ -10,7 +10,8 @@ source_files = {
   pryrc: "#{ENV['PWD']}/pryrc/pryrc",
   node_version: "#{ENV['PWD']}/node/node-version",
   rspec: "#{ENV['PWD']}/rspec/rspec",
-  ruby_version: "#{ENV['PWD']}/ruby/ruby-version"
+  ruby_version: "#{ENV['PWD']}/ruby/ruby-version",
+  signature: "#{ENV['PWD']}/signature/signature"
 }
 
 target_files = {
@@ -21,7 +22,8 @@ target_files = {
   pryrc: "#{ENV['HOME']}/.pryrc",
   node_version: "#{ENV['HOME']}/.node-version",
   rspec: "#{ENV['HOME']}/.rspec",
-  ruby_version: "#{ENV['HOME']}/.ruby-version"
+  ruby_version: "#{ENV['HOME']}/.ruby-version",
+  signature: "#{ENV['HOME']}/.signature"
 }
 
 tasks = [
