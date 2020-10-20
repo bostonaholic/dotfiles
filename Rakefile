@@ -9,7 +9,7 @@ source_files = {
   ignore: "#{ENV['PWD']}/ignore/ignore",
   pryrc: "#{ENV['PWD']}/pryrc/pryrc",
   node_version: "#{ENV['PWD']}/node/node-version",
-  rspec: "#{ENV['PWD']}/rspec/rspec",
+  rspec: "#{ENV['PWD']}/ruby/rspec",
   ruby_version: "#{ENV['PWD']}/ruby/ruby-version",
   signature: "#{ENV['PWD']}/signature/signature",
   spacemacs: "#{ENV['PWD']}/spacemacs/spacemacs",
