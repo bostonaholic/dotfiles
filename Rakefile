@@ -16,7 +16,8 @@ source_files = {
   zshrc: "#{ENV['PWD']}/zsh/zshrc",
   boot_properties: "#{ENV['PWD']}/clojure/boot.properties",
   lein_profiles: "#{ENV['PWD']}/clojure/profiles.clj",
-  gpg_agent_conf: "#{ENV['PWD']}/gpg/gpg-agent.conf"
+  gpg_agent_conf: "#{ENV['PWD']}/gpg/gpg-agent.conf",
+  qwerty: "#{ENV['PWD']}/keyboard/qwerty.txt"
 }
 
 target_files = {
@@ -33,7 +34,8 @@ target_files = {
   zshrc: "#{ENV['HOME']}/.zshrc",
   boot_properties: "#{ENV['HOME']}/.boot/boot.properties",
   lein_profiles: "#{ENV['HOME']}/.lein/profiles.clj",
-  gpg_agent_conf: "#{ENV['HOME']}/.gnupg/gpg-agent.conf"
+  gpg_agent_conf: "#{ENV['HOME']}/.gnupg/gpg-agent.conf",
+  qwerty: "#{ENV['HOME']}/qwerty.txt"
 }
 
 tasks = [
