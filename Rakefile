@@ -6,14 +6,16 @@ source_files = {
   gitconfig:  "#{ENV['PWD']}/git/gitconfig",
   githelpers: "#{ENV['PWD']}/git/githelpers",
   gitignore_global: "#{ENV['PWD']}/git/gitignore_global",
-  ignore: "#{ENV['PWD']}/ignore/ignore"
+  ignore: "#{ENV['PWD']}/ignore/ignore",
+  pryrc: "#{ENV['PWD']}/pryrc/pryrc"
 }
 
 target_files = {
   gitconfig:  "#{ENV['HOME']}/.gitconfig",
   githelpers: "#{ENV['HOME']}/.githelpers",
   gitignore_global: "#{ENV['HOME']}/.gitignore_global",
-  ignore: "#{ENV['HOME']}/.ignore"
+  ignore: "#{ENV['HOME']}/.ignore",
+  pryrc: "#{ENV['HOME']}/.pryrc"
 }
 
 tasks = [
