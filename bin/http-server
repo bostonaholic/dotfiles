@@ -1,5 +1,0 @@
-#!/bin/bash
-
-pushd $HOME/code/bostonaholic/http-server
-yarn run start
-popd

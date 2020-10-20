@@ -1,2 +1,0 @@
-# SSH
-ssh -R1337:localhost:22 matthew@pairwith.matthewboston.com
