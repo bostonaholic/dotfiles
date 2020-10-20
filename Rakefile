@@ -249,6 +249,7 @@ end
 
 # FILE ACTIONS
 def prompt_to_link_file(source_file, target_file)
+  puts
   print "overwrite? #{target_file} [ynaq]  "
   case STDIN.gets.chomp
   when 'y' then replace_file(source_file, target_file)
