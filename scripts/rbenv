@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+################################################################################
+#
+# rbenv
+#
+################################################################################
+
+VERSION='2.7.1'
+
+function install_global_ruby() {
+    rbenv install $VERSION
+    rbenv rehash
+    rbenv global $VERSION
+}
+
+if [ ! -d "$HOME/.rbenv" ]; then
+    echo 'Setting up rbenv...'
+    brew install rbenv
+
+    echo 'Setting up ruby-build...'
+    brew install ruby-build
+
+    echo "rbenv is now set up! Installing latest Ruby..."
+    install_global_ruby
+else
+    echo 'rbenv is already installed on this machine.'
+
+    if [ ! -d "$HOME/.rbenv/versions/$VERSION" ]; then
+        install_global_ruby
+    else
+        echo "Ruby $VERSION is already installed on this machine."
+    fi
+fi

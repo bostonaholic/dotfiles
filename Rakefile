@@ -2,7 +2,10 @@
 
 require 'rake'
 
-tasks = ['symlinks']
+tasks = [
+  'symlinks',
+  'rbenv'
+]
 
 task default: [:install]
 
@@ -26,6 +29,17 @@ namespace :install do
     if response?('y')
       message 'Symlinking files...'
       create_symlinks
+    end
+  end
+
+  desc 'Install rbenv for managing ruby versions'
+  task :rbenv do
+    prompt 'rbenv'
+
+    if response?('y')
+      message 'Installing rbenv...'
+
+      system 'bash scripts/rbenv'
     end
   end
 end
