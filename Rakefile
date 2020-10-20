@@ -3,6 +3,7 @@
 require 'rake'
 
 tasks = [
+  'git_submodules',
   'symlinks',
   'homebrew',
   'rbenv',
@@ -28,6 +29,17 @@ task :install do
 end
 
 namespace :install do
+  desc 'Install Git Submodules'
+  task :git_submodules do
+    prompt 'submodules'
+
+    if response?('y')
+      message 'Installing Git Submodules'
+
+      system 'bash scripts/git-submodules'
+    end
+  end
+
   desc 'Create symlinks'
   task :symlinks do
     prompt 'symlinks'
