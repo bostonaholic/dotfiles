@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+################################################################################
+#
+# oh-my-zsh
+#
+################################################################################
+
+DIRECTORY="$HOME/.oh-my-zsh"
+
+if [ ! -d "$DIRECTORY" ]; then
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    echo "Done!"
+else
+    echo 'oh-my-zsh is already installed on this machine.'
+fi
+

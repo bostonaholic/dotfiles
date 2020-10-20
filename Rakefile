@@ -11,7 +11,8 @@ tasks = [
   'nodenv',
   'npm_packages',
   'spacemacs',
-  'vimrc'
+  'vimrc',
+  'oh-my-zsh'
 ]
 
 task default: [:install]
@@ -124,6 +125,17 @@ namespace :install do
       message 'Installing vimrc'
 
       system 'bash scripts/vimrc'
+    end
+  end
+
+  desc 'Install oh-my-zsh configuration for ZSH'
+  task 'oh-my-zsh' do
+    prompt 'oh-my-zsh'
+
+    if response?('y')
+      message 'Installing oh-my-zsh'
+
+      system 'bash scripts/oh-my-zsh'
     end
   end
 end
