@@ -32,7 +32,18 @@ namespace :install do
     end
   end
 
-  desc 'Install rbenv for managing ruby versions'
+  desc 'Install Homebrew for managing dev packages'
+  task :homebrew do
+    prompt 'homebrew'
+
+    if response?('y')
+      message 'Installing homebrew'
+
+      system 'bash scripts/homebrew'
+    end
+  end
+
+  desc 'Install rbenv for managing Ruby versions'
   task :rbenv do
     prompt 'rbenv'
 
