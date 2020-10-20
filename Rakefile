@@ -13,7 +13,9 @@ source_files = {
   ruby_version: "#{ENV['PWD']}/ruby/ruby-version",
   signature: "#{ENV['PWD']}/signature/signature",
   spacemacs: "#{ENV['PWD']}/spacemacs/spacemacs",
-  zshrc: "#{ENV['PWD']}/zsh/zshrc"
+  zshrc: "#{ENV['PWD']}/zsh/zshrc",
+  boot_properties: "#{ENV['PWD']}/clojure/boot.properties",
+  lein_profiles: "#{ENV['PWD']}/clojure/profiles.clj"
 }
 
 target_files = {
@@ -27,7 +29,9 @@ target_files = {
   ruby_version: "#{ENV['HOME']}/.ruby-version",
   signature: "#{ENV['HOME']}/.signature",
   spacemacs: "#{ENV['HOME']}/.spacemacs",
-  zshrc: "#{ENV['HOME']}/.zshrc"
+  zshrc: "#{ENV['HOME']}/.zshrc",
+  boot_properties: "#{ENV['HOME']}/.boot/boot.properties",
+  lein_profiles: "#{ENV['HOME']}/.lein/profiles.clj"
 }
 
 tasks = [
