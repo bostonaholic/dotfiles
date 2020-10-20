@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+################################################################################
+#
+# NPM Packages
+#
+################################################################################
+
+packages=(
+  prettier
+  prettier-eslint
+  prettier-eslint-cli
+  tern
+)
+
+for package in ${packages[@]}; do
+  npm install -g $package
+done

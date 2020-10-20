@@ -8,6 +8,7 @@ tasks = [
   'rbenv',
   'brewfile',
   'nodenv',
+  'npm_packages',
   'spacemacs',
   'vimrc'
 ]
@@ -78,6 +79,17 @@ namespace :install do
       message 'Installing nodenv...'
 
       system 'bash scripts/nodenv'
+    end
+  end
+
+  desc 'Install NPM packages'
+  task :npm_packages do
+    prompt 'NPM Packages'
+
+    if response?('y')
+      message 'Installing NPM Packages...'
+
+      system 'bash scripts/npm'
     end
   end
 
