@@ -5,6 +5,9 @@
 #
 ################################################################################
 
+# Update the user's cached credentials, authenticating the user if necessary.
+sudo --validate
+
 if ! [ -x "$(command -v brew)" ]; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
