@@ -2,6 +2,18 @@
 
 require 'rake'
 
+source_files = {
+  gitconfig:  "#{ENV['PWD']}/git/gitconfig",
+  githelpers: "#{ENV['PWD']}/git/githelpers",
+  gitignore_global: "#{ENV['PWD']}/git/gitignore_global"
+}
+
+target_files = {
+  gitconfig:  "#{ENV['HOME']}/.gitconfig",
+  githelpers: "#{ENV['HOME']}/.githelpers",
+  gitignore_global: "#{ENV['HOME']}/.gitignore_global"
+}
+
 tasks = [
   'git_submodules',
   'symlinks',
@@ -48,7 +60,7 @@ namespace :install do
 
     if response?('y')
       message 'Symlinking files...'
-      create_symlinks
+      create_symlinks source_files, target_files
     end
   end
 
@@ -245,18 +257,8 @@ def skip_identical_file(file)
   message "skipping identical #{file}"
 end
 
-def files_to_symlink
-  Dir.glob('.*').sort \
-    - ['.', '..'] \
-    - ['.git', '.gitignore', '.gitmodules'] \
-    - ['.bundle']
-end
-
-def create_symlinks
-  files_to_symlink.each do |file|
-    source_file = "#{ENV['PWD']}/#{file}"
-    target_file = "#{ENV['HOME']}/#{file}"
-
-    symlink_file source_file, target_file
+def create_symlinks(source_files, target_files)
+  source_files.each do |source_key, source_file|
+    symlink_file source_file, target_files[source_key]
   end
 end
