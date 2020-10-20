@@ -136,7 +136,7 @@ end
 def prompt(section)
   puts
   puts '---------------------------------------------'
-  puts " Ready to install #{section}? [y|n]"
+  puts " Ready to install #{section}? [y|N]"
   puts '---------------------------------------------'
 end
 
