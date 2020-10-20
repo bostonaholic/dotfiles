@@ -7,6 +7,7 @@ tasks = [
   'homebrew',
   'rbenv',
   'brewfile',
+  'nodenv',
   'spacemacs',
   'vimrc'
 ]
@@ -66,6 +67,17 @@ namespace :install do
       message 'Installing Brewfile...'
 
       system 'brew bundle'
+    end
+  end
+
+  desc 'Install nodenv for managing Node versions'
+  task :nodenv do
+    prompt 'nodenv'
+
+    if response?('y')
+      message 'Installing nodenv...'
+
+      system 'bash scripts/nodenv'
     end
   end
 
