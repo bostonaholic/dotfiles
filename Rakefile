@@ -11,7 +11,6 @@ task :install do
   files = Dir.glob('.*').sort \
     - ['.', '..'] \
     - ['.git', '.gitignore', '.gitmodules'] \
-    - ['.env.sample']
   symlink_files files
 
   # symlink bin
