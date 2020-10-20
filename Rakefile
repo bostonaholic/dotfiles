@@ -8,7 +8,8 @@ source_files = {
   gitignore_global: "#{ENV['PWD']}/git/gitignore_global",
   ignore: "#{ENV['PWD']}/ignore/ignore",
   pryrc: "#{ENV['PWD']}/pryrc/pryrc",
-  node_version: "#{ENV['PWD']}/node/node-version"
+  node_version: "#{ENV['PWD']}/node/node-version",
+  rspec: "#{ENV['PWD']}/rspec/rspec"
 }
 
 target_files = {
@@ -17,7 +18,8 @@ target_files = {
   gitignore_global: "#{ENV['HOME']}/.gitignore_global",
   ignore: "#{ENV['HOME']}/.ignore",
   pryrc: "#{ENV['HOME']}/.pryrc",
-  node_version: "#{ENV['HOME']}/.node-version"
+  node_version: "#{ENV['HOME']}/.node-version",
+  rspec: "#{ENV['HOME']}/.rspec"
 }
 
 tasks = [
