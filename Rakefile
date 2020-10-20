@@ -12,7 +12,8 @@ tasks = [
   'npm_packages',
   'spacemacs',
   'vimrc',
-  'oh-my-zsh'
+  'oh-my-zsh',
+  'powerline_fonts'
 ]
 
 task default: [:install]
@@ -136,6 +137,17 @@ namespace :install do
       message 'Installing oh-my-zsh'
 
       system 'bash scripts/oh-my-zsh'
+    end
+  end
+
+  desc 'Install Powerline Fonts'
+  task 'powerline_fonts' do
+    prompt 'Powerline Fonts'
+
+    if response?('y')
+      message 'Installing Powerline Fonts'
+
+      system 'bash scripts/powerline-fonts'
     end
   end
 end
