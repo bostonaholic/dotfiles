@@ -1,79 +1,72 @@
 # frozen_string_literal: true
 
-require 'rubygems'
 require 'rake'
+
+tasks = ['symlinks']
 
 task default: [:install]
 
-desc 'Symlink all dot files'
+desc 'Install bostonaholic/dotfiles'
 task :install do
-  # symlink dot files
-  files = Dir.glob('.*').sort \
-    - ['.', '..'] \
-    - ['.git', '.gitignore', '.gitmodules'] \
-  symlink_files files
+  puts '---------------------------------'
+  puts ' Install bostonaholic/dotfiles'
+  puts " --> Type 'start'"
+  puts '---------------------------------'
 
-  # symlink bin
-  # link_file 'bin', ENV['HOME'].to_s
-
-  # symlink misc
-  boot_dir = "#{ENV['HOME']}/.boot"
-  Dir.mkdir boot_dir unless Dir.exist?(boot_dir)
-  link_file 'boot.properties', boot_dir
-
-  gnupg_dir = "#{ENV['HOME']}/.gnupg"
-  Dir.mkdir gnupg_dir unless Dir.exist?(gnupg_dir)
-  link_file 'gpg-agent.conf', gnupg_dir
-
-  lein_dir = "#{ENV['HOME']}/.lein"
-  Dir.mkdir lein_dir unless Dir.exist?(lein_dir)
-  link_file 'profiles.clj', lein_dir
-
-  link_file 'qwerty.txt', ENV['HOME'].to_s
-
-  # symlink oh-my-zsh
-  bostonaholic_plugin_dir = "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/bostonaholic"
-  Dir.mkdir bostonaholic_plugin_dir unless Dir.exist?(bostonaholic_plugin_dir)
-  link_file 'bostonaholic.plugin.zsh', bostonaholic_plugin_dir
-
-  nodenv_plugin_dir = "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/nodenv"
-  Dir.mkdir nodenv_plugin_dir unless Dir.exist?(nodenv_plugin_dir)
-  link_file 'nodenv.plugin.zsh', nodenv_plugin_dir
-
-  link_file 'msb.zsh-theme', "#{ENV['HOME']}/.oh-my-zsh/custom/themes"
-
-  link_file 'my_configs.zsh', "#{ENV['HOME']}/.vim_runtime"
-
-  # symlink samples
-end
-
-def symlink_file(file)
-  if file_identical?(file)
-    skip_identical_file(file)
-  elsif replace_all_files?
-    link_file(file)
-  elsif file_missing?(file)
-    prompt_to_link_file(file)
+  if response?('start')
+    tasks.each { |task| Rake::Task["install:#{task}"].invoke }
   end
 end
 
-def symlink_files(files)
-  files.each do |file|
-    symlink_file file
+namespace :install do
+  desc 'Create symlinks'
+  task :symlinks do
+    prompt 'symlinks'
+
+    if response?('y')
+      message 'Symlinking files...'
+      create_symlinks
+    end
+  end
+end
+
+def message(string)
+  puts
+  puts "--> #{string}"
+end
+
+def prompt(section)
+  puts
+  puts '---------------------------------------------'
+  puts " Ready to install #{section}? [y|n]"
+  puts '---------------------------------------------'
+end
+
+def response?(value)
+  STDIN.gets.chomp == value ? true : false
+end
+
+def symlink_file(source_file, target_file)
+  if file_identical?(source_file, target_file)
+    skip_identical_file(target_file)
+  elsif replace_all_files?
+    link_file(source_file, target_file)
+  elsif file_missing?(target_file)
+    prompt_to_link_file(source_file, target_file)
   end
 end
 
 # FILE CHECKS
 def file_exists?(file)
-  File.exist?("#{ENV['HOME']}/#{file}") # FIXME
+  File.exist?(file)
 end
 
 def file_missing?(file)
   !file_exists?(file)
 end
 
-def file_identical?(file)
-  File.identical? file, File.join(ENV['HOME'], file.to_s) # FIXME
+def file_identical?(file_path1, file_path2)
+  File.identical? file_path1, file_path2
 end
 
 def replace_all_files?
@@ -81,36 +74,51 @@ def replace_all_files?
 end
 
 # FILE ACTIONS
-def prompt_to_link_file(file)
-  print "overwrite? ~/#{file} [ynaq]  " # FIXME
-  case $stdin.gets.chomp
-  when 'y' then replace_file(file)
-  when 'a' then replace_all(file)
+def prompt_to_link_file(source_file, target_file)
+  print "overwrite? #{target_file} [ynaq]  "
+  case STDIN.gets.chomp
+  when 'y' then replace_file(source_file, target_file)
+  when 'a' then replace_all(source_file, target_file)
   when 'q' then exit
-  else skip_file(file)
+  else skip_file(target_file)
   end
 end
 
-def link_file(file, destination = ENV['HOME'])
-  puts " => symlinking #{file} to #{destination}"
-  directory = File.dirname(__FILE__)
-  File.symlink(File.join(directory, file).to_s, "#{destination}/#{file}")
+def link_file(source_file, destination_file)
+  message "symlinking #{source_file} to #{destination_file}"
+  File.symlink(source_file, destination_file)
 end
 
-def replace_file(file)
-  `rm -rf #{ENV['HOME']}/#{file}` # FIXME
-  link_file(file)
+def replace_file(source_file, target_file)
+  `rm -rf #{target_file}`
+  link_file(source_file, target_file)
 end
 
-def replace_all(file)
+def replace_all(source_file, target_file)
   @replace_all = true
-  replace_file(file)
+  replace_file(source_file, target_file)
 end
 
 def skip_file(file)
-  puts " => skipping ~/#{file}" # FIXME
+  message "skipping #{file}"
 end
 
 def skip_identical_file(file)
-  puts " => skipping identical ~/#{file}" # FIXME
+  message "skipping identical #{file}"
+end
+
+def files_to_symlink
+  Dir.glob('.*').sort \
+    - ['.', '..'] \
+    - ['.git', '.gitignore', '.gitmodules'] \
+    - ['.bundle']
+end
+
+def create_symlinks
+  files_to_symlink.each do |file|
+    source_file = "#{ENV['PWD']}/#{file}"
+    target_file = "#{ENV['HOME']}/#{file}"
+
+    symlink_file source_file, target_file
+  end
 end
