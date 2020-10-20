@@ -5,7 +5,8 @@ require 'rake'
 tasks = [
   'symlinks',
   'homebrew',
-  'rbenv'
+  'rbenv',
+  'brewfile'
 ]
 
 task default: [:install]
@@ -52,6 +53,17 @@ namespace :install do
       message 'Installing rbenv...'
 
       system 'bash scripts/rbenv'
+    end
+  end
+
+  desc 'Install the Brewfile'
+  task :brewfile do
+    prompt 'brewfile'
+
+    if response?('y')
+      message 'Installing Brewfile...'
+
+      system 'brew bundle'
     end
   end
 end
