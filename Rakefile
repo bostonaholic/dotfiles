@@ -15,7 +15,8 @@ source_files = {
   spacemacs: "#{ENV['PWD']}/spacemacs/spacemacs",
   zshrc: "#{ENV['PWD']}/zsh/zshrc",
   boot_properties: "#{ENV['PWD']}/clojure/boot.properties",
-  lein_profiles: "#{ENV['PWD']}/clojure/profiles.clj"
+  lein_profiles: "#{ENV['PWD']}/clojure/profiles.clj",
+  gpg_agent_conf: "#{ENV['PWD']}/gpg/gpg-agent.conf"
 }
 
 target_files = {
@@ -31,7 +32,8 @@ target_files = {
   spacemacs: "#{ENV['HOME']}/.spacemacs",
   zshrc: "#{ENV['HOME']}/.zshrc",
   boot_properties: "#{ENV['HOME']}/.boot/boot.properties",
-  lein_profiles: "#{ENV['HOME']}/.lein/profiles.clj"
+  lein_profiles: "#{ENV['HOME']}/.lein/profiles.clj",
+  gpg_agent_conf: "#{ENV['HOME']}/.gnupg/gpg-agent.conf"
 }
 
 tasks = [
