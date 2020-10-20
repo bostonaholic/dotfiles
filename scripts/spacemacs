@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+################################################################################
+#
+# Spacemacs
+#
+################################################################################
+
+DIRECTORY="$HOME/.emacs.d"
+
+if [ ! -d "$DIRECTORY" ]; then
+    git clone https://github.com/syl20bnr/spacemacs $DIRECTORY
+    pushd $DIRECTORY
+    git checkout develop
+    popd
+    echo "Done!"
+else
+    echo 'Spacemacs is already installed on this machine.'
+fi

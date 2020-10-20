@@ -6,7 +6,8 @@ tasks = [
   'symlinks',
   'homebrew',
   'rbenv',
-  'brewfile'
+  'brewfile',
+  'spacemacs'
 ]
 
 task default: [:install]
@@ -64,6 +65,17 @@ namespace :install do
       message 'Installing Brewfile...'
 
       system 'brew bundle'
+    end
+  end
+
+  desc 'Install Spacemacs configuration for Emacs'
+  task :spacemacs do
+    prompt 'spacemacs'
+
+    if response?('y')
+      message 'Installing Spacemacs'
+
+      system 'bash scripts/spacemacs'
     end
   end
 end
