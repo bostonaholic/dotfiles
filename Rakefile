@@ -9,7 +9,8 @@ source_files = {
   ignore: "#{ENV['PWD']}/ignore/ignore",
   pryrc: "#{ENV['PWD']}/pryrc/pryrc",
   node_version: "#{ENV['PWD']}/node/node-version",
-  rspec: "#{ENV['PWD']}/rspec/rspec"
+  rspec: "#{ENV['PWD']}/rspec/rspec",
+  ruby_version: "#{ENV['PWD']}/ruby/ruby-version"
 }
 
 target_files = {
@@ -19,7 +20,8 @@ target_files = {
   ignore: "#{ENV['HOME']}/.ignore",
   pryrc: "#{ENV['HOME']}/.pryrc",
   node_version: "#{ENV['HOME']}/.node-version",
-  rspec: "#{ENV['HOME']}/.rspec"
+  rspec: "#{ENV['HOME']}/.rspec",
+  ruby_version: "#{ENV['HOME']}/.ruby-version"
 }
 
 tasks = [
