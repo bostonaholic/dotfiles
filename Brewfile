@@ -29,6 +29,7 @@ brew 'zsh'
 brew 'gnupg'
 brew 'gnupg2'
 brew 'gnutls'
+cask 'gpg-suite'
 cask 'keybase'
 brew 'pinentry-mac'
 
