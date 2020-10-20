@@ -5,13 +5,15 @@ require 'rake'
 source_files = {
   gitconfig:  "#{ENV['PWD']}/git/gitconfig",
   githelpers: "#{ENV['PWD']}/git/githelpers",
-  gitignore_global: "#{ENV['PWD']}/git/gitignore_global"
+  gitignore_global: "#{ENV['PWD']}/git/gitignore_global",
+  ignore: "#{ENV['PWD']}/ignore/ignore"
 }
 
 target_files = {
   gitconfig:  "#{ENV['HOME']}/.gitconfig",
   githelpers: "#{ENV['HOME']}/.githelpers",
-  gitignore_global: "#{ENV['HOME']}/.gitignore_global"
+  gitignore_global: "#{ENV['HOME']}/.gitignore_global",
+  ignore: "#{ENV['HOME']}/.ignore"
 }
 
 tasks = [
