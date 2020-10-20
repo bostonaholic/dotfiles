@@ -69,7 +69,7 @@ end
 namespace :install do
   desc 'Install Git Submodules'
   task :git_submodules do
-    prompt 'submodules'
+    prompt 'Git Submodules'
 
     if response?('y')
       message 'Installing Git Submodules'
@@ -90,7 +90,7 @@ namespace :install do
 
   desc 'Install Homebrew for managing dev packages'
   task :homebrew do
-    prompt 'homebrew'
+    prompt 'Homebrew'
 
     if response?('y')
       message 'Installing homebrew'
@@ -110,9 +110,9 @@ namespace :install do
     end
   end
 
-  desc 'Install the Brewfile'
+  desc 'Install Homebrew packages'
   task :brewfile do
-    prompt 'brewfile'
+    prompt 'Brewfile'
 
     if response?('y')
       message 'Installing Brewfile...'
@@ -145,7 +145,7 @@ namespace :install do
 
   desc 'Install Spacemacs configuration for Emacs'
   task :spacemacs do
-    prompt 'spacemacs'
+    prompt 'Spacemacs'
 
     if response?('y')
       message 'Installing Spacemacs'
@@ -156,10 +156,10 @@ namespace :install do
 
   desc 'Install vimrc configuration for Vim'
   task 'vimrc' do
-    prompt 'vimrc'
+    prompt 'Vimrc'
 
     if response?('y')
-      message 'Installing vimrc'
+      message 'Installing Vimrc'
 
       system 'bash scripts/vimrc'
 

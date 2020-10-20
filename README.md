@@ -2,37 +2,36 @@
 
 ## Setup
 
-### Clone repository
+### Clone the repository
 
 ```
 $ mkdir code && cd code
 $ git clone --recurse-submodules git@github.com:bostonaholic/dotfiles.git
 ```
 
-Symlink non-standard configuration files
+### Copy sample environment files
 
 ```
-$ ln -s $PWD/boot.properties ~/.boot/boot.properties
-$ ln -s $PWD/gpg-agent.conf ~/.gnupg/gpg-agent.conf
-$ ln -s $PWD/profiles.clj ~/.lein/profiles.clj
+$ cp $PWD/env/secret.sample.el $HOME/.secret.el
+$ cp $PWD/env/env.sample $HOME/.env
 ```
 
-```
-$ cp $PWD/secret.sample.el $HOME/.secret.el
-```
-
-- [GPG Suite](https://gpgtools.org/)
-
-### Symlink my oh-my-zsh theme
+### Install with rake
 
 ```
-$ ln -s $PWD/zsh/bostonaholic.zsh-theme ~/.oh-my-zsh/custom/themes/bostonaholic.zsh-theme
-```
-
-Symlink my plugin
-
-```
-$ ln -s $PWD/zsh/bostonaholic.plugin.zsh ~/.oh-my-zsh/custom/plugins/bostonaholic/bostonaholic.plugin.zsh
+rake install                  # Install bostonaholic/dotfiles
+rake install:brewfile         # Install Homebrew packages
+rake install:git_submodules   # Install Git Submodules
+rake install:homebrew         # Install Homebrew for managing dev packages
+rake install:nodenv           # Install nodenv for managing Node versions
+rake install:npm_packages     # Install NPM packages
+rake install:oh-my-zsh        # Install oh-my-zsh configuration for ZSH
+rake install:powerline_fonts  # Install Powerline Fonts
+rake install:rbenv            # Install rbenv for managing Ruby versions
+rake install:spacemacs        # Install Spacemacs configuration for Emacs
+rake install:symlinks         # Create symlinks
+rake install:vimrc            # Install vimrc configuration for Vim
+rake update                   # Update bostonaholic/dotfiles
 ```
 
 ## Tips
