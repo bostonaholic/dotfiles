@@ -26,7 +26,7 @@ task :install do
   puts '---------------------------------'
 
   if response?('start')
-    tasks.each { |task| Rake::Task["install:#{task}"].invoke }
+    tasks.each { |task| run "install:#{task}" }
   end
 end
 
@@ -178,6 +178,10 @@ end
 
 def response?(value)
   STDIN.gets.chomp == value ? true : false
+end
+
+def run(task)
+  Rake::Task[task].invoke
 end
 
 def symlink_file(source_file, target_file)
