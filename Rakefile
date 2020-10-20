@@ -7,7 +7,8 @@ tasks = [
   'homebrew',
   'rbenv',
   'brewfile',
-  'spacemacs'
+  'spacemacs',
+  'vimrc'
 ]
 
 task default: [:install]
@@ -76,6 +77,17 @@ namespace :install do
       message 'Installing Spacemacs'
 
       system 'bash scripts/spacemacs'
+    end
+  end
+
+  desc 'Install vimrc configuration for Vim'
+  task 'vimrc' do
+    prompt 'vimrc'
+
+    if response?('y')
+      message 'Installing vimrc'
+
+      system 'bash scripts/vimrc'
     end
   end
 end

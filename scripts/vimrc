@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+################################################################################
+#
+# Vimrc
+#
+################################################################################
+
+DIRECTORY="$HOME/.vim_runtime"
+
+if [ ! -d "$DIRECTORY" ]; then
+    git clone --depth=1 https://github.com/amix/vimrc.git $DIRECTORY
+    pushd $DIRECTORY
+    sh install_awesome_vimrc.sh
+    popd
+    echo "Done!"
+else
+    echo 'Vimrc is already installed on this machine.'
+fi
