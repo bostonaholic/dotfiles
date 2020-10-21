@@ -266,7 +266,7 @@ def prompt_to_link_file(source_file, target_file)
 end
 
 def link_file(source_file, destination_file)
-  message "symlinking #{source_file} to #{destination_file}"
+  message "symlinking #{destination_file} to #{source_file}"
   File.symlink(source_file, destination_file)
 end
 
