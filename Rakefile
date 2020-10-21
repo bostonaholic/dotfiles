@@ -17,7 +17,9 @@ source_files = {
   boot_properties: "#{ENV['PWD']}/clojure/boot.properties",
   lein_profiles: "#{ENV['PWD']}/clojure/profiles.clj",
   gpg_agent_conf: "#{ENV['PWD']}/gpg/gpg-agent.conf",
-  qwerty: "#{ENV['PWD']}/keyboard/qwerty.txt"
+  qwerty: "#{ENV['PWD']}/keyboard/qwerty.txt",
+  jsbeautifyrc: "#{ENV['PWD']}/javascript/jsbeautifyrc",
+  jshintrc: "#{ENV['PWD']}/javascript/jshintrc"
 }
 
 target_files = {
@@ -35,7 +37,9 @@ target_files = {
   boot_properties: "#{ENV['HOME']}/.boot/boot.properties",
   lein_profiles: "#{ENV['HOME']}/.lein/profiles.clj",
   gpg_agent_conf: "#{ENV['HOME']}/.gnupg/gpg-agent.conf",
-  qwerty: "#{ENV['HOME']}/qwerty.txt"
+  qwerty: "#{ENV['HOME']}/qwerty.txt",
+  jsbeautifyrc: "#{ENV['HOME']}/.jsbeautifyrc",
+  jshintrc: "#{ENV['HOME']}/.jshintrc"
 }
 
 tasks = [
