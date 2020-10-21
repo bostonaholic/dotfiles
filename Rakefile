@@ -12,7 +12,7 @@ source_files = {
   rspec: "#{ENV['PWD']}/ruby/rspec",
   ruby_version: "#{ENV['PWD']}/ruby/ruby-version",
   signature: "#{ENV['PWD']}/signature/signature",
-  spacemacs: "#{ENV['PWD']}/spacemacs/spacemacs",
+  spacemacs: "#{ENV['PWD']}/emacs/spacemacs",
   zshrc: "#{ENV['PWD']}/zsh/zshrc",
   boot_properties: "#{ENV['PWD']}/clojure/boot.properties",
   lein_profiles: "#{ENV['PWD']}/clojure/profiles.clj",
