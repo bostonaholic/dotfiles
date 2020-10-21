@@ -4,7 +4,7 @@ require 'rake'
 
 source_files = {
   boot_properties: "#{ENV['PWD']}/clojure/boot.properties",
-  gitconfig:  "#{ENV['PWD']}/git/gitconfig",
+  gitconfig: "#{ENV['PWD']}/git/gitconfig",
   githelpers: "#{ENV['PWD']}/git/githelpers",
   gitignore_global: "#{ENV['PWD']}/git/gitignore_global",
   gpg_agent_conf: "#{ENV['PWD']}/gpg/gpg-agent.conf",
@@ -24,7 +24,7 @@ source_files = {
 
 target_files = {
   boot_properties: "#{ENV['HOME']}/.boot/boot.properties",
-  gitconfig:  "#{ENV['HOME']}/.gitconfig",
+  gitconfig: "#{ENV['HOME']}/.gitconfig",
   githelpers: "#{ENV['HOME']}/.githelpers",
   gitignore_global: "#{ENV['HOME']}/.gitignore_global",
   gpg_agent_conf: "#{ENV['HOME']}/.gnupg/gpg-agent.conf",
