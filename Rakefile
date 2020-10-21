@@ -3,43 +3,43 @@
 require 'rake'
 
 source_files = {
+  boot_properties: "#{ENV['PWD']}/clojure/boot.properties",
   gitconfig:  "#{ENV['PWD']}/git/gitconfig",
   githelpers: "#{ENV['PWD']}/git/githelpers",
   gitignore_global: "#{ENV['PWD']}/git/gitignore_global",
+  gpg_agent_conf: "#{ENV['PWD']}/gpg/gpg-agent.conf",
   ignore: "#{ENV['PWD']}/ignore/ignore",
-  pryrc: "#{ENV['PWD']}/ruby/pryrc",
+  jsbeautifyrc: "#{ENV['PWD']}/javascript/jsbeautifyrc",
+  jshintrc: "#{ENV['PWD']}/javascript/jshintrc",
+  lein_profiles: "#{ENV['PWD']}/clojure/profiles.clj",
   node_version: "#{ENV['PWD']}/node/node-version",
+  pryrc: "#{ENV['PWD']}/ruby/pryrc",
+  qwerty: "#{ENV['PWD']}/keyboard/qwerty.txt",
   rspec: "#{ENV['PWD']}/ruby/rspec",
   ruby_version: "#{ENV['PWD']}/ruby/ruby-version",
   signature: "#{ENV['PWD']}/signature/signature",
   spacemacs: "#{ENV['PWD']}/emacs/spacemacs",
-  zshrc: "#{ENV['PWD']}/zsh/zshrc",
-  boot_properties: "#{ENV['PWD']}/clojure/boot.properties",
-  lein_profiles: "#{ENV['PWD']}/clojure/profiles.clj",
-  gpg_agent_conf: "#{ENV['PWD']}/gpg/gpg-agent.conf",
-  qwerty: "#{ENV['PWD']}/keyboard/qwerty.txt",
-  jsbeautifyrc: "#{ENV['PWD']}/javascript/jsbeautifyrc",
-  jshintrc: "#{ENV['PWD']}/javascript/jshintrc"
+  zshrc: "#{ENV['PWD']}/zsh/zshrc"
 }
 
 target_files = {
+  boot_properties: "#{ENV['HOME']}/.boot/boot.properties",
   gitconfig:  "#{ENV['HOME']}/.gitconfig",
   githelpers: "#{ENV['HOME']}/.githelpers",
   gitignore_global: "#{ENV['HOME']}/.gitignore_global",
+  gpg_agent_conf: "#{ENV['HOME']}/.gnupg/gpg-agent.conf",
   ignore: "#{ENV['HOME']}/.ignore",
-  pryrc: "#{ENV['HOME']}/.pryrc",
+  jsbeautifyrc: "#{ENV['HOME']}/.jsbeautifyrc",
+  jshintrc: "#{ENV['HOME']}/.jshintrc",
+  lein_profiles: "#{ENV['HOME']}/.lein/profiles.clj",
   node_version: "#{ENV['HOME']}/.node-version",
+  pryrc: "#{ENV['HOME']}/.pryrc",
+  qwerty: "#{ENV['HOME']}/qwerty.txt",
   rspec: "#{ENV['HOME']}/.rspec",
   ruby_version: "#{ENV['HOME']}/.ruby-version",
   signature: "#{ENV['HOME']}/.signature",
   spacemacs: "#{ENV['HOME']}/.spacemacs",
-  zshrc: "#{ENV['HOME']}/.zshrc",
-  boot_properties: "#{ENV['HOME']}/.boot/boot.properties",
-  lein_profiles: "#{ENV['HOME']}/.lein/profiles.clj",
-  gpg_agent_conf: "#{ENV['HOME']}/.gnupg/gpg-agent.conf",
-  qwerty: "#{ENV['HOME']}/qwerty.txt",
-  jsbeautifyrc: "#{ENV['HOME']}/.jsbeautifyrc",
-  jshintrc: "#{ENV['HOME']}/.jshintrc"
+  zshrc: "#{ENV['HOME']}/.zshrc"
 }
 
 tasks = [
