@@ -7,7 +7,7 @@ source_files = {
   githelpers: "#{ENV['PWD']}/git/githelpers",
   gitignore_global: "#{ENV['PWD']}/git/gitignore_global",
   ignore: "#{ENV['PWD']}/ignore/ignore",
-  pryrc: "#{ENV['PWD']}/pryrc/pryrc",
+  pryrc: "#{ENV['PWD']}/ruby/pryrc",
   node_version: "#{ENV['PWD']}/node/node-version",
   rspec: "#{ENV['PWD']}/ruby/rspec",
   ruby_version: "#{ENV['PWD']}/ruby/ruby-version",
