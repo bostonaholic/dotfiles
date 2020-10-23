@@ -1,4 +1,4 @@
-export PATH=:$HOME/code/dotfiles/bin:$PATH
+export PATH=$HOME/code/dotfiles/bin:$PATH
 
 EDITOR=vi
 
