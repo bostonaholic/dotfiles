@@ -9,10 +9,10 @@ DIRECTORY="$HOME/.vim_runtime"
 
 if [ ! -d "$DIRECTORY" ]; then
     git clone --depth=1 https://github.com/amix/vimrc.git $DIRECTORY
-    pushd $DIRECTORY
+    pushd $DIRECTORY > /dev/null
     pip3 install requests
     sh install_awesome_vimrc.sh
-    popd
+    popd > /dev/null
     echo "Done!"
 else
     echo 'Vimrc is already installed on this machine.'

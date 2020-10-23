@@ -20,16 +20,16 @@ git submodule foreach git pull origin master
 # Vimrc
 # https://github.com/amix/vimrc
 echo && echo "--> Updating Vimrc from https://github.com/amix/vimrc"
-pushd $HOME/.vim_runtime
+pushd $HOME/.vim_runtime > /dev/null
 git stash push --keep-index --include-untracked --message "stashing before update"
 git pull --rebase
 python update_plugins.py
 git stash pop
-popd
+popd > /dev/null
 
 # Spacemacs
 # https://github.com/syl20bnr/spacemacs
 echo && echo "--> Updating Spacemacs from https://github.com/syl20bnr/spacemacs"
-pushd $HOME/.emacs.d
+pushd $HOME/.emacs.d > /dev/null
 git pull --rebase
-popd
+popd > /dev/null

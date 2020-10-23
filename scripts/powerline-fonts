@@ -6,8 +6,8 @@
 ################################################################################
 
 git clone https://github.com/powerline/fonts.git --depth=1
-pushd fonts
+pushd fonts > /dev/null
 sh install.sh
-popd
+popd > /dev/null
 rm -rf fonts
 
