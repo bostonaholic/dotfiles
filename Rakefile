@@ -69,7 +69,7 @@ end
 namespace :install do
   desc 'Install Git Submodules'
   task :git_submodules do
-    prompt 'Git Submodules'
+    prompt_to_install 'Git Submodules'
 
     if response?('y')
       message 'Installing Git Submodules'
@@ -80,7 +80,7 @@ namespace :install do
 
   desc 'Create symlinks'
   task :symlinks do
-    prompt 'symlinks'
+    prompt_to_install 'symlinks'
 
     if response?('y')
       message 'Symlinking files...'
@@ -90,7 +90,7 @@ namespace :install do
 
   desc 'Install Homebrew for managing dev packages'
   task :homebrew do
-    prompt 'Homebrew'
+    prompt_to_install 'Homebrew'
 
     if response?('y')
       message 'Installing homebrew'
@@ -101,7 +101,7 @@ namespace :install do
 
   desc 'Install rbenv for managing Ruby versions'
   task :rbenv do
-    prompt 'rbenv'
+    prompt_to_install 'rbenv'
 
     if response?('y')
       message 'Installing rbenv...'
@@ -112,7 +112,7 @@ namespace :install do
 
   desc 'Install Homebrew packages'
   task :brewfile do
-    prompt 'Brewfile'
+    prompt_to_install 'Brewfile'
 
     if response?('y')
       message 'Installing Brewfile...'
@@ -123,7 +123,7 @@ namespace :install do
 
   desc 'Install nodenv for managing Node versions'
   task :nodenv do
-    prompt 'nodenv'
+    prompt_to_install 'nodenv'
 
     if response?('y')
       message 'Installing nodenv...'
@@ -134,7 +134,7 @@ namespace :install do
 
   desc 'Install NPM packages'
   task :npm_packages do
-    prompt 'NPM Packages'
+    prompt_to_install 'NPM Packages'
 
     if response?('y')
       message 'Installing NPM Packages...'
@@ -145,7 +145,7 @@ namespace :install do
 
   desc 'Install Spacemacs configuration for Emacs'
   task :spacemacs do
-    prompt 'Spacemacs'
+    prompt_to_install 'Spacemacs'
 
     if response?('y')
       message 'Installing Spacemacs'
@@ -156,7 +156,7 @@ namespace :install do
 
   desc 'Install vimrc configuration for Vim'
   task 'vimrc' do
-    prompt 'Vimrc'
+    prompt_to_install 'Vimrc'
 
     if response?('y')
       message 'Installing Vimrc'
@@ -169,7 +169,7 @@ namespace :install do
 
   desc 'Install oh-my-zsh configuration for ZSH'
   task 'oh-my-zsh' do
-    prompt 'oh-my-zsh'
+    prompt_to_install 'oh-my-zsh'
 
     if response?('y')
       message 'Installing oh-my-zsh'
@@ -184,7 +184,7 @@ namespace :install do
 
   desc 'Install Powerline Fonts'
   task 'powerline_fonts' do
-    prompt 'Powerline Fonts'
+    prompt_to_install 'Powerline Fonts'
 
     if response?('y')
       message 'Installing Powerline Fonts'
@@ -209,7 +209,7 @@ def message(string)
   puts "--> #{string}"
 end
 
-def prompt(section)
+def prompt_to_install(section)
   puts
   puts '---------------------------------------------'
   puts " Ready to install #{section}? [y|N]"
