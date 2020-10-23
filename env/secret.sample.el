@@ -1,4 +1,4 @@
-(defvar my/user-full-name    nil)
-(defvar my/user-mail-address nil)
-(defvar my/gpg-signing-key   nil)
-(defvar my/irc-nick          nil)
+(defvar my/user-full-name    "TODO")
+(defvar my/user-mail-address "TODO")
+(defvar my/gpg-signing-key   "TODO")
+(defvar my/irc-nick          "TODO")

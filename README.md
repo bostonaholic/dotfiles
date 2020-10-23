@@ -16,6 +16,8 @@ $ cp $PWD/env/secret.sample.el $HOME/.secret.el
 $ cp $PWD/env/env.sample $HOME/.env
 ```
 
+Fill in the `TODO` sections in each of the above environment files.
+
 ### Install with rake
 
 ```
