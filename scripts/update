@@ -15,7 +15,7 @@ rubyup
 
 # Git Submodules
 echo && echo "--> Updating Git Submodules"
-git submodule foreach git pull
+git submodule foreach git pull origin master
 
 # Vimrc
 # https://github.com/amix/vimrc
