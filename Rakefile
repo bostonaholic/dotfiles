@@ -63,9 +63,7 @@ task :install do
   puts " --> Type 'start'"
   puts '---------------------------------'
 
-  if response?('start')
-    tasks.each { |task| run "install:#{task}" }
-  end
+  tasks.each { |task| run "install:#{task}" } if response?('start')
 end
 
 namespace :install do
@@ -203,9 +201,7 @@ task :update do
   puts " --> Type 'start'"
   puts '---------------------------------------------'
 
-  if response?('start')
-    system 'bash scripts/update'
-  end
+  system 'bash scripts/update' if response?('start')
 end
 
 def message(string)
