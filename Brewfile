@@ -70,5 +70,4 @@ brew 'dfu-util'  # Device Firmware Upgrade Utilities
 brew 'graphviz'
 brew 'markdown'
 brew 'ossp-uuid' # ISO-C API and CLI for generating UUIDs
-cask 'macdown'
 cask 'vlc'
