@@ -69,7 +69,7 @@
 	la = !git l --all
 	recent = !GIT_NO_PAGER=1 git l -30
 	r = !git recent
-	ra = !git recent --all
+	rall = !git recent --all
 
 	head = !git l -1
 	h = !git head
