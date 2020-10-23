@@ -16,7 +16,6 @@ source_files = {
   pryrc: "#{ENV['PWD']}/ruby/pryrc",
   qwerty: "#{ENV['PWD']}/keyboard/qwerty.txt",
   rspec: "#{ENV['PWD']}/ruby/rspec",
-  ruby_version: "#{ENV['PWD']}/ruby/ruby-version",
   signature: "#{ENV['PWD']}/signature/signature",
   spacemacs: "#{ENV['PWD']}/emacs/spacemacs",
   zshrc: "#{ENV['PWD']}/zsh/zshrc"
@@ -36,7 +35,6 @@ target_files = {
   pryrc: "#{ENV['HOME']}/.pryrc",
   qwerty: "#{ENV['HOME']}/qwerty.txt",
   rspec: "#{ENV['HOME']}/.rspec",
-  ruby_version: "#{ENV['HOME']}/.ruby-version",
   signature: "#{ENV['HOME']}/.signature",
   spacemacs: "#{ENV['HOME']}/.spacemacs",
   zshrc: "#{ENV['HOME']}/.zshrc"
