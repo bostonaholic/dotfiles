@@ -217,7 +217,7 @@ def prompt(section)
 end
 
 def response?(value)
-  $stdin.gets.chomp == value ? true : false
+  $stdin.gets.chomp == value
 end
 
 def run(task)
