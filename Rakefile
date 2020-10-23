@@ -40,18 +40,18 @@ target_files = {
   zshrc: "#{ENV['HOME']}/.zshrc"
 }
 
-tasks = [
-  'git_submodules',
-  'symlinks',
-  'homebrew',
-  'rbenv',
-  'brewfile',
-  'nodenv',
-  'npm_packages',
-  'spacemacs',
-  'vimrc',
-  'oh-my-zsh',
-  'powerline_fonts'
+tasks = %w[
+  git_submodules
+  symlinks
+  homebrew
+  rbenv
+  brewfile
+  nodenv
+  npm_packages
+  spacemacs
+  vimrc
+  oh-my-zsh
+  powerline_fonts
 ]
 
 task default: [:install]
