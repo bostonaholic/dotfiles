@@ -1,4 +1,4 @@
-;; ln -s $PWD/profiles.clj ~/.lein/profiles.clj
+;; ln -s $PWD/profiles.clj $HOME/.lein/profiles.clj
 {:user {:plugins [[atroche/lein-ns-dep-graph "0.2.0-SNAPSHOT"]
                   [cider/cider-nrepl "0.25.0"]
                   [lein-ancient "0.6.15"]]
