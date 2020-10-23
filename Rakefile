@@ -63,7 +63,7 @@ task :install do
   puts " --> Type 'start'"
   puts '---------------------------------'
 
-  tasks.each { |task| run "install:#{task}" } if response?('start')
+  tasks.each { |task| run "install:#{task}" } if response? 'start'
 end
 
 namespace :install do
@@ -71,7 +71,7 @@ namespace :install do
   task :git_submodules do
     prompt_to_install 'Git Submodules'
 
-    if response?('y')
+    if response? 'y'
       message 'Installing Git Submodules'
 
       system 'bash scripts/git-submodules'
@@ -82,7 +82,7 @@ namespace :install do
   task :symlinks do
     prompt_to_install 'symlinks'
 
-    if response?('y')
+    if response? 'y'
       message 'Symlinking files...'
       create_symlinks source_files, target_files
     end
@@ -92,7 +92,7 @@ namespace :install do
   task :homebrew do
     prompt_to_install 'Homebrew'
 
-    if response?('y')
+    if response? 'y'
       message 'Installing homebrew'
 
       system 'bash scripts/homebrew'
@@ -103,7 +103,7 @@ namespace :install do
   task :rbenv do
     prompt_to_install 'rbenv'
 
-    if response?('y')
+    if response? 'y'
       message 'Installing rbenv...'
 
       system 'bash scripts/rbenv'
@@ -114,7 +114,7 @@ namespace :install do
   task :brewfile do
     prompt_to_install 'Brewfile'
 
-    if response?('y')
+    if response? 'y'
       message 'Installing Brewfile...'
 
       system 'brew bundle --no-lock'
@@ -125,7 +125,7 @@ namespace :install do
   task :nodenv do
     prompt_to_install 'nodenv'
 
-    if response?('y')
+    if response? 'y'
       message 'Installing nodenv...'
 
       system 'bash scripts/nodenv'
@@ -136,7 +136,7 @@ namespace :install do
   task :npm_packages do
     prompt_to_install 'NPM Packages'
 
-    if response?('y')
+    if response? 'y'
       message 'Installing NPM Packages...'
 
       system 'bash scripts/npm'
@@ -147,7 +147,7 @@ namespace :install do
   task :spacemacs do
     prompt_to_install 'Spacemacs'
 
-    if response?('y')
+    if response? 'y'
       message 'Installing Spacemacs'
 
       system 'bash scripts/spacemacs'
@@ -158,7 +158,7 @@ namespace :install do
   task 'vimrc' do
     prompt_to_install 'Vimrc'
 
-    if response?('y')
+    if response? 'y'
       message 'Installing Vimrc'
 
       system 'bash scripts/vimrc'
@@ -171,7 +171,7 @@ namespace :install do
   task 'oh-my-zsh' do
     prompt_to_install 'oh-my-zsh'
 
-    if response?('y')
+    if response? 'y'
       message 'Installing oh-my-zsh'
 
       system 'bash scripts/oh-my-zsh'
@@ -186,7 +186,7 @@ namespace :install do
   task 'powerline_fonts' do
     prompt_to_install 'Powerline Fonts'
 
-    if response?('y')
+    if response? 'y'
       message 'Installing Powerline Fonts'
 
       system 'bash scripts/powerline-fonts'
@@ -201,7 +201,7 @@ task :update do
   puts " --> Type 'start'"
   puts '---------------------------------------------'
 
-  system 'bash scripts/update' if response?('start')
+  system 'bash scripts/update' if response? 'start'
 end
 
 def message(string)
@@ -225,12 +225,12 @@ def run(task)
 end
 
 def symlink_file(source_file, target_file)
-  if file_identical?(source_file, target_file)
-    skip_identical_file(target_file)
+  if file_identical? source_file, target_file
+    skip_identical_file target_file
   elsif replace_all_files?
-    link_file(source_file, target_file)
-  elsif file_missing?(target_file)
-    prompt_to_link_file(source_file, target_file)
+    link_file source_file, target_file
+  elsif file_missing? target_file
+    prompt_to_link_file source_file, target_file
   end
 end
 
@@ -240,11 +240,11 @@ def file_exists?(file)
 end
 
 def file_missing?(file)
-  !file_exists?(file)
+  !file_exists? file
 end
 
 def file_identical?(file_path1, file_path2)
-  File.identical? file_path1, file_path2
+  File.identical?(file_path1, file_path2)
 end
 
 def replace_all_files?
@@ -256,10 +256,10 @@ def prompt_to_link_file(source_file, target_file)
   puts
   print "overwrite? #{target_file} [ynaq]  "
   case $stdin.gets.chomp
-  when 'y' then replace_file(source_file, target_file)
-  when 'a' then replace_all(source_file, target_file)
+  when 'y' then replace_file source_file, target_file
+  when 'a' then replace_all source_file, target_file
   when 'q' then exit
-  else skip_file(target_file)
+  else skip_file target_file
   end
 end
 
@@ -270,12 +270,12 @@ end
 
 def replace_file(source_file, target_file)
   `rm -rf #{target_file}`
-  link_file(source_file, target_file)
+  link_file source_file, target_file
 end
 
 def replace_all(source_file, target_file)
   @replace_all = true
-  replace_file(source_file, target_file)
+  replace_file source_file, target_file
 end
 
 def skip_file(file)
