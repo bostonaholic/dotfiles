@@ -217,7 +217,7 @@ def prompt(section)
 end
 
 def response?(value)
-  STDIN.gets.chomp == value ? true : false
+  $stdin.gets.chomp == value ? true : false
 end
 
 def run(task)
@@ -255,7 +255,7 @@ end
 def prompt_to_link_file(source_file, target_file)
   puts
   print "overwrite? #{target_file} [ynaq]  "
-  case STDIN.gets.chomp
+  case $stdin.gets.chomp
   when 'y' then replace_file(source_file, target_file)
   when 'a' then replace_all(source_file, target_file)
   when 'q' then exit
