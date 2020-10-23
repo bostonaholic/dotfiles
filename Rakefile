@@ -176,9 +176,12 @@ namespace :install do
 
       system 'bash scripts/oh-my-zsh'
 
-      symlink_file "#{ENV['PWD']}/zsh/bostonaholic.zsh-theme", "#{ENV['HOME']}/.oh-my-zsh/custom/themes/bostonaholic.zsh-theme"
-      symlink_file "#{ENV['PWD']}/zsh/bostonaholic.plugin.zsh", "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/bostonaholic/bostonaholic.plugin.zsh"
-      symlink_file "#{ENV['PWD']}/zsh/nodenv.plugin.zsh", "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/nodenv/nodenv.plugin.zsh"
+      symlink_file "#{ENV['PWD']}/zsh/bostonaholic.zsh-theme",
+                   "#{ENV['HOME']}/.oh-my-zsh/custom/themes/bostonaholic.zsh-theme"
+      symlink_file "#{ENV['PWD']}/zsh/bostonaholic.plugin.zsh",
+                   "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/bostonaholic/bostonaholic.plugin.zsh"
+      symlink_file "#{ENV['PWD']}/zsh/nodenv.plugin.zsh",
+                   "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/nodenv/nodenv.plugin.zsh"
     end
   end
 
