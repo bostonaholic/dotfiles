@@ -43,3 +43,7 @@ Errors with `ssh-agent`:
 > Error connecting to agent: No such file or directory
 
 Add `zstyle :omz:plugins:ssh-agent agent-forwarding on`
+
+## Thanks
+
+Inspired by [drewbarontini/dotfiles](https://github.com/drewbarontini/dotfiles).
