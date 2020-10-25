@@ -84,6 +84,13 @@ namespace :install do
 
     if response? 'y'
       message 'Symlinking files...'
+
+      ["#{ENV['HOME']}/.boot",
+       "#{ENV['HOME']}/.lein",
+       "#{ENV['HOME']}/.gnupg"].each do |dir|
+        mkdir dir unless dir_exists? dir
+      end
+
       create_symlinks source_files, target_files
     end
   end
@@ -242,6 +249,10 @@ def file_exists?(file)
   File.exist?(file)
 end
 
+def dir_exists?(dir)
+  Dir.exist?(dir)
+end
+
 def file_missing?(file)
   !file_exists? file
 end
@@ -264,6 +275,10 @@ def prompt_to_link_file(source_file, target_file)
   when 'q' then exit
   else skip_file target_file
   end
+end
+
+def mkdir(dir_path)
+  Dir.mkdir(dir_path)
 end
 
 def link_file(source_file, destination_file)
