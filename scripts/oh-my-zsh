@@ -13,4 +13,3 @@ if [ ! -d "$DIRECTORY" ]; then
 else
     echo 'oh-my-zsh is already installed on this machine.'
 fi
-

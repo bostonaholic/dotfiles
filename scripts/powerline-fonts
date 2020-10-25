@@ -10,4 +10,3 @@ pushd fonts > /dev/null
 sh install.sh
 popd > /dev/null
 rm -rf fonts
-
