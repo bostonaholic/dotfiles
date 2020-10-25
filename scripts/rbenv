@@ -20,6 +20,10 @@ if [ ! -d "$HOME/.rbenv" ]; then
     echo 'Setting up ruby-build...'
     brew install ruby-build
 
+    # ruby-build suggests using these
+    echo 'Setting up openssl and readline...'
+    brew install openssl readline
+
     echo "rbenv is now set up! Installing latest Ruby..."
     install_global_ruby
 else
