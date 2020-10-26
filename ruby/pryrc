@@ -3,16 +3,18 @@
 
 Pry.prompt = [
   proc { |obj, nest_level, _|
-    "#{RUBY_VERSION} (#{obj}):#{nest_level} > " },
+    "#{RUBY_VERSION} (#{obj}):#{nest_level} > "
+  },
   proc { |obj, nest_level, _|
-    "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }
+    "#{RUBY_VERSION} (#{obj}):#{nest_level} * "
+  }
 ]
 
 Pry.editor = 'vim'
 
 def with_gem(gem)
   begin
-    require "#{gem}"
+    require gem.to_s
     yield if block_given?
   rescue LoadError
     puts "gem install #{gem}  # <-- highly recommended"
@@ -43,29 +45,30 @@ end
 # Stolen from https://gist.github.com/807492
 # Use Array.toy or Hash.toy to get an array or hash to play with
 class Array
-  def self.toy(n=10, &block)
-    block_given? ? Array.new(n,&block) : Array.new(n) {|i| i+1}
+  def self.toy(num = 10, &block)
+    block_given? ? Array.new(num, &block) : Array.new(num) { |i| i + 1 }
   end
 end
 
+# Monkey patch `Hash` class to add Hash.toy
 class Hash
-  def self.toy(n=10)
-    Hash[Array.toy(n).zip(Array.toy(n){|c| (96+(c+1)).chr})]
+  def self.toy(num = 10)
+    Hash[Array.toy(num).zip(Array.toy(num) { |c| (96 + (c + 1)).chr })]
   end
 end
 
-def time(&block)
+def time
   start = Time.now
   yield if block_given?
   (Time.now - start) * 1_000
 end
 
-def times(samples=1_000, &block)
+def times(samples = 1_000)
   durations = samples.times.inject([]) do |acc, _|
     acc << time { yield }
   end
   mean = durations.reduce(:+) / durations.size.to_f
-  mean_square = durations.map{|n| n * n}.reduce(:+) / durations.size.to_f
+  mean_square = durations.map { |n| n * n }.reduce(:+) / durations.size.to_f
   { samples: samples,
     mean: mean,
     mean_square: mean_square,
