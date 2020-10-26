@@ -75,6 +75,7 @@ This function should only modify configuration layer settings."
      nginx
      org
      plantuml
+     python
      react
      (ruby :variables
            ruby-version-manager 'rbenv
