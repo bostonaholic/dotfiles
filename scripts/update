@@ -5,6 +5,10 @@
 #
 ################################################################################
 
+# Git Submodules
+echo && echo "--> Updating Git Submodules"
+git submodule foreach git pull origin master
+
 # Homebrew and Homebrew Packages
 echo && echo "--> Updating Homebrew and Homebrew Packages"
 brewup
@@ -12,10 +16,6 @@ brewup
 # Gems
 echo && echo "--> Updating Ruby Gems"
 rubyup
-
-# Git Submodules
-echo && echo "--> Updating Git Submodules"
-git submodule foreach git pull origin master
 
 # Vimrc
 # https://github.com/amix/vimrc
