@@ -86,8 +86,6 @@
 
 	refresh = !git stash && git checkout master && git pull origin master && git checkout - && git rebase master && git stash pop
 
-	productivity = "!git log --pretty='%aN' | sort | uniq -c | sort -nr"
-
 	laf = fsck --lost-found
 [filter "lfs"]
 	clean = git-lfs clean -- %f
