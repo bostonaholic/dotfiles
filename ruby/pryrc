@@ -1,4 +1,5 @@
 # -*-Ruby-*-
+# frozen_string_literal: true
 
 Pry.prompt = [
   proc { |obj, nest_level, _|
