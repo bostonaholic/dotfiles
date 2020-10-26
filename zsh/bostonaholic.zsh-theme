@@ -1,3 +1,5 @@
+# -*-Shell-script-*-
+
 GIT_PS1_SHOWDIRTYSTATE=1      # display working directory state (* for modified/+ for staged)
 GIT_PS1_SHOWSTASHSTATE=1      # display stashed state ($ if there are stashed files)
 GIT_PS1_SHOWUNTRACKEDFILES=1  # display untracked state(% if there are untracked files)

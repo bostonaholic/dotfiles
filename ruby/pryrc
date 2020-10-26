@@ -1,3 +1,5 @@
+# -*-Ruby-*-
+
 Pry.prompt = [
   proc { |obj, nest_level, _|
     "#{RUBY_VERSION} (#{obj}):#{nest_level} > " },
