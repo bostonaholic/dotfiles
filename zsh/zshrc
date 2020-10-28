@@ -79,6 +79,7 @@ plugins=(
     nodenv
 
     # built-in
+    asdf
     brew
     bundler
     docker
