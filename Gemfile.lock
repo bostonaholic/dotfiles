@@ -3,7 +3,6 @@ GEM
   specs:
     ast (2.4.1)
     coderay (1.1.3)
-    ffi (1.13.1)
     method_source (1.0.0)
     parallel (1.19.2)
     parser (2.7.2.0)
@@ -13,9 +12,6 @@ GEM
       method_source (~> 1.0)
     rainbow (3.0.0)
     rake (13.0.1)
-    rb-fsevent (0.10.4)
-    rb-inotify (0.10.1)
-      ffi (~> 1.0)
     regexp_parser (1.8.2)
     rexml (3.2.4)
     rubocop (1.0.0)
@@ -30,14 +26,6 @@ GEM
     rubocop-ast (1.0.0)
       parser (>= 2.7.1.5)
     ruby-progressbar (1.10.1)
-    sass (3.7.4)
-      sass-listen (~> 4.0.0)
-    sass-listen (4.0.0)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
-    scss_lint (0.59.0)
-      sass (~> 3.5, >= 3.5.5)
-    scss_lint_reporter_checkstyle (0.2.0)
     unicode-display_width (1.7.0)
 
 PLATFORMS
@@ -47,8 +35,6 @@ DEPENDENCIES
   pry
   rake
   rubocop
-  scss_lint
-  scss_lint_reporter_checkstyle
 
 BUNDLED WITH
    2.1.4
