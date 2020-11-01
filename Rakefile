@@ -245,6 +245,8 @@ def symlink_file(source_file, target_file)
   elsif replace_all_files?
     link_file source_file, target_file
   elsif file_missing? target_file
+    link_file source_file, target_file
+  else
     prompt_to_link_file source_file, target_file
   end
 end
