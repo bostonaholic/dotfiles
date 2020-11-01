@@ -183,6 +183,11 @@ namespace :install do
 
       system 'bash scripts/oh-my-zsh'
 
+      ["#{ENV['HOME']}/.oh-my-zsh/custom/plugins/bostonaholic",
+        "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/nodenv"].each do |dir|
+        mkdir dir unless dir_exists? dir
+      end
+
       symlink_file "#{ENV['PWD']}/zsh/bostonaholic.zsh-theme",
                    "#{ENV['HOME']}/.oh-my-zsh/custom/themes/bostonaholic.zsh-theme"
       symlink_file "#{ENV['PWD']}/zsh/bostonaholic.plugin.zsh",
