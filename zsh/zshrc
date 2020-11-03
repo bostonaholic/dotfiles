@@ -80,6 +80,7 @@ plugins=(
 
     # built-in
     asdf
+    common-aliases
     brew
     bundler
     docker
