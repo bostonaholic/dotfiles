@@ -1,4 +1,5 @@
 [init]
+	defaultBranch = main
 [user]
 	name = Matthew Boston
 	email = matthew@matthewboston.com
