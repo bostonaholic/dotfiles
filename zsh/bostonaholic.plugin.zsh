@@ -23,6 +23,9 @@ alias camera_restart="sudo killall VDCAssistant"
 
 alias ip="curl https://icanhazip.com"
 
+# Git
+alias gti=git
+
 # Ruby
 alias bundle_close="bundle exec gem pristine $*"
 
