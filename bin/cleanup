@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Recursively remove files matching <pattern>
+#
+# $ cleanup <pattern>
+#
+# $ cleanup ".DS_Store"
+#
+# $ cleanup "*.elc"
+#
+
+find . -type f -name "$1" -delete

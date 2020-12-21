@@ -41,7 +41,6 @@ target_files = {
 }
 
 tasks = %w[
-  git_submodules
   symlinks
   homebrew
   rbenv
@@ -67,17 +66,6 @@ task :install do
 end
 
 namespace :install do
-  desc 'Install Git Submodules'
-  task :git_submodules do
-    prompt_to_install 'Git Submodules'
-
-    if response? 'y'
-      message 'Installing Git Submodules'
-
-      system 'bash scripts/git-submodules'
-    end
-  end
-
   desc 'Create symlinks'
   task :symlinks do
     prompt_to_install 'symlinks'

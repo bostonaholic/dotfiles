@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Run git commands in all git projects
+#
+# $ git batch status -sb
+#
+
+#
+# TODO: nested directories
+#
+
+DIRECTORIES=`ls -d */`
+
+for d in $DIRECTORIES
+do
+    if [[ -d "$d/.git" ]]
+    then
+        pushd $d > /dev/null
+        pwd
+        git $@
+        popd > /dev/null
+        echo
+    fi
+done

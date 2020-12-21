@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# Be nice to recruiters. While you're at it, try to win more business for your software agency.
+#
+# Usage:
+#  $ decruit firstname [company]
+#
+# Send a nicely worded response to an outsourced recruiting agency
+#  $ decruit Mike
+#
+# Send a nicely worded response to a company recuiter
+#  $ decruit Mike Microsoft
+#
+
+MY_FIRSTNAME=$(git config --global user.name | cut -d ' ' -f 1)
+
+RECRUITER_FIRSTNAME=$1
+shift
+COMPANY=$@
+
+CLIENT_OR_COMPANY=$([ -z $COMPANY ] && echo "client" || echo "company")
+
+if [ -z $COMPANY ]
+then
+    echo "
+Hi $RECRUITER_FIRSTNAME,
+
+Thanks for contacting me regarding the open position.
+
+However, I am extremely happy where I am now; a software agency called Test Double. We specialize in well-crafted complex web and mobile applications and are always available on contract. As a recruiter, I'm sure you're probably incentivized to only seek out full-time hires, but if your $CLIENT_OR_COMPANY's goal is to build the absolute best software (as opposed to settling for someone that will join as a W2 employee), we can help.
+
+Please let me know if your client would be interested in contracting with Test Double and I'd be happy to set up a time to chat.
+
+Cheers,
+$MY_FIRSTNAME"
+else
+    echo "
+Hi $RECRUITER_FIRSTNAME,
+
+Thanks for contacting me regarding the open position with $COMPANY.
+
+However, I am extremely happy where I am now; a software agency called Test Double. We specialize in well-crafted complex web and mobile applications and are always available on contract. As a recruiter, I'm sure you're probably incentivized to only seek out full-time hires, but if your $CLIENT_OR_COMPANY's goal is to build the absolute best software (as opposed to settling for someone that will join as a W2 employee), we can help.
+
+Please let me know if $COMPANY would be interested in contracting with Test Double and I'd be happy to set up a time to chat.
+
+Cheers,
+$MY_FIRSTNAME"
+fi

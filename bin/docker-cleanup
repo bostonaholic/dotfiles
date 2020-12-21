@@ -1,0 +1,17 @@
+#!/bin/bash
+
+function remove_dangling_volumes {
+    docker volume rm $(docker volume ls --quiet --filter dangling=true)
+}
+
+function remove_all_containers {
+    docker ps --all | sed '1 d' | awk '{print $1}' | xargs -L1 docker rm
+}
+
+function remove_all_images {
+    docker images --all | sed '1 d' | awk '{print $3}' | xargs -L1 docker rmi --force
+}
+
+ask remove_dangling_volumes
+ask remove_all_containers
+ask remove_all_images

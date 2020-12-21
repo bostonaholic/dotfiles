@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# $ porty info 3000
+# $ porty kill 3000
+
+set +x
+set -e
+
+function pids_for_port {
+    lsof -t -i :$1
+}
+
+case "$1" in
+    info)
+        lsof -i :$2
+        echo ""
+        for pid in $(pids_for_port $2)
+        do
+            ps -ef | grep --regexp=$pid
+        done
+        ;;
+    kill)
+        for pid in $(pids_for_port $2)
+        do
+            echo "kill $pid"
+            kill $pid
+        done
+        ;;
+    *)
+        echo "porty is a tool used to work with unix processes in the context of ports"
+        echo ""
+        echo "Usage:"
+        echo -e "info <port>\t Show process information"
+        echo -e "kill <port>\t Kill all processes"
+        ;;
+esac

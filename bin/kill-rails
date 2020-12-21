@@ -1,0 +1,15 @@
+#!/bin/bash
+# kill-rails
+# Author: Jake Sheehy
+#
+# Forcefully kill stuck rail server(s), spring, and puma.
+ps aux | egrep '(rails|puma|spring)' | while read line; do
+  command=$(echo $line | awk '{ print $11 }')
+  command_arg=$(echo $line | awk '{ print $12 }')
+  pid=$(echo $line | awk '{ print $2 }')
+  if [[ $command == "bin/rails" ]] || [[ $command == "rails_console" ]] || [[ $command == "spring" ]] || [[ $command == "puma" ]]
+  then
+    echo -ne "Killing command: $command $command_arg (PID $pid)\n"
+    sudo kill -9 $pid
+  fi
+done

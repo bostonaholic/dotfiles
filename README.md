@@ -6,7 +6,7 @@
 
 ```
 $ mkdir code && cd code
-$ git clone --recurse-submodules git@github.com:bostonaholic/dotfiles.git
+$ git clone git@github.com:bostonaholic/dotfiles.git
 ```
 
 ### Copy sample environment files
@@ -23,7 +23,6 @@ Fill in the `TODO` sections in each of the above environment files.
 ```
 rake install                  # Install bostonaholic/dotfiles
 rake install:brewfile         # Install Homebrew packages
-rake install:git_submodules   # Install Git Submodules
 rake install:homebrew         # Install Homebrew for managing dev packages
 rake install:nodenv           # Install nodenv for managing Node versions
 rake install:npm_packages     # Install NPM packages

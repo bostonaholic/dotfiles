@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# List committers in a project/directory/file in order of number of commits
+#
+# Show authors for whole repo:
+#   $ git authors
+#
+# Show authors for an entire directory:
+#   $ git authors <dir>
+#
+# Show authors for a single file:
+#   $ git authors <file>
+
+set -e
+git shortlog --summary "$@" \
+    | sort -nr

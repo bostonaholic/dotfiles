@@ -5,10 +5,6 @@
 #
 ################################################################################
 
-# Git Submodules
-echo && echo "--> Updating Git Submodules"
-git submodule foreach git pull origin master
-
 # Homebrew and Homebrew Packages
 echo && echo "--> Updating Homebrew and Homebrew Packages"
 brewup

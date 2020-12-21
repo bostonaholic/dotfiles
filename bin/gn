@@ -1,0 +1,44 @@
+#!/usr/bin/python
+
+#
+# Print a diff summary like:
+#
+#   $ git diff 'master~10..master' | gn
+#   4 modified files
+#   185 lines added
+#   19 lines removed
+#   +166 lines net change
+
+import sys, os, re, fileinput
+
+def get_lines(diff_lines):
+    # Added lines start with '+' but not '+++'.
+    added_lines = [line for line in diff_lines
+        if line.startswith('+') and not line.startswith('+++')]
+
+    # Removed lines start with '-' but not '---'.
+    removed_lines = [line for line in diff_lines
+        if line.startswith('-') and not line.startswith('---')]
+    return added_lines, removed_lines
+
+def file_name(diff_line):
+    return diff_line[6:]
+
+def get_modified_files(diff_lines):
+    modified_files = [line for line in diff_lines
+        if line.startswith('+++') or line.startswith('---')]
+    return set(map(file_name, modified_files))
+
+if __name__ == '__main__':
+    YELLOW = '\033[93m'
+    GREEN = '\033[92m'
+    RED = '\033[91m'
+    PURPLE = '\033[94m'
+    WHITE = '\033[0m'
+    diff_lines = list(fileinput.input())
+    added_lines, removed_lines = get_lines(diff_lines)
+    modified_files = get_modified_files(diff_lines)
+    print YELLOW + ' %4i modified files' % len(modified_files)
+    print GREEN + ' %4i lines added' % len(added_lines)
+    print RED + ' %4i lines removed' % len(removed_lines)
+    print PURPLE + '%+5i lines net change' % (len(added_lines) - len(removed_lines))

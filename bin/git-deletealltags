@@ -1,0 +1,10 @@
+#!/bin/bash
+
+for r in `git remote`
+do
+    for t in `git tag`
+    do
+        git push $r :$t
+        git tag -d $t
+    done
+done

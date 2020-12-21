@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pushd $HOME/code/dotfiles > /dev/null
+rake update
+popd > /dev/null

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# this is the script used in the ports Alfred Workflow
+
+pattern=$1
+
+PORTS=""
+if [ -z "$pattern" ]; then
+  PORTS=$(lsof -iTCP -sTCP:LISTEN)
+else
+  PORTS=$(lsof -iTCP -sTCP:LISTEN | grep -i "$pattern")
+fi
+
+
+i=0
+echo "<?xml version='1.0'?><items>"
+while read -r line; do
+  if [ $i -gt 0 ]; then
+    x=($line)
+    boop=$(cut -d ":" -f 2 <<< "${x[8]}")
+    echo "<item uid='${x[1]}' arg='' valid='yes'>
+      <title>${x[0]}: ${boop}</title>
+      <subtitle>PID: ${x[1]}</subtitle>
+      <icon>icon.png</icon>
+    </item>"
+  fi
+  ((i++))
+done <<<"$PORTS"
+echo '</items>'
