@@ -24,5 +24,4 @@ git --no-pager log --all --find-renames --find-copies --name-only --format='form
     | egrep -v '^$' \
     | sort \
     | uniq -c \
-    | sort -nr \
-    | head
+    | sort -nr
