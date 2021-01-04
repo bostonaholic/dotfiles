@@ -16,7 +16,7 @@
 	verbose = true
 	gpgsign = true
 [core]
-	excludesfile = $HOME/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	editor = vim
 [diff]
 	renames = true
