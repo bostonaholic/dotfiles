@@ -16,6 +16,7 @@ brew 'emacs-plus', # tap d12frosted/emacs-plus
      args: ['with-ctags', 'with-spacemacs-icon'],
      restart_service: :changed
 brew 'git'
+brew 'git-lfs'
 brew 'libyaml'
 cask 'ngrok'
 brew 'node'
