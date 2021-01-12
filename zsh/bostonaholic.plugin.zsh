@@ -23,6 +23,8 @@ alias camera_restart="sudo killall VDCAssistant"
 
 alias ip="curl https://icanhazip.com"
 
+alias iso8601_date="date +%Y-%m-%dT%H:%M:%S%z"
+
 # Git
 alias gti=git
 
