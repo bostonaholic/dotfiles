@@ -14,7 +14,7 @@ export LESS="--quit-if-one-screen --no-init $LESS"
 # CLI
 alias ..="cd .."
 
-alias rgrep=grep --recursive
+alias rgrep="grep --recursive"
 
 alias date_seconds="date +%s"
 alias rand="date | md5"
