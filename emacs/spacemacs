@@ -557,8 +557,6 @@ before packages are loaded."
 
                 js-indent-level 2
 
-                magit-commit-arguments (list (concat "--gpg-sign=" my/gpg-signing-key))
-
                 powerline-default-separator nil
 
                 vc-follow-symlinks t
