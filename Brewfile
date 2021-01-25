@@ -19,6 +19,7 @@ brew 'emacs-plus', # tap d12frosted/emacs-plus
      restart_service: :changed
 brew 'git'
 brew 'git-lfs'
+cask 'iterm2'
 brew 'libyaml'
 cask 'ngrok'
 brew 'node'
