@@ -9,6 +9,8 @@
 tap 'AdoptOpenJDK/openjdk'
 tap 'd12frosted/emacs-plus'
 
+# macOS Apps
+
 # Programming
 brew 'aspell'
 brew 'cloc'
