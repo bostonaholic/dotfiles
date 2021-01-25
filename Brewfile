@@ -12,6 +12,7 @@ tap 'd12frosted/emacs-plus'
 # macOS Apps
 cask '1password'
 cask 'alfred'
+cask 'caffeine'
 
 # Programming
 brew 'aspell'
