@@ -13,6 +13,7 @@ tap 'd12frosted/emacs-plus'
 cask '1password'
 cask 'alfred'
 cask 'caffeine'
+cask 'dash'
 
 # Programming
 brew 'aspell'
