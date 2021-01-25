@@ -15,6 +15,7 @@ cask '1password'
 cask 'alfred'
 cask 'caffeine'
 cask 'dash'
+cask 'sizeup'
 
 # Programming
 brew 'aspell'
