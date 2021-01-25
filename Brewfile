@@ -10,6 +10,7 @@ tap 'AdoptOpenJDK/openjdk'
 tap 'd12frosted/emacs-plus'
 
 # macOS Apps
+cask '1password'
 
 # Programming
 brew 'aspell'
