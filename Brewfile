@@ -8,6 +8,7 @@
 # Taps
 tap 'AdoptOpenJDK/openjdk'
 tap 'd12frosted/emacs-plus'
+tap 'borkdude/brew'
 
 # macOS Apps
 cask '1password'
