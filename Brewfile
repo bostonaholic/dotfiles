@@ -15,6 +15,7 @@ cask 'alfred'
 cask 'caffeine'
 cask 'dropbox'
 cask 'evernote'
+cask 'firefox'
 cask 'sizeup'
 
 # Programming
