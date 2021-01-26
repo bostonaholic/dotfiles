@@ -20,6 +20,7 @@ cask 'notion'
 cask 'rocket'
 cask 'sizeup'
 cask 'slack'
+cask 'spotify'
 
 # Programming
 brew 'aspell'
