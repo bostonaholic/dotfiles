@@ -49,6 +49,7 @@ brew 'gnutls'
 cask 'gpg-suite'
 cask 'keybase'
 brew 'pinentry-mac'
+cask 'tunnelbear'
 
 # Clojure
 cask 'adoptopenjdk11' # tap AdoptOpenJDK/openjdk
