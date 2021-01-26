@@ -13,13 +13,13 @@ tap 'borkdude/brew'
 # macOS Apps
 cask 'alfred'
 cask 'caffeine'
-cask 'dash'
 cask 'dropbox'
 cask 'sizeup'
 
 # Programming
 brew 'aspell'
 brew 'cloc'
+cask 'dash'
 brew 'emacs-plus', # tap d12frosted/emacs-plus
      args: ['with-ctags', 'with-spacemacs-icon'],
      restart_service: :changed
