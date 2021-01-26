@@ -19,6 +19,7 @@ cask 'firefox'
 cask 'notion'
 cask 'rocket'
 cask 'sizeup'
+cask 'slack'
 
 # Programming
 brew 'aspell'
