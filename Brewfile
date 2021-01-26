@@ -14,6 +14,7 @@ tap 'borkdude/brew'
 cask 'alfred'
 cask 'caffeine'
 cask 'dash'
+cask 'dropbox'
 cask 'sizeup'
 
 # Programming
