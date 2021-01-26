@@ -17,6 +17,7 @@ cask 'dropbox'
 cask 'evernote'
 cask 'firefox'
 cask 'notion'
+cask 'rocket'
 cask 'sizeup'
 
 # Programming
