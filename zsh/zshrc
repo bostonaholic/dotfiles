@@ -90,7 +90,6 @@ plugins=(
     gem
     git
     gitfast
-    golang
     gpg-agent
     lein
     node
