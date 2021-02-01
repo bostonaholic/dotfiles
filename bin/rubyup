@@ -16,9 +16,7 @@ for ruby_version in $( rbenv versions --bare )
 do
     export RBENV_VERSION=$ruby_version
 
-    echo
-    ruby --version
     gem update --system
-    echo "using rubygems \c" && gem --version
+    echo "$(ruby --version) using rubygems $(gem --version)"
     echo
 done
