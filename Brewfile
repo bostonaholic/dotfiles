@@ -60,6 +60,7 @@ brew 'borkdude/brew/clj-kondo'
 
 # JavaScript
 brew 'jslint4java'
+brew 'yarn'
 
 # Ruby
 brew 'rbenv'
