@@ -59,6 +59,7 @@ brew 'leiningen'
 brew 'borkdude/brew/clj-kondo'
 
 # JavaScript
+brew 'jq'
 brew 'jslint4java'
 brew 'yarn'
 
