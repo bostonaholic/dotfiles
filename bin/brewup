@@ -6,4 +6,5 @@ brew update && \
   brew doctor --verbose && \
   brew outdated && \
   brew outdated --cask && \
-  brew cleanup -s
+  brew cleanup -s && \
+  rm -rf "$(brew --cache)"
