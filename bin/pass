@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Using built-in dictionary
+# sed -n $1p /usr/share/dict/words
+
+# Using word list file
+# One can be found from EFF: https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases
+cat /usr/local/etc/wordlist.txt | grep $1
