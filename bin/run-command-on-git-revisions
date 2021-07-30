@@ -8,7 +8,7 @@
 #     https://github.com/garybernhardt/dotfiles
 #
 # Example usage:
-#     $ run-command-on-git-revisions origin/master master 'python runtests.py'
+#     $ run-command-on-git-revisions origin/main main 'python runtests.py'
 
 set -e
 

@@ -67,7 +67,7 @@
 	ft = fetch --tags
 	fa = fetch --all --tags
 
-	upstream = "!git fetch upstream; git merge upstream/master"
+	upstream = "!git fetch upstream; git merge upstream/main"
 	u = !git upstream
 
 	l = "!. $HOME/.githelpers && pretty_git_log"
@@ -89,7 +89,7 @@
 
 	st = status --short --branch
 
-	refresh = !git stash && git checkout master && git pull origin master && git checkout - && git rebase master && git stash pop
+	refresh = !git stash && git checkout main && git pull origin main && git checkout - && git rebase main && git stash pop
 
 	laf = fsck --lost-found
 [filter "lfs"]

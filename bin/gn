@@ -3,7 +3,7 @@
 #
 # Print a diff summary like:
 #
-#   $ git diff 'master~10..master' | gn
+#   $ git diff 'main~10..main' | gn
 #   293 lines of diff
 #   185 lines (+200, -15)
 #   650 words (+10, -660)
