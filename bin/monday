@@ -1,5 +1,5 @@
 #!/bin/bash
 
 pushd $HOME/code/dotfiles > /dev/null
-rake update
+bashful run monday.yml
 popd > /dev/null
