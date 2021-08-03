@@ -16,12 +16,7 @@ rubyup
 # Vimrc
 # https://github.com/amix/vimrc
 echo && echo "--> Updating Vimrc from https://github.com/amix/vimrc"
-pushd $HOME/.vim_runtime > /dev/null
-git clean -d --force
-git reset --hard
-git pull --rebase
-python update_plugins.py
-popd > /dev/null
+vimup
 
 # Spacemacs
 # https://github.com/syl20bnr/spacemacs
