@@ -26,6 +26,4 @@ popd > /dev/null
 # Spacemacs
 # https://github.com/syl20bnr/spacemacs
 echo && echo "--> Updating Spacemacs from https://github.com/syl20bnr/spacemacs"
-pushd $HOME/.emacs.d > /dev/null
-git pull --rebase
-popd > /dev/null
+spacemacsup
