@@ -9,6 +9,7 @@
 tap 'AdoptOpenJDK/openjdk'
 tap 'd12frosted/emacs-plus'
 tap 'borkdude/brew'
+tap 'wagoodman/bashful'
 
 # macOS Apps
 cask 'alfred'
@@ -73,6 +74,7 @@ brew 'readline'
 # Unix
 brew 'ack'
 brew 'autoenv'
+brew 'bashful'
 brew 'curl'
 brew 'htop'
 brew 'httpie'
