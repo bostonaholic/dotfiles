@@ -20,6 +20,7 @@
 [core]
 	excludesfile = ~/.gitignore_global
 	editor = vim
+	logAllRefUpdates = always
 [diff]
 	renames = true
 	noprefix = true
