@@ -55,6 +55,19 @@ It might be that Homebrew's version of `gpg` needs the symlink overwritten.
 
 `$ brew link --overwrite gnupg`
 
+Or
+
+```
+error: gpg failed to sign the data
+fatal: failed to write commit object
+```
+
+Try:
+
+```
+gpgconf --kil gpg-agent
+```
+
 ## Thanks
 
 Inspired by [drewbarontini/dotfiles](https://github.com/drewbarontini/dotfiles).
