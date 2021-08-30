@@ -47,13 +47,17 @@ Add `zstyle :omz:plugins:ssh-agent agent-forwarding on`
 
 Errors with `/usr/local/bin/gpg` not in the `$PATH`
 
-> fatal: cannot run /usr/local/bin/gpg: No such file or directory
-> error: gpg failed to sign the data
-> fatal: failed to write commit object
+```
+fatal: cannot run /usr/local/bin/gpg: No such file or directory
+error: gpg failed to sign the data
+fatal: failed to write commit object
+```
 
 It might be that Homebrew's version of `gpg` needs the symlink overwritten.
 
-`$ brew link --overwrite gnupg`
+```
+brew link --overwrite gnupg
+```
 
 Or
 
