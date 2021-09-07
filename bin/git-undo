@@ -32,6 +32,16 @@ Git has no undo feature, but maybe these will help:
   git add <file>
   git commit --amend --no-edit
 
+## Undoing an amend
+
+  Move head to the old commit
+  ---------------------------
+  git reset --soft HEAD@{1}
+
+  Re-commit the current tree reusing the commit message
+  ------------------------------------------------------------
+  git commit -C HEAD@{1}
+
 ## Discard uncommitted changes
 
   Discard all uncommitted changes in your working directory
