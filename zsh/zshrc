@@ -79,9 +79,9 @@ plugins=(
     nodenv
 
     # built-in
-    common-aliases
     brew
     bundler
+    common-aliases
     docker
     docker-compose
     emacs
