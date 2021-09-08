@@ -93,7 +93,6 @@ plugins=(
     npm
     postgres
     rails
-    rbenv
     ruby
     ssh-agent
     yarn

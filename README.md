@@ -27,7 +27,6 @@ rake install:homebrew         # Install Homebrew for managing dev packages
 rake install:npm_packages     # Install NPM packages
 rake install:oh-my-zsh        # Install oh-my-zsh configuration for ZSH
 rake install:powerline_fonts  # Install Powerline Fonts
-rake install:rbenv            # Install rbenv for managing Ruby versions
 rake install:spacemacs        # Install Spacemacs configuration for Emacs
 rake install:symlinks         # Create symlinks
 rake install:vimrc            # Install vimrc configuration for Vim

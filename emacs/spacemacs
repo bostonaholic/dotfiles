@@ -78,7 +78,7 @@ This function should only modify configuration layer settings."
      python
      react
      (ruby :variables
-           ruby-version-manager 'rbenv
+           ;; ruby-version-manager 'asdf
            ruby-enable-enh-ruby-mode t)
      ruby-on-rails
      ;; (shell :variables

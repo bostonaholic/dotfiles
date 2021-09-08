@@ -41,7 +41,6 @@ target_files = {
 tasks = %w[
   symlinks
   homebrew
-  rbenv
   brewfile
   npm_packages
   spacemacs
@@ -88,17 +87,6 @@ namespace :install do
       message 'Installing homebrew'
 
       system 'bash scripts/homebrew'
-    end
-  end
-
-  desc 'Install rbenv for managing Ruby versions'
-  task :rbenv do
-    prompt_to_install 'rbenv'
-
-    if response? 'y'
-      message 'Installing rbenv...'
-
-      system 'bash scripts/rbenv'
     end
   end
 
