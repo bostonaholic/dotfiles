@@ -50,7 +50,6 @@ brew 'jslint4java'
 brew 'yarn'
 
 # Ruby
-brew 'ruby-build'
 # ruby-build suggests using these
 brew 'openssl'
 brew 'readline'
