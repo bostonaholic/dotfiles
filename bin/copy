@@ -6,6 +6,7 @@
 
 rsync --verbose \
       --archive \
+      --compress \
       --progress \
       --stats \
       --human-readable \

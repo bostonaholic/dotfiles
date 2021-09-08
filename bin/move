@@ -7,6 +7,7 @@
 rsync --vebose \
       --remove-source-files \
       --archive \
+      --compress \
       --progress \
       --stats \
       --human-readable \
