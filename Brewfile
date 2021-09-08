@@ -11,28 +11,14 @@ tap 'd12frosted/emacs-plus'
 tap 'borkdude/brew'
 tap 'wagoodman/bashful'
 
-# macOS Apps
-cask 'alfred'
-cask 'caffeine'
-cask 'dropbox'
-cask 'evernote'
-cask 'firefox'
-cask 'notion'
-cask 'rocket'
-cask 'sizeup'
-cask 'slack'
-cask 'spotify'
-
 # Programming
 brew 'aspell'
 brew 'cloc'
-cask 'dash'
 brew 'emacs-plus', # tap d12frosted/emacs-plus
      args: %w[with-ctags with-spacemacs-icon],
      restart_service: :changed
 brew 'git'
 brew 'git-lfs'
-cask 'iterm2'
 brew 'libyaml'
 cask 'ngrok'
 brew 'node'
@@ -50,7 +36,6 @@ brew 'gnutls'
 cask 'gpg-suite'
 cask 'keybase'
 brew 'pinentry-mac'
-cask 'tunnelbear'
 
 # Clojure
 cask 'adoptopenjdk11' # tap AdoptOpenJDK/openjdk
