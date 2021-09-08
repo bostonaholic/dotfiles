@@ -24,7 +24,6 @@ Fill in the `TODO` sections in each of the above environment files.
 rake install                  # Install bostonaholic/dotfiles
 rake install:brewfile         # Install Homebrew packages
 rake install:homebrew         # Install Homebrew for managing dev packages
-rake install:nodenv           # Install nodenv for managing Node versions
 rake install:npm_packages     # Install NPM packages
 rake install:oh-my-zsh        # Install oh-my-zsh configuration for ZSH
 rake install:powerline_fonts  # Install Powerline Fonts

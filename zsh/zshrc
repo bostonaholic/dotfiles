@@ -76,7 +76,6 @@ ZSH_THEME="bostonaholic"
 plugins=(
     # custom
     bostonaholic
-    nodenv
 
     # built-in
     brew

@@ -12,7 +12,6 @@ source_files = {
   jsbeautifyrc: "#{ENV['PWD']}/javascript/jsbeautifyrc",
   jshintrc: "#{ENV['PWD']}/javascript/jshintrc",
   lein_profiles: "#{ENV['PWD']}/clojure/profiles.clj",
-  node_version: "#{ENV['PWD']}/node/node-version",
   pryrc: "#{ENV['PWD']}/ruby/pryrc",
   qwerty: "#{ENV['PWD']}/keyboard/qwerty.txt",
   rspec: "#{ENV['PWD']}/ruby/rspec",
@@ -31,7 +30,6 @@ target_files = {
   jsbeautifyrc: "#{ENV['HOME']}/.jsbeautifyrc",
   jshintrc: "#{ENV['HOME']}/.jshintrc",
   lein_profiles: "#{ENV['HOME']}/.lein/profiles.clj",
-  node_version: "#{ENV['HOME']}/.node-version",
   pryrc: "#{ENV['HOME']}/.pryrc",
   qwerty: "#{ENV['HOME']}/qwerty.txt",
   rspec: "#{ENV['HOME']}/.rspec",
@@ -45,7 +43,6 @@ tasks = %w[
   homebrew
   rbenv
   brewfile
-  nodenv
   npm_packages
   spacemacs
   vimrc
@@ -116,17 +113,6 @@ namespace :install do
     end
   end
 
-  desc 'Install nodenv for managing Node versions'
-  task :nodenv do
-    prompt_to_install 'nodenv'
-
-    if response? 'y'
-      message 'Installing nodenv...'
-
-      system 'bash scripts/nodenv'
-    end
-  end
-
   desc 'Install NPM packages'
   task :npm_packages do
     prompt_to_install 'NPM Packages'
@@ -171,8 +157,7 @@ namespace :install do
 
       system 'bash scripts/oh-my-zsh'
 
-      ["#{ENV['HOME']}/.oh-my-zsh/custom/plugins/bostonaholic",
-        "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/nodenv"].each do |dir|
+      ["#{ENV['HOME']}/.oh-my-zsh/custom/plugins/bostonaholic"].each do |dir|
         mkdir dir unless dir_exists? dir
       end
 
@@ -180,8 +165,6 @@ namespace :install do
                    "#{ENV['HOME']}/.oh-my-zsh/custom/themes/bostonaholic.zsh-theme"
       symlink_file "#{ENV['PWD']}/zsh/bostonaholic.plugin.zsh",
                    "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/bostonaholic/bostonaholic.plugin.zsh"
-      symlink_file "#{ENV['PWD']}/zsh/nodenv.plugin.zsh",
-                   "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/nodenv/nodenv.plugin.zsh"
     end
   end
 
