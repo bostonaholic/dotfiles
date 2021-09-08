@@ -78,6 +78,7 @@ plugins=(
     bostonaholic
 
     # built-in
+    asdf
     brew
     bundler
     common-aliases
