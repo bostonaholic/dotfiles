@@ -5,7 +5,6 @@ require 'rake'
 source_files = {
   boot_properties: "#{ENV['PWD']}/clojure/boot.properties",
   gitconfig: "#{ENV['PWD']}/git/gitconfig",
-  procore_gitconfig: "#{ENV['PWD']}/git/procore_gitconfig",
   githelpers: "#{ENV['PWD']}/git/githelpers",
   gitignore_global: "#{ENV['PWD']}/git/gitignore_global",
   gpg_agent_conf: "#{ENV['PWD']}/gpg/gpg-agent.conf",
@@ -25,7 +24,6 @@ source_files = {
 target_files = {
   boot_properties: "#{ENV['HOME']}/.boot/boot.properties",
   gitconfig: "#{ENV['HOME']}/.gitconfig",
-  procore_gitconfig: "#{ENV['HOME']}/.procore_gitconfig",
   githelpers: "#{ENV['HOME']}/.githelpers",
   gitignore_global: "#{ENV['HOME']}/.gitignore_global",
   gpg_agent_conf: "#{ENV['HOME']}/.gnupg/gpg-agent.conf",
@@ -174,7 +172,6 @@ namespace :install do
       system 'bash scripts/oh-my-zsh'
 
       ["#{ENV['HOME']}/.oh-my-zsh/custom/plugins/bostonaholic",
-        "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/procore",
         "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/nodenv"].each do |dir|
         mkdir dir unless dir_exists? dir
       end
@@ -183,8 +180,6 @@ namespace :install do
                    "#{ENV['HOME']}/.oh-my-zsh/custom/themes/bostonaholic.zsh-theme"
       symlink_file "#{ENV['PWD']}/zsh/bostonaholic.plugin.zsh",
                    "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/bostonaholic/bostonaholic.plugin.zsh"
-      symlink_file "#{ENV['PWD']}/zsh/procore.plugin.zsh",
-                   "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/procore/procore.plugin.zsh"
       symlink_file "#{ENV['PWD']}/zsh/nodenv.plugin.zsh",
                    "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/nodenv/nodenv.plugin.zsh"
     end

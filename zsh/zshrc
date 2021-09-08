@@ -79,8 +79,6 @@ plugins=(
     nodenv
 
     # built-in
-    asdf
-    procore # overwrites asdf command
     common-aliases
     brew
     bundler

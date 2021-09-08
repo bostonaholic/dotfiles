@@ -4,8 +4,6 @@
 	name = Matthew Boston
 	email = matthew@matthewboston.com
 	signingkey = 2114586C7C49B659
-[includeIf "gitdir:~/code/procore/"]
-  path = ./.procore_gitconfig
 [github]
 	user = bostonaholic
 [gpg]
