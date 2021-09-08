@@ -11,7 +11,7 @@ if [[ $FOUND_NODENV -ne 1 ]]; then
         if [[ -d $dir/bin ]]; then
             export PATH="$dir/bin:$PATH"
             FOUND_NODENV=1
-            breakp
+            break
         fi
     done
 fi
