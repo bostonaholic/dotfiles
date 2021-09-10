@@ -9,6 +9,7 @@
 tap 'AdoptOpenJDK/openjdk'
 tap 'd12frosted/emacs-plus'
 tap 'borkdude/brew'
+tap 'homebrew/cask'
 tap 'wagoodman/bashful'
 
 # Programming
