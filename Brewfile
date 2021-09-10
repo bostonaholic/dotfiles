@@ -23,7 +23,6 @@ brew 'git'
 brew 'git-lfs'
 brew 'libyaml'
 cask 'ngrok'
-cask 'postman'
 brew 'tmux'
 brew 'vim'
 brew 'zsh'
@@ -33,8 +32,6 @@ brew 'zsh-completions'
 brew 'gnupg'
 brew 'gnupg2'
 brew 'gnutls'
-cask 'gpg-suite'
-cask 'keybase'
 brew 'pinentry-mac'
 
 # Clojure
@@ -75,4 +72,3 @@ brew 'dfu-util'  # Device Firmware Upgrade Utilities
 brew 'graphviz'
 brew 'markdown'
 brew 'ossp-uuid' # ISO-C API and CLI for generating UUIDs
-cask 'vlc'
