@@ -5,9 +5,6 @@ tasks:
       - name: Updating Homebrew and Homebrew Packages
         cmd: brewup
 
-      - name: Updating Ruby Gems
-        cmd: rubyup
-
       - name: Updating Vimrc from https://github.com/amix/vimrc
         cmd: vimup
 

@@ -9,10 +9,6 @@
 echo && echo "--> Updating Homebrew and Homebrew Packages"
 brewup
 
-# Gems
-echo && echo "--> Updating Ruby Gems"
-rubyup
-
 # Vimrc
 # https://github.com/amix/vimrc
 echo && echo "--> Updating Vimrc from https://github.com/amix/vimrc"
