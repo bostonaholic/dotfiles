@@ -97,7 +97,6 @@ plugins=(
     ruby
     ssh-agent
     yarn
-    zsh_reload
 )
 
 source $ZSH/oh-my-zsh.sh
