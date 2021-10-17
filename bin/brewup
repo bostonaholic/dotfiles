@@ -5,18 +5,25 @@ WHITE_BOLD='\033[1;37m'
 NO_COLOR='\033[0m'
 
 printf "${GREEN}===>${WHITE_BOLD} brew update${NO_COLOR}\n" && \
-    brew update && \
-    printf "${GREEN}===>${WHITE_BOLD} brew upgrade${NO_COLOR}\n" && \
-    brew upgrade && \
-    printf "${GREEN}===>${WHITE_BOLD} brew upgrade --cask${NO_COLOR}\n" && \
-    brew upgrade --cask && \
-    printf "${GREEN}===>${WHITE_BOLD} brew doctor --verbose${NO_COLOR}\n"  && \
-    brew doctor --verbose && \
-    printf "${GREEN}===>${WHITE_BOLD} brew outdated${NO_COLOR}\n" && \
-    brew outdated && \
-    printf "${GREEN}===>${WHITE_BOLD} brew outdated --cask${NO_COLOR}\n" && \
-    brew outdated --cask && \
-    printf "${GREEN}===>${WHITE_BOLD} brew cleanup -s${NO_COLOR}\n" && \
-    brew cleanup -s && \
-    printf "${GREEN}===>${WHITE_BOLD} rm -rf $(brew --cache)${NO_COLOR}\n" && \
+    brew update
+
+printf "${GREEN}===>${WHITE_BOLD} brew upgrade${NO_COLOR}\n" && \
+    brew upgrade
+
+printf "${GREEN}===>${WHITE_BOLD} brew upgrade --cask${NO_COLOR}\n" && \
+    brew upgrade --cask
+
+printf "${GREEN}===>${WHITE_BOLD} brew doctor --verbose${NO_COLOR}\n"  && \
+    brew doctor --verbose
+
+printf "${GREEN}===>${WHITE_BOLD} brew outdated${NO_COLOR}\n" && \
+    brew outdated
+
+printf "${GREEN}===>${WHITE_BOLD} brew outdated --cask${NO_COLOR}\n" && \
+    brew outdated --cask
+
+printf "${GREEN}===>${WHITE_BOLD} brew cleanup -s${NO_COLOR}\n" && \
+    brew cleanup -s
+
+printf "${GREEN}===>${WHITE_BOLD} rm -rf $(brew --cache)${NO_COLOR}\n" && \
     rm -rf "$(brew --cache)"
