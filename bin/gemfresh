@@ -6,10 +6,7 @@
 
 set -euo pipefail
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NO_COLOR='\033[0m'
-CLEAR_LINE='\r\033[K'
+source $HOME/.colors
 
 while getopts ":h" opt; do
   case "${opt}" in

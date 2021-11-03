@@ -1,8 +1,6 @@
 #!/bin/bash
 
-GREEN='\033[0;32m'
-WHITE_BOLD='\033[1;37m'
-NO_COLOR='\033[0m'
+source $HOME/.colors
 
 function remove_all_containers {
     docker ps --all | sed '1 d' | awk '{print $1}' | xargs -L1 docker rm
