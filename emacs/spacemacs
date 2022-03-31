@@ -60,7 +60,7 @@ This function should only modify configuration layer settings."
                              :password my/circleci-irc-pwd)))
      (git :variables
           git-magit-status-fullscreen t
-          magit-repository-directories '("~/code/"))
+          magit-repository-directories '(("~/code/")))
      graphviz
      helm
      html
