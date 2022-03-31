@@ -61,8 +61,9 @@ This function should only modify configuration layer settings."
      (git :variables
           git-magit-status-fullscreen t
           git-enable-github-support t
-          git-gutter-use-fringe t)
      github
+          git-gutter-use-fringe t
+          magit-repository-directories '("~/code/"))
      graphviz
      helm
      html
