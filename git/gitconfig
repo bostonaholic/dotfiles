@@ -60,6 +60,7 @@
 	psu = push --set-upstream
 
 	di = diff
+  dh = diff HEAD
 	dc = diff --cached
 	ds = diff --staged
 	dw = diff --word-diff=plain
