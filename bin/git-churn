@@ -21,7 +21,7 @@
 
 set -e
 git --no-pager log --all --find-renames --find-copies --name-only --format='format:' "$@" \
-    | egrep -v '^$' \
+    | grep -Ev '^$' \
     | sort \
     | uniq -c \
     | sort -nr

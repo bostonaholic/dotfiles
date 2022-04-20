@@ -8,10 +8,10 @@
 DIRECTORY="$HOME/.emacs.d"
 
 if [ ! -d "$DIRECTORY" ]; then
-    git clone https://github.com/syl20bnr/spacemacs $DIRECTORY
-    pushd $DIRECTORY > /dev/null
+    git clone https://github.com/syl20bnr/spacemacs "$DIRECTORY"
+    pushd "$DIRECTORY" > /dev/null || exit
     git checkout develop
-    popd > /dev/null
+    popd > /dev/null || exit
     echo "Done!"
 else
     echo 'Spacemacs is already installed on this machine.'

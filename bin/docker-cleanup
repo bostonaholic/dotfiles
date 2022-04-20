@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source $HOME/.colors
+# shellcheck disable=SC1091
+source "${HOME}/.colors"
 
 function remove_all_containers {
     docker ps --all | sed '1 d' | awk '{print $1}' | xargs -L1 docker rm
@@ -11,17 +12,18 @@ function remove_all_images {
 }
 
 function remove_dangling_volumes {
-    local dangling_volumes=$(docker volume ls --quiet --filter dangling=true)
+    dangling_volumes="$(docker volume ls --quiet --filter dangling=true)"
+    local dangling_volumes
     if [ -n "$dangling_volumes" ]; then
-        docker volume rm $dangling_volumes
+        docker volume rm "$dangling_volumes"
     fi
 }
 
-printf "${GREEN}===>${WHITE_BOLD} remove all containers${NO_COLOR}\n" && \
+printf "%b===>%b remove all containers%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR} "&& \
     remove_all_containers
 
-printf "${GREEN}===>${WHITE_BOLD} remove all images${NO_COLOR}\n" && \
+printf "%b===>%b remove all images%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
     remove_all_images
 
-printf "${GREEN}===>${WHITE_BOLD} remove dangling volumes${NO_COLOR}\n" && \
+printf "%b===>%b remove dangling volumes%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
     remove_dangling_volumes

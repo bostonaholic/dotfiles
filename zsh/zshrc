@@ -1,16 +1,18 @@
+#!/bin/bash
+
 # -*-Shell-script-*-
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/python/libexec/bin:$PATH
+export PATH="${HOME}/bin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/python/libexec/bin:${PATH}"
 
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH="${HOME}/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="bostonaholic"
+export ZSH_THEME="bostonaholic"
 ## NOTE: List of themes that I like.
 #
 # wuffers
@@ -98,8 +100,10 @@ plugins=(
     ssh-agent
     yarn
 )
+export plugins
 
-source $ZSH/oh-my-zsh.sh
+# shellcheck disable=SC1091
+source "${ZSH}/oh-my-zsh.sh"
 
 # User configuration
 
@@ -130,7 +134,8 @@ source $ZSH/oh-my-zsh.sh
 # ruby-build installs a non-Homebrew OpenSSL for each Ruby version installed and these are never upgraded.
 # To link Rubies to Homebrew's OpenSSL 1.1 (which is upgraded) add the following to your ~/.zshrc:
 # Note: this may interfere with building old versions of Ruby (e.g <2.4) that use OpenSSL <1.1.
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+export RUBY_CONFIGURE_OPTS
 
 # Activate zsh-completions
 if type brew &>/dev/null; then

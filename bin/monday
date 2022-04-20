@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pushd $HOME/code/dotfiles > /dev/null
+pushd "${HOME}/code/dotfiles" > /dev/null || exit
 bashful run monday.yml
-popd > /dev/null
+popd > /dev/null || exit

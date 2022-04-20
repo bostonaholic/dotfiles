@@ -28,35 +28,35 @@ main() {
 enforce_usage() {
     if [ -z "$test_command" ]; then
         usage
-        exit $E_BADARGS
+        exit "$E_BADARGS"
     fi
 }
 
 usage() {
-    echo "usage: `basename $0` start_ref end_ref test_command"
+    echo "usage: $(basename "$0") start_ref end_ref test_command"
 }
 
 run_tests() {
-    revs=`log_command git rev-list --reverse ${start_ref}..${end_ref}`
+    revs=$(log_command git rev-list --reverse "${start_ref}".."${end_ref}")
 
     for rev in $revs; do
-        debug "Checking out: $(git log --oneline -1 $rev)"
-        log_command git checkout --quiet $rev
-        log_command $test_command
+        debug "Checking out: $(git log --oneline -1 "$rev")"
+        log_command git checkout --quiet "$rev"
+        log_command "$test_command"
         log_command git reset --hard
     done
-    log_command git checkout --quiet $end_ref
+    log_command git checkout --quiet "$end_ref"
     debug "OK for all revisions!"
 }
 
 log_command() {
     debug "=> $*"
-    eval $*
+    eval "$*"
 }
 
 debug() {
     if [ $verbose ]; then
-        echo $* >&2
+        echo "$*" >&2
     fi
 }
 

@@ -1,6 +1,8 @@
+#!/bin/bash
+
 export PATH=$HOME/code/dotfiles/bin:$PATH
 
-EDITOR=vi
+export EDITOR=vi
 
 ### ALIASES ###
 
@@ -32,8 +34,12 @@ alias iso8601_date="date +%Y-%m-%dT%H:%M:%S%z"
 alias gti=git
 
 # Ruby
-alias bundle_close="bundle exec gem pristine $*"
+function bundle_close() {
+    bundle exec gem pristine "$*"
+}
 
 # Clojure
 #alias clj="lein repl $*"
-alias cljs="planck $*"
+function cljs() {
+    planck "$*"
+}

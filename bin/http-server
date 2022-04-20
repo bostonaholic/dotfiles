@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pushd $HOME/code/bostonaholic/http-server > /dev/null
+pushd "${HOME}/code/bostonaholic/http-server" > /dev/null || exit
 yarn run start
-popd > /dev/null
+popd > /dev/null || exit

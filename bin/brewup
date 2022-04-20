@@ -1,27 +1,28 @@
 #!/bin/bash
 
+# shellcheck disable=SC1091
 source "${HOME}/.colors"
 
-printf "${GREEN}===>${WHITE_BOLD} brew update${NO_COLOR}\n" && \
+printf "%b===>%b brew update%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
     brew update
 
-printf "${GREEN}===>${WHITE_BOLD} brew upgrade${NO_COLOR}\n" && \
+printf "%b===>%b brew upgrade%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
     brew upgrade
 
-printf "${GREEN}===>${WHITE_BOLD} brew upgrade --cask${NO_COLOR}\n" && \
+printf "%b===>%b brew upgrade --cask%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
     brew upgrade --cask
 
-printf "${GREEN}===>${WHITE_BOLD} brew doctor --verbose${NO_COLOR}\n"  && \
+printf "%b===>%b brew doctor --verbose%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
     brew doctor --verbose
 
-printf "${GREEN}===>${WHITE_BOLD} brew outdated${NO_COLOR}\n" && \
+printf "%b===>%b brew outdated%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
     brew outdated
 
-printf "${GREEN}===>${WHITE_BOLD} brew outdated --cask${NO_COLOR}\n" && \
+printf "%b===>%b brew outdated --cask%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
     brew outdated --cask
 
-printf "${GREEN}===>${WHITE_BOLD} brew cleanup -s${NO_COLOR}\n" && \
+printf "%b===>%b brew cleanup -s%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
     brew cleanup -s
 
-printf "${GREEN}===>${WHITE_BOLD} rm -rf $(brew --cache)${NO_COLOR}\n" && \
+printf "%b===>%b rm -rf $(brew --cache)%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
     rm -rf "$(brew --cache)"

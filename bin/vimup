@@ -1,8 +1,8 @@
 #!/bin/bash
 
-pushd "${HOME}/.vim_runtime" > /dev/null
+pushd "${HOME}/.vim_runtime" > /dev/null || exit
 git clean -d --force
 git reset --hard
 git pull --rebase
 python update_plugins.py
-popd > /dev/null
+popd > /dev/null || exit

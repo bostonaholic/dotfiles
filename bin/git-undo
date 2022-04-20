@@ -64,7 +64,7 @@ Git has no undo feature, but maybe these will help:
 
 ## Recovering work after a hard reset
 
-  Restore work after you've done a `git reset --hard`
+  Restore work after you've done a 'git reset --hard'
   ---------------------------------------------------
   $ git reflog
     1a75c1d... HEAD@{0}: reset --hard HEAD^: updating HEAD

@@ -1,4 +1,5 @@
-# -*-Shell-script-*-
+#!/bin/bash
+# shellcheck disable=SC1087,SC2016,SC2034,SC2154,SC2168
 
 GIT_PS1_SHOWDIRTYSTATE=1      # display working directory state (* for modified/+ for staged)
 GIT_PS1_SHOWSTASHSTATE=1      # display stashed state ($ if there are stashed files)
@@ -12,6 +13,7 @@ GIT_PS1_HIDE_IF_PWD_IGNORED=  # do nothing if pwd is ignored by git
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[white]%}git:(%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg[white]%})%{$reset_color%} "
+ZSH_THEME_GIT_PROMPT_DIRTY="*"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 
 ZSH_THEME_RUBY_PROMPT_PREFIX="%{$fg[white]%}ruby:(%{$reset_color%}"
