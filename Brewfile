@@ -60,6 +60,7 @@ brew 'httpie'
 brew 'nmap'
 brew 'rg'
 brew 'rlwrap'
+brew 'shellcheck'
 brew 'the_silver_searcher'
 brew 'tree'
 
