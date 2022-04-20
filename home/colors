@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 export CLEAR_LINE='\r\033[K'
 export GREEN='\033[0;32m'

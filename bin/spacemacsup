@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 pushd "${HOME}/.emacs.d" > /dev/null
 git pull --rebase

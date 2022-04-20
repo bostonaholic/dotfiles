@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 pushd "${HOME}/.vim_runtime" > /dev/null
 git clean -d --force
