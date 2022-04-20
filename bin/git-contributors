@@ -13,7 +13,7 @@ curl --silent -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/
          > /tmp/repos
 
 rm /tmp/users 2>/dev/null
-while read REPO;do
+while read REPO; do
     curl -H "Authorization: token ${GITHUB_TOKEN}" "${REPO}/contributors" 2>/dev/null | jq --raw-output '.[].login' >> /tmp/users
 done < /tmp/repos
 
