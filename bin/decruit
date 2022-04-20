@@ -20,8 +20,7 @@ COMPANY=$@
 
 CLIENT_OR_COMPANY=$([ -z $COMPANY ] && echo "client" || echo "company")
 
-if [ -z $COMPANY ]
-then
+if [ -z $COMPANY ]; then
     echo "
 Hi $RECRUITER_FIRSTNAME,
 
