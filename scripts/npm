@@ -12,6 +12,6 @@ packages=(
   tern
 )
 
-for package in ${packages[@]}; do
-  npm install -g $package
+for package in "${packages[@]}"; do
+  npm install -g "$package"
 done

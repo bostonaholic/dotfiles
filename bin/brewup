@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $HOME/.colors
+source "${HOME}/.colors"
 
 printf "${GREEN}===>${WHITE_BOLD} brew update${NO_COLOR}\n" && \
     brew update

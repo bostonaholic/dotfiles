@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-pushd $HOME/.emacs.d > /dev/null
+pushd "${HOME}/.emacs.d" > /dev/null
 git pull --rebase
 popd > /dev/null

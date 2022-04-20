@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pushd $HOME/.vim_runtime > /dev/null
+pushd "${HOME}/.vim_runtime" > /dev/null
 git clean -d --force
 git reset --hard
 git pull --rebase
