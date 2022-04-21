@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 # Using built-in dictionary
 # sed -n $1p /usr/share/dict/words
 

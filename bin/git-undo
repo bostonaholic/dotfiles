@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+set -euo pipefail
+
 cat <<TEXT
 
 Git has no undo feature, but maybe these will help:

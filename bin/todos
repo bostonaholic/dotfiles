@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 TAGS="FIXME|HACK|NOTE|TODO|XXX"
 
 rg $TAGS

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 for r in $(git remote)
 do
     for t in $(git tag)

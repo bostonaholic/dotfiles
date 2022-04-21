@@ -3,5 +3,6 @@
 # Show the age of a file
 #   $ git age <file>
 
-set -e
+set -euo pipefail
+
 git log -1 --format="%ad" -- "$@"

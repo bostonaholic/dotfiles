@@ -1,2 +1,5 @@
-# SSH
+#!/bin/bash
+
+set -euo pipefail
+
 ssh -R1337:localhost:22 matthew@pairwith.matthewboston.com

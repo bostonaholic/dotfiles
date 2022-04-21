@@ -2,6 +2,9 @@
 # kill-rails
 # Author: Jake Sheehy
 #
+
+set -euo pipefail
+
 # Forcefully kill stuck rail server(s), spring, and puma.
 pgrep '(rails|puma|spring)' | while read -r line; do
   command=$(echo "$line" | awk '{ print $11 }')

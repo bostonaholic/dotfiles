@@ -1,4 +1,6 @@
 #!/bin/bash
 
+set -euo pipefail
+
 # Delete local branches which have already been merged into the current HEAD
 git branch --merged | grep -v "\*" | xargs -n 1 git branch -d

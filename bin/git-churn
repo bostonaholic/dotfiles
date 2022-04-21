@@ -19,7 +19,7 @@
 #
 # (These are all standard arguments to `git log`.)
 
-set -e
+set -euo pipefail
 git --no-pager log --all --find-renames --find-copies --name-only --format='format:' "$@" \
     | grep -Ev '^$' \
     | sort \

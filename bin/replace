@@ -6,6 +6,8 @@
 #
 # replace foo bar **/*.rb
 
+set -euo pipefail
+
 find_this="$1"
 shift
 replace_with="$1"

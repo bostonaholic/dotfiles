@@ -9,6 +9,8 @@
 # TODO: nested directories
 #
 
+set -euo pipefail
+
 DIRECTORIES=$(ls -d "*/")
 
 for d in $DIRECTORIES
