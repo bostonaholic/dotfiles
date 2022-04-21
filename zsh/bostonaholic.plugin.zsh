@@ -39,7 +39,6 @@ function bundle_close() {
 }
 
 # Clojure
-#alias clj="lein repl $*"
 function cljs() {
     planck "$*"
 }
