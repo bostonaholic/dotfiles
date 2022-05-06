@@ -14,8 +14,8 @@ function remove_all_images {
 }
 
 function remove_dangling_volumes {
-    dangling_volumes="$(docker volume ls --quiet --filter dangling=true)"
     local dangling_volumes
+    dangling_volumes="$(docker volume ls --quiet --filter dangling=true)"
     if [ -n "$dangling_volumes" ]; then
         docker volume rm "$dangling_volumes"
     fi
