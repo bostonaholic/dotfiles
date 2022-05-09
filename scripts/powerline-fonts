@@ -5,8 +5,12 @@
 #
 ################################################################################
 
+set -euo pipefail
+
 git clone https://github.com/powerline/fonts.git --depth=1
-pushd fonts > /dev/null || exit
-sh install.sh
-popd > /dev/null || exit
+(
+    cd fonts
+    sh install.sh
+)
+
 rm -rf fonts

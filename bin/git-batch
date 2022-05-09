@@ -16,10 +16,11 @@ DIRECTORIES=$(ls -d "*/")
 for d in $DIRECTORIES
 do
     if [[ -d "$d/.git" ]]; then
-        pushd "$d" > /dev/null || exit
-        pwd
-        git "$@"
-        popd > /dev/null || exit
+        (
+            cd "$d"
+            pwd
+            git "$@"
+        )
         echo
     fi
 done

@@ -5,13 +5,16 @@
 #
 ################################################################################
 
+set -euo pipefail
+
 DIRECTORY="$HOME/.emacs.d"
 
 if [ ! -d "$DIRECTORY" ]; then
     git clone https://github.com/syl20bnr/spacemacs "$DIRECTORY"
-    pushd "$DIRECTORY" > /dev/null || exit
-    git checkout develop
-    popd > /dev/null || exit
+    (
+        cd "$DIRECTORY"
+        git checkout develop
+    )
     echo "Done!"
 else
     echo 'Spacemacs is already installed on this machine.'

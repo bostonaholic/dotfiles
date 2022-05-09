@@ -2,9 +2,10 @@
 
 set -euo pipefail
 
-pushd "${HOME}/.vim_runtime" > /dev/null || exit
-git clean -d --force
-git reset --hard
-git pull --rebase
-python update_plugins.py
-popd > /dev/null || exit
+(
+    cd "${HOME}/.vim_runtime"
+    git reset --hard
+    git clean -d --force
+    git pull --rebase
+    python update_plugins.py
+)

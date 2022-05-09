@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
-pushd "${HOME}/.emacs.d" > /dev/null || exit
-git pull --rebase
-popd > /dev/null || exit
+(
+    cd "${HOME}/.emacs.d"
+    git pull --rebase
+)

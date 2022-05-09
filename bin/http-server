@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
-pushd "${HOME}/code/bostonaholic/http-server" > /dev/null || exit
-yarn run start
-popd > /dev/null || exit
+(
+    cd "${HOME}/code/bostonaholic/http-server"
+    yarn run start
+)
