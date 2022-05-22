@@ -28,3 +28,6 @@ printf "%b===>%b brew cleanup -s%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" &
 
 printf "%b===>%b rm -rf $(brew --cache)%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
     rm -rf "$(brew --cache)"
+
+printf "%b===>%b brew doctor --verbose%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
+    brew doctor --verbose
