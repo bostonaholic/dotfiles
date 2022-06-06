@@ -53,11 +53,7 @@ This function should only modify configuration layer settings."
           erc-server-list '(("irc.freenode.net"
                              :port "6697"
                              :ssl t
-                             :nick my/irc-nick)
-                            (my/circleci-irc-server
-                             :port my/circleci-irc-port
-                             :nick my/irc-nick
-                             :password my/circleci-irc-pwd)))
+                             :nick my/irc-nick)))
      (git :variables
           git-magit-status-fullscreen t
           magit-repository-directories '(("~/code/")))
