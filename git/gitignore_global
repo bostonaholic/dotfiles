@@ -10,11 +10,6 @@ Thumbs.db
 .idea/
 *.iml
 
-# Clojure #
-###########
-.nrepl-port
-.cljs_rhino_repl/
-
 # Progamming #
 ##############
 scratch*
