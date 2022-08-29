@@ -72,6 +72,20 @@ Try:
 gpgconf --kil gpg-agent
 ```
 
+### vimrc
+
+```
+  File "/Users/<user>/.vim_runtime/update_plugins.py", line 13, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+```
+
+Try:
+
+```
+pip3 install requests
+```
+
 ## Thanks
 
 Inspired by [drewbarontini/dotfiles](https://github.com/drewbarontini/dotfiles).
