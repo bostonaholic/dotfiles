@@ -35,6 +35,8 @@ rake update                   # Update bostonaholic/dotfiles
 
 ## Tips
 
+### ssh-agent
+
 Errors with `ssh-agent`:
 
 > Error connecting to agent: No such file or directory
