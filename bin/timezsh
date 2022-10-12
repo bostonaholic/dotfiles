@@ -1,4 +1,11 @@
 #!/bin/bash
 
+set -euo pipefail
+
 shell=${1-$SHELL}
-for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+
+times=10
+while [ $times -gt 0 ]; do
+    /usr/bin/time "$shell" -i -c exit
+    ((times--))
+done
