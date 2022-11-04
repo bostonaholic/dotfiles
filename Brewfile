@@ -61,6 +61,7 @@ brew 'nmap'
 brew 'rg'
 brew 'rlwrap'
 brew 'shellcheck'
+brew 'trash-cli'
 brew 'the_silver_searcher'
 brew 'tree'
 
