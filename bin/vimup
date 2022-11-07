@@ -9,3 +9,7 @@ set -euo pipefail
     git pull --rebase
     python update_plugins.py
 )
+
+echo
+echo "# TODO: If exit 1 try again after installing 'requests' module"
+echo "# pip3 install requests"
