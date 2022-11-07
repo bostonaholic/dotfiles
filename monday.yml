@@ -1,4 +1,5 @@
 # bashful config
+# https://github.com/wagoodman/bashful
 tasks:
   - name: Monday
     parallel-tasks:
