@@ -13,6 +13,7 @@ tap 'homebrew/cask'
 tap 'wagoodman/bashful'
 
 # Programming
+brew 'asdf'
 brew 'aspell'
 brew 'cloc'
 brew 'emacs-plus', # tap d12frosted/emacs-plus
