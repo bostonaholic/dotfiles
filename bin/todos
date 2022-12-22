@@ -4,4 +4,4 @@ set -euo pipefail
 
 TAGS="FIXME|HACK|NOTE|TODO|XXX"
 
-git grep -E " ($TAGS):"
+git grep -E " ($TAGS)(\(.*\))?:"
