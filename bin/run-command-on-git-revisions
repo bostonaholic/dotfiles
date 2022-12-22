@@ -55,7 +55,7 @@ log_command() {
 }
 
 debug() {
-    if [ $verbose ]; then
+    if [ "$verbose" ]; then
         echo "$*" >&2
     fi
 }
