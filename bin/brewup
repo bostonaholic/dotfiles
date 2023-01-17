@@ -24,6 +24,7 @@ printf "%b===>%b brew outdated --cask%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLO
     brew outdated --cask
 
 printf "%b===>%b brew cleanup -s%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
+    # -s Scrub the cache
     brew cleanup -s
 
 printf "%b===>%b rm -rf $(brew --cache)%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
