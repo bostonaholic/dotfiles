@@ -2,33 +2,25 @@
 
 set -euo pipefail
 
-# shellcheck disable=SC1091
-source "${HOME}/.colors"
+cd "$(dirname "$0")"
 
-printf "%b===>%b brew update%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
-    brew update
+source ./print-and-run
 
-printf "%b===>%b brew upgrade%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
-    brew upgrade
+print_and_run brew update
 
-printf "%b===>%b brew upgrade --cask%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
-    brew upgrade --cask
+print_and_run brew upgrade
 
-printf "%b===>%b brew doctor --verbose%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
-    brew doctor --verbose
+print_and_run brew upgrade --cask
 
-printf "%b===>%b brew outdated%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
-    brew outdated
+print_and_run brew doctor --verbose
 
-printf "%b===>%b brew outdated --cask%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
-    brew outdated --cask
+print_and_run brew outdated
 
-printf "%b===>%b brew cleanup -s%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
-    # -s Scrub the cache
-    brew cleanup -s
+print_and_run brew outdated --cask
 
-printf "%b===>%b rm -rf $(brew --cache)%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
-    rm -rf "$(brew --cache)"
+# -s Scrub the cache
+print_and_run brew cleanup -s
 
-printf "%b===>%b brew doctor --verbose%b\n" "${GREEN}" "${WHITE_BOLD}" "${NO_COLOR}" && \
-    brew doctor --verbose
+print_and_run rm -rf "$(brew --cache)"
+
+print_and_run brew doctor --verbose
