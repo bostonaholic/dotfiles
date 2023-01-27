@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -euo pipefail
+
+print_and_run() {
+    echo "==>" "$@"
+    "$@"
+}
