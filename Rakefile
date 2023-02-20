@@ -18,7 +18,6 @@ source_files = {
   rspec: "#{ENV['PWD']}/ruby/rspec",
   signature: "#{ENV['PWD']}/signature/signature",
   spacemacs: "#{ENV['PWD']}/emacs/spacemacs",
-  tool_versions: "#{ENV['PWD']}/asdf/tool-versions",
   zshrc: "#{ENV['PWD']}/zsh/zshrc"
 }
 
@@ -38,7 +37,6 @@ target_files = {
   rspec: "#{ENV['HOME']}/.rspec",
   signature: "#{ENV['HOME']}/.signature",
   spacemacs: "#{ENV['HOME']}/.spacemacs",
-  tool_versions: "#{ENV['HOME']}/.tool-versions",
   zshrc: "#{ENV['HOME']}/.zshrc"
 }
 

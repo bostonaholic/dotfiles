@@ -13,7 +13,6 @@ tap 'homebrew/cask'
 tap 'wagoodman/bashful'
 
 # Programming
-brew 'asdf'
 brew 'aspell'
 brew 'cloc'
 brew 'emacs-plus', # tap d12frosted/emacs-plus
@@ -44,11 +43,13 @@ brew 'borkdude/brew/clj-kondo'
 # JavaScript
 brew 'jq'
 brew 'jslint4java'
+brew 'nodenv'
 brew 'yarn'
 
 # Ruby
 # ruby-build suggests using these
 brew 'openssl'
+brew 'rbenv'
 brew 'readline'
 
 # Unix

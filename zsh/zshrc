@@ -80,7 +80,6 @@ plugins=(
     bostonaholic
 
     # built-in
-    asdf
     brew
     bundler
     common-aliases
@@ -93,9 +92,11 @@ plugins=(
     gpg-agent
     lein
     node
+    nodenv
     npm
     postgres
     rails
+    rbenv
     ruby
     ssh-agent
     yarn
