@@ -128,7 +128,7 @@ namespace :install do
   end
 
   desc 'Install vimrc configuration for Vim'
-  task 'vimrc' do
+  task :vimrc do
     prompt_to_install 'Vimrc'
 
     if response? 'y'
@@ -161,7 +161,7 @@ namespace :install do
   end
 
   desc 'Install Powerline Fonts'
-  task 'powerline_fonts' do
+  task :powerline_fonts do
     prompt_to_install 'Powerline Fonts'
 
     if response? 'y'
