@@ -2,4 +2,3 @@
 #######
 .bundle/
 vendor/
-Brewfile.lock.json
