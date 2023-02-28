@@ -1,3 +1,0 @@
-[submodule "zsh/nodenv"]
-	path = zsh/nodenv
-	url = git@github.com:bostonaholic/nodenv.plugin.zsh.git
