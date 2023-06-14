@@ -8,8 +8,13 @@ set -euo pipefail
     git clean -d --force
     git pull --rebase
     python update_plugins.py
-)
 
-echo
-echo "# TODO: If exit 1 try again after installing 'requests' module"
-echo "# pip3 install requests"
+    exit_code=$?
+
+    if [ "$exit_code" -eq 1 ];
+    then
+        pip install requests
+        pip3 install requests
+        python update_plugins.py
+    fi
+)
