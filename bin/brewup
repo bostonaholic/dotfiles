@@ -13,8 +13,6 @@ print_and_run brew upgrade
 
 print_and_run brew upgrade --cask
 
-print_and_run brew doctor --verbose
-
 print_and_run brew outdated
 
 print_and_run brew outdated --cask
@@ -23,5 +21,3 @@ print_and_run brew outdated --cask
 print_and_run brew cleanup -s
 
 print_and_run rm -rf "$(brew --cache)"
-
-print_and_run brew doctor --verbose
