@@ -255,7 +255,7 @@ def link_file(source_file, destination_file)
 end
 
 def replace_file(source_file, target_file)
-  `rm -rf #{target_file}`
+  `rm -rfv #{target_file}`
   link_file source_file, target_file
 end
 

@@ -20,4 +20,4 @@ print_and_run brew outdated --cask
 # -s Scrub the cache
 print_and_run brew cleanup -s
 
-print_and_run rm -rf "$(brew --cache)"
+print_and_run rm -rfv "$(brew --cache)"

@@ -13,4 +13,4 @@ git clone https://github.com/powerline/fonts.git --depth=1
     sh install.sh
 )
 
-rm -rf fonts
+rm -rfv fonts
