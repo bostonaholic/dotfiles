@@ -4,7 +4,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-# shellcheck disable=SC1091
+# shellcheck source=./print-and-run
 source ./print-and-run
 
 print_and_run brew update
