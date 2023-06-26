@@ -15,8 +15,10 @@ shift
 
 if command -v rg &>/dev/null ; then
   items=$(rg -l --color never "$find_this" "$@")
+elif command -v ag &>/dev/null ; then
+  items=$(ag --files-with-matches --nocolor "$find_this" "$@")
 else
-  items=items=$(ag --files-with-matches --nocolor "$find_this" "$@")
+  items=$(grep --files-with-matches "$find_this" "$@")
 fi
 
 temp="${TMPDIR:-/tmp}/replace_temp_file.$$"
