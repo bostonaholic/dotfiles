@@ -73,7 +73,8 @@ This function should only modify configuration layer settings."
      python
      react
      (ruby :variables
-           ;; ruby-version-manager 'asdf
+           ;; TODO: make 'asdf plugin compatible
+           ruby-version-manager 'rbenv
            ruby-enable-enh-ruby-mode t)
      ruby-on-rails
      ;; (shell :variables
