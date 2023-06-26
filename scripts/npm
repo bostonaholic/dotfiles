@@ -10,6 +10,7 @@ packages=(
   prettier-eslint
   prettier-eslint-cli
   tern
+  ulid
 )
 
 for package in "${packages[@]}"
