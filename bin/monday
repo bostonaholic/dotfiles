@@ -4,5 +4,9 @@ set -euo pipefail
 
 (
     cd "${HOME}/code/dotfiles"
-    bashful run monday.yml
+    # bashful run monday.yml
+    brewup &
+    vimup &
+    spacemacsup &
+    wait
 )
