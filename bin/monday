@@ -5,7 +5,9 @@ set -euo pipefail
 (
     cd "${HOME}/code/dotfiles"
     # bashful run monday.yml
+
     # shellcheck source=./scripts/update
     source ./scripts/update
+
     wait
 )
