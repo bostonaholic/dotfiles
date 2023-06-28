@@ -50,7 +50,7 @@ brew 'yarn'
 # Ruby
 # ruby-build suggests using these
 brew 'openssl'
-brew 'rbenv'
+brew 'rbenv' # ruby-build installed as a dependency
 brew 'readline'
 
 # Unix

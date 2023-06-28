@@ -1,0 +1,9 @@
+#!/bin/bash
+################################################################################
+#
+# rbenv Plugins
+#
+################################################################################
+
+git clone git@github.com:rbenv/rbenv-default-gems.git "$(rbenv root)/plugins/rbenv-default-gems"
+git clone git@github.com:tpope/rbenv-ctags "$(rbenv root)/plugins/rbenv-ctags"

@@ -18,3 +18,15 @@ vimup
 # https://github.com/syl20bnr/spacemacs
 echo && echo "--> Updating Spacemacs from https://github.com/syl20bnr/spacemacs"
 spacemacsup
+
+# rbenv plugins
+plugins=(
+    'ruby-build'
+    'rbenv-default-gems'
+    'rbenv-ctags'
+)
+
+for plugin in "${plugins[@]}"
+do
+    git -C "$(rbenv root)/plugins/${plugin}" pull --rebase
+done

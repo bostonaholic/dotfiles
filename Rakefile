@@ -5,6 +5,7 @@ require 'rake'
 source_files = {
   boot_properties: "#{ENV['PWD']}/clojure/boot.properties",
   colors: "#{ENV['PWD']}/home/colors",
+  default_gems: "#{ENV['PWD']}/ruby/default-gems",
   gitconfig: "#{ENV['PWD']}/git/gitconfig",
   githelpers: "#{ENV['PWD']}/git/githelpers",
   gitignore_global: "#{ENV['PWD']}/git/gitignore_global",
@@ -24,6 +25,7 @@ source_files = {
 target_files = {
   boot_properties: "#{ENV['HOME']}/.boot/boot.properties",
   colors: "#{ENV['HOME']}/.colors",
+  default_gems: "#{ENV['HOME']}/.rbenv/default-gems",
   gitconfig: "#{ENV['HOME']}/.gitconfig",
   githelpers: "#{ENV['HOME']}/.githelpers",
   gitignore_global: "#{ENV['HOME']}/.gitignore_global",
@@ -45,6 +47,7 @@ tasks = %w[
   homebrew
   brewfile
   npm_packages
+  rbenv_plugins
   spacemacs
   vimrc
   oh-my-zsh
@@ -111,6 +114,17 @@ namespace :install do
       message 'Installing NPM Packages...'
 
       system 'bash scripts/npm'
+    end
+  end
+
+  desc 'Install rbenv plugins'
+  task :rbenv_plugins do
+    prompt_to_install 'rbenv Plugins'
+
+    if response? 'y'
+      message 'Installing rbenv Plugins...'
+
+      system 'bash scripts/rbenv_plugins'
     end
   end
 
