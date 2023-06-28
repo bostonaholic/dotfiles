@@ -622,6 +622,10 @@ before packages are loaded."
 
                 winum-scope 'frame-local)
 
+  ;; Close gaps in emacs frames
+  ;; https://github.com/d12frosted/homebrew-emacs-plus/tree/master#emacs-28-and-emacs-27
+  (setq frame-resize-pixelwise t)
+
   (add-to-list 'auto-mode-alist '("Brewfile" . ruby-mode))
 
   (add-to-list 'auto-mode-alist '("Gemfile.*" . enh-ruby-mode))
