@@ -21,7 +21,6 @@ spacemacsup
 
 # rbenv plugins
 plugins=(
-    'ruby-build'
     'rbenv-default-gems'
     'rbenv-ctags'
 )
