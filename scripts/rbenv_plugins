@@ -7,5 +7,15 @@
 
 mkdir -p "$(rbenv root)/plugins"
 
-git clone git@github.com:rbenv/rbenv-default-gems.git "$(rbenv root)/plugins/rbenv-default-gems"
-git clone git@github.com:tpope/rbenv-ctags "$(rbenv root)/plugins/rbenv-ctags"
+plugins=(
+    'rbenv/rbenv-default-gems'
+    'tpope/rbenv-ctags'
+)
+
+for plugin in "${plugins[@]}"
+do
+    plugin_name=$(echo "${plugin}" | cut -d '/' -f 2)
+    plugin_repo="git@github.com:${plugin}.git"
+
+    git clone "${plugin_repo}" "$(rbenv root)/plugins/${plugin_name}"
+done
