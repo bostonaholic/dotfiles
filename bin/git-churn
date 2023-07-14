@@ -8,6 +8,9 @@
 # Show churn for whole repo:
 #   $ git churn
 #
+# I often use it with `head` to get the top ten offenders:
+#   $ git churn | head
+#
 # Show churn for specific directories:
 #   $ git churn app lib
 #
