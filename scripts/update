@@ -5,6 +5,13 @@
 #
 ################################################################################
 
+# Dotfiles
+echo && echo "--> Updating dotfiles source"
+(
+    cd "${HOME}/code/dotfiles" || exit
+    git pull --rebase
+)
+
 # Homebrew and Homebrew Packages
 echo && echo "--> Updating Homebrew and Homebrew Packages"
 brewup
