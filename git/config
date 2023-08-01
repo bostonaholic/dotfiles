@@ -16,7 +16,6 @@
 	verbose = true
 	gpgsign = true
 [core]
-	excludesfile = ~/.gitignore_global
 	editor = vim
 	logAllRefUpdates = always
 [diff]
@@ -43,8 +42,8 @@
 	aa = add --all
 	ap = add --patch
 
-	b = "!. $HOME/.githelpers && pretty_git_branch"
-	bs = "!. $HOME/.githelpers && pretty_git_branch_sorted"
+	b = "!. $HOME/.config/git/helpers && pretty_git_branch"
+	bs = "!. $HOME/.config/git/helpers && pretty_git_branch_sorted"
 	br = branch
 	bra = branch --all
 	bd = branch -d
@@ -71,7 +70,7 @@
 	upstream = "!git fetch upstream; git merge upstream/main"
 	u = !git upstream
 
-	l = "!. $HOME/.githelpers && pretty_git_log"
+	l = "!. $HOME/.config/git/helpers && pretty_git_log"
 	la = !git l --all
 	recent = !GIT_NO_PAGER=1 git l -30
 	r = !git recent
@@ -79,7 +78,7 @@
 
 	head = !git l -1
 	h = !git head
-	hp = "!. $HOME/.githelpers && show_git_head"
+	hp = "!. $HOME/.config/git/helpers && show_git_head"
 
 	ra = rebase --abort
 	rc = rebase --continue

@@ -6,9 +6,9 @@ source_files = {
   boot_properties: "#{ENV['PWD']}/clojure/boot.properties",
   colors: "#{ENV['PWD']}/home/colors",
   default_gems: "#{ENV['PWD']}/ruby/default-gems",
-  gitconfig: "#{ENV['PWD']}/git/gitconfig",
-  githelpers: "#{ENV['PWD']}/git/githelpers",
-  gitignore_global: "#{ENV['PWD']}/git/gitignore_global",
+  gitconfig: "#{ENV['PWD']}/git/config",
+  githelpers: "#{ENV['PWD']}/git/helpers",
+  gitignore: "#{ENV['PWD']}/git/ignore",
   gpg_agent_conf: "#{ENV['PWD']}/gpg/gpg-agent.conf",
   ignore: "#{ENV['PWD']}/ignore/ignore",
   jsbeautifyrc: "#{ENV['PWD']}/javascript/jsbeautifyrc",
@@ -26,9 +26,9 @@ target_files = {
   boot_properties: "#{ENV['HOME']}/.boot/boot.properties",
   colors: "#{ENV['HOME']}/.colors",
   default_gems: "#{ENV['HOME']}/.rbenv/default-gems",
-  gitconfig: "#{ENV['HOME']}/.gitconfig",
-  githelpers: "#{ENV['HOME']}/.githelpers",
-  gitignore_global: "#{ENV['HOME']}/.gitignore_global",
+  gitconfig: "#{ENV['HOME']}/.config/git/config",
+  githelpers: "#{ENV['HOME']}/.config/git/helpers",
+  gitignore: "#{ENV['HOME']}/.config/git/ignore",
   gpg_agent_conf: "#{ENV['HOME']}/.gnupg/gpg-agent.conf",
   ignore: "#{ENV['HOME']}/.ignore",
   jsbeautifyrc: "#{ENV['HOME']}/.jsbeautifyrc",
@@ -74,7 +74,8 @@ namespace :install do
     if response? 'y'
       message 'Symlinking files...'
 
-      ["#{ENV['HOME']}/.boot",
+      ["#{ENV['HOME']}/.config/git",
+       "#{ENV['HOME']}/.boot",
        "#{ENV['HOME']}/.lein",
        "#{ENV['HOME']}/.gnupg"].each do |dir|
         mkdir dir unless dir_exists? dir
