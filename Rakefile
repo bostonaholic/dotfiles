@@ -74,8 +74,8 @@ namespace :install do
     if response? 'y'
       message 'Symlinking files...'
 
-      ["#{ENV['HOME']}/.config/git",
-       "#{ENV['HOME']}/.boot",
+      ["#{ENV['HOME']}/.boot",
+       "#{ENV['HOME']}/.config/git",
        "#{ENV['HOME']}/.lein",
        "#{ENV['HOME']}/.gnupg"].each do |dir|
         mkdir dir unless dir_exists? dir
