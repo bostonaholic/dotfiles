@@ -23,6 +23,21 @@ $ cp $PWD/env/secret.sample.el $HOME/.secret.el
 $ cp $PWD/env/env.sample $HOME/.env
 ```
 
+### Configure a work computer
+
+Configure git to use a work email and signing key
+
+```
+$ vi ~/.config/git/config.work
+```
+
+```
+[user]
+	name = Matthew Boston
+	email = matthew.boston@example.com
+	signingkey = <>
+```
+
 Fill in the `TODO` sections in each of the above environment files.
 
 ### Install with rake
