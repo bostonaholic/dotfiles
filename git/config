@@ -99,3 +99,6 @@
 	required = true
 [tag]
 	forceSignAnnotated = true
+
+[includeIf "gitdir:~/code/work/"]
+  path = config.work
