@@ -51,7 +51,7 @@
 	brr = branch --move
 
 	amend = commit --amend
-  amend-noe = commit --amend --no-edit
+	amend-noe = commit --amend --no-edit
 	cl = clone
 	ci = commit -m
 	co = checkout
@@ -59,7 +59,7 @@
 	psu = push --set-upstream
 
 	di = diff
-  dh = diff HEAD
+	dh = diff HEAD
 	dc = diff --cached
 	ds = diff --staged
 	dw = diff --word-diff=plain
