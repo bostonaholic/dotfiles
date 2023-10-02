@@ -77,6 +77,7 @@ export ZSH_THEME="robbyrussell"
 plugins=(
     # custom
     bostonaholic
+    nodenv
 
     # built-in
     brew
@@ -91,7 +92,6 @@ plugins=(
     gpg-agent
     lein
     node
-    nodenv
     npm
     postgres
     rails
