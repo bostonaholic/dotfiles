@@ -16,10 +16,10 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg[white]%})%{$reset_color%} "
 ZSH_THEME_GIT_PROMPT_DIRTY="*"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-ZSH_THEME_RUBY_PROMPT_PREFIX="%{$fg[white]%}ruby:(%{$reset_color%}"
+ZSH_THEME_RUBY_PROMPT_PREFIX="%{$fg[red]%}ruby:%{$reset_color%}("
 ZSH_THEME_RUBY_PROMPT_SUFFIX="%{$fg[white]%})%{$reset_color%} "
 
-ZSH_THEME_NODE_PROMPT_PREFIX="%{$fg[white]%}node:(%{$reset_color%}"
+ZSH_THEME_NODE_PROMPT_PREFIX="%{$fg[green]%}node:%{$reset_color%}("
 ZSH_THEME_NODE_PROMPT_SUFFIX="%{$fg[white]%})%{$reset_color%} "
 
 function git_prompt_info() {
