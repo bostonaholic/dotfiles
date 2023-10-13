@@ -1,3 +1,4 @@
+gem-ctags
 bundler
 pry
 rubocop
