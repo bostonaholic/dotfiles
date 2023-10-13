@@ -15,8 +15,9 @@ tap 'wagoodman/bashful'
 # Programming
 brew 'aspell'
 brew 'cloc'
+brew 'ctags'
 brew 'emacs-plus', # tap d12frosted/emacs-plus
-     args: %w[with-ctags with-spacemacs-icon],
+     args: %w[with-spacemacs-icon],
      restart_service: :changed
 brew 'git'
 brew 'git-lfs'
