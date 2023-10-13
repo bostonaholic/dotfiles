@@ -48,6 +48,7 @@ rake install:brewfile         # Install Homebrew packages
 rake install:homebrew         # Install Homebrew for managing dev packages
 rake install:npm_packages     # Install NPM packages
 rake install:oh-my-zsh        # Install oh-my-zsh configuration for ZSH
+rake install:nodenv           # Install nodenv for managing Node versions
 rake install:powerline_fonts  # Install Powerline Fonts
 rake install:spacemacs        # Install Spacemacs configuration for Emacs
 rake install:symlinks         # Create symlinks

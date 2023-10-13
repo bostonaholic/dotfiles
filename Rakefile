@@ -14,6 +14,7 @@ source_files = {
   jsbeautifyrc: "#{ENV['PWD']}/javascript/jsbeautifyrc",
   jshintrc: "#{ENV['PWD']}/javascript/jshintrc",
   lein_profiles: "#{ENV['PWD']}/clojure/profiles.clj",
+  node_version: "#{ENV['PWD']}/node/node-version",
   pryrc: "#{ENV['PWD']}/ruby/pryrc",
   qwerty: "#{ENV['PWD']}/keyboard/qwerty.txt",
   rspec: "#{ENV['PWD']}/ruby/rspec",
@@ -34,6 +35,7 @@ target_files = {
   jsbeautifyrc: "#{ENV['HOME']}/.jsbeautifyrc",
   jshintrc: "#{ENV['HOME']}/.jshintrc",
   lein_profiles: "#{ENV['HOME']}/.lein/profiles.clj",
+  node_version: "#{ENV['HOME']}/.node-version",
   pryrc: "#{ENV['HOME']}/.pryrc",
   qwerty: "#{ENV['HOME']}/qwerty.txt",
   rspec: "#{ENV['HOME']}/.rspec",
@@ -46,6 +48,7 @@ tasks = %w[
   symlinks
   homebrew
   brewfile
+  nodenv
   npm_packages
   rbenv_plugins
   spacemacs
@@ -104,6 +107,17 @@ namespace :install do
       message 'Installing Brewfile...'
 
       system 'brew bundle --no-lock'
+    end
+  end
+
+  desc 'Install nodenv for managing Node versions'
+  task :nodenv do
+    prompt_to_install 'nodenv'
+
+    if response? 'y'
+      message 'Installing nodenv...'
+
+      system 'bash scripts/nodenv'
     end
   end
 

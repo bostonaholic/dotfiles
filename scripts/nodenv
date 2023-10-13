@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+################################################################################
+#
+# nodenv
+#
+################################################################################
+
+VERSION='20.8.0'
+
+function install_global_node() {
+    nodenv install $VERSION
+    nodenv rehash
+    nodenv global $VERSION
+}
+
+if [ ! -d "$HOME/.nodenv" ]; then
+    echo 'Setting up nodenv...'
+    brew install nodenv
+
+    echo "nodenv is now set up! Installing latest Node..."
+    install_global_node
+else
+    echo 'nodenv is already installed on this machine.'
+
+    if [ ! -d "$HOME/.nodenv/versions/$VERSION" ]; then
+        install_global_node
+    else
+        echo "Node $VERSION is already installed on this machine."
+    fi
+fi
