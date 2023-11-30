@@ -46,7 +46,6 @@ brew 'borkdude/brew/clj-kondo'
 brew 'jq'
 brew 'jslint4java'
 brew 'nodenv'
-brew 'yarn'
 
 # Ruby
 # ruby-build suggests using these
