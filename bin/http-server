@@ -4,5 +4,5 @@ set -euo pipefail
 
 (
     cd "${HOME}/code/bostonaholic/http-server"
-    yarn run start
+    ./script/server
 )
