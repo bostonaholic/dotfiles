@@ -37,7 +37,6 @@ brew 'pinentry-mac'
 
 # Clojure
 cask 'adoptopenjdk11' # tap AdoptOpenJDK/openjdk
-brew 'boot-clj'
 brew 'planck'
 brew 'leiningen'
 brew 'borkdude/brew/clj-kondo'

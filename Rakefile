@@ -3,7 +3,6 @@
 require 'rake'
 
 source_files = {
-  boot_properties: "#{ENV['PWD']}/clojure/boot.properties",
   colors: "#{ENV['PWD']}/home/colors",
   default_gems: "#{ENV['PWD']}/ruby/default-gems",
   gitconfig: "#{ENV['PWD']}/git/config",
@@ -24,7 +23,6 @@ source_files = {
 }
 
 target_files = {
-  boot_properties: "#{ENV['HOME']}/.boot/boot.properties",
   colors: "#{ENV['HOME']}/.colors",
   default_gems: "#{ENV['HOME']}/.rbenv/default-gems",
   gitconfig: "#{ENV['HOME']}/.config/git/config",
@@ -77,8 +75,7 @@ namespace :install do
     if response? 'y'
       message 'Symlinking files...'
 
-      ["#{ENV['HOME']}/.boot",
-       "#{ENV['HOME']}/.config/git",
+      ["#{ENV['HOME']}/.config/git",
        "#{ENV['HOME']}/.lein",
        "#{ENV['HOME']}/.gnupg"].each do |dir|
         mkdir dir unless dir_exists? dir
