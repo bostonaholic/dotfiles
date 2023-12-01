@@ -6,10 +6,11 @@
 #
 
 # Taps
-tap 'AdoptOpenJDK/openjdk'
+tap 'clojure/tools'
 tap 'd12frosted/emacs-plus'
 tap 'borkdude/brew'
 tap 'homebrew/cask'
+tap 'homebrew/cask-versions'
 tap 'wagoodman/bashful'
 
 # Programming
@@ -36,10 +37,13 @@ brew 'gnutls'
 brew 'pinentry-mac'
 
 # Clojure
-cask 'adoptopenjdk11' # tap AdoptOpenJDK/openjdk
+brew 'clojure/tools/clojure'
 brew 'planck'
 brew 'leiningen'
 brew 'borkdude/brew/clj-kondo'
+
+# Java
+cask 'temurin21'
 
 # JavaScript
 brew 'jq'
