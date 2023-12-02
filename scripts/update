@@ -9,7 +9,7 @@
 echo && echo "--> Updating dotfiles source"
 (
     cd "${HOME}/code/dotfiles" || exit
-    git pull --rebase
+    git refresh
 )
 
 # Homebrew and Homebrew Packages
