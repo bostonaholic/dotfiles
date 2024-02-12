@@ -9,13 +9,6 @@ $ mkdir code && cd code
 $ git clone git@github.com:bostonaholic/dotfiles.git
 ```
 
-### Include the git submodules
-
-```
-$ git submodule init
-$ git submodule update
-```
-
 ### Copy sample environment files
 
 ```
