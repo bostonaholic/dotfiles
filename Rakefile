@@ -5,6 +5,7 @@ require 'rake'
 source_files = {
   colors: "#{ENV['PWD']}/home/colors",
   default_gems: "#{ENV['PWD']}/ruby/default-gems",
+  gitsigners: "#{ENV['PWD']}/git/allowed_signers",
   gitconfig: "#{ENV['PWD']}/git/config",
   githelpers: "#{ENV['PWD']}/git/helpers",
   gitignore: "#{ENV['PWD']}/git/ignore",
@@ -26,6 +27,7 @@ source_files = {
 target_files = {
   colors: "#{ENV['HOME']}/.colors",
   default_gems: "#{ENV['HOME']}/.rbenv/default-gems",
+  gitsigners: "#{ENV['HOME']}/.config/git/allowed_signers",
   gitconfig: "#{ENV['HOME']}/.config/git/config",
   githelpers: "#{ENV['HOME']}/.config/git/helpers",
   gitignore: "#{ENV['HOME']}/.config/git/ignore",
