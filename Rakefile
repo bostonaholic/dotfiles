@@ -81,7 +81,8 @@ namespace :install do
 
       ["#{ENV['HOME']}/.config/git",
        "#{ENV['HOME']}/.lein",
-       "#{ENV['HOME']}/.gnupg"].each do |dir|
+       "#{ENV['HOME']}/.gnupg",
+       "#{ENV['HOME']}/.rbenv"].each do |dir|
         mkdir dir unless dir_exists? dir
       end
 
