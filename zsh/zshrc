@@ -79,7 +79,7 @@ plugins=(
     bostonaholic
     ngrok
     nodenv
-    
+
     # built-in
     brew
     bundler
