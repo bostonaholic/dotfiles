@@ -610,7 +610,7 @@ before packages are loaded."
                 css-indent-offset 2
 
                 ;; This has to be set because spacemacs resets it incorrectly to ~/.docsets
-                ;; https://github.com/syl20bnr/spacemacs/blob/master/layers/%2Btools/dash/config.el#L12
+                ;; HACK: https://github.com/syl20bnr/spacemacs/blob/master/layers/%2Btools/dash/config.el#L12
                 helm-dash-docset-newpath "~/Library/Application Support/Dash/DocSets"
 
                 js-indent-level 2
@@ -622,7 +622,7 @@ before packages are loaded."
                 winum-scope 'frame-local)
 
   ;; Close gaps in emacs frames
-  ;; https://github.com/d12frosted/homebrew-emacs-plus/tree/master#emacs-28-and-emacs-27
+  ;; HACK: https://github.com/d12frosted/homebrew-emacs-plus/tree/master#emacs-28-and-emacs-27
   (setq frame-resize-pixelwise t)
 
   (add-to-list 'auto-mode-alist '("Brewfile" . ruby-mode))
