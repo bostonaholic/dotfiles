@@ -1,6 +1,10 @@
 #!/bin/bash
 # shellcheck disable=SC1087,SC2016,SC2034,SC2154,SC2168
 
+##
+# Git Prompt Support
+# https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
+##
 GIT_PS1_SHOWDIRTYSTATE=1      # display working directory state (* for modified/+ for staged)
 GIT_PS1_SHOWSTASHSTATE=1      # display stashed state ($ if there are stashed files)
 GIT_PS1_SHOWUNTRACKEDFILES=1  # display untracked state (% if there are untracked files)
