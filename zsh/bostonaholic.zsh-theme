@@ -14,6 +14,7 @@ GIT_PS1_DESCRIBE_STYLE=branch # detached-head description
 GIT_PS1_STATESEPARATOR=" "    # separator between branch name and dirty state symbols
 GIT_PS1_SHOWCOLORHINTS=1      # display colored hints about the current dirty state
 GIT_PS1_HIDE_IF_PWD_IGNORED=  # do nothing if pwd is ignored by git
+GIT_PS1_SHOWCONFLICTSTATE=yes # show when there are unresolved conflicts
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[white]%}git:(%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg[white]%})%{$reset_color%} "
