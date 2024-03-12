@@ -15,7 +15,6 @@ set -euo pipefail
 rsync --verbose \
       --remove-source-files \
       --archive \
-      --compress \
       --progress \
       --stats \
       --human-readable \
