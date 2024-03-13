@@ -13,6 +13,9 @@ tap 'homebrew/cask'
 tap 'homebrew/cask-versions'
 tap 'wagoodman/bashful'
 
+# set arguments for all 'brew install --cask' commands
+cask_args appdir: '~/Applications', require_sha: true
+
 # Programming
 brew 'aspell'
 brew 'cloc'
