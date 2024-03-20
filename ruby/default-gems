@@ -1,4 +1,6 @@
 gem-ctags
 bundler
 pry
+pry-doc
 rubocop
+ruby_parser
