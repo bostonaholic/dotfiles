@@ -1,7 +1,9 @@
+awesome_print
 bundler
 gem-ctags
 prettier
 pry
+pry-byebug
 pry-doc
 rubocop
 ruby_parser
