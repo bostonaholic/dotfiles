@@ -666,11 +666,7 @@ before packages are loaded."
 
       ;; compojure.core/context
       (compojure.core/context 1)
-      (context 1)
-
-      ;; circleci.backplane.context/with-context
-      (circleci.backplane.context/with-context 1)
-      (with-context 1)))
+      (context 1)))
 
   (add-hook 'js2-mode-hook 'prettier-js-mode)
   (add-hook 'web-mode-hook 'prettier-js-mode)
