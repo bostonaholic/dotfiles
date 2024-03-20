@@ -1,5 +1,6 @@
 bundler
 gem-ctags
+prettier
 pry
 pry-doc
 rubocop
