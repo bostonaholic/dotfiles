@@ -74,7 +74,8 @@ This function should only modify configuration layer settings."
      react
      (ruby :variables
            ruby-version-manager 'rbenv
-           ruby-enable-enh-ruby-mode t)
+           ruby-enable-enh-ruby-mode t
+           ruby-test-runner 'rspec)
      ruby-on-rails
      ;; (shell :variables
      ;;        shell-default-height 30
