@@ -1,5 +1,5 @@
-gem-ctags
 bundler
+gem-ctags
 pry
 pry-doc
 rubocop
