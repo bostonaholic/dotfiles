@@ -74,6 +74,7 @@ This function should only modify configuration layer settings."
      react
      (ruby :variables
            ruby-enable-enh-ruby-mode t
+           ruby-prettier-on-save t
            ruby-test-runner 'rspec
            ruby-version-manager 'rbenv)
      ruby-on-rails
