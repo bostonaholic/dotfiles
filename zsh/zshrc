@@ -93,6 +93,7 @@ plugins=(
     docker-compose
     emacs
     gem
+    gh
     git
     gitfast
     gpg-agent
