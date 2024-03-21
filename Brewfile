@@ -23,6 +23,7 @@ brew 'ctags'
 brew 'emacs-plus', # tap d12frosted/emacs-plus
      args: %w[with-spacemacs-icon],
      restart_service: :changed
+brew 'gh'
 brew 'git'
 brew 'git-lfs'
 brew 'libyaml'
