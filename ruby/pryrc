@@ -1,15 +1,6 @@
 # -*-Ruby-*-
 # frozen_string_literal: true
 
-Pry.prompt = [
-  proc { |obj, nest_level, _|
-    "#{RUBY_VERSION} (#{obj}):#{nest_level} > "
-  },
-  proc { |obj, nest_level, _|
-    "#{RUBY_VERSION} (#{obj}):#{nest_level} * "
-  }
-]
-
 Pry.editor = 'vim'
 
 def with_gem(gem)
