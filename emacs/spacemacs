@@ -104,6 +104,10 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
                                       buffer-move
+                                      (copilot :location (recipe
+                                                          :fetcher github
+                                                          :repo "copilot-emacs/copilot.el"
+                                                          :files ("*.el" "dist")))
                                       protobuf-mode
                                       )
 
@@ -646,6 +650,25 @@ before packages are loaded."
   (with-eval-after-load 'markdown-mode
     (define-key markdown-mode-map (kbd "M-n") nil)
     (define-key markdown-mode-map (kbd "M-p") nil))
+
+  ;; accept completion from copilot and fallback to company
+  (with-eval-after-load 'company
+    ;; disable inline previews
+    (delq 'company-preview-if-just-one-frontend company-frontends))
+
+  ;; keybindings for copilot completion
+  (with-eval-after-load 'copilot
+    (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+    (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+    (define-key copilot-completion-map (kbd "C-TAB") 'copilot-accept-completion-by-word)
+    (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion-by-word))
+
+  ;; enable copilot for all programming modes
+  (add-hook 'prog-mode-hook 'copilot-mode)
+
+  ;; enable copilot for enh-ruby mode
+  ;; https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
+  (add-to-list 'copilot-major-mode-alist '("enh-ruby" . "ruby"))
 
   ;; join line below to current line
   (global-set-key (kbd "M-j")
