@@ -109,6 +109,9 @@ namespace :install do
       message 'Installing Brewfile...'
 
       system 'brew bundle --no-lock'
+
+      # Create a link to Emacs.app in ~/Applications
+      system "osascript -e 'tell application \"Finder\" to make alias file to posix file \"/usr/local/opt/emacs-plus@29/Emacs.app\" at POSIX file \"/Applications\" with properties {name:\"Emacs.app\"}'"
     end
   end
 
