@@ -104,6 +104,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
                                       buffer-move
+                                      ;; https://github.com/copilot-emacs/copilot.el
                                       (copilot :location (recipe
                                                           :fetcher github
                                                           :repo "copilot-emacs/copilot.el"
