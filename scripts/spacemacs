@@ -15,6 +15,9 @@ if [ ! -d "$DIRECTORY" ]; then
         cd "$DIRECTORY"
         git checkout develop
     )
+
+    # TODO: symlink templates
+
     echo "Done!"
 else
     echo 'Spacemacs is already installed on this machine.'

@@ -86,6 +86,7 @@ This function should only modify configuration layer settings."
      sql
      syntax-checking
      ;; treemacs
+     templates
      (typescript :variables
                  typescript-fmt-tool 'prettier
                  typescript-fmt-on-save t)
