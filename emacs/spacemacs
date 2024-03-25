@@ -658,10 +658,13 @@ before packages are loaded."
 
   ;; keybindings for copilot completion
   (with-eval-after-load 'copilot
+    (global-set-key (kbd "s-i") 'copilot-complete)
     (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
     (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
     (define-key copilot-completion-map (kbd "C-TAB") 'copilot-accept-completion-by-word)
-    (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion-by-word))
+    (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion-by-word)
+    (define-key copilot-completion-map (kbd "S-<tab>") 'copilot-accept-completion-by-line)
+    (define-key copilot-completion-map (kbd "S-TAB") 'copilot-accept-completion-by-line))
 
   ;; enable copilot for all programming modes
   (add-hook 'prog-mode-hook 'copilot-mode)
