@@ -30,6 +30,7 @@ brew 'git-lfs'
 brew 'libyaml'
 cask 'ngrok'
 brew 'php'
+brew 'postgresql@16', restart_service: :changed
 brew 'tmux'
 brew 'vim'
 brew 'zsh'
