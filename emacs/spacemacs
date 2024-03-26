@@ -671,11 +671,18 @@ before packages are loaded."
 
   ;; keybindings for copilot completion
   (with-eval-after-load 'copilot
+    ;; map copilot keybinding similar to VS Code
     (global-set-key (kbd "s-i") 'copilot-complete)
+
+    ;; accept the entire completion
     (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
     (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+
+    ;; accept the completion word-by-word
     (define-key copilot-completion-map (kbd "C-TAB") 'copilot-accept-completion-by-word)
     (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion-by-word)
+
+    ;; accept the completion line-by-line
     (define-key copilot-completion-map (kbd "S-<tab>") 'copilot-accept-completion-by-line)
     (define-key copilot-completion-map (kbd "S-TAB") 'copilot-accept-completion-by-line)
 
