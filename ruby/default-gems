@@ -6,4 +6,5 @@ pry
 pry-byebug
 pry-doc
 rubocop
+rubocop-rspec
 ruby_parser
