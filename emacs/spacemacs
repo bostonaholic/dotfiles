@@ -104,12 +104,16 @@ This function should only modify configuration layer settings."
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
+                                      ;; https://github.com/lukhas/buffer-move/tree/master
                                       buffer-move
+
                                       ;; https://github.com/copilot-emacs/copilot.el
                                       (copilot :location (recipe
                                                           :fetcher github
                                                           :repo "copilot-emacs/copilot.el"
                                                           :files ("*.el" "dist")))
+
+                                      ;; https://github.com/protocolbuffers/protobuf/tree/main
                                       protobuf-mode
                                       )
 
