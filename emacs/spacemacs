@@ -653,6 +653,13 @@ before packages are loaded."
   (global-set-key (kbd "M-n")         'scroll-up-line)
   (global-set-key (kbd "M-p")         'scroll-down-line)
 
+  (with-eval-after-load 'flycheck-mode
+    ;; Add the standardrb checker to flycheck
+    (setq-default flycheck-checker 'ruby-standard)
+
+    ;; Chain rubocop after standardrb
+    (flycheck-add-next-checker 'ruby-standard 'ruby-rubocop '(info warning error)))
+
   (with-eval-after-load 'markdown-mode
     (define-key markdown-mode-map (kbd "M-n") nil)
     (define-key markdown-mode-map (kbd "M-p") nil))
