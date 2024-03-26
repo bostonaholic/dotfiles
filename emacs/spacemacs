@@ -697,14 +697,6 @@ before packages are loaded."
   (add-hook 'js2-mode-hook 'prettier-js-mode)
   (add-hook 'web-mode-hook 'prettier-js-mode)
   (add-hook 'typescript-mode-hook 'prettier-js-mode)
-
-  ;; ;; fixed in spacemacs 0.300 https://github.com/syl20bnr/spacemacs/pull/11755
-  ;; (add-to-list 'auto-mode-alist '("\\.dot\\'" . graphviz-dot-mode))
-  ;; ;; fix for https://github.com/luxbock/graphviz-dot-mode/pull/2
-  ;; (defcustom graphviz-dot-indent-width tab-width
-  ;;   "*Indentation width in Graphviz Dot mode buffers."
-  ;;   :type 'integer
-  ;;   :group 'graphviz)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
