@@ -677,14 +677,14 @@ before packages are loaded."
     (define-key copilot-completion-map (kbd "C-TAB") 'copilot-accept-completion-by-word)
     (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion-by-word)
     (define-key copilot-completion-map (kbd "S-<tab>") 'copilot-accept-completion-by-line)
-    (define-key copilot-completion-map (kbd "S-TAB") 'copilot-accept-completion-by-line))
+    (define-key copilot-completion-map (kbd "S-TAB") 'copilot-accept-completion-by-line)
 
-  ;; enable copilot for all programming modes
-  (add-hook 'prog-mode-hook 'copilot-mode)
+    ;; enable copilot for all programming modes
+    (add-hook 'prog-mode-hook 'copilot-mode)
 
-  ;; enable copilot for enh-ruby mode
-  ;; https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
-  (add-to-list 'copilot-major-mode-alist '("enh-ruby" . "ruby"))
+    ;; enable copilot for enh-ruby mode
+    ;; https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
+    (add-to-list 'copilot-major-mode-alist '("enh-ruby" . "ruby")))
 
   ;; join line below to current line
   (global-set-key (kbd "M-j")
