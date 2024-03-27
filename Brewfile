@@ -62,6 +62,9 @@ brew 'openssl'
 brew 'rbenv' # ruby-build installed as a dependency
 brew 'readline'
 
+# Python
+brew 'pyenv'
+
 # Unix
 brew 'ack'
 brew 'autoenv'
