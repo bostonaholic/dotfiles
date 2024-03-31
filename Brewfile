@@ -81,8 +81,12 @@ brew 'the_silver_searcher'
 brew 'tree'
 
 # Video editing
+cask 'filebot'    # Renaming movies and TV shows
 cask 'makemkv'    # Ripping DVDs and Blu-ray
 cask 'mkvtoolnix' # Splitting .mkv files
+
+# 3D printing
+cask 'blender' # 3D modeling
 
 # Other
 brew 'adr-tools' # Architecture Decision Records tool
