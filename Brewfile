@@ -80,6 +80,10 @@ brew 'trash-cli'
 brew 'the_silver_searcher'
 brew 'tree'
 
+# Video editing
+cask 'makemkv'    # Ripping DVDs and Blu-ray
+cask 'mkvtoolnix' # Splitting .mkv files
+
 # Other
 brew 'adr-tools' # Architecture Decision Records tool
 brew 'awscli'
