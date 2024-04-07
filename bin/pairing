@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-ssh -R1337:localhost:22 matthew@pairwith.matthewboston.com
+ssh -R1337:127.0.0.1:22 matthew@pairwith.matthewboston.com
