@@ -637,8 +637,8 @@ before packages are loaded."
   ;; Highlight uses of localhost and prefer 127.0.0.1
   (defun warn-localhost ()
     (font-lock-add-keywords nil
-                            '(("localhost"        ;; TODO: Change to squiggle underline
-                               0 '(face-attribute 'warning :underline t
+                            '(("localhost"
+                               0 '(face-attribute 'warning (:underline (:style wave))
                                                   ;; TODO: Change to popup advice like rubocop
                                                   help-echo "Advice: 'localhost' refers to the loopback interface, use 127.0.0.1 instead.")
                                prepend))))
