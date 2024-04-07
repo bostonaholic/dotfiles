@@ -643,6 +643,7 @@ before packages are loaded."
                                                   help-echo "Advice: 'localhost' refers to the loopback interface, use 127.0.0.1 instead.")
                                prepend))))
   (add-hook 'prog-mode-hook 'warn-localhost)
+  (add-hook 'markdown-mode-hook 'warn-localhost)
 
   ;; Fix ssh pushing in magit
   ;; HACK: https://github.com/magit/magit/discussions/5046
