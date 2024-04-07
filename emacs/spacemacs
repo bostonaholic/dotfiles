@@ -634,6 +634,16 @@ before packages are loaded."
 
                 winum-scope 'frame-local)
 
+  ;; Highlight uses of localhost and prefer 127.0.0.1
+  (defun warn-localhost ()
+    (font-lock-add-keywords nil
+                            '(("localhost"        ;; TODO: Change to squiggle underline
+                               0 '(face-attribute 'warning :underline t
+                                                  ;; TODO: Change to popup advice like rubocop
+                                                  help-echo "Advice: 'localhost' refers to the loopback interface, use 127.0.0.1 instead.")
+                               prepend))))
+  (add-hook 'prog-mode-hook 'warn-localhost)
+
   ;; Fix ssh pushing in magit
   ;; HACK: https://github.com/magit/magit/discussions/5046
   (defun magit-read-gpg-signing-key (prompt &optional initial-input history)
