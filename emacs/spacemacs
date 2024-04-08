@@ -57,7 +57,6 @@ This function should only modify configuration layer settings."
      (git :variables
           git-magit-status-fullscreen t
           magit-repository-directories '(("~/code/")))
-     github
      graphviz
      helm
      html
