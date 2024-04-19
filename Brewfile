@@ -61,6 +61,7 @@ brew 'nodenv'
 brew 'openssl'
 brew 'rbenv' # ruby-build installed as a dependency
 brew 'readline'
+brew 'rust' # for building Ruby with YJIT
 
 # Python
 brew 'pyenv'
