@@ -7,5 +7,8 @@ pry-byebug
 pry-doc
 rubocop
 rubocop-rspec
+ruby-lsp
+ruby-lsp-rails
+ruby-lsp-rspec
 ruby_parser
 standard
