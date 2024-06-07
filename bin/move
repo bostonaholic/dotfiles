@@ -13,9 +13,9 @@
 set -euo pipefail
 
 rsync --verbose \
-      --remove-source-files \
       --archive \
       --progress \
       --stats \
       --human-readable \
+      --remove-source-files \
       "$@"
