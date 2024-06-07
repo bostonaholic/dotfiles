@@ -4,10 +4,10 @@
 # Taken from: https://apple.stackexchange.com/questions/32785/is-there-a-way-to-show-the-speed-of-copying-files-on-a-mac/32798#32798
 #
 # NOTE: Add a trailing slash to only move the contents of the source directory:
-#           $ move /source/directory/
+#           $ move /source/directory/ /destination/directory
 #
 #       Remove the trailing slash to move the source directory and its contents:
-#           $ move /source/directory
+#           $ move /source/directory /destination/directory
 #
 
 set -euo pipefail
