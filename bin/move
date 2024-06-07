@@ -14,6 +14,7 @@ set -euo pipefail
 
 rsync --verbose \
       --archive \
+      --bwlimit=0 \
       --progress \
       --stats \
       --human-readable \
