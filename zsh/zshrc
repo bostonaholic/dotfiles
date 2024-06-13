@@ -106,6 +106,7 @@ plugins=(
     python
     rails
     rbenv
+    ripgrep
     ruby
     ssh-agent
     yarn
