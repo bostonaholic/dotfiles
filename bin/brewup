@@ -8,9 +8,6 @@ set -euo pipefail
     # shellcheck disable=SC1091
     source ./print-and-run
 
-    # Remove all outdated versions of installed formulae and casks
-    export HOMEBREW_AUTOREMOVE=1
-
     print_and_run brew update
 
     print_and_run brew upgrade
