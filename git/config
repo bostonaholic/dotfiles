@@ -56,7 +56,8 @@
 	amend = commit --amend
 	amend-noe = commit --amend --no-edit
 	cl = clone
-	ci = commit -m
+	ci = commit
+    cm = commit -m
 	co = checkout
 	pu = push
 	psu = push --set-upstream
