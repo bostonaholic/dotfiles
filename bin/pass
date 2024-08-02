@@ -2,6 +2,12 @@
 
 set -euo pipefail
 
+# Usage:
+# pass <number>
+#
+# Protip: Run this script with a leading space to avoid logging to terminal history
+echo "Did you remember to prefix this command with a space to avoid it going into history?"
+
 # Using built-in dictionary
 # sed -n $1p /usr/share/dict/words
 
