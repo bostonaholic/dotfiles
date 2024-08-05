@@ -93,7 +93,7 @@
 
 	st = status --short --branch
 
-	refresh = !git stash && git checkout main && git pull origin main && git checkout - && git rebase main && git stash pop
+	refresh = !git stash && git checkout main && git pull origin main && git checkout - && git rebase main && (git stash pop || true)
 
 	laf = fsck --lost-found
 [filter "lfs"]
