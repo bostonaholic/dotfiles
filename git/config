@@ -57,7 +57,7 @@
 	amend-noe = commit --amend --no-edit
 	cl = clone
 	ci = commit
-    cm = commit -m
+	cm = commit -m
 	co = checkout
 	pu = push
 	psu = push --set-upstream
@@ -86,13 +86,17 @@
 
 	ra = rebase --abort
 	rc = rebase --continue
+	rs = rebase --skip
+	rq = rebase --quit
 
 	remotes = remote --verbose
 
 	stashes = stash list
+	sl = stashes
 
 	st = status --short --branch
 
+	# Refresh the current branch with the latest changes from main
 	refresh = !git stash && git checkout main && git pull origin main && git checkout - && git rebase main && (git stash pop || true)
 
 	laf = fsck --lost-found
@@ -102,7 +106,7 @@
 	process = git-lfs filter-process
 	required = true
 [tag]
+	# GPG sign annotated tags by default
 	forceSignAnnotated = true
-
 [includeIf "gitdir:~/code/work/"]
-  path = config.work
+	path = config.work
