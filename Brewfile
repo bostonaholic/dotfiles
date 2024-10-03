@@ -38,7 +38,6 @@ brew 'zsh-completions'
 
 # Security
 brew 'gnupg'
-brew 'gnupg2'
 brew 'gnutls'
 brew 'pinentry-mac'
 
