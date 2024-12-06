@@ -142,9 +142,9 @@ source "${ZSH}/oh-my-zsh.sh"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # ruby-build installs a non-Homebrew OpenSSL for each Ruby version installed and these are never upgraded.
-# To link Rubies to Homebrew's OpenSSL 1.1 (which is upgraded) add the following to your ~/.zshrc:
+# To link Rubies to Homebrew's OpenSSL (which is upgraded) add the following to your ~/.zshrc:
 # Note: this may interfere with building old versions of Ruby (e.g <2.4) that use OpenSSL <1.1.
-RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
 
 # YJIT is a new JIT compiler for Ruby 3.1
 RUBY_CONFIGURE_OPTS="--with-yjit ${RUBY_CONFIGURE_OPTS}"

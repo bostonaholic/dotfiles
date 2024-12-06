@@ -55,7 +55,7 @@ brew 'nodenv'
 
 # Ruby
 # ruby-build suggests using these
-brew 'openssl@1.1' # for Ruby >=3.1
+brew 'openssl@3' # for Ruby versions >= 3.1
 brew 'rbenv' # ruby-build installed as a dependency
 brew 'readline'
 brew 'rust' # for building Ruby with YJIT
