@@ -99,7 +99,7 @@ namespace :install do
     if response? 'y'
       message 'Installing homebrew'
 
-      system 'bash scripts/homebrew'
+      system 'bash scripts/install_homebrew'
     end
   end
 
@@ -124,7 +124,7 @@ namespace :install do
     if response? 'y'
       message 'Installing nodenv...'
 
-      system 'bash scripts/nodenv'
+      system 'bash scripts/install_nodenv'
     end
   end
 
@@ -135,7 +135,7 @@ namespace :install do
     if response? 'y'
       message 'Installing NPM Packages...'
 
-      system 'bash scripts/npm'
+      system 'bash scripts/install_npm'
     end
   end
 
@@ -146,7 +146,7 @@ namespace :install do
     if response? 'y'
       message 'Installing rbenv Plugins...'
 
-      system 'bash scripts/rbenv_plugins'
+      system 'bash scripts/install_rbenv_plugins'
     end
   end
 
@@ -157,7 +157,7 @@ namespace :install do
     if response? 'y'
       message 'Installing Spacemacs'
 
-      system 'bash scripts/spacemacs'
+      system 'bash scripts/install_spacemacs'
     end
   end
 
@@ -168,7 +168,7 @@ namespace :install do
     if response? 'y'
       message 'Installing Vimrc'
 
-      system 'bash scripts/vimrc'
+      system 'bash scripts/install_vimrc'
 
       symlink_file "#{ENV['PWD']}/vim/my_configs.vim", "#{ENV['HOME']}/.vim_runtime/my_configs.vim"
     end
@@ -181,7 +181,7 @@ namespace :install do
     if response? 'y'
       message 'Installing oh-my-zsh'
 
-      system 'bash scripts/oh-my-zsh'
+      system 'bash scripts/install_oh-my-zsh'
 
       ["#{ENV['HOME']}/.oh-my-zsh/custom/plugins/bostonaholic"].each do |dir|
         mkdir dir unless dir_exists? dir
@@ -201,7 +201,7 @@ namespace :install do
     if response? 'y'
       message 'Installing Powerline Fonts'
 
-      system 'bash scripts/powerline-fonts'
+      system 'bash scripts/install_powerline-fonts'
     end
   end
 end
