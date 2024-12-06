@@ -21,7 +21,7 @@ source_files = {
   rspec: "#{ENV['PWD']}/ruby/rspec",
   signature: "#{ENV['PWD']}/signature/signature",
   spacemacs: "#{ENV['PWD']}/emacs/spacemacs",
-  zprofile: "#{ENV['PWD']}/zsh/.zprofile",
+  zprofile: "#{ENV['PWD']}/zsh/zprofile",
   zshrc: "#{ENV['PWD']}/zsh/zshrc"
 }
 
