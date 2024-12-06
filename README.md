@@ -102,6 +102,27 @@ Try:
 pip3 install requests
 ```
 
+### compaudit
+
+```
+zsh compinit: insecure directories, run compaudit for list.
+Ignore insecure directories and continue [y] or abort compinit [n]?
+```
+
+Try:
+
+Check which directory has the wrong permissions
+
+```
+compaudit
+```
+
+Then run the following to fix the permissions:
+
+```
+sudo chmod -R g-w <directory>
+```
+
 ## Thanks
 
 Inspired by [drewbarontini/dotfiles](https://github.com/drewbarontini/dotfiles).
