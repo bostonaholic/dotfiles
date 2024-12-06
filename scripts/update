@@ -27,13 +27,5 @@ echo && echo "--> Updating Spacemacs from https://github.com/syl20bnr/spacemacs"
 spacemacsup
 
 # rbenv plugins
-plugins=(
-    'rbenv-default-gems'
-    'rbenv-ctags'
-)
-
-for plugin in "${plugins[@]}"
-do
-    echo && echo "--> Updating ${plugin}"
-    git -C "$(rbenv root)/plugins/${plugin}" pull --rebase
-done
+echo && echo "--> Updating rbenv plugins"
+./scripts/update_rbenv_plugins

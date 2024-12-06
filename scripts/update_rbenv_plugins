@@ -1,0 +1,15 @@
+#!/bin/bash
+################################################################################
+#
+# Update rbenv Plugins
+#
+################################################################################
+
+set -euo pipefail
+
+for plugin_dir in "$(rbenv root)"/plugins/*; do
+    if [ -d "${plugin_dir}/.git" ]; then
+        echo "Updating $(basename "${plugin_dir}")..."
+        (cd "${plugin_dir}" && git pull)
+    fi
+done
