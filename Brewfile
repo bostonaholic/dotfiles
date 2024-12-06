@@ -9,8 +9,6 @@
 tap 'clojure/tools'
 tap 'd12frosted/emacs-plus'
 tap 'borkdude/brew'
-tap 'homebrew/cask'
-tap 'homebrew/cask-versions'
 tap 'wagoodman/bashful'
 
 # set arguments for all 'brew install --cask' commands
