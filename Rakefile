@@ -113,7 +113,7 @@ namespace :install do
       system 'brew bundle --no-lock'
 
       # Create a link to Emacs.app in ~/Applications
-      system "osascript -e 'tell application \"Finder\" to make alias file to posix file \"/usr/local/opt/emacs-plus@29/Emacs.app\" at POSIX file \"/Applications\" with properties {name:\"Emacs.app\"}'"
+      system "osascript -e 'tell application \"Finder\" to make alias file to posix file \"/opt/homebrew/Cellar/emacs-plus@29/29.4/Emacs.app\ at POSIX file \"/Applications\" with properties {name:\"Emacs.app\"}'"
     end
   end
 
