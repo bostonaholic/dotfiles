@@ -7,14 +7,13 @@ set -euo pipefail
     git reset --hard
     git clean -d --force
     git pull --rebase
-    python update_plugins.py
+    python3 update_plugins.py
 
     exit_code=$?
 
     if [ "$exit_code" -eq 1 ];
     then
-        pip install requests
         pip3 install requests
-        python update_plugins.py
+        python3 update_plugins.py
     fi
 )

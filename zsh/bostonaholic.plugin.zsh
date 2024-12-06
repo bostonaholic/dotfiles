@@ -36,6 +36,9 @@ function bundle_close() {
     bundle exec gem pristine "$*"
 }
 
+# Python
+alias python=python3
+
 # Clojure
 function cljs() {
     planck "$*"
