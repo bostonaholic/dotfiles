@@ -46,7 +46,7 @@ brew 'leiningen'
 brew 'borkdude/brew/clj-kondo'
 
 # Java
-cask 'temurin21'
+cask 'temurin@21'
 
 # JavaScript
 brew 'jq'
