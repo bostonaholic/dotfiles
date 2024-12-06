@@ -17,5 +17,8 @@ do
     plugin_name=$(echo "${plugin}" | cut -d '/' -f 2)
     plugin_repo="git@github.com:${plugin}.git"
 
-    git clone "${plugin_repo}" "$(rbenv root)/plugins/${plugin_name}"
+    # Only clone the plugin if it doesn't already exist
+    if [ ! -d "$(rbenv root)/plugins/${plugin_name}" ]; then
+        git clone "${plugin_repo}" "$(rbenv root)/plugins/${plugin_name}"
+    fi
 done
