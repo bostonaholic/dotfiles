@@ -49,6 +49,14 @@ rake install:vimrc            # Install vimrc configuration for Vim
 rake update                   # Update bostonaholic/dotfiles
 ```
 
+## Post-install
+
+### Copilot.vim
+
+```
+vim -c "Copilot setup"
+```
+
 ## Tips
 
 ### ssh-agent
