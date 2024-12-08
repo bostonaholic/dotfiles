@@ -59,6 +59,7 @@ tasks = %w[
   vimrc
   oh-my-zsh
   powerline_fonts
+  macos
 ]
 
 task default: [:install]
@@ -202,6 +203,17 @@ namespace :install do
       message 'Installing Powerline Fonts'
 
       system 'bash scripts/install_powerline-fonts'
+    end
+  end
+
+  desc 'Install macOS settings'
+  task :macos do
+    prompt_to_install 'macOS'
+  
+    if response? 'y'
+      message 'Installing macOS settings'
+  
+      system 'bash macos/macos'
     end
   end
 end

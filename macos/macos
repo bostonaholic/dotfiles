@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Set key repeat rate to fast
+defaults write -g KeyRepeat -int 1
