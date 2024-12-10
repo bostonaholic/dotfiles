@@ -24,6 +24,14 @@ LOG_SIGNED="%C(always,green)%G?%C(always,reset)"
 LOG_SUBJECT="%s"
 LOG_REFS="%C(always,red)%d%C(always,reset)"
 
+# "G" for a good (valid) signature
+# "B" for a bad signature
+# "U" for a good signature with unknown validity
+# "X" for a good signature that has expired
+# "Y" for a good signature made by an expired key
+# "R" for a good signature made by a revoked key
+# "E" if the signature cannot be checked (e.g. missing key)
+# "N" for no signature
 LOG_FORMAT="$LOG_HASH}$LOG_RELATIVE_TIME}$LOG_AUTHOR}$LOG_SIGNED}$LOG_REFS $LOG_SUBJECT"
 
 BRANCH_PREFIX="%(HEAD)"
