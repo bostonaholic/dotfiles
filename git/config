@@ -27,7 +27,7 @@
 [fetch]
 	prune = true
 [push]
-	default = tracking
+	default = simple
 [pull]
 	default = tracking
 	tags = true
