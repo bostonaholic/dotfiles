@@ -33,6 +33,7 @@
 	tags = true
 	rebase = true
 [rebase]
+	autosquash = true
 	autostash = true
 [rerere]
 	autoupdate = true
