@@ -81,6 +81,7 @@
 	r = !git recent
 	rall = !git recent --all
 
+	last = log -1 HEAD --stat --show-signature
 	head = !git l -1
 	h = !git head
 	hp = "!. $HOME/.config/git/helpers && show_git_head"
@@ -96,6 +97,8 @@
 	sl = stashes
 
 	st = status --short --branch
+
+	unstage = reset HEAD --
 
 	# Refresh the current branch with the latest changes from main
 	refresh = !git stash && git checkout main && git pull origin main && git checkout - && git rebase main && (git stash pop || true)
