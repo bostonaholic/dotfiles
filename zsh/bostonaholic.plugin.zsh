@@ -2,8 +2,6 @@
 
 export PATH=$HOME/code/dotfiles/bin:$PATH
 
-export EDITOR=vi
-
 ### ALIASES ###
 
 # --quit-if-one-screen causes it to quit if the content is less than one screen
