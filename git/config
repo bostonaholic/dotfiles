@@ -41,7 +41,7 @@
 [remote "origin"]
 	prune = true
 [alias]
-	aliases = config --get-regexp "alias.*"
+	aliases = !git config --get-regexp "alias.*" | cut -c 7-
 
 	aa = add --all
 	ap = add --patch
