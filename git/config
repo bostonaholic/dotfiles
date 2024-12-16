@@ -77,8 +77,8 @@
 
 	l = "!. $HOME/.config/git/helpers && pretty_git_log"
 	la = !git l --all
-	recent = !GIT_NO_PAGER=1 git l -30
-	r = !git recent
+	recent = "!f() { GIT_NO_PAGER=1 git l -${1:-10}; }; f"
+	r = !git recent $1
 	rall = !git recent --all
 
 	last = log -1 HEAD --stat --show-signature
