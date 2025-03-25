@@ -713,13 +713,11 @@ before packages are loaded."
 
   (with-eval-after-load 'clojure-mode
     (define-clojure-indent
-      ;; truckerpath.more-monads.error-m/attempt-all
-      (truckerpath.more-monads.error-m/attempt-all 1)
-      (attempt-all 1)
+     (truckerpath.more-monads.error-m/attempt-all 1)
+     (attempt-all 1)
 
-      ;; compojure.core/context
-      (compojure.core/context 1)
-      (context 1)))
+     (compojure.core/context 1)
+     (context 1)))
 
   (add-hook 'js2-mode-hook 'prettier-js-mode)
   (add-hook 'web-mode-hook 'prettier-js-mode)
