@@ -611,7 +611,7 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (load-file (expand-file-name ".secret.el" user-home-directory))
+  (load-file (expand-file-name ".secret.el" "~/"))
   (setq-default user-full-name my/user-full-name
                 user-mail-address my/user-mail-address
 
