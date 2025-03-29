@@ -1,0 +1,15 @@
+#!/bin/bash
+
+SCRIPT_DIR="script"
+if [ ! -d "$SCRIPT_DIR" ]; then
+  mkdir "$SCRIPT_DIR"
+fi
+
+scripts=("${SCRIPT_DIR}/bootstrap" "${SCRIPT_DIR}/setup" "${SCRIPT_DIR}/update" "${SCRIPT_DIR}/server" "${SCRIPT_DIR}/test" "${SCRIPT_DIR}/cibuild" "${SCRIPT_DIR}/console")
+
+for script in "${scripts[@]}"; do
+  if [ ! -f "$script" ]; then
+    touch "$script"
+    chmod +x "$script"
+  fi
+done
