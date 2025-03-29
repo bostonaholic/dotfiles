@@ -27,7 +27,7 @@
 [fetch]
 	prune = true
 [push]
-	default = simple
+	autoSetupRemote = true
 [pull]
 	default = tracking
 	tags = true
