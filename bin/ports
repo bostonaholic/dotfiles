@@ -2,7 +2,7 @@
 
 # this is the script used in the ports Alfred Workflow
 
-set -euo pipefail
+set -eux -o pipefail
 
 pattern=$1
 

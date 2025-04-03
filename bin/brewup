@@ -1,25 +1,22 @@
 #!/bin/bash
 
-set -euo pipefail
+set -eux -o pipefail
 
 (
     cd "$(dirname "$0")"
 
-    # shellcheck disable=SC1091
-    source ./print-and-run
+    brew update
 
-    print_and_run brew update
+    brew upgrade
 
-    print_and_run brew upgrade
+    brew upgrade --cask
 
-    print_and_run brew upgrade --cask
+    brew outdated
 
-    print_and_run brew outdated
-
-    print_and_run brew outdated --cask
+    brew outdated --cask
 
     # -s Scrub the cache
-    print_and_run brew cleanup -s
+    brew cleanup -s
 
-    print_and_run rm -rfv "$(brew --cache)"
+    rm -rfv "$(brew --cache)"
 )

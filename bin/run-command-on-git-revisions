@@ -10,7 +10,7 @@
 # Example usage:
 #     $ run-command-on-git-revisions origin/main main 'python runtests.py'
 
-set -euo pipefail
+set -eux -o pipefail
 
 if [[ $1 == -v ]]; then
     verbose=1

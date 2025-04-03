@@ -1,5 +1,5 @@
 #!/bin/bash
 
-set -euo pipefail
+set -eux -o pipefail
 
 bundle exec rake routes | grep -e "$1" | tr -s " " | tr " " "\t"

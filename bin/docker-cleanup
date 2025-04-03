@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
+set -eux -o pipefail
 
 # shellcheck disable=SC1091
 source "${HOME}/.colors"

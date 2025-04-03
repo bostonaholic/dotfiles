@@ -10,7 +10,7 @@
 #           $ move /source/directory /destination/directory
 #
 
-set -euo pipefail
+set -eux -o pipefail
 
 rsync --verbose \
       --archive \

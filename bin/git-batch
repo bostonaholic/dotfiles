@@ -9,7 +9,7 @@
 # TODO: nested directories
 #
 
-set -euo pipefail
+set -eux -o pipefail
 
 DIRECTORIES=$(ls -d "*/")
 

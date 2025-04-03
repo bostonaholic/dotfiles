@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-set -euo pipefail
+set -eux -o pipefail
 
 # Get the trunk branch name
 trunk_branch=$(git rev-parse --abbrev-ref HEAD | sed 's/^.*\///')

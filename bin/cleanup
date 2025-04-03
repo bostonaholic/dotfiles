@@ -9,6 +9,6 @@
 # $ cleanup "*.elc"
 #
 
-set -euo pipefail
+set -eux -o pipefail
 
 find . -type f -name "$1" -delete

@@ -11,6 +11,6 @@
 # Show authors for a single file:
 #   $ git authors <file>
 
-set -euo pipefail
+set -eux -o pipefail
 git shortlog --summary "$@" \
     | sort -nr

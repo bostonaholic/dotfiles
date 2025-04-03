@@ -1,5 +1,5 @@
 #!/bin/bash
 
-set -euo pipefail
+set -eux -o pipefail
 
 ssh -R1337:127.0.0.1:22 matthew@pairwith.matthewboston.com

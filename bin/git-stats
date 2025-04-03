@@ -1,5 +1,5 @@
 #!/bin/bash
 
-set -euo pipefail
+set -eux -o pipefail
 
 git diff "$*" | gn

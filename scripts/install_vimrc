@@ -5,7 +5,7 @@
 #
 ################################################################################
 
-set -euo pipefail
+set -eux -o pipefail
 
 DIRECTORY="$HOME/.vim_runtime"
 

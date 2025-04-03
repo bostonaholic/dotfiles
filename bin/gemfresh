@@ -2,7 +2,7 @@
 # Author: @stevenharman
 # Source: https://gist.github.com/stevenharman/6975adc0ceeaffd30ac2082268b7d896
 
-set -euo pipefail
+set -eux -o pipefail
 
 # shellcheck disable=SC1091
 source "${HOME}/.colors"
