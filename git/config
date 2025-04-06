@@ -26,6 +26,8 @@
 	noprefix = true
 [fetch]
 	prune = true
+[merge]
+    conflictstyle = zdiff3
 [push]
 	autoSetupRemote = true
 [pull]
