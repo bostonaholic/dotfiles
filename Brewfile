@@ -59,6 +59,7 @@ brew 'rust' # for building Ruby with YJIT
 
 # Python
 brew 'pyenv'
+brew 'uv' # Extremely fast Python package installer and resolver, for MCP servers
 
 # Unix
 brew 'ack'
