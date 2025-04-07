@@ -105,6 +105,9 @@
 	# Refresh the current branch with the latest changes from main
 	refresh = !git stash && git checkout main && git pull origin main && git checkout - && git rebase main && (git stash pop || true)
 
+	# Squash all commits on the current branch against main
+	squash-branch = "!f() { base=$(git merge-base HEAD main); git reset --soft \"$base\"; git commit -m \"${1:-Squashed commit}\"; }; f"
+
 	laf = fsck --lost-found
 [filter "lfs"]
 	clean = git-lfs clean -- %f
