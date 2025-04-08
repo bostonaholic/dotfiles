@@ -84,6 +84,7 @@ plugins=(
     docker
     docker-compose
     emacs
+    fzf-tab # git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM}/plugins/fzf-tab
     gem
     gh
     git

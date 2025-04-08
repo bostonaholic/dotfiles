@@ -87,6 +87,7 @@ brew 'adr-tools' # Architecture Decision Records tool
 brew 'awscli'
 brew 'coreutils' # GNU core utilities
 brew 'dfu-util'  # Device Firmware Upgrade Utilities
+brew 'fzf'       # Command-line fuzzy finder, fzf-tab omz plugin
 brew 'graphviz'
 brew 'markdown'
 brew 'ossp-uuid' # ISO-C API and CLI for generating UUIDs
