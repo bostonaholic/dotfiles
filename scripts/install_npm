@@ -6,6 +6,8 @@
 ################################################################################
 
 packages=(
+  @anthropic-ai/claude-code
+  @openai/codex
   prettier
   prettier-eslint
   prettier-eslint-cli

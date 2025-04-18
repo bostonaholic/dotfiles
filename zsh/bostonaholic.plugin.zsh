@@ -15,6 +15,9 @@ export HISTCONTROL=ignorespace
 # CLI
 alias ..="cd .."
 
+alias cl=claude
+alias co=codex
+
 alias rgrep="grep --recursive"
 
 alias date_seconds="date +%s"
