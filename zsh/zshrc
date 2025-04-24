@@ -94,8 +94,8 @@ plugins=(
     node
     npm
     postgres
-    pyenv
-    python
+    #pyenv
+    #python
     rails
     rbenv
     ruby
@@ -143,3 +143,5 @@ fi
 
 # 1Password SSH agent
 export SSH_AUTH_SOCK=~/.1password/agent.sock
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
