@@ -5,6 +5,7 @@ require 'rake'
 source_files = {
   colors: "#{ENV['PWD']}/home/colors",
   default_gems: "#{ENV['PWD']}/ruby/default-gems",
+  ghostty_config: "#{ENV['PWD']}/ghostty/config",
   gitsigners: "#{ENV['PWD']}/git/allowed_signers",
   gitconfig: "#{ENV['PWD']}/git/config",
   githelpers: "#{ENV['PWD']}/git/helpers",
@@ -28,6 +29,7 @@ source_files = {
 target_files = {
   colors: "#{ENV['HOME']}/.colors",
   default_gems: "#{ENV['HOME']}/.rbenv/default-gems",
+  ghostty_config: "#{ENV['HOME']}/.config/ghostty/config",
   gitsigners: "#{ENV['HOME']}/.config/git/allowed_signers",
   gitconfig: "#{ENV['HOME']}/.config/git/config",
   githelpers: "#{ENV['HOME']}/.config/git/helpers",
@@ -82,7 +84,8 @@ namespace :install do
     if response? 'y'
       message 'Symlinking files...'
 
-      ["#{ENV['HOME']}/.config/git",
+      ["#{ENV['HOME']}/.config/ghostty",
+       "#{ENV['HOME']}/.config/git",
        "#{ENV['HOME']}/.lein",
        "#{ENV['HOME']}/.gnupg",
        "#{ENV['HOME']}/.rbenv"].each do |dir|

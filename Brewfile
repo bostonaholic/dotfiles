@@ -23,6 +23,7 @@ brew 'emacs-plus', # tap d12frosted/emacs-plus
      restart_service: :changed,
      link: true
 brew 'gh'
+cask 'ghostty'
 brew 'git'
 brew 'git-lfs'
 brew 'libyaml'
