@@ -16,6 +16,7 @@ cask_args appdir: '~/Applications', require_sha: true
 
 # Programming
 brew 'aspell'
+cask 'claude'
 brew 'cloc'
 brew 'ctags'
 brew 'emacs-plus', # tap d12frosted/emacs-plus
