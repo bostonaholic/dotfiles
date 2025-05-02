@@ -22,3 +22,6 @@ do
         git clone "${plugin_repo}" "$(rbenv root)/plugins/${plugin_name}"
     fi
 done
+
+# Ensure the new plugins are available
+rbenv rehash
