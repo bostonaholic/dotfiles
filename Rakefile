@@ -139,7 +139,7 @@ namespace :install do
     if response? 'y'
       message 'Installing NPM Packages...'
 
-      system 'bash scripts/install_npm'
+      system 'bash scripts/install_npm_packages'
     end
   end
 
