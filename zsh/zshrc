@@ -144,4 +144,5 @@ fi
 # 1Password SSH agent
 export SSH_AUTH_SOCK=~/.1password/agent.sock
 
+# shellcheck disable=SC1090
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
