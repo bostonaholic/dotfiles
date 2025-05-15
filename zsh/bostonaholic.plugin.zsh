@@ -29,6 +29,9 @@ alias ip="curl https://icanhazip.com"
 
 alias iso8601_date="date +%Y-%m-%dT%H:%M:%S%z"
 
+alias upcase="tr '[:lower:]' '[:upper:]'"
+alias downcase="tr '[:upper:]' '[:lower:]'"
+
 # Git
 alias gti=git
 
