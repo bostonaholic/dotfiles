@@ -50,6 +50,14 @@ function wt_add() {
   local repo
   repo=$(get_repo_name)
   local path="${2:-"$DEFAULT_WT_PATH/$repo/$branch"}"
+
+  # Check if branch exists either locally or remotely
+  if ! git show-ref --verify --quiet "refs/heads/$branch" && ! git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+    echo "Error: Branch '$branch' does not exist."
+    echo "To create a new branch and worktree, use: wt new $branch [start_point] [path]"
+    return 1
+  fi
+
   git worktree add "$path" "$branch"
   echo "Worktree created at: $path"
 }
