@@ -1,0 +1,146 @@
+#!/bin/bash
+
+set -eu -o pipefail
+
+# wt is a wrapper around git worktree
+# it provides a few shortcuts for managing worktrees
+#
+# wt add <branch> [path]
+#   Create a new worktree from the given branch
+#   If no path is provided, the worktree will be created in $HOME/code/worktrees/<repo>/<branch>
+#
+# wt list
+#   List all worktrees
+#
+# wt remove <path>
+#   Remove the worktree at the given path
+#
+# wt prune
+#   Prune all worktrees that are no longer tracked by git
+#
+# wt new <branch> [start_point] [path]
+#   Create a new branch and worktree
+#   If no start_point is provided, HEAD will be used
+#   If no path is provided, the worktree will be created in $HOME/code/worktrees/<repo>/<branch>
+#
+# wt move <old_path> <new_path>
+#   Move the worktree from the old path to the new path
+#
+# wt lock <path> [reason]
+#   Lock the worktree at the given path
+#
+# wt unlock <path>
+#   Unlock the worktree at the given path
+#
+# wt help
+#   Show the help message
+
+DEFAULT_WT_PATH="$HOME/code/worktrees"
+
+function wt() {
+  local cmd="$1"
+  shift 1 || true
+
+  # Get the repository name from the git directory
+  local repo
+  repo=$(basename "$(git rev-parse --show-toplevel)" 2>/dev/null) || repo="repo"
+
+  case "$cmd" in
+    # Create a new worktree
+    add|a)
+      if [ $# -lt 1 ]; then
+        echo "Usage: wt add <branch> [path]"
+        return 1
+      fi
+      local branch="$1"
+      local path="${2:-"$DEFAULT_WT_PATH/$repo/$branch"}"
+      git worktree add "$path" "$branch"
+      echo "Worktree created at: $path"
+      ;;
+
+    # List all worktrees
+    list|ls|l)
+      git worktree list
+      ;;
+
+    # Remove a worktree
+    remove|rm|r)
+      if [ $# -lt 1 ]; then
+        echo "Usage: wt remove <path>"
+        return 1
+      fi
+      git worktree remove "$@"
+      ;;
+
+    # Prune worktrees
+    prune|p)
+      git worktree prune "$@"
+      ;;
+
+    # Create a new branch and worktree
+    new|n)
+      if [ $# -lt 1 ]; then
+        echo "Usage: wt new <branch> [start_point] [path]"
+        return 1
+      fi
+      local branch="$1"
+      local start_point="${2:-HEAD}"
+      local path="${3:-"$DEFAULT_WT_PATH/$repo/$branch"}"
+      git checkout -b "$branch" "$start_point"
+      git checkout -
+      git worktree add "$path" "$branch"
+      echo "Worktree created at: $path"
+      ;;
+
+    # Move a worktree
+    move|mv|m)
+      if [ $# -lt 2 ]; then
+        echo "Usage: wt move <old_path> <new_path>"
+        return 1
+      fi
+      git worktree move "$@"
+      ;;
+
+    # Lock a worktree
+    lock)
+      if [ $# -lt 1 ]; then
+        echo "Usage: wt lock <path> [reason]"
+        return 1
+      fi
+      git worktree lock "$@"
+      ;;
+
+    # Unlock a worktree
+    unlock)
+      if [ $# -lt 1 ]; then
+        echo "Usage: wt unlock <path>"
+        return 1
+      fi
+      git worktree unlock "$@"
+      ;;
+
+    # Show help
+    help|h|*)
+      echo "Git Worktree Shortcuts"
+      echo "======================"
+      echo "Usage: wt <command> [args]"
+      echo ""
+      echo "Commands:"
+      echo "  add, a        - Create a new worktree: wt add <branch> [path]"
+      echo "  list, ls, l   - List all worktrees"
+      echo "  remove, rm, r - Remove a worktree: wt remove <path>"
+      echo "  prune, p      - Prune worktrees"
+      echo "  new, n        - Create a new branch and worktree: wt new <branch> [start_point] [path]"
+      echo "  move, mv, m   - Move a worktree: wt move <old_path> <new_path>"
+      echo "  lock          - Lock a worktree: wt lock <path> [reason]"
+      echo "  unlock        - Unlock a worktree: wt unlock <path>"
+      echo "  help, h       - Show this help"
+      ;;
+  esac
+}
+
+if [ $# -eq 0 ]; then
+  wt help
+else
+  wt "$@"
+fi
