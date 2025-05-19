@@ -9,6 +9,9 @@ set -eu -o pipefail
 #   Create a new worktree from the given branch
 #   If no path is provided, the worktree will be created in $HOME/code/worktrees/<repo>/<branch>
 #
+# wt cd <branch>
+#   Change to the directory of the worktree for the given branch
+#
 # wt list
 #   List all worktrees
 #
@@ -34,6 +37,9 @@ set -eu -o pipefail
 #
 # wt help
 #   Show the help message
+
+# Check if the script is being sourced
+(return 0 2>/dev/null) && SOURCED=1 || SOURCED=0
 
 DEFAULT_WT_PATH="$HOME/code/worktrees"
 
@@ -118,6 +124,31 @@ function wt_unlock() {
   git worktree unlock "$@"
 }
 
+function wt_cd() {
+  if [ $# -lt 1 ]; then
+    echo "Usage: wt cd <branch>"
+    return 1
+  fi
+  local branch="$1"
+
+  # Get the path from git worktree list
+  local path
+  path=$(git worktree list | grep -F "[${branch}]" | awk '{print $1}')
+
+  if [ -z "$path" ]; then
+    echo "Error: No worktree found for branch '${branch}'"
+    return 1
+  fi
+
+  if [ "$SOURCED" -eq 1 ]; then
+    cd "$path"
+  else
+    echo "Cannot change directory directly."
+    echo "To use this command, source the script first:"
+    echo "  source $0 && wt cd $branch"
+  fi
+}
+
 function wt_help() {
   echo "Git Worktree Shortcuts"
   echo "======================"
@@ -125,6 +156,7 @@ function wt_help() {
   echo ""
   echo "Commands:"
   echo "  add, a        - Create a new worktree: wt add <branch> [path]"
+  echo "  cd            - Change to the directory of a worktree: wt cd <branch>"
   echo "  list, ls, l   - List all worktrees"
   echo "  remove, rm, r - Remove a worktree: wt remove <path>"
   echo "  prune, p      - Prune worktrees"
@@ -142,6 +174,9 @@ function wt() {
   case "$cmd" in
     add|a)
       wt_add "$@"
+      ;;
+    cd)
+      wt_cd "$@"
       ;;
     list|ls|l)
       wt_list "$@"
@@ -170,8 +205,11 @@ function wt() {
   esac
 }
 
-if [ $# -eq 0 ]; then
-  wt help
-else
-  wt "$@"
+# Only execute if not being sourced
+if [ "$SOURCED" -eq 0 ]; then
+  if [ $# -eq 0 ]; then
+    wt help
+  else
+    wt "$@"
+  fi
 fi
