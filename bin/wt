@@ -47,6 +47,18 @@ function get_repo_name() {
   basename "$(git rev-parse --show-toplevel)" 2>/dev/null || echo "repo"
 }
 
+function copy_env_file() {
+  local target_path="$1"
+  local repo_root
+  repo_root=$(git rev-parse --show-toplevel)
+  local env_file=".env"
+
+  if [ -f "$repo_root/$env_file" ]; then
+    cp "$repo_root/$env_file" "$target_path/$env_file"
+    echo "Copied $env_file file to worktree"
+  fi
+}
+
 function wt_add() {
   if [ $# -lt 1 ]; then
     echo "Usage: wt add <branch> [path]"
@@ -65,6 +77,9 @@ function wt_add() {
   fi
 
   git worktree add "$path" "$branch"
+
+  copy_env_file "$path"
+
   echo "Worktree created at: $path"
 }
 
@@ -97,6 +112,9 @@ function wt_new() {
   git checkout -b "$branch" "$start_point"
   git checkout -
   git worktree add "$path" "$branch"
+
+  copy_env_file "$path"
+
   echo "Worktree created at: $path"
 }
 
