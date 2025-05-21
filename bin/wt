@@ -8,6 +8,7 @@ set -eu -o pipefail
 # wt add <branch> [path]
 #   Create a new worktree from the given branch
 #   If no path is provided, the worktree will be created in $HOME/code/worktrees/<repo>/<branch>
+#   Note: Slashes in branch names are replaced with underscores in the default path
 #
 # wt cd <branch>
 #   Change to the directory of the worktree for the given branch
@@ -25,6 +26,7 @@ set -eu -o pipefail
 #   Create a new branch and worktree
 #   If no start_point is provided, HEAD will be used
 #   If no path is provided, the worktree will be created in $HOME/code/worktrees/<repo>/<branch>
+#   Note: Slashes in branch names are replaced with underscores in the default path
 #
 # wt move <old_path> <new_path>
 #   Move the worktree from the old path to the new path
@@ -47,6 +49,10 @@ function get_repo_name() {
   basename "$(git rev-parse --show-toplevel)" 2>/dev/null || echo "repo"
 }
 
+function sanitize_branch_name() {
+  echo "$1" | tr '/' '_'
+}
+
 function copy_env_file() {
   local target_path="$1"
   local repo_root
@@ -65,9 +71,10 @@ function wt_add() {
     return 1
   fi
   local branch="$1"
-  local repo
+  local repo sanitized_branch
   repo=$(get_repo_name)
-  local path="${2:-"$DEFAULT_WT_PATH/$repo/$branch"}"
+  sanitized_branch=$(sanitize_branch_name "$branch")
+  local path="${2:-"$DEFAULT_WT_PATH/$repo/$sanitized_branch"}"
 
   # Check if branch exists either locally or remotely
   if ! git show-ref --verify --quiet "refs/heads/$branch" && ! git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
@@ -106,9 +113,10 @@ function wt_new() {
   fi
   local branch="$1"
   local start_point="${2:-HEAD}"
-  local repo
+  local repo sanitized_branch
   repo=$(get_repo_name)
-  local path="${3:-"$DEFAULT_WT_PATH/$repo/$branch"}"
+  sanitized_branch=$(sanitize_branch_name "$branch")
+  local path="${3:-"$DEFAULT_WT_PATH/$repo/$sanitized_branch"}"
   git checkout -b "$branch" "$start_point"
   git checkout -
   git worktree add "$path" "$branch"
@@ -174,11 +182,13 @@ function wt_help() {
   echo ""
   echo "Commands:"
   echo "  add, a        - Create a new worktree: wt add <branch> [path]"
+  echo "                  (slashes in branch names are replaced with underscores in the default path)"
   echo "  cd            - Change to the directory of a worktree: wt cd <branch>"
   echo "  list, ls, l   - List all worktrees"
   echo "  remove, rm, r - Remove a worktree: wt remove <path>"
   echo "  prune, p      - Prune worktrees"
   echo "  new, n        - Create a new branch and worktree: wt new <branch> [start_point] [path]"
+  echo "                  (slashes in branch names are replaced with underscores in the default path)"
   echo "  move, mv, m   - Move a worktree: wt move <old_path> <new_path>"
   echo "  lock          - Lock a worktree: wt lock <path> [reason]"
   echo "  unlock        - Unlock a worktree: wt unlock <path>"
