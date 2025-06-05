@@ -19,6 +19,7 @@ brew 'aspell'
 cask 'claude'
 brew 'cloc'
 brew 'ctags'
+cask 'docker'
 brew 'emacs-plus', # tap d12frosted/emacs-plus
      args: %w[with-spacemacs-icon],
      restart_service: :changed,
