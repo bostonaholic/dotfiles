@@ -184,12 +184,12 @@ function wt_help() {
   echo "  add, a        - Create a new worktree: wt add <branch> [path]"
   echo "                  (slashes in branch names are replaced with underscores in the default path)"
   echo "  cd            - Change to the directory of a worktree: wt cd <branch>"
-  echo "  list, ls, l   - List all worktrees"
-  echo "  remove, rm, r - Remove a worktree: wt remove <path>"
+  echo "  list, ls      - List all worktrees"
+  echo "  remove, rm    - Remove a worktree: wt remove <path>"
   echo "  prune, p      - Prune worktrees"
   echo "  new, n        - Create a new branch and worktree: wt new <branch> [start_point] [path]"
   echo "                  (slashes in branch names are replaced with underscores in the default path)"
-  echo "  move, mv, m   - Move a worktree: wt move <old_path> <new_path>"
+  echo "  move, mv      - Move a worktree: wt move <old_path> <new_path>"
   echo "  lock          - Lock a worktree: wt lock <path> [reason]"
   echo "  unlock        - Unlock a worktree: wt unlock <path>"
   echo "  help, h       - Show this help"
@@ -206,10 +206,10 @@ function wt() {
     cd)
       wt_cd "$@"
       ;;
-    list|ls|l)
+    list|ls)
       wt_list "$@"
       ;;
-    remove|rm|r)
+    remove|rm)
       wt_remove "$@"
       ;;
     prune|p)
@@ -218,7 +218,7 @@ function wt() {
     new|n)
       wt_new "$@"
       ;;
-    move|mv|m)
+    move|mv)
       wt_move "$@"
       ;;
     lock)
