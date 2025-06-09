@@ -1,3 +1,41 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(awk:*)",
+      "Bash(cat:*)",
+      "Bash(cut:*)",
+      "Bash(date:*)",
+      "Bash(df:*)",
+      "Bash(diff:*)",
+      "Bash(du:*)",
+      "Bash(echo:*)",
+      "Bash(env:*)",
+      "Bash(file:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(head:*)",
+      "Bash(hostname:*)",
+      "Bash(id:*)",
+      "Bash(less:*)",
+      "Bash(ls:*)",
+      "Bash(md5:*)",
+      "Bash(more:*)",
+      "Bash(ps:*)",
+      "Bash(pwd:*)",
+      "Bash(sed:*)",
+      "Bash(sort:*)",
+      "Bash(stat:*)",
+      "Bash(tail:*)",
+      "Bash(tr:*)",
+      "Bash(uname:*)",
+      "Bash(uniq:*)",
+      "Bash(uptime:*)",
+      "Bash(wc:*)",
+      "Bash(which:*)",
+      "Bash(who:*)",
+      "Bash(whoami:*)"
+    ],
+    "deny": []
+  },
   "model": "opus"
 }
