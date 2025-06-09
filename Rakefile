@@ -3,6 +3,7 @@
 require 'rake'
 
 source_files = {
+  claude_settings: "#{ENV['PWD']}/claude/settings.json",
   colors: "#{ENV['PWD']}/home/colors",
   default_gems: "#{ENV['PWD']}/ruby/default-gems",
   ghostty_config: "#{ENV['PWD']}/ghostty/config",
@@ -27,6 +28,7 @@ source_files = {
 }
 
 target_files = {
+  claude_settings: "#{ENV['HOME']}/.claude/settings.json",
   colors: "#{ENV['HOME']}/.colors",
   default_gems: "#{ENV['HOME']}/.rbenv/default-gems",
   ghostty_config: "#{ENV['HOME']}/.config/ghostty/config",
@@ -84,7 +86,8 @@ namespace :install do
     if response? 'y'
       message 'Symlinking files...'
 
-      ["#{ENV['HOME']}/.config/ghostty",
+      ["#{ENV['HOME']}/.claude",
+       "#{ENV['HOME']}/.config/ghostty",
        "#{ENV['HOME']}/.config/git",
        "#{ENV['HOME']}/.lein",
        "#{ENV['HOME']}/.gnupg",
