@@ -12,6 +12,8 @@
       "Bash(env:*)",
       "Bash(file:*)",
       "Bash(find:*)",
+      "Bash(git:*)",
+      "Bash(gh:*)",
       "Bash(grep:*)",
       "Bash(head:*)",
       "Bash(hostname:*)",
