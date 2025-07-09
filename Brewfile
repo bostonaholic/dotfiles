@@ -88,6 +88,7 @@ cask 'blender' # 3D modeling
 # Other
 brew 'adr-tools' # Architecture Decision Records tool
 brew 'awscli'
+cask 'clipy'     # Clipboard manager
 brew 'coreutils' # GNU core utilities
 brew 'dfu-util'  # Device Firmware Upgrade Utilities
 brew 'fzf'       # Command-line fuzzy finder, fzf-tab omz plugin
