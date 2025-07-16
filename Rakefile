@@ -117,7 +117,7 @@ namespace :install do
     if response? 'y'
       message 'Installing Brewfile...'
 
-      system 'brew bundle --no-lock'
+      system 'brew bundle'
     end
   end
 
