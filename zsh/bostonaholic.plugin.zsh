@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PATH=$HOME/code/dotfiles/bin:$PATH
+export PATH=$HOME/dotfiles/bin:$PATH
 
 ### ALIASES ###
 

@@ -8,7 +8,7 @@
 # Dotfiles
 echo && echo "--> Updating dotfiles source"
 (
-    cd "${HOME}/code/dotfiles" || exit
+    cd "${HOME}/dotfiles" || exit
     git refresh
 )
 

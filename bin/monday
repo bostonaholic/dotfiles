@@ -3,7 +3,7 @@
 set -eux -o pipefail
 
 (
-    cd "${HOME}/code/dotfiles"
+    cd "${HOME}/dotfiles"
     # bashful run monday.yml
 
     # shellcheck disable=SC1091
