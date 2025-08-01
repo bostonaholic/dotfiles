@@ -4,6 +4,7 @@ require 'rake'
 
 source_files = {
   claude_commands: "#{ENV['PWD']}/claude/commands",
+  claude_md: "#{ENV['PWD']}/claude/CLAUDE.md",
   claude_settings: "#{ENV['PWD']}/claude/settings.json",
   colors: "#{ENV['PWD']}/home/colors",
   default_gems: "#{ENV['PWD']}/ruby/default-gems",
@@ -30,6 +31,7 @@ source_files = {
 
 target_files = {
   claude_commands: "#{ENV['HOME']}/.claude/commands",
+  claude_md: "#{ENV['HOME']}/.claude/CLAUDE.md",
   claude_settings: "#{ENV['HOME']}/.claude/settings.json",
   colors: "#{ENV['HOME']}/.colors",
   default_gems: "#{ENV['HOME']}/.rbenv/default-gems",
