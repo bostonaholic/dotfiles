@@ -4,31 +4,37 @@
 
 ### Clone the repository
 
+```bash
+mkdir code && cd code
 ```
-$ mkdir code && cd code
-$ git clone git@github.com:bostonaholic/dotfiles.git
+
+```bash
+git clone git@github.com:bostonaholic/dotfiles.git
 ```
 
 ### Copy sample environment files
 
+```bash
+cp $PWD/env/secret.sample.el $HOME/.secret.el
 ```
-$ cp $PWD/env/secret.sample.el $HOME/.secret.el
-$ cp $PWD/env/env.sample $HOME/.env
+
+```bash
+cp $PWD/env/env.sample $HOME/.env
 ```
 
 ### Configure a work computer
 
 Configure git to use a work email and signing key
 
-```
-$ vi ~/.config/git/config.work
+```bash
+vi ~/.config/git/config.work
 ```
 
-```
+```plaintext
 [user]
-	name = Matthew Boston
-	email = matthew.boston@example.com
-	signingkey = <>
+    name = Matthew Boston
+    email = matthew.boston@example.com
+    signingkey = <>
 ```
 
 Fill in the `TODO` sections in each of the above environment files.
@@ -64,7 +70,7 @@ The installation is now managed by a single `install.sh` script with a declarati
 
 ### Copilot.vim
 
-```
+```vimscript
 vim -c "Copilot setup"
 ```
 
@@ -82,7 +88,7 @@ Add `zstyle :omz:plugins:ssh-agent agent-forwarding on`
 
 Errors with `/usr/local/bin/gpg` not in the `$PATH`
 
-```
+```plaintext
 fatal: cannot run /usr/local/bin/gpg: No such file or directory
 error: gpg failed to sign the data
 fatal: failed to write commit object
@@ -90,26 +96,26 @@ fatal: failed to write commit object
 
 It might be that Homebrew's version of `gpg` needs the symlink overwritten.
 
-```
+```bash
 brew link --overwrite gnupg
 ```
 
 Or
 
-```
+```plaintext
 error: gpg failed to sign the data
 fatal: failed to write commit object
 ```
 
 Try:
 
-```
+```bash
 gpgconf --kil gpg-agent
 ```
 
 ### vimrc
 
-```
+```plaintext
   File "/Users/<user>/.vim_runtime/update_plugins.py", line 13, in <module>
     import requests
 ModuleNotFoundError: No module named 'requests'
@@ -117,13 +123,13 @@ ModuleNotFoundError: No module named 'requests'
 
 Try:
 
-```
+```bash
 pip3 install requests
 ```
 
 ### compaudit
 
-```
+```plaintext
 zsh compinit: insecure directories, run compaudit for list.
 Ignore insecure directories and continue [y] or abort compinit [n]?
 ```
@@ -132,13 +138,13 @@ Try:
 
 Check which directory has the wrong permissions
 
-```
+```bash
 compaudit
 ```
 
 Then run the following to fix the permissions:
 
-```
+```bash
 sudo chmod -R g-w <directory>
 ```
 
