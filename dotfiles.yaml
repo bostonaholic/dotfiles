@@ -1,0 +1,110 @@
+# Dotfiles Configuration
+# This file defines all symlinks, directories, and packages to be installed
+
+directories:
+  - ~/.claude
+  - ~/.config/ghostty
+  - ~/.config/git
+  - ~/.lein
+  - ~/.gnupg
+  - ~/.rbenv
+  - ~/.oh-my-zsh/custom/plugins/bostonaholic
+  - ~/.oh-my-zsh/custom/themes
+
+symlinks:
+  # Claude
+  claude/commands: ~/.claude/commands
+  claude/CLAUDE.md: ~/.claude/CLAUDE.md
+  claude/settings.json: ~/.claude/settings.json
+
+  # Shell
+  zsh/zshrc: ~/.zshrc
+  zsh/zprofile: ~/.zprofile
+  zsh/bostonaholic.zsh-theme: ~/.oh-my-zsh/custom/themes/bostonaholic.zsh-theme
+  zsh/bostonaholic.plugin.zsh: ~/.oh-my-zsh/custom/plugins/bostonaholic/bostonaholic.plugin.zsh
+
+  # Git
+  git/config: ~/.config/git/config
+  git/helpers: ~/.config/git/helpers
+  git/ignore: ~/.config/git/ignore
+  git/allowed_signers: ~/.config/git/allowed_signers
+
+  # Terminal
+  ghostty/config: ~/.config/ghostty/config
+
+  # Ruby
+  ruby/pryrc: ~/.pryrc
+  ruby/rspec: ~/.rspec
+  ruby/default-gems: ~/.rbenv/default-gems
+
+  # Node
+  node/node-version: ~/.node-version
+
+  # Editors
+  emacs/spacemacs: ~/.spacemacs
+  vim/my_configs.vim: ~/.vim_runtime/my_configs.vim
+
+  # Other tools
+  home/colors: ~/.colors
+  gpg/gpg-agent.conf: ~/.gnupg/gpg-agent.conf
+  ignore/ignore: ~/.ignore
+  ignore/rgignore: ~/.rgignore
+  javascript/jsbeautifyrc: ~/.jsbeautifyrc
+  javascript/jshintrc: ~/.jshintrc
+  clojure/profiles.clj: ~/.lein/profiles.clj
+  keyboard/qwerty.txt: ~/qwerty.txt
+  signature/signature: ~/.signature
+
+packages:
+  brew:
+    bundle_file: Brewfile
+
+  npm:
+    global_packages:
+      - "@anthropic-ai/claude-code"
+      - "@openai/codex"
+      - prettier
+      - prettier-eslint
+      - prettier-eslint-cli
+      - tern
+      - ulid
+
+scripts:
+  pre_install:
+    - description: "Validate sudo credentials"
+      command: "sudo --validate"
+
+  post_install:
+    - description: "Install oh-my-zsh"
+      command: "scripts/install_oh-my-zsh"
+      condition: "! [ -d ~/.oh-my-zsh ]"
+
+    - description: "Install Spacemacs"
+      command: "scripts/install_spacemacs"
+      condition: "! [ -d ~/.emacs.d ]"
+
+    - description: "Install vimrc"
+      command: "scripts/install_vimrc"
+      condition: "! [ -d ~/.vim_runtime ]"
+
+    - description: "Install rbenv plugins"
+      command: "scripts/install_rbenv_plugins"
+      condition: "[ -d ~/.rbenv ]"
+
+    - description: "Install nodenv"
+      command: "scripts/install_nodenv"
+      condition: "! command -v nodenv"
+
+    - description: "Install Powerline fonts"
+      command: "scripts/install_powerline-fonts"
+      optional: true
+
+    - description: "Apply macOS settings"
+      command: "macos/macos"
+      condition: '[[ "$OSTYPE" == "darwin"* ]]'
+      optional: true
+
+options:
+  backup_dir: ~/.dotfiles_backup
+  default_shell: zsh
+  verbose: false

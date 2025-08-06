@@ -6,8 +6,8 @@ set -eux -o pipefail
     cd "${HOME}/dotfiles"
     # bashful run monday.yml
 
-    # shellcheck disable=SC1091
-    source ./scripts/update
+    # Run the update script
+    ./update.sh
 
     wait
 )

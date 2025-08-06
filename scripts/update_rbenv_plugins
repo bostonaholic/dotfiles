@@ -1,15 +1,47 @@
 #!/bin/bash
-################################################################################
-#
-# Update rbenv Plugins
-#
-################################################################################
+# Update rbenv plugins
 
-set -eux -o pipefail
+set -euo pipefail
 
-for plugin_dir in "$(rbenv root)"/plugins/*; do
-    if [ -d "${plugin_dir}/.git" ]; then
-        echo "Updating $(basename "${plugin_dir}")..."
-        (cd "${plugin_dir}" && git pull)
+# Colors for output
+readonly BLUE='\033[0;34m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[0;33m'
+readonly NC='\033[0m'
+
+# Logging functions
+log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
+success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
+warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+
+# Main function
+main() {
+    if ! command -v rbenv &> /dev/null; then
+        warn "rbenv not installed, skipping plugin updates"
+        return
     fi
-done
+
+    log "Updating rbenv plugins..."
+    RBENV_ROOT="${RBENV_ROOT:-$HOME/.rbenv}"
+
+    if [[ -d "$RBENV_ROOT/plugins" ]]; then
+        for plugin in "$RBENV_ROOT"/plugins/*; do
+            if [[ -d "$plugin/.git" ]]; then
+                plugin_name=$(basename "$plugin")
+                log "Updating rbenv plugin: $plugin_name"
+                (
+                    cd "$plugin" || exit
+                    git pull --quiet
+                )
+            fi
+        done
+        success "rbenv plugins updated"
+    else
+        warn "No rbenv plugins found"
+    fi
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

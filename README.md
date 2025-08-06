@@ -33,21 +33,32 @@ $ vi ~/.config/git/config.work
 
 Fill in the `TODO` sections in each of the above environment files.
 
-### Install with rake
+### Install with install.sh
 
+```bash
+# Full installation (interactive)
+./install.sh
+
+# Preview changes without making them
+./install.sh --dry-run
+
+# Install without prompts
+./install.sh -y
+
+# Install specific components only
+./install.sh --only symlinks        # Only create symlinks
+./install.sh --only brew            # Only install Homebrew packages
+./install.sh --only npm             # Only install npm packages
+./install.sh --only symlinks,brew   # Multiple components
+
+# Other options
+./install.sh -v                     # Verbose output
+./install.sh -f                     # Force overwrite files
+./install.sh --no-backup            # Skip backing up existing files
+./install.sh --help                 # Show all options
 ```
-rake install                  # Install bostonaholic/dotfiles
-rake install:brewfile         # Install Homebrew packages
-rake install:homebrew         # Install Homebrew for managing dev packages
-rake install:npm_packages     # Install NPM packages
-rake install:oh-my-zsh        # Install oh-my-zsh configuration for ZSH
-rake install:nodenv           # Install nodenv for managing Node versions
-rake install:powerline_fonts  # Install Powerline Fonts
-rake install:spacemacs        # Install Spacemacs configuration for Emacs
-rake install:symlinks         # Create symlinks
-rake install:vimrc            # Install vimrc configuration for Vim
-rake update                   # Update bostonaholic/dotfiles
-```
+
+The installation is now managed by a single `install.sh` script with a declarative `dotfiles.yaml` configuration file.
 
 ## Post-install
 

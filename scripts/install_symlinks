@@ -1,0 +1,170 @@
+#!/bin/bash
+# Create symlinks from dotfiles.yaml
+
+set -euo pipefail
+
+# Colors for output
+# readonly RED='\033[0;31m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[0;33m'
+readonly BLUE='\033[0;34m'
+readonly NC='\033[0m'
+
+# Configuration
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly DOTFILES_DIR
+CONFIG_FILE="$DOTFILES_DIR/dotfiles.yaml"
+readonly CONFIG_FILE
+BACKUP_DIR="${BACKUP_DIR:-${HOME}/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)}"
+
+# Options from environment or defaults
+DRY_RUN="${DRY_RUN:-false}"
+FORCE="${FORCE:-false}"
+VERBOSE="${VERBOSE:-false}"
+BACKUP="${BACKUP:-true}"
+
+# Logging functions
+log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
+success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
+warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+debug() { 
+    if [[ $VERBOSE == true ]]; then 
+        echo -e "${BLUE}[DEBUG]${NC} $1"
+    fi
+}
+
+# Backup file if it exists
+backup_file() {
+    local file=$1
+
+    if [[ -e "$file" && $BACKUP == true && $DRY_RUN == false ]]; then
+        local backup_path
+        backup_path="$BACKUP_DIR/$(basename "$file")"
+        mkdir -p "$(dirname "$backup_path")"
+        debug "Backing up $file to $backup_path"
+        cp -r "$file" "$backup_path"
+    fi
+}
+
+# Create symlink
+create_symlink() {
+    local source=$1
+    local target=$2
+
+    # Expand home directory
+    target=$(eval echo "$target")
+    source="$DOTFILES_DIR/$source"
+
+    # Check if source exists
+    if [[ ! -e "$source" ]]; then
+        warn "Source file not found: $source"
+        return 1
+    fi
+
+    # Handle existing target
+    if [[ -e "$target" || -L "$target" ]]; then
+        if [[ -L "$target" ]]; then
+            local current_target
+            current_target=$(readlink "$target")
+            if [[ "$current_target" == "$source" ]]; then
+                debug "Symlink already correct: $target"
+                return 2  # Already exists and correct
+            fi
+        fi
+
+        if [[ $FORCE == false && $DRY_RUN == false ]]; then
+            # Make sure prompt is visible by flushing output
+            printf "\n"
+            read -p "$(echo -e "${YELLOW}Overwrite $target? [y/N]${NC} ")" -n 1 -r
+            echo
+            if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+                warn "Skipping $target"
+                return 3  # Skipped by user
+            fi
+        fi
+
+        if [[ $DRY_RUN == false ]]; then
+            backup_file "$target"
+            log "Backed up existing file: $target"
+        fi
+
+        if [[ $DRY_RUN == false ]]; then
+            rm -rf "$target"
+        fi
+    fi
+
+    # Create parent directory if needed
+    local target_dir
+    target_dir=$(dirname "$target")
+    if [[ ! -d "$target_dir" ]]; then
+        if [[ $DRY_RUN == true ]]; then
+            log "[DRY RUN] Would create directory: $target_dir"
+        else
+            debug "Creating parent directory: $target_dir"
+            mkdir -p "$target_dir"
+        fi
+    fi
+
+    # Create symlink
+    if [[ $DRY_RUN == true ]]; then
+        log "[DRY RUN] Would symlink: $source -> $target"
+    else
+        log "Creating symlink: $target -> $source"
+        ln -sf "$source" "$target"
+    fi
+
+    return 0  # Success
+}
+
+# Main function
+main() {
+    log "Creating symlinks..."
+
+    local created=0
+    local skipped=0
+    local already_correct=0
+    local failed=0
+    local total=0
+
+    # Parse symlinks from YAML using yq
+    debug "Using yq to parse symlinks"
+    local symlinks_data
+    if ! symlinks_data=$(yq eval '.symlinks | to_entries | .[] | [.key, .value] | @tsv' "$CONFIG_FILE" 2>&1); then
+        warn "Failed to parse symlinks with yq: $symlinks_data"
+        return
+    fi
+    debug "Found symlinks data: $(echo "$symlinks_data" | wc -l) lines"
+
+    while IFS=$'\t' read -r source target; do
+        if [[ -n "$source" && -n "$target" ]]; then
+            total=$((total + 1))
+            debug "Processing symlink: $source -> $target"
+
+            set +e  # Temporarily disable error exit
+            create_symlink "$source" "$target"
+            local result=$?
+            set -e  # Re-enable error exit
+
+            case $result in
+                0) created=$((created + 1)) ;;
+                1) failed=$((failed + 1)) ;;
+                2) already_correct=$((already_correct + 1)) ;;
+                3) skipped=$((skipped + 1)) ;;
+            esac
+        fi
+    done <<< "$symlinks_data"
+
+    log "Symlink summary:"
+    log "  - Total: $total symlinks processed"
+    log "  - Created: $created new symlinks"
+    log "  - Already correct: $already_correct symlinks"
+    log "  - Skipped: $skipped symlinks (user choice)"
+    [[ $failed -gt 0 ]] && warn "  - Failed: $failed symlinks (source not found)"
+
+    success "Symlink creation completed"
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

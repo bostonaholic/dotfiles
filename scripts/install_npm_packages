@@ -1,24 +1,85 @@
 #!/bin/bash
-################################################################################
-#
-# NPM Packages
-#
-################################################################################
+# Install npm packages from dotfiles.yaml
 
-packages=(
-  @anthropic-ai/claude-code
-  @openai/codex
-  prettier
-  prettier-eslint
-  prettier-eslint-cli
-  tern
-  ulid
-)
+set -euo pipefail
 
-for package in "${packages[@]}"
-do
-    npm install -g "$package"
-done
+# Colors for output
+readonly BLUE='\033[0;34m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[0;33m'
+readonly NC='\033[0m'
 
-# Ensure the new packages are available
-nodenv rehash
+# Configuration
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly DOTFILES_DIR
+CONFIG_FILE="$DOTFILES_DIR/dotfiles.yaml"
+readonly CONFIG_FILE
+
+# Options from environment or defaults
+DRY_RUN="${DRY_RUN:-false}"
+VERBOSE="${VERBOSE:-false}"
+
+# Logging functions
+log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
+success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
+warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+debug() { 
+    if [[ $VERBOSE == true ]]; then 
+        echo -e "${BLUE}[DEBUG]${NC} $1"
+    fi
+}
+
+# Main function
+main() {
+    log "Installing npm packages..."
+
+    # Check if npm is available
+    if ! command -v npm &> /dev/null; then
+        warn "npm not found. Skipping npm package installation"
+        warn "Install Node.js/npm first, then run: $0"
+        return
+    fi
+
+    log "npm version: $(npm --version)"
+
+    # Parse npm packages from YAML using yq
+    local packages
+    packages=$(yq eval '.packages.npm.global_packages[]' "$CONFIG_FILE" 2>/dev/null | tr -d '"')
+
+    local installed=0
+    local total=0
+
+    while IFS= read -r package; do
+        if [[ -n "$package" ]]; then
+            total=$((total + 1))
+            if [[ $DRY_RUN == true ]]; then
+                log "[DRY RUN] Would install npm package: $package"
+            else
+                log "Installing npm package: $package"
+                if npm install -g "$package"; then
+                    installed=$((installed + 1))
+                    success "  ✓ $package installed"
+                else
+                    warn "  ✗ Failed to install $package"
+                fi
+            fi
+        fi
+    done <<< "$packages"
+
+    # Rehash if using nodenv
+    if command -v nodenv &> /dev/null && [[ $DRY_RUN == false ]]; then
+        log "Rehashing nodenv..."
+        nodenv rehash
+    fi
+
+    if [[ $DRY_RUN == false ]]; then
+        success "npm packages installed: $installed/$total packages"
+    else
+        success "npm packages checked: $total packages would be installed"
+    fi
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

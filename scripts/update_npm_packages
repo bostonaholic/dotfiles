@@ -1,0 +1,50 @@
+#!/bin/bash
+# Update npm global packages
+
+set -euo pipefail
+
+# Colors for output
+readonly BLUE='\033[0;34m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[0;33m'
+readonly NC='\033[0m'
+
+# Logging functions
+log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
+success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
+warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+
+# Main function
+main() {
+    if ! command -v npm &> /dev/null; then
+        warn "npm not installed, skipping package updates"
+        return
+    fi
+
+    log "Checking for npm package updates..."
+
+    # Get list of outdated global packages
+    outdated=$(npm outdated -g --parseable 2>/dev/null || true)
+
+    if [[ -n "$outdated" ]]; then
+        log "Updating npm global packages..."
+        # Update each outdated package
+        while IFS= read -r line; do
+            if [[ -n "$line" ]]; then
+                package=$(echo "$line" | cut -d: -f4)
+                if [[ -n "$package" ]]; then
+                    log "Updating: $package"
+                    npm update -g "$package" 2>/dev/null || warn "Failed to update $package"
+                fi
+            fi
+        done <<< "$outdated"
+        success "npm packages updated"
+    else
+        success "All npm packages are up to date"
+    fi
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

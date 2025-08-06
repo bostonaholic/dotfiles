@@ -1,15 +1,79 @@
 #!/bin/bash
-################################################################################
-#
-# Homebrew
-#
-################################################################################
+# Install Homebrew and packages from Brewfile
 
-# Update the user's cached credentials, authenticating the user if necessary.
-sudo --validate
+set -euo pipefail
 
-if ! [ -x "$(command -v brew)" ]; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-else
-    echo 'Homebrew is already installed on this machine.'
+# Colors for output
+readonly BLUE='\033[0;34m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[0;33m'
+readonly NC='\033[0m'
+
+# Configuration
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly DOTFILES_DIR
+
+# Options from environment or defaults
+DRY_RUN="${DRY_RUN:-false}"
+VERBOSE="${VERBOSE:-false}"
+
+# Logging functions
+log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
+success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
+warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+debug() { 
+    if [[ $VERBOSE == true ]]; then 
+        echo -e "${BLUE}[DEBUG]${NC} $1"
+    fi
+}
+
+# Main function
+main() {
+    log "Installing Homebrew packages..."
+
+    # Install Homebrew if not present
+    if ! command -v brew &> /dev/null; then
+        if [[ $DRY_RUN == true ]]; then
+            log "[DRY RUN] Would install Homebrew"
+        else
+            log "Homebrew not found. Installing Homebrew..."
+            log "This may take a few minutes..."
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+            # Add Homebrew to PATH for this session
+            if [[ -x "/opt/homebrew/bin/brew" ]]; then
+                eval "$(/opt/homebrew/bin/brew shellenv)"
+            elif [[ -x "/usr/local/bin/brew" ]]; then
+                eval "$(/usr/local/bin/brew shellenv)"
+            fi
+
+            success "Homebrew installed successfully"
+        fi
+    else
+        log "Homebrew is already installed"
+    fi
+
+    # Install from Brewfile
+    if [[ -f "$DOTFILES_DIR/Brewfile" ]]; then
+        log "Found Brewfile at: $DOTFILES_DIR/Brewfile"
+        if [[ $DRY_RUN == true ]]; then
+            log "[DRY RUN] Would run: brew bundle"
+            log "[DRY RUN] Would install packages from Brewfile"
+        else
+            log "Installing packages from Brewfile..."
+            log "This may take several minutes depending on your internet connection..."
+            cd "$DOTFILES_DIR"
+            brew bundle
+        fi
+    else
+        warn "Brewfile not found at: $DOTFILES_DIR/Brewfile"
+        warn "Skipping Homebrew package installation"
+    fi
+
+    success "Homebrew package installation completed"
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
 fi

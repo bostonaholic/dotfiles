@@ -31,6 +31,7 @@ brew 'git-lfs'
 brew 'libyaml'
 cask 'ngrok'
 brew 'vim'
+brew 'yq'
 brew 'zsh'
 brew 'zsh-completions'
 
