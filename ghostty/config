@@ -6,6 +6,7 @@ keybind = cmd+opt+right=next_tab
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 6
 window-inherit-working-directory = false
+window-new-tab-position = end
 window-padding-balance = true
 window-padding-x = 6
 window-padding-y = 6
