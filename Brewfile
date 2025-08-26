@@ -71,6 +71,7 @@ brew 'autoenv'
 brew 'bashful'
 brew 'btop'
 brew 'curl'
+brew 'direnv' # for managing environment variables
 brew 'htop'
 brew 'httpie'
 brew 'ripgrep'

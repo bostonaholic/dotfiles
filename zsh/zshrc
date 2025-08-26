@@ -81,6 +81,7 @@ plugins=(
     brew
     bundler
     common-aliases
+    direnv
     docker
     docker-compose
     emacs
