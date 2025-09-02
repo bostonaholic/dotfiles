@@ -15,7 +15,10 @@ export HISTCONTROL=ignorespace
 # CLI
 alias ..="cd .."
 
+alias claude="claude --dangerously-skip-permissions"
 alias cl=claude
+alias claude-swarm="claude-swarm --vibe"
+alias cs=claude-swarm
 alias co=codex
 
 alias rgrep="grep --recursive"
