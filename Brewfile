@@ -9,7 +9,6 @@
 tap 'clojure/tools'
 tap 'd12frosted/emacs-plus'
 tap 'borkdude/brew'
-tap 'wagoodman/bashful'
 
 # set arguments for all 'brew install --cask' commands
 cask_args appdir: '~/Applications', require_sha: true
@@ -68,7 +67,6 @@ brew 'uv' # Extremely fast Python package installer and resolver, for MCP server
 # Unix
 brew 'ack'
 brew 'autoenv'
-brew 'bashful'
 brew 'btop'
 brew 'curl'
 brew 'direnv' # for managing environment variables

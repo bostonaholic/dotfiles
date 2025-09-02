@@ -4,9 +4,7 @@ set -eux -o pipefail
 
 (
     cd "${HOME}/dotfiles"
-    # bashful run monday.yml
 
-    # Run the update script
     ./update.sh
 
     wait

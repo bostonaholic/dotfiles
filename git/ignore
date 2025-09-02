@@ -18,6 +18,5 @@ Thumbs.db
 ##############
 scratch*
 .env
-.bashful
 
 **/.claude/settings.local.json
