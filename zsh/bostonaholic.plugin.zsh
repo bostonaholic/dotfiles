@@ -15,11 +15,10 @@ export HISTCONTROL=ignorespace
 # CLI
 alias ..="cd .."
 
-alias claude="claude --dangerously-skip-permissions"
-alias cl=claude
-alias claude-swarm="claude-swarm --vibe"
-alias cs=claude-swarm
-alias co=codex
+# Claude with fallback: tries claude-swarm first, falls back to normal claude if it fails
+function claude() {
+    claude-swarm --vibe "$@" || command claude start --dangerously-skip-permissions "$@"
+}
 
 alias rgrep="grep --recursive"
 
