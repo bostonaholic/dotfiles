@@ -17,7 +17,7 @@ alias ..="cd .."
 
 # Claude with fallback: tries claude-swarm first, falls back to normal claude if it fails
 function claude() {
-    claude-swarm --vibe "$@" || command claude start --dangerously-skip-permissions "$@"
+    claude-swarm --vibe "$@" || claude start --dangerously-skip-permissions "$@"
 }
 
 alias rgrep="grep --recursive"
