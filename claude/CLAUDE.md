@@ -1,5 +1,16 @@
 # Claude
 
+## First Principles
+
+- **Clarity Over Cleverness:** Code should be written for humans to read first, and for machines to execute second.
+- **Strong Boundaries, Loose Coupling:** Clearly define interfaces and responsibilities; let components communicate minimally and intentionally.
+- **Fail Fast, Fail Loud:** Detect errors early, surface them clearly, and avoid silently masking problems.
+- **Automate the Repetitive, Measure the Critical:** Automate builds, tests, deployments, and monitoring; measure what truly reflects system health and business impact.
+- **Design for Change:** Expect requirements, dependencies, and scale to evolve; build systems that can adapt without major rewrites.
+- **Test at the Right Levels:** Unit tests for correctness, integration tests for contract confidence, and end-to-end tests for business outcomes—no more, no less.
+- **Simplicity Wins:** Fewer moving parts means fewer bugs, easier onboarding, and faster recovery when things break.
+- **Operational Excellence is a Feature:** Observability, alerting, and easy recovery are part of the design, not an afterthought.
+
 ## Programming Principles
 
 When writing code, always adhere to these principles inspired by legendary programmers:
