@@ -17,6 +17,5 @@ Thumbs.db
 # Progamming #
 ##############
 scratch*
-.env
 
 **/.claude/settings.local.json
