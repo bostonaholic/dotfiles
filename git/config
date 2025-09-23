@@ -28,6 +28,7 @@
 	prune = true
 [merge]
     conflictstyle = zdiff3
+	ff = only
 [push]
 	autoSetupRemote = true
 [pull]
