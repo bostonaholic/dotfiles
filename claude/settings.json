@@ -37,7 +37,9 @@
       "Bash(who:*)",
       "Bash(whoami:*)"
     ],
-    "deny": []
+    "deny": [
+      "Read(./.env.*)"
+    ]
   },
   "model": "opus"
 }
