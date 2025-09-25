@@ -18,7 +18,7 @@ brew 'aspell'
 cask 'claude'
 brew 'cloc'
 brew 'ctags'
-cask 'docker'
+cask 'docker-desktop'
 brew 'emacs-plus', # tap d12frosted/emacs-plus
      args: %w[with-spacemacs-icon],
      restart_service: :changed,
@@ -78,9 +78,9 @@ brew 'shellcheck'
 brew 'tree'
 
 # Video editing
-cask 'filebot'    # Renaming movies and TV shows
-cask 'makemkv'    # Ripping DVDs and Blu-ray
-cask 'mkvtoolnix' # Splitting .mkv files
+cask 'filebot'        # Renaming movies and TV shows
+cask 'makemkv'        # Ripping DVDs and Blu-ray
+cask 'mkvtoolnix-app' # Splitting .mkv files
 
 # 3D printing
 cask 'blender' # 3D modeling
