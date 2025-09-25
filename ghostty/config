@@ -3,6 +3,7 @@ font-family = TX-02 Regular
 font-size = 16
 keybind = cmd+opt+left=previous_tab
 keybind = cmd+opt+right=next_tab
+keybind = shift+enter=text:\n
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 6
 window-inherit-working-directory = false
