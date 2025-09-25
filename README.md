@@ -175,7 +175,3 @@ Then run the following to fix the permissions:
 ```bash
 sudo chmod -R g-w <directory>
 ```
-
-## Thanks
-
-Inspired by [drewbarontini/dotfiles](https://github.com/drewbarontini/dotfiles).
