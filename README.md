@@ -62,6 +62,38 @@ Fill in the `TODO` sections in each of the above environment files.
 
 The installation is now managed by a single `install.sh` script with a declarative `dotfiles.yaml` configuration file.
 
+### Configuration with dotfiles.yaml
+
+The `dotfiles.yaml` file controls what gets installed and where. It has three main sections:
+
+#### Directories
+
+Lists directories that will be created in your home folder:
+
+```yaml
+directories:
+  - ~/.config/git
+  - ~/.gnupg
+```
+
+#### Symlinks
+
+Maps source files (in the dotfiles repo) to their destination (in your home directory):
+
+```yaml
+symlinks:
+  zsh/zshrc: ~/.zshrc              # Links zsh/zshrc to ~/.zshrc
+  git/config: ~/.config/git/config # Links git/config to ~/.config/git/config
+```
+
+#### Adding New Dotfiles
+
+To add a new dotfile to the installation:
+
+1. Add your file to the appropriate directory in the repo
+2. Edit `dotfiles.yaml` and add an entry to the `symlinks` section
+3. Run `./install.sh --only symlinks` to create just the new symlink
+
 ## Post-install
 
 ### Copilot.vim
