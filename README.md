@@ -5,11 +5,7 @@
 ### Clone the repository
 
 ```bash
-mkdir code && cd code
-```
-
-```bash
-git clone git@github.com:bostonaholic/dotfiles.git
+git clone git@github.com:bostonaholic/dotfiles.git ~/dotfiles
 ```
 
 ### Copy sample environment files
