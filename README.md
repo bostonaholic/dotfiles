@@ -53,9 +53,9 @@ Fill in the `TODO` sections in each of the above environment files.
 
 # Install specific components only
 ./install.sh --only symlinks        # Only create symlinks
-./install.sh --only brew            # Only install Homebrew packages
+./install.sh --only homebrew        # Only install Homebrew packages
 ./install.sh --only npm             # Only install npm packages
-./install.sh --only symlinks,brew   # Multiple components
+./install.sh --only symlinks,homebrew  # Multiple components
 
 # Other options
 ./install.sh -v                     # Verbose output

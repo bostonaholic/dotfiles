@@ -56,7 +56,7 @@ OPTIONS:
 
 COMPONENTS:
     symlinks    Create all symlinks
-    brew        Install Homebrew packages
+    homebrew    Install Homebrew packages
     npm         Install npm packages
     scripts     Run installation scripts
 
@@ -187,7 +187,7 @@ create_symlinks() {
 
 # Install Homebrew packages
 install_brew() {
-    if ! should_install "brew"; then
+    if ! should_install "homebrew"; then
         return
     fi
 
