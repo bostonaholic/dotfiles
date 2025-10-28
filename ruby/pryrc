@@ -3,12 +3,16 @@
 
 Pry.editor = 'vim'
 
+# Load optional gems and configure Pry accordingly
+
 def with_gem(gem)
   require gem.to_s
   yield if block_given?
 rescue LoadError
   puts "gem install #{gem}  # <-- highly recommended"
 end
+
+# Configure Pry with pry-byebug and awesome_print if available
 
 with_gem 'pry-byebug' do
   if defined?(PryByebug)
@@ -32,8 +36,9 @@ with_gem 'awesome_print' do
   # }
 end
 
-# === CONVENIENCE METHODS ===
+# Convenience methods for testing Arrays and Hashes
 # Stolen from https://gist.github.com/lucapette/807492
+
 # Use Array.toy or Hash.toy to get an array or hash to play with
 class Array
   def self.toy(num = 10, &block)
@@ -47,6 +52,8 @@ class Hash
     Hash[Array.toy(num).zip(Array.toy(num) { |c| (96 + (c + 1)).chr })]
   end
 end
+
+# Convenience method for timing blocks
 
 def time
   start = Time.now
