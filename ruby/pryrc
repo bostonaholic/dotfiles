@@ -54,9 +54,9 @@ def time
   (Time.now - start) * 1_000
 end
 
-def times(samples = 1_000)
+def times(samples = 1_000, &block)
   durations = samples.times.inject([]) do |acc, _|
-    acc << time { yield }
+    acc << time(&block)
   end
   mean = durations.reduce(:+) / durations.size.to_f
   mean_square = durations.map { |n| n * n }.reduce(:+) / durations.size.to_f
