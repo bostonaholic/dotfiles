@@ -3,6 +3,16 @@
 
 Pry.editor = 'vim'
 
+# Customize prompt to show Ruby version
+Pry.config.prompt = Pry::Prompt.new(
+  'custom',
+  'Custom prompt with Ruby version',
+  [
+    proc { |obj, nest_level, _pry_| "\e[31m[ruby #{RUBY_VERSION}]\e[0m #{obj}:#{nest_level}> " },
+    proc { |obj, nest_level, _pry_| "\e[31m[ruby #{RUBY_VERSION}]\e[0m #{obj}:#{nest_level}* " }
+  ]
+)
+
 # Load optional gems and configure Pry accordingly
 
 def with_gem(gem)
