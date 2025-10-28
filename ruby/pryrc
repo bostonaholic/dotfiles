@@ -4,12 +4,10 @@
 Pry.editor = 'vim'
 
 def with_gem(gem)
-  begin
-    require gem.to_s
-    yield if block_given?
-  rescue LoadError
-    puts "gem install #{gem}  # <-- highly recommended"
-  end
+  require gem.to_s
+  yield if block_given?
+rescue LoadError
+  puts "gem install #{gem}  # <-- highly recommended"
 end
 
 with_gem 'pry-byebug' do
