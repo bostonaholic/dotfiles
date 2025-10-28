@@ -33,7 +33,7 @@ with_gem 'awesome_print' do
 end
 
 # === CONVENIENCE METHODS ===
-# Stolen from https://gist.github.com/807492
+# Stolen from https://gist.github.com/lucapette/807492
 # Use Array.toy or Hash.toy to get an array or hash to play with
 class Array
   def self.toy(num = 10, &block)
