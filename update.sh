@@ -35,6 +35,11 @@ echo && log "Updating Homebrew and Homebrew Packages..."
 brewup
 success "Homebrew updated"
 
+# Update Claude plugins
+if command -v claude >/dev/null 2>&1; then
+  claude plugin marketplace update
+fi
+
 # Vimrc
 # https://github.com/amix/vimrc
 if [[ -d "${HOME}/.vim_runtime" ]]; then
