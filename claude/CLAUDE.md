@@ -2,6 +2,8 @@
 
 ## First Principles
 
+When writing planning, designing, writing, and testing code, always adhere to first-principles thinking.
+
 - **Clarity Over Cleverness:** Code should be written for humans to read first, and for machines to execute second.
 - **Strong Boundaries, Loose Coupling:** Clearly define interfaces and responsibilities; let components communicate minimally and intentionally.
 - **Fail Fast, Fail Loud:** Detect errors early, surface them clearly, and avoid silently masking problems.
