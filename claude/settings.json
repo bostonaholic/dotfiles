@@ -41,5 +41,7 @@
       "Read(./.env.*)"
     ]
   },
-  "model": "opus"
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true
+  }
 }
