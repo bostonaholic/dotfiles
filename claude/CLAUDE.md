@@ -23,5 +23,6 @@ When writing code, always adhere to these principles inspired by legendary progr
 - Alan Kay: Favor a **message-passing, late-binding design** (prefer to communicate between loosely coupled components and defer binding decisions when possible).
 - Donald Knuth: **Code must be readable and maintainable** above all else. Choose clarity before cleverness.
 - Barbara Liskov: **Respect interface contracts**. Ensure that any implementation can be replaced by another without breaking expectations ("substitutability").
+- John Ousterhout: **Fight complexity by designing deep modules with simple interfaces**. Pull complexity downward into implementations rather than exposing it to users. Strive for strategic design over tactical quick fixes.
 
 Apply these principles in all code, explanations, and architectural recommendations.
