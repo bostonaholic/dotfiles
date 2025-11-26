@@ -6,6 +6,7 @@ keybind = cmd+opt+right=next_tab
 keybind = shift+enter=text:\n
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 6
+shell-integration-features = ssh-terminfo,ssh-env
 window-inherit-working-directory = false
 window-new-tab-position = end
 window-padding-balance = true
