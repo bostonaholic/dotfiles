@@ -16,6 +16,7 @@ symlinks:
   claude/commands: ~/.claude/commands
   claude/CLAUDE.md: ~/.claude/CLAUDE.md
   claude/settings.json: ~/.claude/settings.json
+  claude/skills: ~/.claude/skills
 
   # Shell
   zsh/zshrc: ~/.zshrc
