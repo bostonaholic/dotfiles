@@ -43,5 +43,6 @@
   },
   "enabledPlugins": {
     "superpowers@superpowers-marketplace": true
-  }
+  },
+  "includeCoAuthoredBy": false
 }
