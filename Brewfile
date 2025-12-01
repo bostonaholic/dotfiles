@@ -11,7 +11,7 @@ tap 'd12frosted/emacs-plus'
 tap 'borkdude/brew'
 
 # set arguments for all 'brew install --cask' commands
-cask_args appdir: '~/Applications', require_sha: true
+cask_args appdir: '~/Applications', fontdir: '/Library/Fonts'
 
 # Programming
 brew 'aspell'
@@ -33,6 +33,9 @@ brew 'vim'
 brew 'yq'
 brew 'zsh'
 brew 'zsh-completions'
+
+# Fonts
+cask 'font-source-code-pro'
 
 # Security
 brew 'gnupg'
