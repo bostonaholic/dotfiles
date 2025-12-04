@@ -26,9 +26,15 @@
 
 set -eu -o pipefail
 
-# Get the git repository root
+# Get the git repository root (main repo, not worktree)
 get_repo_root() {
-    git rev-parse --show-toplevel 2>/dev/null
+    # Get the common git directory, then go up one level to get repo root
+    local git_common_dir
+    git_common_dir=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)
+    if [ -n "$git_common_dir" ]; then
+        # Remove the /.git suffix to get the repo root
+        dirname "$git_common_dir"
+    fi
 }
 
 # Convert branch name to a safe directory name
@@ -166,13 +172,31 @@ cmd_cd() {
     local worktree_dir
     worktree_dir=$(get_worktree_dir "$branch")
 
+    # Check if this worktree exists
     if [ ! -d "$worktree_dir" ]; then
-        echo "Worktree not found: $worktree_dir" >&2
-        exit 1
-    fi
+        # Maybe it's the main repo? Check all worktrees to find where this branch is
+        local repo_root
+        repo_root=$(get_repo_root)
+        local found_path
+        found_path=$(git worktree list --porcelain | awk -v branch="$branch" '
+            /^worktree / { path = substr($0, 10) }
+            /^branch / {
+                br = substr($0, 8)
+                gsub(/^refs\/heads\//, "", br)
+                if (br == branch) { print path; exit }
+            }
+        ')
 
-    # Print the path (shell function wrapper in zsh plugin uses this)
-    echo "$worktree_dir"
+        if [ -n "$found_path" ] && [ -d "$found_path" ]; then
+            echo "$found_path"
+        else
+            echo "Worktree not found: $worktree_dir" >&2
+            exit 1
+        fi
+    else
+        # Print the path (shell function wrapper in zsh plugin uses this)
+        echo "$worktree_dir"
+    fi
 }
 
 # Main command dispatcher
