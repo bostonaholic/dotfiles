@@ -37,6 +37,23 @@ alias downcase="tr '[:upper:]' '[:lower:]'"
 # Git
 alias gti=git
 
+# Git worktree wrapper - handles 'cd' subcommand specially
+function wt() {
+    if [ "$1" = "cd" ]; then
+        if [ -z "$2" ]; then
+            command wt cd
+            return $?
+        fi
+        local worktree_path
+        worktree_path=$(command wt cd "$2")
+        if [ $? -eq 0 ] && [ -d "$worktree_path" ]; then
+            builtin cd "$worktree_path"
+        fi
+    else
+        command wt "$@"
+    fi
+}
+
 # Ruby
 function bundle_close() {
     bundle exec gem pristine "$*"
