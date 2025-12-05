@@ -62,6 +62,7 @@
 	cl = clone
 	ci = commit
 	cm = commit -m
+	aic = !git-ai-commit
 	co = checkout
 	pu = push
 	psu = push --set-upstream

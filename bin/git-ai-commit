@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+# Generate AI-powered commit messages using local Claude CLI
+
+set -euo pipefail
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+error() {
+    echo -e "${RED}Error: $1${NC}" >&2
+    exit 1
+}
+
+info() {
+    echo -e "${BLUE}$1${NC}"
+}
+
+success() {
+    echo -e "${GREEN}$1${NC}"
+}
+
+warning() {
+    echo -e "${YELLOW}$1${NC}"
+}
+
+# Check if we're in a git repository
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    error "Not in a git repository"
+fi
+
+# Check if there are staged changes
+if git diff --cached --quiet; then
+    error "No staged changes to commit. Use 'git add' to stage changes first."
+fi
+
+# Check if claude CLI is available
+if ! command -v claude &> /dev/null; then
+    error "claude CLI not found. Install it with: npm install -g @anthropic-ai/claude-code"
+fi
+
+# Get the staged diff
+info "Analyzing staged changes..."
+DIFF=$(git diff --cached)
+
+# Check if diff is too large (>200KB)
+DIFF_SIZE=$(echo "$DIFF" | wc -c)
+if [ "$DIFF_SIZE" -gt 204800 ]; then
+    warning "Diff is large ($(echo "scale=1; $DIFF_SIZE/1024" | bc)KB). This may take longer."
+fi
+
+# Get recent commit messages for context
+RECENT_COMMITS=$(git log --format='%s' -10 2>/dev/null || echo "")
+
+# Create a temporary file for the prompt
+PROMPT_FILE=$(mktemp)
+cat > "$PROMPT_FILE" <<EOF
+You are a git commit message expert. Analyze the following staged git diff and generate a concise, meaningful commit message.
+
+Follow these guidelines:
+1. Use conventional commit format: type(scope): description
+   - Types: feat, fix, docs, style, refactor, test, chore
+   - Scope is optional but encouraged
+2. Keep the first line under 72 characters
+3. Focus on WHY the change was made, not just WHAT changed
+4. Be specific and avoid vague messages like 'update files' or 'fix bug'
+5. Use imperative mood (e.g., 'add' not 'added' or 'adds')
+
+Here are recent commits from this repository for style reference:
+${RECENT_COMMITS}
+
+Staged diff:
+${DIFF}
+
+Generate ONLY the commit message, no explanations or additional text. If the change is complex, you may use a multi-line message with a blank line separating the subject from the body.
+EOF
+
+# Call Claude CLI
+info "Generating commit message with Claude..."
+COMMIT_MSG=$(claude --model sonnet --print --dangerously-skip-permissions < "$PROMPT_FILE" 2>&1)
+EXIT_CODE=$?
+rm "$PROMPT_FILE"
+
+if [ $EXIT_CODE -ne 0 ] || [ -z "$COMMIT_MSG" ]; then
+    error "Failed to generate commit message: $COMMIT_MSG"
+fi
+
+# Display the generated message
+echo ""
+success "Generated commit message:"
+echo "─────────────────────────────────────────"
+echo "$COMMIT_MSG"
+echo "─────────────────────────────────────────"
+echo ""
+
+# Ask for confirmation
+read -p "$(echo -e ${BLUE}Use this message? [Y/n/e]${NC} )" -n 1 -r
+echo ""
+
+case $REPLY in
+    [Ee]*)
+        # Edit the message
+        TEMP_FILE=$(mktemp)
+        echo "$COMMIT_MSG" > "$TEMP_FILE"
+        ${EDITOR:-vim} "$TEMP_FILE"
+        COMMIT_MSG=$(cat "$TEMP_FILE")
+        rm "$TEMP_FILE"
+
+        if [ -z "$COMMIT_MSG" ]; then
+            error "Commit message is empty. Aborting."
+        fi
+
+        info "Committing with edited message..."
+        git commit -F - <<< "$COMMIT_MSG"
+        success "✓ Commit created successfully!"
+        ;;
+    [Nn]*)
+        warning "Commit aborted."
+        exit 1
+        ;;
+    *)
+        # Default: yes
+        info "Committing..."
+        git commit -F - <<< "$COMMIT_MSG"
+        success "✓ Commit created successfully!"
+        ;;
+esac
