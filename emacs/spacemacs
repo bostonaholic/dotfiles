@@ -43,6 +43,7 @@ This function should only modify configuration layer settings."
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-enable-sort-by-usage t)
      better-defaults
+     claude-code-ide
      (clojure :variables
               clojure-enable-linters 'clj-kondo)
      csv
@@ -654,6 +655,20 @@ before packages are loaded."
   ;; HACK: https://github.com/magit/magit/discussions/5046
   (defun magit-read-gpg-signing-key (prompt &optional initial-input history)
     "")
+
+  ;; AI-powered commit messages
+  (defun my/git-ai-commit ()
+    "Generate commit message using Claude and insert into commit buffer."
+    (interactive)
+    (let* ((default-directory (magit-toplevel))
+           (shell-file-name "/bin/zsh")
+           (commit-msg (string-trim (shell-command-to-string "source ~/.zshrc && ~/dotfiles/bin/git-ai-commit-msg"))))
+      (if (string-empty-p commit-msg)
+          (message "Failed to generate commit message")
+        (insert commit-msg))))
+
+  (with-eval-after-load 'magit
+    (define-key git-commit-mode-map (kbd "C-c C-a") 'my/git-ai-commit))
 
   ;; Close gaps in emacs frames
   ;; HACK: https://github.com/d12frosted/homebrew-emacs-plus/tree/master#emacs-28-and-emacs-27
