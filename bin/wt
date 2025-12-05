@@ -133,7 +133,14 @@ cmd_remove() {
         exit 1
     fi
 
+    # Remove the worktree
     git worktree remove "$@" "$worktree_dir"
+
+    # Delete the local branch if it exists
+    if git show-ref --verify --quiet "refs/heads/${branch}"; then
+        echo "Deleting local branch: $branch"
+        git branch -D "$branch"
+    fi
 }
 
 # Command: wt prune
