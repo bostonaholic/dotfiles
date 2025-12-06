@@ -73,6 +73,7 @@ brew 'autoenv'
 brew 'btop'
 brew 'curl'
 brew 'direnv' # for managing environment variables
+brew 'fd'     # Simple, fast and user-friendly alternative to 'find'
 brew 'htop'
 brew 'httpie'
 brew 'ripgrep'
