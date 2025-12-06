@@ -660,12 +660,15 @@ before packages are loaded."
   (defun my/git-ai-commit ()
     "Generate commit message using Claude and insert into commit buffer."
     (interactive)
+    (message "Generating commit message with Claude...")
     (let* ((default-directory (magit-toplevel))
            (shell-file-name "/bin/zsh")
            (commit-msg (string-trim (shell-command-to-string "source ~/.zshrc && ~/dotfiles/bin/git-ai-commit-msg"))))
       (if (string-empty-p commit-msg)
           (message "Failed to generate commit message")
-        (insert commit-msg))))
+        (progn
+          (insert commit-msg)
+          (message "Commit message inserted")))))
 
   (with-eval-after-load 'magit
     (define-key git-commit-mode-map (kbd "C-c C-a") 'my/git-ai-commit))
