@@ -1,4 +1,9 @@
 {
+  "alwaysThinkingEnabled": true,
+  "includeCoAuthoredBy": false,
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true
+  },
   "permissions": {
     "allow": [
       "Bash(awk:*)",
@@ -40,10 +45,5 @@
     "deny": [
       "Read(./.env.*)"
     ]
-  },
-  "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true
-  },
-  "alwaysThinkingEnabled": true,
-  "includeCoAuthoredBy": false
+  }
 }
