@@ -20,7 +20,6 @@ brew 'cloc'
 brew 'ctags'
 cask 'docker-desktop'
 brew 'emacs-plus', # tap d12frosted/emacs-plus
-     args: %w[with-spacemacs-icon],
      restart_service: :changed,
      link: true
 brew 'gh'
