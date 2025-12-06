@@ -77,6 +77,7 @@ brew 'direnv' # for managing environment variables
 brew 'fd'     # Simple, fast and user-friendly alternative to 'find'
 brew 'htop'
 brew 'httpie'
+brew 'pre-commit' # Git hook framework for running checks before commits
 brew 'ripgrep'
 brew 'rlwrap'
 brew 'shellcheck'

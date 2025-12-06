@@ -1,0 +1,9 @@
+# Pre-commit hooks configuration
+# See https://pre-commit.com for more information
+repos:
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.10.0.1
+    hooks:
+      - id: shellcheck
+        name: ShellCheck
+        description: Run shellcheck to validate shell scripts
