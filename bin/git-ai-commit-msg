@@ -3,6 +3,9 @@
 
 set -euo pipefail
 
+# Get optional user context from first argument
+USER_CONTEXT="${1:-}"
+
 # Check if we're in a git repository
 if ! git rev-parse --git-dir > /dev/null 2>&1; then
     exit 1
@@ -24,7 +27,7 @@ DIFF=$(git diff --cached)
 # Get recent commit messages for context
 RECENT_COMMITS=$(git log --format='%s' -10 2>/dev/null || echo "")
 
-# Create a temporary file for the prompt
+# Build the prompt with optional user context
 PROMPT_FILE=$(mktemp)
 cat > "$PROMPT_FILE" <<EOF
 You are a git commit message expert. Analyze the following staged git diff and generate a concise, meaningful commit message.
@@ -40,6 +43,19 @@ Follow these guidelines:
 
 Here are recent commits from this repository for style reference:
 ${RECENT_COMMITS}
+EOF
+
+# Add user context if provided
+if [ -n "$USER_CONTEXT" ]; then
+    cat >> "$PROMPT_FILE" <<EOF
+
+Additional context from the developer:
+${USER_CONTEXT}
+EOF
+fi
+
+# Add the diff and closing instructions
+cat >> "$PROMPT_FILE" <<EOF
 
 Staged diff:
 ${DIFF}

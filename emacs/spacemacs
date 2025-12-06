@@ -657,18 +657,27 @@ before packages are loaded."
     "")
 
   ;; AI-powered commit messages
-  (defun my/git-ai-commit ()
-    "Generate commit message using Claude and insert into commit buffer."
-    (interactive)
-    (message "Generating commit message with Claude...")
-    (let* ((default-directory (magit-toplevel))
-           (shell-file-name "/bin/zsh")
-           (commit-msg (string-trim (shell-command-to-string "source ~/.zshrc && ~/dotfiles/bin/git-ai-commit-msg"))))
-      (if (string-empty-p commit-msg)
-          (message "Failed to generate commit message")
-        (progn
-          (insert commit-msg)
-          (message "Commit message inserted")))))
+  (defun my/git-ai-commit (arg)
+    "Generate commit message using Claude and insert into commit buffer.
+With prefix argument (C-u C-c C-a), prompt for additional context to enhance generation."
+    (interactive "P")
+    (let* ((user-context (when arg
+                           (read-string "Additional context for commit message: ")))
+           (context-arg (if (and user-context (not (string-empty-p user-context)))
+                            (shell-quote-argument user-context)
+                          "")))
+      (if (and arg user-context (not (string-empty-p user-context)))
+          (message "Generating commit message with context: %s" user-context)
+        (message "Generating commit message with Claude..."))
+      (let* ((default-directory (magit-toplevel))
+             (shell-file-name "/bin/zsh")
+             (command (format "source ~/.zshrc && ~/dotfiles/bin/git-ai-commit-msg %s" context-arg))
+             (commit-msg (string-trim (shell-command-to-string command))))
+        (if (string-empty-p commit-msg)
+            (message "Failed to generate commit message")
+          (progn
+            (insert commit-msg)
+            (message "Commit message inserted"))))))
 
   (with-eval-after-load 'magit
     (define-key git-commit-mode-map (kbd "C-c C-a") 'my/git-ai-commit))

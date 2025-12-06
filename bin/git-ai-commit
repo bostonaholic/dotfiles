@@ -27,6 +27,22 @@ warning() {
     echo -e "${YELLOW}$1${NC}"
 }
 
+# Parse command line arguments
+USER_CONTEXT=""
+while getopts "c:" opt; do
+    case $opt in
+        c)
+            USER_CONTEXT="$OPTARG"
+            ;;
+        \?)
+            error "Invalid option: -$OPTARG. Usage: git-ai-commit [-c \"context\"]"
+            ;;
+        :)
+            error "Option -$OPTARG requires an argument"
+            ;;
+    esac
+done
+
 # Check if we're in a git repository
 if ! git rev-parse --git-dir > /dev/null 2>&1; then
     error "Not in a git repository"
@@ -41,7 +57,7 @@ fi
 # Use the same directory as this script to find git-ai-commit-msg
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 info "Analyzing staged changes..."
-COMMIT_MSG=$("$SCRIPT_DIR/git-ai-commit-msg" 2>&1)
+COMMIT_MSG=$("$SCRIPT_DIR/git-ai-commit-msg" "$USER_CONTEXT" 2>&1)
 EXIT_CODE=$?
 
 if [ $EXIT_CODE -ne 0 ] || [ -z "$COMMIT_MSG" ]; then
