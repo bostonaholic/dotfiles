@@ -19,3 +19,4 @@ Thumbs.db
 scratch*
 
 **/.claude/settings.local.json
+.claude-code-mcp.log
