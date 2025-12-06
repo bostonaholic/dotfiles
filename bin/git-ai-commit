@@ -73,7 +73,7 @@ echo "────────────────────────�
 echo ""
 
 # Ask for confirmation
-read -p "$(echo -e ${BLUE}Use this message? [Y/n/e]${NC} )" -n 1 -r
+read -p "$(echo -e "${BLUE}Use this message? [Y/n/e]${NC} ")" -n 1 -r
 echo ""
 
 case $REPLY in

@@ -45,9 +45,8 @@ function wt() {
             return $?
         fi
         local worktree_path
-        worktree_path=$(command wt cd "$2")
-        if [ $? -eq 0 ] && [ -d "$worktree_path" ]; then
-            builtin cd "$worktree_path"
+        if worktree_path=$(command wt cd "$2") && [ -d "$worktree_path" ]; then
+            builtin cd "$worktree_path" || return
         fi
     else
         command wt "$@"
