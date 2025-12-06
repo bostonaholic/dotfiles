@@ -9,12 +9,14 @@
 tap 'borkdude/brew'
 tap 'clojure/tools'
 tap 'd12frosted/emacs-plus'
+tap 'steveyegge/beads'
 
 # set arguments for all 'brew install --cask' commands
 cask_args appdir: '~/Applications', fontdir: '/Library/Fonts'
 
 # Programming
 brew 'aspell'
+brew 'bd'          # tap steveyegge/beads
 cask 'claude'
 brew 'cloc'
 brew 'ctags'
