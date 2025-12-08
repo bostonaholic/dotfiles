@@ -43,7 +43,6 @@ This function should only modify configuration layer settings."
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-enable-sort-by-usage t)
      better-defaults
-     claude-code-ide
      (clojure :variables
               clojure-enable-linters 'clj-kondo)
      csv
