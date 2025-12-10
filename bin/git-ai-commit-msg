@@ -21,11 +21,11 @@ if ! command -v claude &> /dev/null; then
     exit 1
 fi
 
-# Get the staged diff
-DIFF=$(git diff --cached)
+# Get the staged diff (filter out null bytes)
+DIFF=$(git diff --cached | tr -d '\000')
 
-# Get recent commit messages for context
-RECENT_COMMITS=$(git log --format='%s' -10 2>/dev/null || echo "")
+# Get recent commit messages for context (filter out null bytes)
+RECENT_COMMITS=$(git log --format='%s' -10 2>/dev/null | tr -d '\000' || echo "")
 
 # Build the prompt with optional user context
 PROMPT_FILE=$(mktemp)
