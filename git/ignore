@@ -17,6 +17,7 @@ Thumbs.db
 # Progamming #
 ##############
 scratch*
+.worktrees/
 
 **/.claude/settings.local.json
 .claude-code-mcp.log
