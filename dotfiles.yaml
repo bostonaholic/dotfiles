@@ -71,6 +71,11 @@ packages:
       - tern
       - ulid
 
+  uv:
+    tool_packages:
+      - name: specify-cli
+        source: "git+https://github.com/github/spec-kit.git"
+
 scripts:
   pre_install:
     - description: "Validate sudo credentials"

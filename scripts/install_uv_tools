@@ -1,0 +1,89 @@
+#!/bin/bash
+# Install uv tools from dotfiles.yaml
+
+set -euo pipefail
+
+# Colors for output
+readonly BLUE='\033[0;34m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[0;33m'
+readonly NC='\033[0m'
+
+# Configuration
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly DOTFILES_DIR
+CONFIG_FILE="$DOTFILES_DIR/dotfiles.yaml"
+readonly CONFIG_FILE
+
+# Options from environment or defaults
+DRY_RUN="${DRY_RUN:-false}"
+VERBOSE="${VERBOSE:-false}"
+
+# Logging functions
+log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
+success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
+warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+debug() {
+    if [[ $VERBOSE == true ]]; then
+        echo -e "${BLUE}[DEBUG]${NC} $1"
+    fi
+}
+
+# Main function
+main() {
+    log "Installing uv tools..."
+
+    # Check if uv is available
+    if ! command -v uv &> /dev/null; then
+        warn "uv not found. Skipping uv tool installation"
+        warn "Install uv first (brew install uv), then run: $0"
+        return
+    fi
+
+    log "uv version: $(uv --version)"
+
+    # Parse uv tool packages from YAML using yq
+    local tool_count
+    tool_count=$(yq eval '.packages.uv.tool_packages | length' "$CONFIG_FILE" 2>/dev/null || echo "0")
+
+    if [[ "$tool_count" == "0" ]]; then
+        log "No uv tools to install"
+        return
+    fi
+
+    local installed=0
+    local total=0
+
+    for ((i=0; i<tool_count; i++)); do
+        local name
+        local source
+        name=$(yq eval ".packages.uv.tool_packages[$i].name" "$CONFIG_FILE" 2>/dev/null)
+        source=$(yq eval ".packages.uv.tool_packages[$i].source" "$CONFIG_FILE" 2>/dev/null)
+
+        if [[ -n "$name" && -n "$source" ]]; then
+            total=$((total + 1))
+            if [[ $DRY_RUN == true ]]; then
+                log "[DRY RUN] Would install uv tool: $name from $source"
+            else
+                log "Installing uv tool: $name from $source"
+                if uv tool install "$name" --from "$source"; then
+                    installed=$((installed + 1))
+                    success "  ✓ $name installed"
+                else
+                    warn "  ✗ Failed to install $name"
+                fi
+            fi
+        fi
+    done
+
+    if [[ $DRY_RUN == false ]]; then
+        success "uv tools installed: $installed/$total tools"
+    else
+        success "uv tools checked: $total tools would be installed"
+    fi
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

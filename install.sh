@@ -58,6 +58,7 @@ COMPONENTS:
     symlinks    Create all symlinks
     homebrew    Install Homebrew packages
     npm         Install npm packages
+    uv          Install uv tools
     scripts     Run installation scripts
 
 EXAMPLES:
@@ -207,6 +208,17 @@ install_npm() {
     "$DOTFILES_DIR/scripts/install_npm_packages"
 }
 
+# Install uv tools
+install_uv() {
+    if ! should_install "uv"; then
+        return
+    fi
+
+    # Export options for the script
+    export DRY_RUN VERBOSE
+    "$DOTFILES_DIR/scripts/install_uv_tools"
+}
+
 # Run installation scripts
 run_scripts() {
     if [[ $SKIP_SCRIPTS == true ]] || ! should_install "scripts"; then
@@ -325,6 +337,8 @@ main() {
     install_brew
     echo
     install_npm
+    echo
+    install_uv
     echo
 
     # Run post-install scripts

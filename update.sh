@@ -66,5 +66,8 @@ echo && "$DOTFILES_DIR/scripts/update_rbenv_plugins"
 # npm packages
 echo && "$DOTFILES_DIR/scripts/update_npm_packages"
 
+# uv tools
+echo && "$DOTFILES_DIR/scripts/update_uv_tools"
+
 echo
 success "All updates completed!"

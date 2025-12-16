@@ -1,0 +1,68 @@
+#!/bin/bash
+# Update uv tools
+
+set -euo pipefail
+
+# Colors for output
+readonly BLUE='\033[0;34m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[0;33m'
+readonly NC='\033[0m'
+
+# Configuration
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly DOTFILES_DIR
+CONFIG_FILE="$DOTFILES_DIR/dotfiles.yaml"
+readonly CONFIG_FILE
+
+# Logging functions
+log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
+success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
+warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+
+# Main function
+main() {
+    if ! command -v uv &> /dev/null; then
+        warn "uv not installed, skipping tool updates"
+        return
+    fi
+
+    log "Updating uv tools..."
+
+    # Parse uv tool packages from YAML using yq
+    local tool_count
+    tool_count=$(yq eval '.packages.uv.tool_packages | length' "$CONFIG_FILE" 2>/dev/null || echo "0")
+
+    if [[ "$tool_count" == "0" ]]; then
+        log "No uv tools configured for updates"
+        return
+    fi
+
+    local updated=0
+    local total=0
+
+    for ((i=0; i<tool_count; i++)); do
+        local name
+        local source
+        name=$(yq eval ".packages.uv.tool_packages[$i].name" "$CONFIG_FILE" 2>/dev/null)
+        source=$(yq eval ".packages.uv.tool_packages[$i].source" "$CONFIG_FILE" 2>/dev/null)
+
+        if [[ -n "$name" && -n "$source" ]]; then
+            total=$((total + 1))
+            log "Updating uv tool: $name from $source"
+            if uv tool install "$name" --force --from "$source"; then
+                updated=$((updated + 1))
+                success "  ✓ $name updated"
+            else
+                warn "  ✗ Failed to update $name"
+            fi
+        fi
+    done
+
+    success "uv tools updated: $updated/$total tools"
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi
