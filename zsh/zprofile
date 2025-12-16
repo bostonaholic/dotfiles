@@ -21,3 +21,6 @@ RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
 RUBY_CONFIGURE_OPTS="--with-yjit ${RUBY_CONFIGURE_OPTS}"
 
 export RUBY_CONFIGURE_OPTS
+
+# Created by `pipx` on 2025-12-12 04:49:42
+export PATH="$PATH:/Users/matthew/.local/bin"

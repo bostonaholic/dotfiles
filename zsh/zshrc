@@ -145,3 +145,6 @@ fi
 
 # 1Password SSH agent
 export SSH_AUTH_SOCK=~/.1password/agent.sock
+
+# Created by `pipx` on 2025-12-12 04:49:42
+export PATH="$PATH:/Users/matthew/.local/bin"
