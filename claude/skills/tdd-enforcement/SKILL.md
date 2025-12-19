@@ -97,6 +97,12 @@ Avoid:
 
 ## Examples of Good Prompts
 
-- “Use the TDD workflow to design tests for this feature before writing any implementation.”
-- “Given this bug description, first write a failing test that reproduces it, then suggest a minimal fix.”
-- “Review this test suite using the TDD checklist; propose improvements to make tests more behavioral and readable.”
+- "Use the TDD workflow to design tests for this feature before writing any implementation."
+- "Given this bug description, first write a failing test that reproduces it, then suggest a minimal fix."
+- "Review this test suite using the TDD checklist; propose improvements to make tests more behavioral and readable."
+
+---
+
+## Integration with Other Skills
+
+For strategic test planning and comprehensive test design patterns, see the `software-testing-strategy` skill. This skill (tdd-enforcement) focuses on the tactical test-first workflow, while software-testing-strategy provides the strategic framework for choosing test types, recognizing anti-patterns, and designing effective test suites.

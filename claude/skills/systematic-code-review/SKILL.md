@@ -283,7 +283,7 @@ Follow this order; do not jump straight to nits.
 
    **Example:** `issue (blocking, tests): These tests check implementation details (private methods) rather than behavior. Following TDD principles and Knuth's "tests as documentation," rewrite to test observable outcomes.`
 
-   For detailed TDD workflow guidance, see the tdd-enforcement skill.
+   For detailed TDD workflow guidance, see the `tdd-enforcement` skill. For test strategy, patterns, and anti-patterns (testing pyramid, test doubles, flaky tests), see the `software-testing-strategy` skill.
 
 6. **Evaluate security and safety**
 
@@ -731,6 +731,7 @@ This skill provides comprehensive review methodology. For specialized deep dives
 
 - **git-commit skill:** Detailed commit message conventions and WHY-focused guidance
 - **tdd-enforcement skill:** Complete TDD workflow (tests first, red-green-refactor cycle)
+- **software-testing-strategy skill:** Strategic testing framework (testing pyramid, test patterns, anti-patterns, legacy code testing)
 - **refactoring-to-patterns skill:** Full catalog of Fowler patterns with before/after examples
 - **architecture-decision-record skill:** ADR structure for architectural decisions
 
