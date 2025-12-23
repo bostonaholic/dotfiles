@@ -67,13 +67,61 @@ Follow this cycle strictly:
 
 ---
 
+## Architecture for TDD Success
+
+TDD is easier when code is architected for testability. The Functional Core, Imperative Shell pattern enables effortless test-first development.
+
+### The Problem: Mixed Concerns
+
+When business logic is tangled with I/O, writing tests first becomes painful:
+
+```python
+# Hard to test-first: Logic mixed with database
+def process_order(order_id):
+    order = OrderRepository.find(order_id)  # How to test without DB?
+    if order.customer.premium:  # Business logic
+        discount = order.total * 0.2
+    PaymentGateway.charge(...)  # How to test without payment gateway?
+```
+
+**Test-first is painful because you need database and payment gateway mocks before implementing logic.**
+
+### The Solution: FCIS Pattern
+
+**Separate logic (core) from I/O (shell):**
+
+```python
+# Core: Pure, easy to test-first
+def calculate_discount(is_premium, total):
+    return total * 0.2 if is_premium else 0
+
+# Test-first is natural (no dependencies!)
+def test_premium_customers_receive_20_percent_discount():
+    discount = calculate_discount(is_premium=True, total=100)
+    assert discount == 20
+```
+
+**Now TDD workflow is smooth:**
+1. Write test for pure function (no mocks needed)
+2. See it fail (red)
+3. Implement pure logic (green)
+4. Refactor (tests protect you)
+
+**Google Testing Blog (October 2025):** "Mixing database calls, network requests, and other external interactions directly with your core logic can lead to code that's difficult to test."
+
+**Recommendation:** When starting TDD on a new feature, explicitly identify core (logic) vs shell (I/O). Write core functions first with test-first workflow. Shell can be tested with lighter integration tests.
+
+**See `writing-code` skill for complete guidance on separating decisions from effects (FCIS pattern).**
+
+---
+
 ## Test Quality Checklist
 
 When generating or reviewing tests, ensure:
 
 - **Behavioral**: Tests describe what the system does, not how it does it.
 - **Isolated**: Each test has a single clear purpose; setup is minimal but meaningful.
-- **Readable**: Someone new to the code can understand behavior from the tests alone.
+- **Readable**: Someone new to the code can understand behavior from the tests alone. Tests follow clear data flow (Arrange → Act → Assert). Lines ordered to match data dependencies (Google Testing Blog, January 2025).
 - **Deterministic**: No reliance on real clocks, randomness, or external services without control.
 - **Fast enough**: Core unit tests can run frequently during development.
 
@@ -105,4 +153,16 @@ Avoid:
 
 ## Integration with Other Skills
 
+### software-testing-strategy (Strategic Framework)
+
 For strategic test planning and comprehensive test design patterns, see the `software-testing-strategy` skill. This skill (tdd-enforcement) focuses on the tactical test-first workflow, while software-testing-strategy provides the strategic framework for choosing test types, recognizing anti-patterns, and designing effective test suites.
+
+### writing-code (Architecture: Decisions vs Effects)
+
+For architecting code that makes TDD effortless, see the `writing-code` skill. Separating decisions from effects (FCIS pattern) makes test-first development natural:
+
+- Decision functions are trivially testable without mocks
+- TDD cycle runs fast (no I/O in decisions)
+- Tests are deterministic (pure decision logic)
+
+**When struggling with TDD:** If writing tests first requires heavy mocking, your code likely mixes decisions and effects. Use the writing-code pattern to separate concerns, then TDD becomes straightforward.

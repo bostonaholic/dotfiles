@@ -285,6 +285,61 @@ Follow this order; do not jump straight to nits.
 
    For detailed TDD workflow guidance, see the `tdd-enforcement` skill. For test strategy, patterns, and anti-patterns (testing pyramid, test doubles, flaky tests), see the `software-testing-strategy` skill.
 
+   **Architecture for Testability:**
+
+   When reviewing test quality, evaluate the underlying architecture:
+
+   **Red Flag: Heavy Mocking Requirements**
+
+   If tests require extensive mocking of the system's own components (not external services), this indicates mixed concerns:
+
+   ```python
+   # Bad: Heavy mocking suggests mixed concerns
+   def test_process_order():
+       repo_mock = Mock()
+       gateway_mock = Mock()
+       order_service = OrderService(repo_mock, gateway_mock)
+       # Many mock assertions on implementation details
+   ```
+
+   **Green Flag: Separating Decisions from Effects**
+
+   Pure decision functions test easily without mocks:
+
+   ```python
+   # Good: Pure function, no mocks needed
+   def test_calculate_discount_for_premium_customer():
+       discount = calculate_discount(is_premium=True, total=100)
+       assert discount == 20
+   ```
+
+   **Review Comment Template:**
+
+   `suggestion (non-blocking, testability): These tests require heavy mocking of our own components, suggesting mixed concerns. Consider separating decisions from effects: extract business logic to pure functions (see writing-code skill).`
+
+   **Reference:** Google Testing Blog (October 2025): "Mixing database calls, network requests, and other external interactions directly with your core logic can lead to code that's difficult to test."
+
+   **Test Readability and Organization:**
+
+   **Code Flow in Tests (Google Testing Blog, January 2025):**
+
+   Tests should follow clear data flow (Arrange-Act-Assert):
+
+   - **Red flag:** Jumbled test setup, unclear dependencies
+   - **Green flag:** Setup → execution → assertion, with lines ordered to match data flow
+
+   **Sorted Test Cases (Google Testing Blog, September 2025):**
+
+   Parameterized tests benefit from alphabetical sorting:
+
+   - **Benefit:** "Sorted lists help prevent bugs" - duplicates and conflicts become immediately visible
+   - **Warning:** Only sort when order doesn't matter (not for dependency loading)
+
+   **Review Comment Templates:**
+
+   - `suggestion (non-blocking, readability): This test has jumbled setup. Consider reorganizing to follow data flow: Arrange → Act → Assert (Google Testing Blog, January 2025).`
+   - `suggestion (non-blocking, organization): Consider sorting these parameterized test cases alphabetically to catch duplicates more easily (Google Testing Blog, September 2025).`
+
 6. **Evaluate security and safety**
 
    - Any user input crossing trust boundaries?
@@ -732,8 +787,13 @@ This skill provides comprehensive review methodology. For specialized deep dives
 - **git-commit skill:** Detailed commit message conventions and WHY-focused guidance
 - **tdd-enforcement skill:** Complete TDD workflow (tests first, red-green-refactor cycle)
 - **software-testing-strategy skill:** Strategic testing framework (testing pyramid, test patterns, anti-patterns, legacy code testing)
+- **writing-code skill:** Architectural pattern for testability (separating decisions from effects)
 - **refactoring-to-patterns skill:** Full catalog of Fowler patterns with before/after examples
 - **architecture-decision-record skill:** ADR structure for architectural decisions
+
+**When reviewing for testability:** Reference writing-code when code mixes decisions and effects. Suggest separating business logic (decisions) from I/O operations (effects) to improve testability and reduce mocking requirements.
+
+**Comment template:** `suggestion (non-blocking, testability): This mixes business logic with database calls. Consider separating decisions from effects for improved testability (see writing-code skill).`
 
 Use this systematic-code-review skill for reviewing code. Use the specialized skills when actively performing those activities (committing, writing tests, refactoring, documenting decisions).
 

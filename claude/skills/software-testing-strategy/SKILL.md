@@ -165,9 +165,109 @@ test('login redirects to dashboard on success', async () => {
 
 **In Testing:** This is the Testing Pyramid principle. Unit tests for correctness, integration tests for contracts, e2e tests for critical journeys.
 
+**Architecture Enables Testing at Right Levels:** Use Functional Core, Imperative Shell to maximize testable surface area. Pure business logic in core = more unit tests. Side effects in shell = fewer integration tests. See "Architecture for Testability" section below.
+
 ### Operational Excellence is a Feature
 
 **In Testing:** Test observability matters. Clear test names, structured output, actionable failures, execution time tracking.
+
+## Architecture for Testability
+
+Before choosing test types and levels, understand how architecture enables or impedes testing.
+
+### Functional Core, Imperative Shell Pattern
+
+**Problem (Google Testing Blog, October 2025):**
+
+> "Mixing database calls, network requests, and other external interactions directly with your core logic can lead to code that's difficult to test."
+
+**Solution:**
+
+Separate pure business logic (functional core) from side effects (imperative shell).
+
+**Why This Matters for Testing:**
+
+- **Unit Testing:** Core becomes trivially testable without mocks
+- **Testing Pyramid Economics:** More logic in core = more fast, cheap unit tests
+- **Integration Testing:** Shell needs fewer, lighter integration tests
+- **Test Determinism:** Pure functions are inherently deterministic
+
+**Example: Before FCIS (Hard to Test)**
+
+```python
+# Mixed concerns: logic tangled with database and email
+def send_expiry_reminders():
+    users = UserRepository.find_all()  # Database call
+    for user in users:
+        # Business logic mixed with I/O
+        if user.expires_at <= Date.today() + timedelta(days=7) and not user.reminded:
+            EmailService.send(
+                to=user.email,
+                subject="Account Expiry Reminder",
+                body=f"Your account expires on {user.expires_at}"
+            )
+            UserRepository.update(user.id, reminded=True)
+```
+
+**Problems:**
+- Can't test expiry logic without database
+- Can't test email content without email service
+- Requires heavy mocking for tests
+- Business rules buried in I/O operations
+
+**Example: After FCIS (Easy to Test)**
+
+```python
+# Core: Pure functions (easy to test)
+def users_needing_reminder(users, cutoff_date):
+    """Filter users who need expiry reminders."""
+    return [u for u in users if u.expires_at <= cutoff_date and not u.reminded]
+
+def generate_expiry_emails(users):
+    """Generate email content for users."""
+    return [
+        {
+            'to': user.email,
+            'subject': 'Account Expiry Reminder',
+            'body': f'Your account expires on {user.expires_at.strftime("%Y-%m-%d")}'
+        }
+        for user in users
+    ]
+
+# Shell: Thin orchestration (tested lightly)
+def send_expiry_reminders():
+    users = UserRepository.find_all()
+    to_remind = users_needing_reminder(users, Date.today() + timedelta(days=7))
+    emails = generate_expiry_emails(to_remind)
+    EmailService.send_bulk(emails)
+    UserRepository.mark_reminded([u.id for u in to_remind])
+```
+
+**Testing Benefits:**
+
+```python
+# Core: Fast unit tests (no mocks needed!)
+def test_filters_users_expiring_within_cutoff():
+    users = [
+        User(email='a@ex.com', expires_at=Date.today() + timedelta(days=5), reminded=False),
+        User(email='b@ex.com', expires_at=Date.today() + timedelta(days=10), reminded=False),
+        User(email='c@ex.com', expires_at=Date.today() + timedelta(days=5), reminded=True)
+    ]
+
+    result = users_needing_reminder(users, Date.today() + timedelta(days=7))
+
+    assert len(result) == 1
+    assert result[0].email == 'a@ex.com'
+
+# Runs in milliseconds, no I/O needed
+```
+
+**Key Benefits:**
+- **Core:** Test extensively with fast unit tests (no I/O dependencies)
+- **Shell:** Test lightly with integration tests (mostly orchestration)
+- **Reusability:** Pure functions compose easily across features
+
+**See the `writing-code` skill for complete implementation guidance on separating decisions from effects (Functional Core, Imperative Shell pattern).**
 
 ## The Testing Pyramid: Economics and Strategy
 
@@ -392,6 +492,42 @@ def test_user_registration_sends_welcome_email():
 - Easy to read and understand
 - Separates concerns within the test
 
+**Data Flow and Readability (Google Testing Blog, January 2025):**
+
+> "Order your lines of code to match the data flow inside your method"
+
+The AAA pattern naturally follows data flow:
+1. **Arrange:** Create data and dependencies
+2. **Act:** Data flows through the system under test
+3. **Assert:** Verify data transformations
+
+**Anti-Pattern: Jumbled Test**
+
+```python
+# Bad: Unclear flow, setup mixed with assertions
+def test_order_total_with_discount():
+    assert order.total == 90  # What order?
+    order = Order(items=[Item(price=100)])
+    order.apply_discount(0.10)  # Discount applied after assertion?
+```
+
+**Good Pattern: Clear Data Flow**
+
+```python
+# Good: Data flows clearly through Arrange → Act → Assert
+def test_order_total_with_discount():
+    # Arrange: Create data
+    order = Order(items=[Item(price=100)])
+
+    # Act: Transform data
+    order.apply_discount(0.10)
+
+    # Assert: Verify transformation
+    assert order.total == 90
+```
+
+Lines ordered to match data dependencies reduce cognitive load and improve test maintainability.
+
 ### Test Builder Pattern
 
 For complex object creation in tests:
@@ -602,6 +738,69 @@ def test_slugify(input_text, expected_slug):
 - Easy to add new test cases
 - Reduces code duplication
 
+### Test Organization and Readability
+
+**Sort Test Cases (Google Testing Blog, September 2025):**
+
+> "Sorted lists help prevent bugs through improved readability and consistency"
+
+Alphabetically sorted parameterized test cases make duplicates and conflicts immediately visible.
+
+**Example: Sorted Parameterized Tests**
+
+```python
+@pytest.mark.parametrize("input_text,expected_slug", [
+    ("  Hello World  ", "hello-world"),     # Leading/trailing spaces (sorted)
+    ("Café au Lait", "cafe-au-lait"),        # Accents
+    ("HELLO WORLD", "hello-world"),          # Uppercase
+    ("Hello World", "hello-world"),          # Basic case
+    ("Hello  World", "hello-world"),         # Multiple spaces
+    ("Hello, World!", "hello-world"),        # Punctuation
+])
+def test_slugify(input_text, expected_slug):
+    assert slugify(input_text) == expected_slug
+```
+
+**Benefits of Sorting:**
+- Duplicates stand out immediately
+- Easier to find specific test cases
+- Consistent organization across test suite
+- Reduces merge conflicts in version control
+
+**Warning:** Only sort when order doesn't matter. Don't sort if test execution order is intentional (e.g., dependency loading).
+
+**Data Flow in Tests (Google Testing Blog, January 2025):**
+
+Tests should flow logically through setup, execution, and verification:
+
+```python
+# Good: Clear flow from setup to assertion
+def test_user_receives_welcome_email_after_registration():
+    # Setup: Create dependencies
+    email_service = FakeEmailService()
+    user_service = UserService(email_service)
+
+    # Execute: Perform action
+    user = user_service.register(email="new@example.com", name="Alice")
+
+    # Verify: Check outcomes
+    assert len(email_service.sent_emails) == 1
+    assert email_service.sent_emails[0]['to'] == "new@example.com"
+    assert "Welcome" in email_service.sent_emails[0]['subject']
+```
+
+**Anti-Pattern: Jumbled Setup**
+
+```python
+# Bad: Setup scattered, unclear dependencies
+def test_user_receives_welcome_email():
+    user = user_service.register(email="new@example.com", name="Alice")  # Where does user_service come from?
+    email_service = FakeEmailService()  # Created after use?
+    assert len(email_service.sent_emails) == 1  # How can this work?
+```
+
+Keep setup together, execution clear, and assertions at the end. Lines should be ordered to match data dependencies.
+
 ## Testing by Level
 
 ### Unit Testing
@@ -640,6 +839,48 @@ def test_account_applies_interest():
 #     account = SavingsAccount(balance=1000, interest_rate=0.05)
 #     assert account._calculate_monthly_rate() == 0.004074
 ```
+
+#### Functional Core, Imperative Shell for Unit Testing
+
+**Architectural Pattern for Maximizing Unit Test Coverage:**
+
+When business logic is tangled with I/O, you're forced to write slow integration tests. FCIS pattern maximizes fast unit test coverage:
+
+**Anti-Pattern (Requires Integration Test):**
+
+```python
+def send_expiry_reminders():
+    users = UserRepository.find_all()  # Database call
+    for user in users:
+        if user.expires_at <= Date.today() + timedelta(days=7):  # Logic mixed with I/O
+            EmailService.send(...)  # Network call
+```
+
+Can't test the expiry logic without database and email service.
+
+**FCIS Pattern (Pure Unit Tests):**
+
+```python
+# Core: Pure, fast unit tests
+def users_needing_reminder(users, cutoff_date):
+    return [u for u in users if u.expires_at <= cutoff_date and not u.reminded]
+
+# Test the core (no mocks needed!)
+def test_filters_users_expiring_before_cutoff():
+    users = [
+        User(expires_at=Date.today() + timedelta(days=5), reminded=False),
+        User(expires_at=Date.today() + timedelta(days=10), reminded=False)
+    ]
+    result = users_needing_reminder(users, Date.today() + timedelta(days=7))
+    assert len(result) == 1
+```
+
+**Testing Economics:**
+- **Before FCIS:** Integration test (seconds, database required)
+- **After FCIS:** Unit test (milliseconds, pure function)
+- **Impact:** Run thousands of core tests in time of one integration test
+
+**See `writing-code` skill for complete pattern guidance on separating decisions from effects.**
 
 #### Example: Testing Edge Cases
 
@@ -1577,6 +1818,35 @@ def test_book_pricing_applies_discount():
     pricing = BookPricing()
     assert pricing.calculate(quantity=2) == 18
 ```
+
+### writing-code (Architecture: Decisions vs Effects)
+
+**Relationship:** Architectural foundation for testability strategy
+
+- Separating decisions from effects (FCIS pattern) maximizes unit test coverage (70% of pyramid)
+- Pure decision logic enables fast, deterministic tests without mocks
+- Effect layer requires fewer, lighter integration tests
+
+**How They Work Together:**
+
+1. **Design:** Use writing-code principles to separate decisions from effects
+2. **Strategy:** Apply software-testing-strategy to plan test distribution (70/20/10)
+3. **Execution:** Use tdd-enforcement for test-first workflow
+
+**Example Flow:**
+
+Feature: User expiry notifications
+1. **writing-code:** Separate `users_needing_reminder()` (decisions) from database/email (effects)
+2. **Strategy:** 70% unit tests for decision logic, 20% integration for effects, 10% e2e for workflow
+3. **TDD:** Red-green-refactor cycle for decision functions
+
+**When to reference:** When architecting features, reviewing code for testability, or struggling with heavy mocking requirements.
+
+**Key Insight (Google Testing Blog, October 2025):**
+
+> "Mixing database calls, network requests, and other external interactions directly with your core logic can lead to code that's difficult to test."
+
+Separating decisions from effects (FCIS pattern) solves this by enabling the testing pyramid economics: more logic in pure decisions = more fast, cheap unit tests.
 
 ## Key Takeaways
 
