@@ -3,6 +3,8 @@ name: beads
 description: Contains critical information about how you must work differently with projects using 'beads'. Load in world, and anywhere else that beads is in use.
 ---
 
+# Beads Skill
+
 ## Issue Tracking with bd (beads)
 
 **IMPORTANT**: This project uses **bd (beads)** for ALL issue tracking. Do NOT use markdown TODOs, task lists, or other tracking methods.
@@ -17,23 +19,27 @@ description: Contains critical information about how you must work differently w
 ### Quick Start
 
 **Check for ready work:**
+
 ```bash
 bd ready --json
 ```
 
 **Create new issues:**
+
 ```bash
 bd create "Issue title" -t bug|feature|task -p 0-4 --json
 bd create "Issue title" -p 1 --deps discovered-from:bd-123 --json
 ```
 
 **Claim and update:**
+
 ```bash
 bd update bd-42 --status in_progress --json
 bd update bd-42 --priority 1 --json
 ```
 
 **Complete work:**
+
 ```bash
 bd close bd-42 --reason "Completed" --json
 ```
@@ -67,6 +73,7 @@ bd close bd-42 --reason "Completed" --json
 ### Auto-Sync
 
 bd automatically syncs with git:
+
 - Exports to `.beads/issues.jsonl` after changes (5s debounce)
 - Imports from JSONL when newer (e.g., after `git pull`)
 - No manual export/import needed!
@@ -85,6 +92,7 @@ pip install beads-mcp
 ```
 
 Add to MCP config (e.g., `~/.config/claude/config.json`):
+
 ```json
 {
   "beads": {
@@ -99,25 +107,29 @@ Then use `mcp__beads__*` functions instead of CLI commands.
 ### Managing AI-Generated Planning Documents
 
 AI assistants often create planning and design documents during development:
+
 - PLAN.md, IMPLEMENTATION.md, ARCHITECTURE.md
 - DESIGN.md, CODEBASE_SUMMARY.md, INTEGRATION_PLAN.md
 - TESTING_GUIDE.md, TECHNICAL_DESIGN.md, and similar files
 
-**Best Practice: Use a dedicated directory for these ephemeral files**
+#### Best Practice: Use a dedicated directory for these ephemeral files
 
 **Recommended approach:**
+
 - Create a `history/` directory in the project root
 - Store ALL AI-generated planning/design docs in `history/`
 - Keep the repository root clean and focused on permanent project files
 - Only access `history/` when explicitly asked to review past planning
 
 **Example .gitignore entry (optional):**
-```
+
+```gitignore
 # AI planning documents (ephemeral)
 history/
 ```
 
 **Benefits:**
+
 - Clean repository root
 - Clear separation between ephemeral and permanent documentation
 - Easy to exclude from version control if desired

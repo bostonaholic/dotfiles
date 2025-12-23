@@ -1,3 +1,8 @@
+---
+name: implement-spec
+description: Implement code from a technical design specification
+---
+
 # Implement from Technical Design Specification
 
 You are an expert software engineer. You will be given the file path to a technical design plan below.

@@ -1,3 +1,8 @@
+---
+name: technical-spec
+description: Create a technical design specification from a feature request or bug fix
+---
+
 # Create a Technical Design Specification
 
 You are an expert software engineer. You will be provided with a feature request or bug fix description below.

@@ -1,12 +1,36 @@
-# Context Window Prime
+---
+name: prime
+description: Load essential project context (file structure, docs) for effective assistance
+---
 
-To understand the context of the project and do nothing else:
+# Prime Context
 
-RUN:
-    git ls-files
+Load essential project context for effective assistance.
 
-READ:
-    README.md
-    docs/**/*
+## Actions
 
-Do nothing else. Respond only with 2-3 sentences explaining what the project does.
+1. **List all tracked files**
+
+   ```bash
+   git ls-files
+   ```
+
+2. **Read core documentation**
+   - README.md
+   - docs/**/*.md (all documentation)
+
+## Purpose
+
+Use this command when:
+
+- Starting work on an unfamiliar codebase
+- Needing to understand project structure
+- Before making architectural decisions
+
+## After Priming
+
+The assistant will have context about:
+
+- Project file structure
+- Documentation and conventions
+- Key components and their locations

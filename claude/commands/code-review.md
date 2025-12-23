@@ -1,3 +1,8 @@
+---
+name: code-review
+description: Conduct thorough code review using systematic evaluation criteria
+---
+
 # Code Review
 
 I'm performing a systematic code review using the code-reviewer agent and the systematic-code-review skill. This review applies first principles, legendary programmer standards, and 2025 industry best practices.
