@@ -1,6 +1,9 @@
 {
   "alwaysThinkingEnabled": true,
   "includeCoAuthoredBy": false,
+  "env": {
+    "MAX_THINKING_TOKENS": "32000"
+  },
   "enabledPlugins": {
     "superpowers@superpowers-marketplace": true
   },
