@@ -19,6 +19,19 @@ $ARGUMENTS
 - If **no arguments** are provided, perform full codebase audit of `lib/` directory
 - If a **focus area** is specified (e.g., "command objects", "data structures"), prioritize that aspect
 
+## Required Skill
+
+**MANDATORY: Use the `simplifying-ruby-code` skill** to evaluate code complexity and provide refactorings.
+
+This skill provides:
+
+- Rich Hickey's simplicity principles (immutable data, pure functions)
+- Separating decisions from effects for testability
+- Ruby-specific patterns (Struct/Data/Hash, protocols, module functions)
+- Safe refactoring steps with migration guidance
+
+Apply the skill's principles throughout your analysis. Reference specific patterns explicitly (e.g., "Pattern 1: Command Objects → Module Functions").
+
 ## Analysis Process
 
 ### STEP 1: Determine Scope
@@ -159,336 +172,19 @@ Include file locations so developers can reference these patterns.
 
 ---
 
-## Refactoring Guidelines
+**For detailed refactoring guidelines, principles, and examples, refer to the `simplifying-ruby-code` skill.**
 
-Follow these principles when implementing suggestions:
+The skill provides:
 
-### 1. Rich Hickey's Simplicity
+- Rich Hickey's simplicity principles
+- Separating decisions from effects
+- Ruby protocols and idioms
+- Safe refactoring steps with before/after examples
+- Common patterns: Command Objects, Value Objects, Utility Classes, Inheritance
 
-- Prefer simple, immutable data structures (Hash, Array, Struct, Data)
-- Separate data from behavior
-- Use pure functions without side effects
-- Avoid complecting concerns
-- Choose simple over easy
+Apply those principles throughout your analysis, explicitly referencing pattern names.
 
-### 2. Ruby Idioms
-
-- Implement Ruby protocols (`each`, `to_h`, `to_a`, `to_json`, `to_s`, `<=>`)
-- Use modules for mixins and namespacing
-- Prefer composition over inheritance
-- Use blocks instead of callbacks or templates
-- Leverage Enumerable methods
-- Use keyword arguments for clarity
-- Follow the principle of least surprise
-
-### 3. Functional Programming in Ruby
-
-- Prefer pure functions (same input → same output, no side effects)
-- Use immutable data where possible (freeze constants, use Data)
-- Separate data transformation from I/O
-- Use method chaining for data pipelines
-- Avoid mutable class/instance variables when functions work
-
-### 4. Safe Refactoring
-
-- Make changes incrementally
-- Run tests after each change
-- Use Rubocop or StandardRB for consistency
-- Keep both old and new code paths temporarily if needed
-- Add deprecation warnings for gradual migrations
-
-## Examples of Common Refactorings
-
-### Example 1: Command Object → Simple Function
-
-**Before:**
-
-```ruby
-# lib/commands/file_processor.rb
-class FileProcessor
-  def initialize(filename)
-    @filename = filename
-  end
-
-  def call
-    File.read(@filename).upcase
-  end
-end
-
-# Usage
-FileProcessor.new("data.txt").call
-```
-
-**After:**
-
-```ruby
-# lib/file_processor.rb
-module FileProcessor
-  module_function
-
-  def process(filename)
-    File.read(filename).upcase
-  end
-end
-
-# Usage
-FileProcessor.process("data.txt")
-```
-
-### Example 2: Custom Data Class → Data
-
-**Before:**
-
-```ruby
-# lib/models/point.rb
-class Point
-  attr_reader :x, :y
-
-  def initialize(x, y)
-    @x = x
-    @y = y
-  end
-
-  def ==(other)
-    x == other.x && y == other.y
-  end
-
-  def hash
-    [x, y].hash
-  end
-end
-```
-
-**After:**
-
-```ruby
-# lib/models/point.rb
-Point = Data.define(:x, :y)
-
-# Or use Struct if mutability is needed
-Point = Struct.new(:x, :y, keyword_init: true)
-
-# Or just use a Hash for simple cases
-{x: 10, y: 20}
-```
-
-### Example 3: Deep Inheritance → Composition
-
-**Before:**
-
-```ruby
-# lib/parsers/base_parser.rb
-class BaseParser
-  def parse(input)
-    validate(input)
-    transform(process(input))
-  end
-
-  def validate(input)
-    raise NotImplementedError
-  end
-
-  def process(input)
-    raise NotImplementedError
-  end
-
-  def transform(data)
-    data
-  end
-end
-
-class JsonParser < BaseParser
-  def validate(input)
-    # validation logic
-  end
-
-  def process(input)
-    JSON.parse(input)
-  end
-end
-```
-
-**After:**
-
-```ruby
-# lib/parsers/json_parser.rb
-module JsonParser
-  module_function
-
-  def parse(input)
-    validate(input)
-    transform(process(input))
-  end
-
-  def validate(input)
-    # validation logic
-  end
-
-  def process(input)
-    JSON.parse(input)
-  end
-
-  def transform(data)
-    data
-  end
-end
-```
-
-### Example 4: Builder Pattern → Keyword Arguments
-
-**Before:**
-
-```ruby
-# lib/builders/query_builder.rb
-class QueryBuilder
-  def initialize
-    @conditions = []
-    @limit = nil
-  end
-
-  def where(condition)
-    @conditions << condition
-    self
-  end
-
-  def limit(n)
-    @limit = n
-    self
-  end
-
-  def build
-    {conditions: @conditions, limit: @limit}
-  end
-end
-
-# Usage
-QueryBuilder.new.where("active").where("verified").limit(10).build
-```
-
-**After:**
-
-```ruby
-# lib/query.rb
-module Query
-  module_function
-
-  def build(conditions: [], limit: nil)
-    {conditions: Array(conditions), limit: limit}
-  end
-end
-
-# Usage
-Query.build(conditions: ["active", "verified"], limit: 10)
-```
-
-### Example 5: Missing Protocol → Implementing Protocols
-
-**Before:**
-
-```ruby
-# lib/collection.rb
-class Collection
-  def initialize(items)
-    @items = items
-  end
-
-  def get_items
-    @items
-  end
-
-  def size
-    @items.size
-  end
-end
-```
-
-**After:**
-
-```ruby
-# lib/collection.rb
-class Collection
-  include Enumerable
-
-  def initialize(items)
-    @items = items
-  end
-
-  def each(&block)
-    @items.each(&block)
-  end
-
-  def to_a
-    @items.dup
-  end
-
-  def to_h
-    @items.to_h
-  end
-end
-
-# Now Collection works with all Enumerable methods
-# collection.map, .select, .reject, .find, etc.
-```
-
-### Example 6: Stateful Utility → Pure Function
-
-**Before:**
-
-```ruby
-# lib/calculator.rb
-class Calculator
-  def initialize
-    @result = 0
-  end
-
-  def add(n)
-    @result += n
-  end
-
-  def multiply(n)
-    @result *= n
-  end
-
-  def result
-    @result
-  end
-end
-
-# Usage
-calc = Calculator.new
-calc.add(5)
-calc.multiply(2)
-calc.result # => 10
-```
-
-**After:**
-
-```ruby
-# lib/calculator.rb
-module Calculator
-  module_function
-
-  def add(a, b)
-    a + b
-  end
-
-  def multiply(a, b)
-    a * b
-  end
-
-  def calculate
-    -> (initial) { yield(initial) }
-  end
-end
-
-# Usage (functional approach)
-result = Calculator.add(5, 0)
-result = Calculator.multiply(result, 2) # => 10
-
-# Or use method chaining with a pipeline
-result = 0.then { |n| Calculator.add(n, 5) }
-           .then { |n| Calculator.multiply(n, 2) }
-```
+---
 
 ## Best Practices
 

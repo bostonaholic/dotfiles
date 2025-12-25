@@ -19,6 +19,19 @@ $ARGUMENTS
 - If **no arguments** are provided, perform full codebase audit
 - If a **focus area** is specified (e.g., "service objects", "value objects"), prioritize that aspect
 
+## Required Skill
+
+**MANDATORY: Use the `simplifying-ruby-code` skill** to evaluate code complexity and provide refactorings.
+
+This skill provides:
+
+- Rich Hickey's simplicity principles (immutable data, pure functions)
+- Separating decisions from effects for testability
+- Ruby-specific patterns (Struct/Data/Hash, protocols, module functions)
+- Safe refactoring steps with migration guidance
+
+Apply the skill's principles throughout your analysis. Reference specific patterns explicitly (e.g., "Pattern 1: Command Objects → Module Functions").
+
 ## Analysis Process
 
 ### STEP 1: Determine Scope
@@ -155,133 +168,37 @@ Include file locations so developers can reference these patterns.
 
 ---
 
-## Refactoring Guidelines
+## Rails-Specific Considerations
 
-Follow these principles when implementing suggestions:
+When applying the `simplifying-ruby-code` skill to Rails applications:
 
-### 1. Rich Hickey's Simplicity
+### ActiveRecord Models
 
-- Prefer simple, immutable data structures (Hash, Array, Struct)
-- Separate data from behavior
-- Use pure functions without side effects
-- Avoid complecting concerns
+- **Keep as classes** - ActiveRecord models benefit from OOP (associations, validations, callbacks)
+- **Extract business logic** - Move calculations and transformations to pure functions/modules
+- **Use concerns wisely** - For shared behavior across models, not as a dumping ground
 
-### 2. Rails Conventions
+### Service Objects in Rails
 
-- Use ActiveRecord callbacks and scopes appropriately
-- Leverage Rails' built-in methods before creating custom ones
-- Follow "Convention over Configuration"
-- Use concerns for shared behavior, not inheritance
+- **Single method, no state** → Move to model class method or module function
+- **Complex orchestration** → Keep as service object but separate decisions from effects
+- **Background jobs** → Appropriate use case for service objects (need serialization)
 
-### 3. Ruby Idioms
+### Rails Helpers vs Modules
 
-- Implement Ruby protocols (`each`, `to_h`, `to_a`, `to_json`)
-- Use modules for mixins and namespacing
-- Prefer composition over inheritance
-- Use blocks and Enumerable methods
+- **View helpers** - Use Rails helper modules for view-specific formatting
+- **Business logic** - Extract to separate modules with `module_function`
+- **Don't mix** - View helpers should format, not contain business rules
 
-### 4. Safe Refactoring
+### Testing Rails Code
 
-- Make changes incrementally
-- Run tests after each change
-- Use deprecation warnings for gradual migrations
-- Keep both old and new code paths temporarily if needed
+- **Models** - Test pure methods without database when possible
+- **Integration** - Test full Rails stack for complex workflows
+- **Separate concerns** - Pure business logic should test without Rails
 
-## Examples of Common Refactorings
+**For detailed refactoring examples and principles, refer to the `simplifying-ruby-code` skill.**
 
-### Example 1: Service Object → Simple Method
-
-**Before:**
-
-```ruby
-# app/services/user_creator.rb
-class UserCreator
-  def initialize(params)
-    @params = params
-  end
-
-  def call
-    User.create(@params)
-  end
-end
-
-# Usage
-UserCreator.new(params).call
-```
-
-**After:**
-
-```ruby
-# app/models/user.rb
-class User < ApplicationRecord
-  def self.create_from_params(params)
-    create(params)
-  end
-end
-
-# Usage
-User.create_from_params(params)
-```
-
-### Example 2: Value Object → Struct
-
-**Before:**
-
-```ruby
-# app/value_objects/coordinate.rb
-class Coordinate
-  attr_reader :lat, :lng
-
-  def initialize(lat, lng)
-    @lat = lat
-    @lng = lng
-  end
-end
-```
-
-**After:**
-
-```ruby
-# Inline where needed
-Coordinate = Struct.new(:lat, :lng, keyword_init: true)
-
-# Or just use a Hash
-{lat: 40.7128, lng: -74.0060}
-```
-
-### Example 3: Utility Class → Module
-
-**Before:**
-
-```ruby
-# app/utils/date_formatter.rb
-class DateFormatter
-  def self.format_for_display(date)
-    date.strftime("%B %d, %Y")
-  end
-
-  def self.format_for_api(date)
-    date.iso8601
-  end
-end
-```
-
-**After:**
-
-```ruby
-# app/helpers/date_helper.rb
-module DateHelper
-  module_function
-
-  def format_for_display(date)
-    date.strftime("%B %d, %Y")
-  end
-
-  def format_for_api(date)
-    date.iso8601
-  end
-end
-```
+---
 
 ## Best Practices
 
