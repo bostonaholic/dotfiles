@@ -34,15 +34,13 @@ Parse arguments to extract:
 
 ## Overview
 
-This command invokes the `dependabot-merger` autonomous agent to:
+This command invokes the `dependabot-orchestrator` agent to coordinate specialized worker agents:
 
 1. **Discover PRs**: Find all open Dependabot PRs (or use specified PR numbers)
-2. **Analyze Each PR**: Run comprehensive 5-phase analysis
-   - Semver classification
-   - Changelog & breaking change detection
-   - Dependency tree impact analysis
-   - Test suite execution
-   - Security advisory check
+2. **Analyze Each PR**: Dispatch worker agents for comprehensive analysis
+   - **pr-analyzer**: Semver classification, breaking change detection, dependency conflicts
+   - **test-runner**: Test suite execution in isolated worktree
+   - **security-checker**: CVE verification (when applicable)
 3. **Make Decisions**: Auto-merge safe updates, skip risky ones
 4. **Report Results**: Detailed summary with merge/skip counts and reasoning
 
@@ -83,11 +81,11 @@ This command invokes the `dependabot-merger` autonomous agent to:
 
 ## Agent Invocation
 
-Invoke the `dependabot-merger` agent with parsed arguments:
+Invoke the `dependabot-orchestrator` agent with parsed arguments:
 
 ```yaml
-agent: dependabot-merger
-model: opus
+agent: dependabot-orchestrator
+model: haiku
 context:
   pr_numbers: [extracted PR numbers or empty for discovery]
   dry_run: [true/false based on --dry-run flag]
@@ -95,10 +93,14 @@ context:
   arguments: "$ARGUMENTS"
 ```
 
-The agent will:
-- Load the `gh-cli` skill for GitHub operations
-- Load the `systematic-debugging` skill for test failure diagnosis
-- Execute the complete analysis and merge workflow
+The orchestrator will:
+- Discover Dependabot PRs using `gh-cli` skill
+- Dispatch specialized worker agents per PR:
+  - **pr-analyzer** (Sonnet): Deep safety analysis
+  - **test-runner** (Sonnet): Test execution with diagnostics
+  - **security-checker** (Haiku): CVE verification
+- Make merge decisions based on worker results
+- Execute merges via `gh-cli` merge-pr workflow
 - Report progress and final results
 
 ## Expected Output
@@ -130,7 +132,14 @@ Total time: 8m 43s
 
 ## Notes
 
-- Agent uses Opus model for deep analysis capabilities
-- Each PR analyzed sequentially for safety and clear audit trail
-- All decisions logged with detailed reasoning
+**Architecture Benefits:**
+- **Orchestrator** (Haiku): Lightweight coordination - 3x cheaper than monolithic Opus
+- **Worker Agents**: Specialized models per task (Sonnet for analysis, Haiku for API calls)
+- **Modular Design**: Each worker is independently testable and upgradeable
+- **Clear Audit Trail**: Sequential PR processing with detailed per-worker results
+
+**Safety Guarantees:**
+- Each PR analyzed sequentially for safety
+- All decisions logged with detailed reasoning from each worker
 - Never merges if any safety check fails
+- Worker failures result in skip (safe default)
