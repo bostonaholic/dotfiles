@@ -1,0 +1,94 @@
+---
+description: 
+globs: *.md
+alwaysApply: true
+---
+# Markdown Rules
+
+**ALWAYS follow markdownlint rules**
+
+## Core Principles
+- Always create markdown that passes markdown linting rules
+- Prioritize readability and accessibility over complex formatting
+- Use semantic structure that translates well to HTML
+- Keep it simple - markdown's power is in its simplicity
+- Follow consistent conventions throughout documents
+
+## Document Structure
+- Start every document with a clear H1 title (`# Title`)
+- Use proper heading hierarchy (don't skip levels: H1 → H2 → H3)
+- Include a table of contents for documents longer than 500 words
+- End documents with proper conclusion or summary when appropriate
+
+## Heading Guidelines
+- Use ATX-style headers (`# Header`) not setext-style (`Header\n======`)
+- Add a blank line before and after each heading
+- Use sentence case for headings unless proper nouns require capitalization
+- Keep headings concise and descriptive
+- Avoid punctuation at the end of headings
+
+## Text Formatting
+- Use `**bold**` for emphasis, not `__bold__`
+- Use `*italic*` for emphasis, not `_italic_`
+- Use backticks for inline code: `code`
+- Use triple backticks with language specification for code blocks:
+  ```javascript
+  console.log('Hello, world!');
+  ```
+
+## Lists
+- Use `-` for unordered lists (not `*` or `+`)
+- Use `1.` for ordered lists with proper numbering
+- Add blank lines between list items if any item contains multiple paragraphs
+- Indent nested lists with 2 spaces
+- Keep list items parallel in structure and tense
+
+## Links and References
+- Use descriptive link text: `[GitHub documentation](mdc:url)` not `[click here](mdc:url)`
+- Prefer reference-style links for repeated URLs: `[text][ref]` with `[ref]: url` at bottom
+- Always include alt text for images: `![descriptive alt text](mdc:image.png)`
+- Use relative paths for internal links when possible
+
+## Tables
+- Always include header rows with proper alignment
+- Use consistent spacing and alignment
+- Keep table content concise
+- For complex data, consider using lists or breaking into smaller tables
+
+## Code and Technical Content
+- Always specify language for syntax highlighting in code blocks
+- Use inline code formatting for commands, file names, and variables
+- Include working examples that users can copy and paste
+- Add comments to complex code examples
+
+## Line Length and Spacing
+- Aim for 80-100 characters per line for readability
+- Use blank lines to separate sections and improve readability
+- Don't add trailing whitespace
+- End files with a single newline
+
+## Accessibility
+- Use descriptive alt text for all images
+- Structure content with proper headings for screen readers
+- Avoid using only color or formatting to convey meaning
+- Write clear, concise language
+
+## File Organization
+- Use lowercase filenames with hyphens: `my-document.md`
+- Include frontmatter when using static site generators
+- Organize related files in logical directory structures
+- Use consistent naming conventions across projects
+
+## Common Patterns to Avoid
+- Don't use HTML when markdown syntax exists
+- Avoid excessive nesting (more than 3 levels deep)
+- Don't use markdown inside HTML blocks
+- Avoid hardcoded line breaks with `<br>` - use proper paragraph spacing
+- Don't mix different list marker styles in the same document
+
+## Quality Checks
+- Run markdown linter (markdownlint) before committing
+- Verify all links are working
+- Check that code examples are accurate and executable
+- Review for consistent tone and style
+- Ensure proper grammar and spelling
