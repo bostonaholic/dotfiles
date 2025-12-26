@@ -18,6 +18,7 @@ cask_args appdir: '~/Applications', fontdir: '/Library/Fonts'
 brew 'aspell'
 brew 'bd'          # tap steveyegge/beads
 cask 'claude'
+cask 'claude-code'
 brew 'cloc'
 brew 'ctags'
 cask 'docker-desktop'
