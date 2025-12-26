@@ -4,7 +4,7 @@
 #
 # DESCRIPTION:
 #   Shows line and word statistics for git diff output.
-#   Convenience wrapper around 'git diff | gn'.
+#   Convenience wrapper around 'git diff | git-numbers'.
 #
 # USAGE:
 #   git stats [git-diff-args]
@@ -21,7 +21,7 @@
 #   +42 words (+50, -8)
 #
 # DEPENDENCIES:
-#   - gn (Git Numbers) script for parsing diff
+#   - git-numbers script for parsing diff
 #
 # NOTES:
 #   All arguments are passed directly to 'git diff'.
@@ -30,4 +30,4 @@
 
 set -eu -o pipefail
 
-git diff "$*" | gn
+git diff "$*" | git-numbers

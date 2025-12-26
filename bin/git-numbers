@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 ################################################################################
-# GN (Git Numbers) - Diff Summary Statistics
+# Git Numbers - Diff Summary Statistics
 #
 # DESCRIPTION:
 #   Analyzes git diffs and prints summary statistics: total diff lines,
@@ -8,14 +8,14 @@
 #   understanding the size and scope of changes.
 #
 # USAGE:
-#   git diff [options] | gn
-#   gn <diff-file>
+#   git diff [options] | git-numbers
+#   git-numbers <diff-file>
 #
 # EXAMPLES:
-#   git diff 'main~10..main' | gn
-#   git diff --cached | gn           # Check staged changes
-#   git show HEAD | gn               # Analyze last commit
-#   gn my-awesome-patch.diff         # Analyze a diff file
+#   git diff 'main~10..main' | git-numbers
+#   git diff --cached | git-numbers           # Check staged changes
+#   git show HEAD | git-numbers               # Analyze last commit
+#   git-numbers my-awesome-patch.diff         # Analyze a diff file
 #
 # OUTPUT:
 #   293 lines of diff
