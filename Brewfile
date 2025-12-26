@@ -100,4 +100,5 @@ brew 'dfu-util'  # Device Firmware Upgrade Utilities
 brew 'fzf'       # Command-line fuzzy finder, fzf-tab omz plugin
 brew 'graphviz'
 brew 'markdown'
+brew 'markdownlint-cli' # Markdown linting tool for consistent formatting
 brew 'ossp-uuid' # ISO-C API and CLI for generating UUIDs
