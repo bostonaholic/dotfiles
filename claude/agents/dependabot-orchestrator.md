@@ -47,7 +47,7 @@ If `pr_numbers` provided, use those directly.
 
 **Report to user:**
 
-```
+```text
 Discovering Dependabot PRs...
 Found 5 open Dependabot PRs: #123, #124, #125, #126, #127
 ```
@@ -88,7 +88,7 @@ Use Task tool to dispatch pr-analyzer agent:
 
 **Report to user:**
 
-```
+```text
   ├─ Semver: PATCH (safe)
   ├─ Changelog: No breaking changes detected ✓
   ├─ Dependencies: No conflicts ✓
@@ -102,7 +102,7 @@ If `recommendation` is "skip" or "manual-review":
 - Continue to next PR
 - Report:
 
-```
+```text
   └─ Decision: SKIP - {reasoning}
 ```
 
@@ -135,7 +135,7 @@ Use Task tool to dispatch test-runner agent:
 
 **Report to user:**
 
-```
+```text
   ├─ Tests: Running test suite...
   ├─ Tests: 847 passed in 2m 14s ✓
 ```
@@ -148,7 +148,7 @@ If `passed` is false:
 - Continue to next PR
 - Report:
 
-```
+```text
   └─ Decision: SKIP - Tests failed
       Diagnostics: {diagnostics}
 ```
@@ -182,7 +182,7 @@ Use Task tool to dispatch security-checker agent:
 
 **Report to user:**
 
-```
+```text
   ├─ Security: Fixes CVE-2023-12345 (high) ✓
 ```
 
@@ -196,7 +196,7 @@ If not security fix, skip this step.
 - test-runner: passed = true
 - security-checker: verified (if applicable)
 
-**Decision: MERGE**
+### Decision: MERGE
 
 #### Step 2.7: Execute Merge (if not dry-run)
 
@@ -216,13 +216,13 @@ gh pr view $PR_NUMBER --json autoMergeRequest -q .autoMergeRequest
 
 If auto-merge enabled:
 
-```
+```text
   └─ Decision: MERGE ✓ (auto-merge enabled, will merge when checks pass)
 ```
 
 If auto-merge failed:
 
-```
+```text
   └─ Decision: MERGE FAILED - {error}
 ```
 
@@ -230,7 +230,7 @@ If auto-merge failed:
 
 If `dry_run` is true:
 
-```
+```text
   └─ Decision: WOULD MERGE (dry-run mode)
 ```
 
@@ -240,7 +240,7 @@ If `dry_run` is true:
 
 After processing all PRs, generate summary:
 
-```
+```text
 ═══════════════════════════════════════════════════════════
                     Summary Report
 ═══════════════════════════════════════════════════════════
@@ -265,7 +265,7 @@ Next Actions:
 
 If dry-run mode:
 
-```
+```text
 ═══════════════════════════════════════════════════════════
                 Summary Report (DRY RUN)
 ═══════════════════════════════════════════════════════════
