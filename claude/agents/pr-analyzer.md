@@ -49,6 +49,7 @@ fi
 ```
 
 **Extract:**
+
 - Package name
 - Old version
 - New version
@@ -56,20 +57,24 @@ fi
 ### Phase 2: Semver Classification
 
 Parse version numbers:
+
 - Old: `1.13.0` → [1, 13, 0]
 - New: `1.13.10` → [1, 13, 10]
 
 **Apply semver rules:**
+
 - If major (first number) changed → MAJOR
 - Else if minor (second number) changed → MINOR
 - Else if patch (third number) changed → PATCH
 
 **Risk by semver:**
+
 - MAJOR → HIGH RISK (always skip)
 - MINOR → MEDIUM RISK (needs analysis)
 - PATCH → LOW RISK (safe if no breaking changes)
 
 **Decision:**
+
 - MAJOR → Return immediately with "skip" recommendation
 - MINOR/PATCH → Continue to next phase
 
@@ -77,7 +82,7 @@ Parse version numbers:
 
 **Use `dependency-analysis` skill** for four-layer analysis.
 
-**Layer 1: Fetch Changelog**
+#### Layer 1: Fetch Changelog
 
 ```bash
 # CHALLENGE: We need the dependency's GitHub repo, not our repo
@@ -106,19 +111,22 @@ fi
 ```
 
 If release notes found:
+
 - Parse markdown structure
 - Look for breaking change sections (use skill patterns)
 
-**Layer 2: Keyword Search**
+#### Layer 2: Keyword Search
 
 Search changelog/release notes for keywords from `dependency-analysis` skill:
+
 - High severity: "BREAKING CHANGE", "backwards incompatible"
 - Medium severity: "removed", "deprecated", "no longer"
 - Low severity: "changed default", "renamed"
 
-**Layer 3: API Surface Analysis**
+#### Layer 3: API Surface Analysis
 
 For MINOR/MAJOR versions:
+
 ```bash
 # Fetch the diff or commit messages
 DIFF=$(gh pr diff $PR_NUMBER)
@@ -135,7 +143,7 @@ echo "New peer dependencies: $NEW_PEER_DEPS"
 # If any concerning patterns found, note in report
 ```
 
-**Layer 4: Community Signals**
+#### Layer 4: Community Signals
 
 ```bash
 # Check recent issues mentioning "breaking"
@@ -148,16 +156,19 @@ gh issue list --repo "$PACKAGE_REPO" --search "breaking" --limit 5 --json number
 **Risk Scoring (use dependency-analysis skill rubric):**
 
 HIGH RISK if:
+
 - MAJOR version
 - "BREAKING CHANGE" found
 - Migration guide present
 - Removed APIs detected
 
 MEDIUM RISK if:
+
 - MINOR version with "removed"/"deprecated"
 - Substantial changelog with many changes
 
 LOW RISK if:
+
 - PATCH version
 - Security fix only
 - Minor bugfixes
@@ -217,6 +228,7 @@ Use `dependency-analysis` skill template to generate structured JSON report matc
 ```
 
 **Required fields:**
+
 - `pr_number`: PR number analyzed
 - `package`: Package name
 - `old_version`: Version before update
@@ -233,16 +245,19 @@ Use `dependency-analysis` skill template to generate structured JSON report matc
 ## Error Handling
 
 **Changelog fetch fails:**
+
 - Note in report
 - Increase scrutiny for MINOR/MAJOR
 - Still analyze what's available
 - Continue with analysis
 
 **GitHub API rate limit:**
+
 - Check rate limit status: `gh api rate_limit`
 - Return "rate-limited" status with reset time
 - Orchestrator can wait and retry if reset time is soon
 - Example:
+
   ```bash
   RATE_LIMIT=$(gh api rate_limit --jq '.rate')
   REMAINING=$(echo "$RATE_LIMIT" | jq -r .remaining)
@@ -255,10 +270,12 @@ Use `dependency-analysis` skill template to generate structured JSON report matc
   ```
 
 **Cannot parse version:**
+
 - Report error
 - Recommendation: "manual-review"
 
 **Unknown package repository:**
+
 - Skip Layer 1, 4 (no changelog/community check)
 - Rely on semver + Layer 2 (keyword search in PR body)
 - Note limitation in report
@@ -301,6 +318,7 @@ Output: {safe: true, risk: "low", ...}
 ## Integration with Orchestrator
 
 Orchestrator invokes this agent with:
+
 ```markdown
 Analyze PR #123 for safety. Return structured JSON report.
 ```

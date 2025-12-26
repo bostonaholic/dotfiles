@@ -4,7 +4,8 @@ Safe PR merging strategies using GitHub CLI.
 
 ## Purpose
 
-Provides patterns for safely merging pull requests with appropriate merge strategies and verification.
+Provides patterns for safely merging pull requests with appropriate merge
+strategies and verification.
 
 ## Merge Strategy Detection
 
@@ -18,11 +19,13 @@ gh repo view --json mergeCommitAllowed,squashMergeAllowed,rebaseMergeAllowed
 ### Strategy Selection
 
 **Prefer in this order:**
+
 1. **Squash** - Clean history for dependency updates
 2. **Merge commit** - Preserves PR structure
 3. **Rebase** - Linear history
 
 For automated dependency updates (Dependabot, Renovate):
+
 - **Always use squash** if available
 - Single logical change = single commit
 
@@ -44,6 +47,7 @@ gh pr merge <number> --auto --rebase --delete-branch
 ```
 
 **Why auto-merge:**
+
 - Waits for CI checks to pass
 - Waits for required reviews
 - Safer than immediate merge
@@ -94,6 +98,7 @@ gh pr view <number> --json mergeable
 ```
 
 If conflicting:
+
 - Skip merge
 - Report conflict to user
 - Recommend manual resolution
@@ -113,6 +118,7 @@ Never merge with failing checks.
 ### Permission Errors
 
 If merge fails with permission error:
+
 - Report to user
 - Provide PR URL for manual merge
 - Don't retry automatically
@@ -185,10 +191,10 @@ echo "  Method: auto-merge (wait for checks)"
 ## Integration with Agents
 
 Agents using this workflow should:
+
 1. Check merge strategy availability
 2. Verify PR is mergeable
 3. Check CI status
 4. Enable auto-merge (preferred)
 5. Verify auto-merge enabled
 6. Report success/failure clearly
-```

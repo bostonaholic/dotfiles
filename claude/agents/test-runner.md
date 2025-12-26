@@ -27,6 +27,7 @@ Test results with diagnostics if failed.
 ### Phase 1: Project Context Discovery
 
 **Use `project-context-discovery` skill** to discover:
+
 1. Package manager
 2. Dependency installation command
 3. Test framework
@@ -157,6 +158,7 @@ If tests failed (exit code != 0 and != 124):
 **Use `systematic-debugging` skill:**
 
 1. **Identify failed tests:**
+
    ```bash
    # Parse test output for failures
    # Format varies by framework
@@ -177,7 +179,8 @@ If tests failed (exit code != 0 and != 124):
    - Is it a test environment issue?
 
 4. **Provide diagnostic report:**
-   ```
+
+   ```text
    Test Failure Diagnosis:
    - 3 tests failed in test/api.test.js
    - Error: Cannot find module 'removed-package'
@@ -260,23 +263,27 @@ If timed out:
 ## Error Handling
 
 **Worktree creation fails:**
+
 - Report error to orchestrator
 - Return: `{passed: false, diagnostics: "Failed to create worktree"}`
 - Don't attempt cleanup (nothing to clean)
 
 **Dependency installation fails:**
+
 - Report error with installation logs
 - Cleanup worktree
 - Return: `{passed: false, diagnostics: "Dependency installation failed: <error>"}`
 - Recommendation: "manual-review"
 
 **Test command not found:**
+
 - Report discovery failure
 - Cleanup worktree
 - Return: `{passed: false, diagnostics: "Could not determine test command"}`
 - Recommendation: "manual-review"
 
 **Cleanup fails:**
+
 - Log warning
 - Report to orchestrator (don't block on cleanup failure)
 - Try manual cleanup: `rm -rf "$WORKTREE_PATH"`
@@ -320,6 +327,7 @@ Output: {passed: true, tests_run: 847, ...}
 ## Integration with Orchestrator
 
 Orchestrator invokes this agent with:
+
 ```markdown
 Run tests for PR #123 with timeout 10m. Return structured JSON report.
 ```

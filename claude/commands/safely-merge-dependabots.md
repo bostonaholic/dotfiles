@@ -21,13 +21,14 @@ $ARGUMENTS
   - Shows what would be merged
   - Example: `/safely-merge-dependabots --dry-run`
 
-- **--timeout <duration>** (optional): Override test timeout (default: 10m)
+- **--timeout `<duration>`** (optional): Override test timeout (default: 10m)
   - Format: 5m, 10m, 20m, 30m
   - Example: `/safely-merge-dependabots --timeout 20m`
 
 ### Argument Parsing
 
 Parse arguments to extract:
+
 - PR numbers: Any numeric arguments
 - Dry-run flag: Check for `--dry-run` in arguments
 - Timeout: Extract value after `--timeout` flag
@@ -47,6 +48,7 @@ This command invokes the `dependabot-orchestrator` agent to coordinate specializ
 ## Safety Policy
 
 **Auto-merge conditions:**
+
 - ✓ PATCH or MINOR version updates only
 - ✓ All tests must pass
 - ✓ No breaking changes detected
@@ -54,6 +56,7 @@ This command invokes the `dependabot-orchestrator` agent to coordinate specializ
 - ✓ Security fixes verified (if applicable)
 
 **Always skip (require manual review):**
+
 - ✗ MAJOR version updates
 - ✗ Breaking changes detected
 - ✗ Test failures
@@ -94,6 +97,7 @@ context:
 ```
 
 The orchestrator will:
+
 - Discover Dependabot PRs using `gh-cli` skill
 - Dispatch specialized worker agents per PR:
   - **pr-analyzer** (Sonnet): Deep safety analysis
@@ -105,7 +109,7 @@ The orchestrator will:
 
 ## Expected Output
 
-```
+```text
 🔍 Discovering Dependabot PRs...
 Found 5 open Dependabot PRs
 
@@ -133,12 +137,14 @@ Total time: 8m 43s
 ## Notes
 
 **Architecture Benefits:**
+
 - **Orchestrator** (Haiku): Lightweight coordination - 3x cheaper than monolithic Opus
 - **Worker Agents**: Specialized models per task (Sonnet for analysis, Haiku for API calls)
 - **Modular Design**: Each worker is independently testable and upgradeable
 - **Clear Audit Trail**: Sequential PR processing with detailed per-worker results
 
 **Safety Guarantees:**
+
 - Each PR analyzed sequentially for safety
 - All decisions logged with detailed reasoning from each worker
 - Never merges if any safety check fails

@@ -1,7 +1,8 @@
 # Dependabot Refactor Validation Plan
 
 **Date:** 2025-12-26
-**Purpose:** Validate modular orchestrator architecture before permanently removing old monolith
+**Purpose:** Validate modular orchestrator architecture before permanently
+removing old monolith
 
 ## Validation Criteria
 
@@ -56,6 +57,7 @@ diff old-results.txt new-results.txt
 **Expected:** Same PRs would be merged/skipped.
 
 **If differences found:**
+
 - Document discrepancies
 - Determine if new architecture is safer (acceptable)
 - Fix if new architecture is less safe (required)
@@ -75,10 +77,12 @@ Run new architecture on real PRs:
 ```
 
 **Success Criteria:**
+
 - 20 successful PR processing runs, OR
 - 2 weeks without issues, whichever comes first
 
 **Track:**
+
 - Total PRs processed
 - PRs merged successfully
 - PRs skipped correctly
@@ -91,24 +95,26 @@ Run new architecture on real PRs:
 
 **Collect metrics:**
 
-| Metric | Monolith | Modular | Improvement |
-|--------|----------|---------|-------------|
-| Avg time per PR | ? | ? | ? |
-| Cost per PR (est.) | Opus tokens | Haiku/Sonnet tokens | ? |
-| Lines of code | 741 | <350 each | ? |
-| Reusable components | 0 | 3 skills | ∞ |
+| Metric              | Monolith    | Modular             | Improvement |
+| ------------------- | ----------- | ------------------- | ----------- |
+| Avg time per PR     | ?           | ?                   | ?           |
+| Cost per PR (est.)  | Opus tokens | Haiku/Sonnet tokens | ?           |
+| Lines of code       | 741         | <350 each           | ?           |
+| Reusable components | 0           | 3 skills            | ∞           |
 
 **Calculate:**
+
 - Cost reduction: `(Monolith - Modular) / Monolith * 100%`
 - Speed improvement: `(Monolith - Modular) / Monolith * 100%`
 
 **Target:**
+
 - Cost: >50% reduction
 - Speed: >30% improvement
 
 ## Decision Criteria
 
-### ✅ Safe to Delete Monolith If:
+### ✅ Safe to Delete Monolith If
 
 - All functional parity checks pass
 - 20+ successful runs OR 2 weeks validation
@@ -117,14 +123,14 @@ Run new architecture on real PRs:
 - No critical issues found
 - Team comfortable with new architecture
 
-### ⚠️ Keep Monolith Longer If:
+### ⚠️ Keep Monolith Longer If
 
 - <20 runs OR <2 weeks elapsed
 - Performance targets not met (investigate why)
 - Functional differences require discussion
 - Team wants more validation time
 
-### ❌ Rollback to Monolith If:
+### ❌ Rollback to Monolith If
 
 - False positives found (merged unsafe PRs)
 - Critical bugs in workers or orchestrator
@@ -175,6 +181,7 @@ Modular orchestrator architecture is now the sole implementation."
 ## Monitoring During Validation
 
 **What to watch:**
+
 - CI status on merged PRs
 - User reports of issues
 - Error messages in orchestrator/workers
@@ -182,6 +189,7 @@ Modular orchestrator architecture is now the sole implementation."
 - Worker agent failures
 
 **Where to check:**
+
 - GitHub Actions logs
 - Merged PR CI status
 - Manual review of skipped PRs
@@ -199,16 +207,19 @@ After validation, update docs:
 ## Timeline
 
 **Week 1 (Dec 26 - Jan 2):**
+
 - Dry-run comparisons
 - Fix any discrepancies
 - Begin live validation
 
 **Week 2 (Jan 2 - Jan 9):**
+
 - Continue live validation
 - Collect performance metrics
 - Monitor merged PRs
 
 **End of Week 2:**
+
 - Review validation results
 - Make decision: keep, extend validation, or rollback
 - Delete monolith if validation passes

@@ -41,12 +41,14 @@ PR_BODY=$(echo "$PR_DATA" | jq -r '.body')
 ```
 
 **Look for patterns:**
+
 - "Vulnerabilities fixed"
 - "CVE-" followed by year and number
 - "Security update"
 - "Security fix"
 
 If no security indicators found:
+
 - Return: `{is_security_fix: false}`
 - Skip remaining phases
 
@@ -102,6 +104,7 @@ done
 ```
 
 **Expected output format:**
+
 ```json
 {
   "cve": "CVE-2023-12345",
@@ -153,6 +156,7 @@ done
 ```
 
 **Verification result:**
+
 - Fix verified: New version meets or exceeds patched version
 - Fix not verified: Version too old or info unavailable
 
@@ -161,6 +165,7 @@ done
 Return structured JSON for orchestrator:
 
 **Security fix found:**
+
 ```json
 {
   "is_security_fix": true,
@@ -177,9 +182,11 @@ Return structured JSON for orchestrator:
   "details": "This update addresses 1 high severity vulnerability"
 }
 ```
+
 **Note:** `fixed_in` field is optional - only present when version data available from GitHub Advisory API.
 
 **Not a security fix:**
+
 ```json
 {
   "is_security_fix": false,
@@ -191,6 +198,7 @@ Return structured JSON for orchestrator:
 ```
 
 **Security fix but verification failed:**
+
 ```json
 {
   "is_security_fix": true,
@@ -206,20 +214,24 @@ Return structured JSON for orchestrator:
   "details": "Unable to verify fix version"
 }
 ```
+
 **Note:** When `fixed_in` is missing, verification cannot be performed and `fix_verified` is set to false.
 
 ## Error Handling
 
 **GitHub API rate limit:**
+
 - Return: `{is_security_fix: null, error: "Rate limit exceeded"}`
 - Orchestrator should skip or manual-review
 
 **CVE not found:**
+
 - Note in output
 - Return what's available
 - Fix_verified: false
 
 **Cannot parse PR body:**
+
 - Return: `{is_security_fix: false}`
 - Continue (not critical)
 
@@ -250,6 +262,7 @@ Output: {is_security_fix: true, severity: "high", fix_verified: true}
 ## Integration with Orchestrator
 
 Orchestrator invokes this agent when:
+
 - PR analyzer indicates potential security fix
 - Always check for Dependabot PRs (adds context)
 

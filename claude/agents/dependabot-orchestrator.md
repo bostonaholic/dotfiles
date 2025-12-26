@@ -11,6 +11,7 @@ Coordinates analysis of Dependabot PRs by dispatching specialized worker agents 
 ## Input Context
 
 Receives from command:
+
 - `pr_numbers`: Array of PR numbers (or empty for discovery)
 - `dry_run`: Boolean (true = don't merge, just report)
 - `timeout`: Test timeout (e.g., "10m")
@@ -34,6 +35,7 @@ gh pr list \
 ```
 
 **Parse output:**
+
 ```json
 [
   {"number": 123, "title": "Bump nokogiri from 1.13.0 to 1.13.10"},
@@ -44,6 +46,7 @@ gh pr list \
 If `pr_numbers` provided, use those directly.
 
 **Report to user:**
+
 ```
 Discovering Dependabot PRs...
 Found 5 open Dependabot PRs: #123, #124, #125, #126, #127
@@ -70,6 +73,7 @@ Use Task tool to dispatch pr-analyzer agent:
 **Wait for pr-analyzer response.**
 
 **Parse JSON response:**
+
 ```json
 {
   "safe": true,
@@ -83,6 +87,7 @@ Use Task tool to dispatch pr-analyzer agent:
 ```
 
 **Report to user:**
+
 ```
   ├─ Semver: PATCH (safe)
   ├─ Changelog: No breaking changes detected ✓
@@ -92,9 +97,11 @@ Use Task tool to dispatch pr-analyzer agent:
 #### Step 2.2: Check Recommendation
 
 If `recommendation` is "skip" or "manual-review":
+
 - Record skip reason
 - Continue to next PR
 - Report:
+
 ```
   └─ Decision: SKIP - {reasoning}
 ```
@@ -114,6 +121,7 @@ Use Task tool to dispatch test-runner agent:
 **Wait for test-runner response.**
 
 **Parse JSON response:**
+
 ```json
 {
   "passed": true,
@@ -126,6 +134,7 @@ Use Task tool to dispatch test-runner agent:
 ```
 
 **Report to user:**
+
 ```
   ├─ Tests: Running test suite...
   ├─ Tests: 847 passed in 2m 14s ✓
@@ -134,9 +143,11 @@ Use Task tool to dispatch test-runner agent:
 #### Step 2.4: Check Test Results
 
 If `passed` is false:
+
 - Record skip reason with diagnostics
 - Continue to next PR
 - Report:
+
 ```
   └─ Decision: SKIP - Tests failed
       Diagnostics: {diagnostics}
@@ -159,6 +170,7 @@ Use Task tool to dispatch security-checker agent:
 **Wait for security-checker response.**
 
 **Parse JSON response:**
+
 ```json
 {
   "is_security_fix": true,
@@ -169,6 +181,7 @@ Use Task tool to dispatch security-checker agent:
 ```
 
 **Report to user:**
+
 ```
   ├─ Security: Fixes CVE-2023-12345 (high) ✓
 ```
@@ -178,6 +191,7 @@ If not security fix, skip this step.
 #### Step 2.6: Make Merge Decision
 
 **All checks passed:**
+
 - pr-analyzer: safe = true
 - test-runner: passed = true
 - security-checker: verified (if applicable)
@@ -195,16 +209,19 @@ gh pr merge $PR_NUMBER --auto --squash --delete-branch
 ```
 
 **Verify auto-merge enabled:**
+
 ```bash
 gh pr view $PR_NUMBER --json autoMergeRequest -q .autoMergeRequest
 ```
 
 If auto-merge enabled:
+
 ```
   └─ Decision: MERGE ✓ (auto-merge enabled, will merge when checks pass)
 ```
 
 If auto-merge failed:
+
 ```
   └─ Decision: MERGE FAILED - {error}
 ```
@@ -212,6 +229,7 @@ If auto-merge failed:
 **Record merge success/failure.**
 
 If `dry_run` is true:
+
 ```
   └─ Decision: WOULD MERGE (dry-run mode)
 ```
@@ -246,6 +264,7 @@ Next Actions:
 ```
 
 If dry-run mode:
+
 ```
 ═══════════════════════════════════════════════════════════
                 Summary Report (DRY RUN)
@@ -269,22 +288,26 @@ To merge, run: /safely-merge-dependabots
 ## Error Handling
 
 **Worker agent fails to respond:**
+
 - Log error
 - Record PR as "needs manual review"
 - Continue to next PR
 - Include in skip report
 
 **GitHub API errors:**
+
 - PR discovery fails → report error, exit
 - PR merge fails → record failure, continue to next PR
 - Rate limit hit → report clearly, suggest wait time
 
 **Worker returns invalid JSON:**
+
 - Log parsing error
 - Record PR as "needs manual review"
 - Continue to next PR
 
 **Timeout (orchestrator level):**
+
 - If entire workflow takes > 30 minutes
 - Report progress so far
 - Recommend continuing with remaining PRs
@@ -292,22 +315,26 @@ To merge, run: /safely-merge-dependabots
 ## Design Principles
 
 **Pure Orchestration:**
+
 - No implementation details
 - Dispatch to workers
 - Make decisions based on worker results
 - Report progress clearly
 
 **Lightweight Context:**
+
 - Only coordination logic
 - Workers handle complexity
 - Minimal lines (~150)
 
 **Sequential Processing:**
+
 - One PR at a time
 - Clear audit trail
 - Failure isolation
 
 **Clear Reporting:**
+
 - Real-time progress
 - Visual separators
 - Actionable next steps
@@ -350,6 +377,7 @@ Phase 3: Final Summary
 ## Integration with Command
 
 Command invokes orchestrator with parsed arguments:
+
 ```markdown
 Analyze and merge Dependabot PRs with:
 - PR numbers: {pr_numbers or "all"}
