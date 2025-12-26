@@ -102,3 +102,126 @@ For each PR in the list:
 📦 PR #123: Bump nokogiri from 1.13.0 to 1.13.10
   Processing...
 ```
+
+### Phase 3: Five-Phase Analysis Per PR
+
+#### Analysis Phase 1: Semver Classification
+
+**Extract version information from PR title:**
+
+PR titles follow pattern: `Bump <package> from <old> to <new>`
+
+```bash
+# Extract old and new versions from PR title
+gh pr view $PR_NUMBER --json title
+# Parse: "Bump nokogiri from 1.13.0 to 1.13.10"
+# OLD: 1.13.0, NEW: 1.13.10
+```
+
+**Classify version change:**
+
+Use semantic versioning rules (MAJOR.MINOR.PATCH):
+- PATCH: Third number increases (1.13.0 → 1.13.10) - Low risk
+- MINOR: Second number increases (1.13.0 → 1.14.0) - Medium risk
+- MAJOR: First number increases (1.13.0 → 2.0.0) - High risk
+
+**Decision:**
+- MAJOR version → SKIP immediately, report: "Requires manual review for major version update"
+- MINOR or PATCH → Continue to next phase
+
+```
+  ├─ Semver: PATCH (safe) ✓
+  or
+  ├─ Semver: MAJOR (requires review)
+  └─ Decision: SKIP - Manual review required for major version
+```
+
+#### Analysis Phase 2: Changelog & Breaking Change Detection
+
+**Multi-layered analysis to detect breaking changes:**
+
+**Layer 1: Fetch and Parse Changelog**
+
+```bash
+# Get PR body which often contains changelog excerpt
+gh pr view $PR_NUMBER --json body
+
+# Extract release notes URL if present
+# Common patterns:
+#   - Release notes: https://github.com/owner/repo/releases/tag/vX.Y.Z
+#   - Changelog: https://github.com/owner/repo/blob/master/CHANGELOG.md
+```
+
+**Layer 2: Keyword Analysis**
+
+Search changelog/release notes for breaking change indicators:
+
+**High-severity keywords (immediate SKIP):**
+- "BREAKING CHANGE"
+- "BREAKING:"
+- "breaking change"
+- "backwards incompatible"
+- "not backwards compatible"
+- "Migration guide"
+- "Upgrading from"
+
+**Medium-severity keywords (extra scrutiny):**
+- "removed"
+- "deprecated"
+- "no longer"
+- "replaced"
+- "renamed"
+- "changed behavior"
+
+**Context matters:**
+- "removed deprecated feature" → Breaking if you use that feature
+- "removed internal method" → Likely safe (internal API)
+- "fixed bug in X" → Safe (bug fixes are usually safe)
+
+**Layer 3: API Surface Analysis**
+
+For the dependency, check what changed:
+
+```bash
+# Get the diff of the PR to see what files changed in YOUR project
+gh pr diff $PR_NUMBER
+
+# Common safe changes:
+# - Lockfile only (Gemfile.lock, package-lock.json, yarn.lock)
+# - Version constraint only (Gemfile, package.json)
+
+# Risky changes:
+# - Code changes alongside dependency update (might be adapting to breaking change)
+# - Multiple dependency updates in one PR (complex to analyze)
+```
+
+**Layer 4: Community Signals**
+
+```bash
+# Check PR comments for warnings
+gh pr view $PR_NUMBER --json comments
+
+# Look for:
+# - Other users reporting issues
+# - Bot warnings about breaking changes
+# - Failed CI checks with error messages
+```
+
+**Risk Scoring:**
+
+Combine all signals:
+- High-severity keyword found → HIGH RISK → SKIP
+- Medium-severity keyword + MINOR version → MEDIUM RISK → Extra scrutiny
+- Clean changelog + PATCH version → LOW RISK → Continue
+- No changelog found + MINOR/MAJOR → SKIP (missing context)
+
+**Report:**
+
+```
+  ├─ Changelog: Reviewing release notes...
+  ├─ Breaking changes: None detected ✓
+  or
+  ├─ Breaking changes: DETECTED - "removed deprecated API" ✗
+  └─ Decision: SKIP - Breaking changes detected
+```
+```
