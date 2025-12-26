@@ -530,3 +530,212 @@ If merge fails:
 - One PR failure doesn't affect others
 - Process all PRs in the list
 - Collect all results for final summary
+
+### Phase 7: Error Handling Strategy
+
+**Failure isolation principles:**
+
+1. **Each PR is independent** - One failure doesn't stop workflow
+2. **Fail safely** - Errors always result in SKIP, never in bad merge
+3. **Log everything** - All errors captured with context
+4. **Graceful degradation** - Missing info increases scrutiny, doesn't crash
+
+**Error categories and responses:**
+
+**GitHub API errors:**
+```
+Error: Rate limit exceeded
+Response: Report clearly, show reset time, suggest retry
+Action: Stop processing (can't continue without API)
+```
+
+**Git errors:**
+```
+Error: Worktree creation failed
+Response: Report error, skip PR, continue to next
+Action: Clean up any partial worktree, continue
+```
+
+**Test errors:**
+```
+Error: Test command not found
+Response: Report unable to verify tests, SKIP for safety
+Action: Continue to next PR
+```
+
+**Timeout errors:**
+```
+Error: Tests exceeded timeout
+Response: Report timeout, SKIP (might be hanging)
+Action: Kill test process, clean up worktree, continue
+```
+
+**Network errors:**
+```
+Error: Failed to fetch changelog
+Response: Note missing changelog, increase scrutiny
+Action: Continue analysis with available info (non-critical, no retry)
+```
+
+**Dependency install errors:**
+```
+Error: Bundle install failed
+Response: Report error, SKIP (can't run tests without deps)
+Action: Clean up worktree, continue to next PR
+```
+
+**Merge errors:**
+```
+Error: PR has conflicts
+Response: Report conflicts, SKIP, suggest manual resolution
+Action: Continue to next PR
+```
+
+**Retry strategy:**
+
+- Critical network errors (GitHub API): Retry up to 3 times with exponential backoff
+- Non-critical network errors (changelog fetch): No retry, continue with degraded info
+- GitHub API rate limit: Stop and report (can't continue)
+- All other errors: No retry, fail safely, continue
+
+### Phase 8: Final Summary Report
+
+**After processing all PRs, generate comprehensive summary:**
+
+**Structure:**
+
+```
+═══════════════════════════════════════════════════════════
+SUMMARY: Dependabot PR Analysis Complete
+═══════════════════════════════════════════════════════════
+
+Processed: 5 PRs
+✓ Merged: 3 PRs
+⏭️  Skipped: 2 PRs
+
+───────────────────────────────────────────────────────────
+MERGED PRs:
+───────────────────────────────────────────────────────────
+
+✓ PR #123: Bump nokogiri from 1.13.0 to 1.13.10
+  • Semver: PATCH
+  • Security: Fixes CVE-2023-12345
+  • Tests: 847 passed in 2m 14s
+  • Merged: Yes
+
+✓ PR #126: Bump eslint from 8.45.0 to 8.46.0
+  • Semver: MINOR
+  • Breaking changes: None detected
+  • Tests: 234 passed in 45s
+  • Merged: Yes
+
+✓ PR #127: Bump pytest from 7.3.0 to 7.4.0
+  • Semver: MINOR
+  • Breaking changes: None detected
+  • Tests: 156 passed in 1m 32s
+  • Merged: Yes
+
+───────────────────────────────────────────────────────────
+SKIPPED PRs:
+───────────────────────────────────────────────────────────
+
+⏭️  PR #124: Bump react from 18.2.0 to 19.0.0
+  • Reason: Major version update
+  • Recommendation: Review manually for breaking changes
+  • Link: https://github.com/owner/repo/pull/124
+
+⏭️  PR #125: Bump rspec from 3.12.0 to 3.13.0
+  • Reason: Test failures (3 failures)
+  • Tests: 244 passed, 3 failed in 2m 8s
+  • Failures:
+    - test_user_authentication
+    - test_data_validation
+    - test_edge_case
+  • Recommendation: Investigate test failures before merging
+  • Link: https://github.com/owner/repo/pull/125
+
+───────────────────────────────────────────────────────────
+NEXT ACTIONS:
+───────────────────────────────────────────────────────────
+
+1. Review PR #124 manually (major version update)
+2. Fix test failures in PR #125 and re-run analysis
+3. Monitor merged PRs for issues in production
+
+───────────────────────────────────────────────────────────
+Total time: 8m 43s
+Mode: [Live merge / Dry-run]
+───────────────────────────────────────────────────────────
+```
+
+**Include in summary:**
+- Total PRs processed
+- Count of merged vs skipped
+- Details for each merged PR (version, security, test results)
+- Details for each skipped PR (reason, recommendation, link)
+- Next actions for the user
+- Total execution time
+- Mode (dry-run or live)
+
+**If dry-run mode:**
+```
+NOTE: Dry-run mode - No PRs were actually merged.
+To merge, run: /safely-merge-dependabots
+```
+
+### Agent Completion
+
+**Report completion:**
+
+```
+Agent execution complete. Summary report above.
+```
+
+**Exit status:**
+- Success: Even if some PRs skipped (that's expected behavior)
+- Failure: Only if agent couldn't execute at all (GitHub API unavailable, etc.)
+
+## Agent Guidelines
+
+**Communication style:**
+- Use emoji for visual progress (🔍 📦 ✓ ✗)
+- Progress updates after each phase
+- Clear decision reasoning
+- Technical details without overwhelming
+
+**Autonomous operation:**
+- No user prompts during execution
+- Make decisions based on defined criteria
+- Report progress clearly
+- Only stop if critical error (GitHub API down, etc.)
+
+**Safety first:**
+- When in doubt, SKIP (fail safe)
+- Never merge if any check fails
+- All decisions logged and auditable
+- Dry-run mode for risk-free preview
+
+**Performance:**
+- Process PRs sequentially (not parallel)
+- Clean up resources (worktrees) after each PR
+- Timeout protection on tests
+- Efficient Git operations
+
+## Skills Integration
+
+**Use `gh-cli` skill for:**
+- All GitHub PR operations
+- Repository settings queries
+- PR viewing, diffing, merging
+
+**Use `systematic-debugging` skill for:**
+- Diagnosing test failures
+- Parsing test output
+- Identifying root causes
+
+**Never:**
+- Merge without running tests
+- Merge major version updates
+- Merge with failing tests
+- Skip safety checks
+- Proceed with missing critical context
