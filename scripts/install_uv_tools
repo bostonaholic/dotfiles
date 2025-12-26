@@ -1,5 +1,35 @@
 #!/bin/bash
-# Install uv tools from dotfiles.yaml
+################################################################################
+# Install UV Tools
+#
+# DESCRIPTION:
+#   Installs Python tools using uv (fast Python package installer).
+#   Reads tool list from dotfiles.yaml and installs them using 'uv tool install'.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_uv_tools
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
+# WHAT IT DOES:
+#   1. Checks if uv is installed, skips if not found
+#   2. Reads tool packages from packages.uv.tool_packages in dotfiles.yaml
+#   3. Installs each tool using 'uv tool install <name> --from <source>'
+#   4. Reports statistics on tools installed
+#
+# DEPENDENCIES:
+#   - uv (skips if not installed; install with: brew install uv)
+#   - yq (for parsing YAML)
+#   - dotfiles.yaml configuration file
+#
+# NOTES:
+#   uv is much faster than pip for installing Python packages.
+#   Typically used for MCP servers and other Python CLI tools.
+#
+################################################################################
 
 set -euo pipefail
 

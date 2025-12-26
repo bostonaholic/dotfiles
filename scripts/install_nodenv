@@ -1,7 +1,31 @@
 #!/bin/bash
 ################################################################################
+# Install nodenv and Node.js
 #
-# nodenv
+# DESCRIPTION:
+#   Installs nodenv (Node.js version manager) and a specific Node.js version.
+#   Manages multiple Node.js versions on the same machine.
+#
+# USAGE:
+#   ./install_nodenv
+#
+# WHAT IT DOES:
+#   1. Checks if nodenv is installed, installs via Homebrew if missing
+#   2. Installs the specified Node.js version using nodenv
+#   3. Sets the installed version as the global default
+#   4. Runs 'nodenv rehash' to make Node.js commands available
+#   5. Skips if nodenv and the version are already installed
+#
+# DEPENDENCIES:
+#   - homebrew (for installing nodenv)
+#   - Internet connection
+#
+# CONFIGURATION:
+#   - VERSION variable at top of script specifies Node.js version to install
+#
+# NOTES:
+#   After installation, add 'eval "$(nodenv init -)"' to your shell profile.
+#   This is typically done automatically by dotfiles symlinks.
 #
 ################################################################################
 

@@ -1,5 +1,41 @@
 #!/usr/bin/env bash
-# Generate AI-powered commit messages using local Claude CLI
+################################################################################
+# Git AI Commit (Interactive)
+#
+# DESCRIPTION:
+#   Generates AI-powered commit messages for staged changes using Claude CLI.
+#   Analyzes the diff and recent commit history to create conventional,
+#   meaningful commit messages. Provides interactive prompts to accept, edit,
+#   or reject the generated message.
+#
+# USAGE:
+#   git ai-commit [-c "additional context"]
+#
+# OPTIONS:
+#   -c CONTEXT  - Optional additional context to guide message generation
+#
+# EXAMPLES:
+#   git add .
+#   git ai-commit                        # Generate message for staged changes
+#   git ai-commit -c "Fixing bug #123"  # Provide extra context
+#
+# WORKFLOW:
+#   1. Analyzes staged git diff
+#   2. Reviews recent commit messages for style consistency
+#   3. Generates commit message using Claude AI
+#   4. Displays message and prompts: [Y]es / [N]o / [E]dit
+#   5. Creates commit or allows editing before committing
+#
+# DEPENDENCIES:
+#   - git (with staged changes)
+#   - claude CLI (Anthropic's Claude CLI tool)
+#   - git-ai-commit-msg (helper script for message generation)
+#
+# NOTES:
+#   This is the interactive version. Use git-ai-commit-msg for non-interactive
+#   message generation (useful in git hooks or automation).
+#
+################################################################################
 
 set -euo pipefail
 

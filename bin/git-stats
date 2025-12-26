@@ -1,4 +1,32 @@
 #!/bin/bash
+################################################################################
+# Git Stats - Quick Diff Statistics
+#
+# DESCRIPTION:
+#   Shows line and word statistics for git diff output.
+#   Convenience wrapper around 'git diff | gn'.
+#
+# USAGE:
+#   git stats [git-diff-args]
+#
+# EXAMPLES:
+#   git stats                    # Stats for unstaged changes
+#   git stats --cached           # Stats for staged changes
+#   git stats main..feature      # Stats between branches
+#   git stats HEAD~3..HEAD       # Stats for last 3 commits
+#
+# OUTPUT:
+#   15 lines of diff
+#   +8 lines (+10, -2)
+#   +42 words (+50, -8)
+#
+# DEPENDENCIES:
+#   - gn (Git Numbers) script for parsing diff
+#
+# NOTES:
+#   All arguments are passed directly to 'git diff'.
+#
+################################################################################
 
 set -eu -o pipefail
 

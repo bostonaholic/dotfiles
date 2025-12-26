@@ -1,5 +1,30 @@
 #!/bin/bash
-# Update npm global packages
+################################################################################
+# Update NPM Global Packages
+#
+# DESCRIPTION:
+#   Checks for and updates outdated global npm packages.
+#   Only updates packages that have newer versions available.
+#
+# USAGE:
+#   Called by update.sh, or run directly:
+#   ./update_npm_packages
+#
+# WHAT IT DOES:
+#   1. Checks if npm is installed, skips if not found
+#   2. Runs 'npm outdated -g' to find outdated packages
+#   3. Updates each outdated package individually
+#   4. Reports results for each package
+#
+# DEPENDENCIES:
+#   - npm (skips if not installed)
+#   - Internet connection
+#
+# NOTES:
+#   This only updates packages that are already installed globally.
+#   To install new packages, use install_npm_packages instead.
+#
+################################################################################
 
 set -euo pipefail
 

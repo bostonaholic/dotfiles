@@ -1,13 +1,35 @@
 #!/bin/bash
+################################################################################
+# Git Batch - Run Git Commands in Multiple Repositories
 #
-# Run git commands in all git projects
+# DESCRIPTION:
+#   Executes the same git command across all git repositories in immediate
+#   subdirectories of current directory. Useful for managing multiple projects.
 #
-# $ git batch status -sb
+# USAGE:
+#   git batch <git-command> [args...]
 #
-
+# EXAMPLES:
+#   git batch status -sb         # Short status for all repos
+#   git batch fetch origin       # Fetch all repos
+#   git batch pull               # Pull all repos
+#   git batch log -1 --oneline   # Show last commit in each repo
 #
-# TODO: nested directories
+# BEHAVIOR:
+#   - Searches for directories with .git subdirectory
+#   - Changes to each repo directory
+#   - Runs the git command
+#   - Displays repo path and command output
+#   - Continues to next repo even if command fails
 #
+# LIMITATIONS:
+#   - Only searches immediate subdirectories (no nesting)
+#   - Does not recurse into nested directory structures
+#
+# TODO:
+#   - Add support for nested directories
+#
+################################################################################
 
 set -eu -o pipefail
 

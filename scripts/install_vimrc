@@ -1,7 +1,30 @@
 #!/bin/bash
 ################################################################################
+# Install Awesome Vimrc
 #
-# Vimrc
+# DESCRIPTION:
+#   Installs "The Ultimate Vimrc" by amix - a comprehensive Vim configuration
+#   with plugins, themes, and sensible defaults for productive editing.
+#
+# USAGE:
+#   ./install_vimrc
+#
+# WHAT IT DOES:
+#   1. Checks if ~/.vim_runtime directory exists
+#   2. If not present, clones the vimrc repository (shallow clone)
+#   3. Installs Python requests library (required by some plugins)
+#   4. Runs the install_awesome_vimrc.sh installer script
+#   5. Skips if Vimrc is already installed
+#
+# DEPENDENCIES:
+#   - git (for cloning repository)
+#   - vim (must be installed)
+#   - python3/pip3 (for installing requests library)
+#   - Internet connection
+#
+# NOTES:
+#   Repository: https://github.com/amix/vimrc
+#   First launch of Vim will load all plugins and create necessary directories.
 #
 ################################################################################
 

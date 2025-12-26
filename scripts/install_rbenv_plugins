@@ -1,7 +1,31 @@
 #!/bin/bash
 ################################################################################
+# Install rbenv Plugins
 #
-# rbenv Plugins
+# DESCRIPTION:
+#   Installs useful rbenv plugins for Ruby version management.
+#   Clones plugin repositories into rbenv plugins directory.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_rbenv_plugins
+#
+# PLUGINS INSTALLED:
+#   - rbenv-default-gems: Automatically installs gems when installing new Ruby
+#   - rbenv-ctags: Generates ctags for installed Ruby versions
+#
+# WHAT IT DOES:
+#   1. Creates plugins directory in rbenv root if needed
+#   2. Clones each plugin from GitHub (only if not already present)
+#   3. Runs 'rbenv rehash' to make plugins available
+#
+# DEPENDENCIES:
+#   - rbenv (must be installed)
+#   - git (for cloning repositories)
+#   - Internet connection
+#
+# NOTES:
+#   Plugins are cloned via SSH (git@github.com). Ensure SSH keys are set up.
 #
 ################################################################################
 

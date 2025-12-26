@@ -1,4 +1,35 @@
 #!/bin/bash
+################################################################################
+# Pass - Look Up Passphrase Words
+#
+# DESCRIPTION:
+#   Looks up words from a wordlist for creating passphrases. Useful for
+#   generating memorable but secure passwords using diceware-style word lists.
+#
+# USAGE:
+#   pass <pattern>
+#
+# ARGUMENTS:
+#   pattern  - Search pattern or line number to look up
+#
+# EXAMPLES:
+#   pass 12345        # Look up word at position 12345
+#   pass "^apple"     # Find words starting with "apple"
+#
+# SECURITY NOTES:
+#   - Command appears in shell history unless prefixed with space
+#   - Run with leading space: " pass 12345" to avoid history logging
+#   - Script reminds you to use leading space for security
+#
+# DEPENDENCIES:
+#   - Wordlist file at /usr/local/etc/wordlist.txt
+#   - EFF wordlist recommended: https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases
+#
+# NOTES:
+#   Alternative commented-out option uses built-in /usr/share/dict/words.
+#   For diceware-style passphrases, use EFF's wordlist.
+#
+################################################################################
 
 set -eu -o pipefail
 

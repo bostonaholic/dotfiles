@@ -1,5 +1,33 @@
 #!/bin/bash
-# Install npm packages from dotfiles.yaml
+################################################################################
+# Install NPM Global Packages
+#
+# DESCRIPTION:
+#   Installs global npm packages listed in dotfiles.yaml configuration.
+#   Rehashes nodenv after installation if nodenv is being used.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_npm_packages
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
+# WHAT IT DOES:
+#   1. Checks if npm is installed, skips if not found
+#   2. Reads package list from packages.npm.global_packages in dotfiles.yaml
+#   3. Installs each package globally using 'npm install -g'
+#   4. Rehashes nodenv if it's installed
+#   5. Reports statistics on packages installed
+#
+# DEPENDENCIES:
+#   - npm (skips if not installed)
+#   - yq (for parsing YAML)
+#   - dotfiles.yaml configuration file
+#   - Optional: nodenv
+#
+################################################################################
 
 set -euo pipefail
 

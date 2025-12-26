@@ -1,4 +1,33 @@
 #!/bin/bash
+################################################################################
+# Vim Update
+#
+# DESCRIPTION:
+#   Updates The Ultimate Vimrc configuration and all plugins.
+#   Resets any local changes, pulls latest version, and updates plugins.
+#
+# USAGE:
+#   vimup
+#
+# WHAT IT DOES:
+#   1. Changes to ~/.vim_runtime directory
+#   2. Resets any local modifications (git reset --hard)
+#   3. Cleans untracked files (git clean -d --force)
+#   4. Pulls latest changes (git pull --rebase)
+#   5. Updates all plugins using update_plugins.py
+#   6. If plugin update fails, installs requests library and retries
+#
+# DEPENDENCIES:
+#   - The Ultimate Vimrc installed at ~/.vim_runtime
+#   - git
+#   - python3
+#   - pip3 (for requests library if needed)
+#
+# NOTES:
+#   This will overwrite any local customizations to vim_runtime.
+#   Store personal configurations in ~/.vimrc or vimrc_custom instead.
+#
+################################################################################
 
 set -eux -o pipefail
 

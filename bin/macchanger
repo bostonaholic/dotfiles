@@ -1,4 +1,35 @@
 #!/bin/bash
+################################################################################
+# MAC Address Changer
+#
+# DESCRIPTION:
+#   Changes the MAC address of the en0 network interface to a random value.
+#   Useful for privacy or testing network behavior with different identifiers.
+#
+# USAGE:
+#   macchanger
+#
+# WHAT IT DOES:
+#   1. Generates random 6-byte hex string using openssl
+#   2. Formats it as MAC address (XX:XX:XX:XX:XX:XX)
+#   3. Uses sudo to change en0 interface MAC address
+#
+# WARNING:
+#   - Requires sudo privileges
+#   - Changes network hardware identifier (may disrupt connections)
+#   - Effects last until network interface restart or system reboot
+#   - Some networks may detect or block MAC address changes
+#
+# DEPENDENCIES:
+#   - openssl (for random number generation)
+#   - ifconfig (for changing MAC address)
+#   - sudo access
+#
+# NOTES:
+#   Only affects en0 interface. Modify script for other interfaces.
+#   MAC address reverts to hardware default on interface restart.
+#
+################################################################################
 
 set -eux -o pipefail
 

@@ -1,5 +1,44 @@
 #!/usr/bin/env bash
-# Generate AI commit message (output only, no commit)
+################################################################################
+# Git AI Commit Message Generator
+#
+# DESCRIPTION:
+#   Generates commit messages using Claude AI without creating commits.
+#   Analyzes staged changes and outputs a conventional commit message to stdout.
+#   Non-interactive - suitable for git hooks and automation.
+#
+# USAGE:
+#   git ai-commit-msg [optional-context]
+#
+# ARGUMENTS:
+#   optional-context  - Additional context to guide message generation
+#
+# EXAMPLES:
+#   git ai-commit-msg                        # Generate message
+#   git ai-commit-msg "Refactoring for performance"  # With context
+#   git commit -m "$(git ai-commit-msg)"     # Use in git command
+#
+# COMMIT MESSAGE FORMAT:
+#   Follows conventional commit format:
+#   - type(scope): description
+#   - Types: feat, fix, docs, style, refactor, test, chore
+#   - First line under 72 characters
+#   - Focus on WHY, not just WHAT
+#   - Imperative mood (add, not added/adds)
+#
+# EXIT CODES:
+#   0 - Success (message generated)
+#   1 - Error (not in git repo, no staged changes, claude not available)
+#
+# DEPENDENCIES:
+#   - git (with staged changes)
+#   - claude CLI (Anthropic's Claude CLI tool)
+#
+# NOTES:
+#   Output goes to stdout, errors/diagnostics suppressed.
+#   Used by git-ai-commit for interactive workflow.
+#
+################################################################################
 
 set -euo pipefail
 

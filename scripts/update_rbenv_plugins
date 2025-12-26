@@ -1,5 +1,31 @@
 #!/bin/bash
-# Update rbenv plugins
+################################################################################
+# Update rbenv Plugins
+#
+# DESCRIPTION:
+#   Updates all installed rbenv plugins by pulling latest changes from git.
+#   Iterates through all plugins in rbenv plugins directory.
+#
+# USAGE:
+#   Called by update.sh, or run directly:
+#   ./update_rbenv_plugins
+#
+# WHAT IT DOES:
+#   1. Checks if rbenv is installed, skips if not found
+#   2. Finds all plugins in $RBENV_ROOT/plugins directory
+#   3. For each plugin with a .git directory, runs 'git pull'
+#   4. Reports which plugins were updated
+#
+# DEPENDENCIES:
+#   - rbenv (skips if not installed)
+#   - git (for updating repositories)
+#   - Internet connection
+#
+# NOTES:
+#   Only updates plugins that are git repositories.
+#   Safe to run even if no plugins are installed.
+#
+################################################################################
 
 set -euo pipefail
 

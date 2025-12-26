@@ -1,8 +1,32 @@
 #!/usr/bin/env ruby
-
+################################################################################
+# Sayit - NATO Phonetic Alphabet Converter
 #
-# $ sayit abc1239
+# DESCRIPTION:
+#   Converts alphanumeric strings to NATO phonetic alphabet for clear
+#   verbal communication. Useful for spelling out codes, hashes, or IDs
+#   over voice channels.
 #
+# USAGE:
+#   sayit <string>
+#
+# EXAMPLES:
+#   sayit abc1239
+#   # Output: alpha bravo charlie one two tree niner
+#
+#   sayit xray55
+#   # Output: x-ray romeo alpha yankee fife fife
+#
+# PHONETIC ALPHABET:
+#   Letters: alpha, bravo, charlie, delta, echo, foxtrot...
+#   Numbers: zero, one, two, tree (3), fower (4), fife (5), niner (9)
+#
+# NOTES:
+#   - Numbers use aviation-style pronunciations (tree, fower, fife, niner)
+#   - Case insensitive
+#   - Non-alphanumeric characters are skipped
+#
+################################################################################
 
 # frozen_string_literal: true
 

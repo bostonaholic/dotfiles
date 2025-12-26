@@ -1,7 +1,29 @@
 #!/bin/bash
 ################################################################################
+# Install Spacemacs
 #
-# Spacemacs
+# DESCRIPTION:
+#   Installs Spacemacs, a community-driven Emacs distribution with better
+#   defaults and an extensive layer system. Uses the develop branch.
+#
+# USAGE:
+#   ./install_spacemacs
+#
+# WHAT IT DOES:
+#   1. Checks if ~/.emacs.d directory exists
+#   2. If not present, clones Spacemacs repository
+#   3. Checks out the 'develop' branch (recommended)
+#   4. Skips if Spacemacs is already installed
+#
+# DEPENDENCIES:
+#   - git (for cloning repository)
+#   - emacs (must be installed separately)
+#   - Internet connection
+#
+# NOTES:
+#   First launch of Emacs will trigger Spacemacs initialization and
+#   package installation, which may take several minutes.
+#   Configure Spacemacs by editing ~/.spacemacs after first launch.
 #
 ################################################################################
 

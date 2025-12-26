@@ -1,4 +1,30 @@
 #!/bin/bash -e
+################################################################################
+# Git Undo - Common Undo Operations Reference
+#
+# DESCRIPTION:
+#   Displays a comprehensive reference guide for undoing various git operations.
+#   Shows commands for unstaging, uncommitting, amending, discarding changes,
+#   and recovering work. Not an actual undo command, but a helpful cheat sheet.
+#
+# USAGE:
+#   git undo
+#
+# COVERAGE:
+#   - Unstaging files
+#   - Uncommitting work (soft reset)
+#   - Amending commits
+#   - Undoing amends
+#   - Discarding uncommitted changes
+#   - Discarding committed changes (hard reset)
+#   - Recovering work after hard reset (using reflog)
+#
+# NOTES:
+#   This script always exits with status 1 after displaying help.
+#   It's meant as a reference guide, not as an executable undo operation.
+#   Commands shown are adapted to your current trunk branch name.
+#
+################################################################################
 
 set -eux -o pipefail
 

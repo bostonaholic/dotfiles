@@ -1,5 +1,33 @@
 #!/bin/bash
-# Create directories from dotfiles.yaml
+################################################################################
+# Create Directories
+#
+# DESCRIPTION:
+#   Creates directory structure specified in dotfiles.yaml. Ensures all
+#   required directories exist before symlinks are created.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_directories
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
+# WHAT IT DOES:
+#   1. Reads directory list from 'directories' key in dotfiles.yaml
+#   2. Expands ~ and environment variables in paths
+#   3. Creates each directory using 'mkdir -p'
+#   4. Reports statistics on directories created vs. already existing
+#
+# DEPENDENCIES:
+#   - yq (for parsing YAML)
+#   - dotfiles.yaml configuration file
+#
+# NOTES:
+#   This script is idempotent - safe to run multiple times.
+#
+################################################################################
 
 set -euo pipefail
 

@@ -1,7 +1,34 @@
 #!/bin/bash
 ################################################################################
+# Dotfiles Updater
 #
-# Update - Update all dotfiles components
+# DESCRIPTION:
+#   Updates all components of the dotfiles environment including the dotfiles
+#   repository itself, Homebrew packages, Claude plugins, Vim runtime,
+#   Spacemacs, rbenv plugins, npm packages, and uv tools.
+#
+# USAGE:
+#   ./update.sh
+#
+# WHAT IT UPDATES:
+#   - Dotfiles repository (git refresh)
+#   - Homebrew and all Homebrew packages
+#   - Claude CLI plugins
+#   - Vim runtime (if installed)
+#   - Spacemacs (if installed)
+#   - rbenv plugins
+#   - Global npm packages
+#   - uv tools
+#
+# DEPENDENCIES:
+#   - git (required)
+#   - homebrew (required)
+#   - brewup script (required)
+#   - Optional: claude, vimup, spacemacsup commands
+#
+# NOTES:
+#   This script is safe to run repeatedly. It will skip components that
+#   aren't installed on your system.
 #
 ################################################################################
 

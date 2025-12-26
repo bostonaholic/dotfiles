@@ -1,6 +1,37 @@
 #!/bin/bash
-
-# this is the script used in the ports Alfred Workflow
+################################################################################
+# Ports - List Listening TCP Ports (Alfred Workflow)
+#
+# DESCRIPTION:
+#   Lists processes listening on TCP ports, optionally filtered by pattern.
+#   Outputs results in Alfred workflow XML format for integration with
+#   Alfred app on macOS.
+#
+# USAGE:
+#   ports [pattern]
+#
+# ARGUMENTS:
+#   pattern  - Optional pattern to filter results (case-insensitive)
+#
+# EXAMPLES:
+#   ports            # Show all listening ports
+#   ports rails      # Show only ports with "rails" in process name
+#   ports 3000       # Show processes on port 3000
+#
+# OUTPUT:
+#   Alfred workflow XML format with items containing:
+#   - Title: Process name and port number
+#   - Subtitle: Process ID (PID)
+#
+# DEPENDENCIES:
+#   - lsof (for listing open files/ports)
+#   - Designed for Alfred workflow integration
+#
+# NOTES:
+#   This script is specifically designed for the "ports" Alfred workflow.
+#   Output format is XML for Alfred consumption, not human-readable.
+#
+################################################################################
 
 set -eux -o pipefail
 

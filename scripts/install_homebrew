@@ -1,5 +1,33 @@
 #!/bin/bash
-# Install Homebrew and packages from Brewfile
+################################################################################
+# Install Homebrew and Packages
+#
+# DESCRIPTION:
+#   Installs Homebrew package manager if not present, then installs all
+#   packages defined in the Brewfile using brew bundle.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_homebrew
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
+# WHAT IT DOES:
+#   1. Checks if Homebrew is installed, installs it if missing
+#   2. Adds Homebrew to PATH for current session
+#   3. Runs 'brew bundle' from Brewfile to install all packages
+#
+# DEPENDENCIES:
+#   - Internet connection (to download Homebrew and packages)
+#   - Brewfile in dotfiles directory
+#
+# NOTES:
+#   Installation can take several minutes depending on number of packages
+#   and internet speed.
+#
+################################################################################
 
 set -euo pipefail
 

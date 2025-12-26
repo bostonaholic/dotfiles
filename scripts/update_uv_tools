@@ -1,5 +1,32 @@
 #!/bin/bash
-# Update uv tools
+################################################################################
+# Update UV Tools
+#
+# DESCRIPTION:
+#   Updates all installed uv tools to their latest versions.
+#   Reads tool list from dotfiles.yaml and reinstalls with --force flag.
+#
+# USAGE:
+#   Called by update.sh, or run directly:
+#   ./update_uv_tools
+#
+# WHAT IT DOES:
+#   1. Checks if uv is installed, skips if not found
+#   2. Reads tool packages from packages.uv.tool_packages in dotfiles.yaml
+#   3. Reinstalls each tool with --force flag to get latest version
+#   4. Reports statistics on tools updated
+#
+# DEPENDENCIES:
+#   - uv (skips if not installed)
+#   - yq (for parsing YAML)
+#   - dotfiles.yaml configuration file
+#   - Internet connection
+#
+# NOTES:
+#   Uses 'uv tool install --force' to update to latest versions.
+#   This is typically faster than other Python package managers.
+#
+################################################################################
 
 set -euo pipefail
 

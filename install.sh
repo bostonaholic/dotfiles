@@ -1,5 +1,40 @@
 #!/usr/bin/env bash
-# Dotfiles installer - Simple, idempotent dotfiles management
+################################################################################
+# Dotfiles Installer
+#
+# DESCRIPTION:
+#   Idempotent installation script that sets up dotfiles environment from
+#   declarative YAML configuration. Creates symlinks, installs packages via
+#   Homebrew/npm/uv, and runs installation scripts.
+#
+# USAGE:
+#   ./install.sh [OPTIONS]
+#
+# OPTIONS:
+#   -h, --help          Show help message
+#   -n, --dry-run       Preview changes without making them
+#   -f, --force         Force overwrite existing files without prompting
+#   -v, --verbose       Enable verbose output
+#   -y, --yes           Answer yes to all prompts
+#   --no-backup         Don't backup existing files
+#   --only COMPONENTS   Install only specified components (symlinks,homebrew,npm,uv,scripts)
+#   --skip-scripts      Skip pre/post installation scripts
+#
+# EXAMPLES:
+#   ./install.sh                   # Interactive installation
+#   ./install.sh --dry-run         # Preview changes
+#   ./install.sh --only symlinks   # Only create symlinks
+#   ./install.sh -fy               # Force install, answer yes to all
+#
+# DEPENDENCIES:
+#   - git (required)
+#   - yq (installed automatically if missing)
+#   - homebrew (installed automatically if missing)
+#
+# CONFIGURATION:
+#   All configuration is read from dotfiles.yaml in the same directory
+#
+################################################################################
 
 set -euo pipefail
 

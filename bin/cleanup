@@ -1,13 +1,33 @@
 #!/bin/bash
+################################################################################
+# Cleanup - Recursively Remove Files by Pattern
 #
-# Recursively remove files matching <pattern>
+# DESCRIPTION:
+#   Recursively finds and deletes all files matching a given pattern.
+#   Useful for cleaning up build artifacts, OS cruft, or temporary files.
 #
-# $ cleanup <pattern>
+# USAGE:
+#   cleanup <pattern>
 #
-# $ cleanup ".DS_Store"
+# ARGUMENTS:
+#   pattern  - File name pattern to match (supports shell wildcards)
 #
-# $ cleanup "*.elc"
+# EXAMPLES:
+#   cleanup ".DS_Store"      # Remove macOS metadata files
+#   cleanup "*.elc"          # Remove Emacs compiled files
+#   cleanup "*.pyc"          # Remove Python bytecode
+#   cleanup "Thumbs.db"      # Remove Windows thumbnail cache
 #
+# WARNING:
+#   This permanently deletes files! Use with caution.
+#   The deletion starts from current directory and goes down.
+#
+# NOTES:
+#   - Uses 'find' with '-delete' for efficiency
+#   - Only matches files, not directories
+#   - Pattern should be quoted to prevent shell expansion
+#
+################################################################################
 
 set -eu -o pipefail
 

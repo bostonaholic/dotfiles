@@ -1,5 +1,35 @@
 #!/bin/bash
-# Create symlinks from dotfiles.yaml
+################################################################################
+# Install Symlinks
+#
+# DESCRIPTION:
+#   Creates symlinks from dotfiles to their target locations in the home
+#   directory. Reads symlink configuration from dotfiles.yaml and handles
+#   conflicts, backups, and directory creation.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_symlinks
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN      - If true, preview changes without making them (default: false)
+#   FORCE        - If true, overwrite without prompting (default: false)
+#   VERBOSE      - If true, show detailed output (default: false)
+#   BACKUP       - If true, backup existing files (default: true)
+#   BACKUP_DIR   - Directory for backups (default: ~/.dotfiles_backup/TIMESTAMP)
+#
+# BEHAVIOR:
+#   - Checks if symlinks already exist and are correct
+#   - Backs up existing files before overwriting (if BACKUP=true)
+#   - Creates parent directories as needed
+#   - Prompts before overwriting (unless FORCE=true)
+#   - Reports statistics on symlinks created/skipped/failed
+#
+# DEPENDENCIES:
+#   - yq (for parsing YAML)
+#   - dotfiles.yaml configuration file
+#
+################################################################################
 
 set -euo pipefail
 

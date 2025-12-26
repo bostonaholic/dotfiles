@@ -1,4 +1,24 @@
 #! /bin/bash
+################################################################################
+# DWI - Deal With It (Animated ASCII Art)
+#
+# DESCRIPTION:
+#   Displays an animated ASCII art "deal with it" sunglasses animation in
+#   the terminal. Pure entertainment value.
+#
+# USAGE:
+#   dwi
+#
+# OUTPUT:
+#   Animated ASCII art showing sunglasses sliding onto a face with the
+#   phrase "Deal with it" at the end.
+#
+# NOTES:
+#   - Uses carriage returns to animate in place
+#   - Takes about 3 seconds to complete animation
+#   - Just for fun!
+#
+################################################################################
 
 set -eu -o pipefail
 

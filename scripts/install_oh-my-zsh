@@ -1,7 +1,27 @@
 #!/bin/bash
 ################################################################################
+# Install Oh My Zsh
 #
-# oh-my-zsh
+# DESCRIPTION:
+#   Installs Oh My Zsh framework for managing zsh configuration.
+#   Only installs if not already present.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_oh-my-zsh
+#
+# WHAT IT DOES:
+#   - Checks if ~/.oh-my-zsh directory exists
+#   - If not present, downloads and runs the official Oh My Zsh installer
+#   - If already installed, skips installation
+#
+# DEPENDENCIES:
+#   - curl (for downloading installer)
+#   - zsh (shell must be installed)
+#   - Internet connection
+#
+# NOTES:
+#   The official installer will prompt to change your default shell to zsh.
 #
 ################################################################################
 

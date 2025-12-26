@@ -1,7 +1,27 @@
 #!/bin/bash
 ################################################################################
+# Install Powerline Fonts
 #
-# Powerline Fonts
+# DESCRIPTION:
+#   Installs Powerline-compatible fonts for terminal use. These fonts include
+#   special glyphs and symbols used by Powerline status bars and themes.
+#
+# USAGE:
+#   ./install_powerline-fonts
+#
+# WHAT IT DOES:
+#   1. Clones the powerline/fonts repository (shallow clone)
+#   2. Runs the install.sh script from the repository
+#   3. Cleans up by removing the cloned repository
+#
+# DEPENDENCIES:
+#   - git (for cloning repository)
+#   - Internet connection
+#
+# NOTES:
+#   After installation, configure your terminal to use one of the installed
+#   Powerline fonts (e.g., "Source Code Pro for Powerline").
+#   The fonts directory is removed after installation to save space.
 #
 ################################################################################
 

@@ -1,4 +1,32 @@
 #!/bin/bash
+################################################################################
+# Docker Cleanup
+#
+# DESCRIPTION:
+#   Removes all Docker containers, images, and dangling volumes.
+#   Useful for reclaiming disk space and starting fresh.
+#
+# USAGE:
+#   docker-cleanup
+#
+# WARNING:
+#   This will DELETE ALL Docker containers, images, and dangling volumes.
+#   Make sure you don't have important containers or images before running!
+#
+# WHAT IT DOES:
+#   1. Removes all containers (running and stopped)
+#   2. Removes all images (forced removal)
+#   3. Removes all dangling volumes (volumes not used by any container)
+#
+# DEPENDENCIES:
+#   - docker
+#   - ~/.colors (for colored output)
+#
+# NOTES:
+#   This is a destructive operation. Use with caution.
+#   The script will show colored output during execution.
+#
+################################################################################
 
 set -eux -o pipefail
 

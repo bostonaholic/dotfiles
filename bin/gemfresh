@@ -1,6 +1,43 @@
 #!/bin/bash
-# Author: @stevenharman
-# Source: https://gist.github.com/stevenharman/6975adc0ceeaffd30ac2082268b7d896
+################################################################################
+# Gemfresh - Ruby Dependency Freshness Report
+#
+# DESCRIPTION:
+#   Analyzes Ruby project dependencies to determine how outdated they are.
+#   Calculates percentage of outdated gems and total "libyears" behind.
+#   Helps identify technical debt and prioritize dependency updates.
+#
+# USAGE:
+#   gemfresh [-h]
+#
+# OPTIONS:
+#   -h  - Show help message
+#
+# OUTPUT:
+#   Dependency Freshness:
+#   Outdated: 12.5% (5/40)
+#   Libyears: 8
+#
+# DEPENDENCIES:
+#   - bundler (gem install bundler)
+#   - libyear-bundler (gem install libyear-bundler)
+#   - bc (for calculations)
+#   - ~/.colors (for colored output)
+#
+# WHAT IT CALCULATES:
+#   - Total dependency count
+#   - Number and percentage of outdated dependencies
+#   - Libyears: sum of years behind latest versions (https://libyear.com)
+#
+# NOTES:
+#   Must be run from a Ruby project directory containing a Gemfile.
+#   Libyear metric helps quantify dependency freshness objectively.
+#
+# AUTHOR:
+#   @stevenharman
+#   https://gist.github.com/stevenharman/6975adc0ceeaffd30ac2082268b7d896
+#
+################################################################################
 
 set -eux -o pipefail
 
