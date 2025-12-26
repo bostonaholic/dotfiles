@@ -434,3 +434,99 @@ gh pr view $PR_NUMBER --json body | grep -i "security\|CVE\|vulnerability"
   or
   ├─ Security: No security advisories
 ```
+
+### Phase 4: Make Merge Decision
+
+**Evaluate all analysis results:**
+
+Decision tree:
+1. Is it a MAJOR version? → SKIP
+2. Are breaking changes detected? → SKIP
+3. Are there dependency conflicts? → SKIP
+4. Did tests fail? → SKIP
+5. All checks passed? → MERGE (if not dry-run)
+
+**Report decision:**
+
+```
+  └─ Decision: MERGE ✓
+  or
+  └─ Decision: SKIP - <reason>
+```
+
+**Create decision record:**
+
+Track for final summary:
+```javascript
+{
+  pr_number: 123,
+  title: "Bump nokogiri from 1.13.0 to 1.13.10",
+  decision: "merge" | "skip",
+  reason: "All checks passed" | "Major version update" | "Test failures" | etc,
+  semver: "PATCH" | "MINOR" | "MAJOR",
+  breaking_changes: true | false,
+  tests_passed: true | false,
+  security_fix: true | false
+}
+```
+
+### Phase 5: Execute Merge (If Approved)
+
+**Only if:**
+- Decision is MERGE
+- DRY_RUN is false
+
+**Detect merge strategy from repository:**
+
+```bash
+# Check repo settings for preferred merge method
+gh repo view --json defaultMergeMethod
+
+# Common strategies:
+# - SQUASH: Squash all commits into one
+# - MERGE: Create merge commit
+# - REBASE: Rebase and fast-forward
+```
+
+**Execute merge:**
+
+```bash
+# Use detected or default strategy (squash is safest for Dependabot)
+gh pr merge $PR_NUMBER --squash --auto
+
+# Or if repo prefers merge commits:
+gh pr merge $PR_NUMBER --merge --auto
+
+# The --auto flag waits for required checks if they're still running
+```
+
+**Handle merge errors:**
+
+If merge fails:
+- Capture error message
+- Report clearly
+- Mark as SKIP in final summary
+- Continue to next PR
+
+**Report:**
+
+```
+  └─ Action: Merged successfully ✓
+  or
+  └─ Action: Merge failed - <error message>
+  or
+  └─ Action: Would merge (dry-run mode)
+```
+
+### Phase 6: Report Results and Continue
+
+**After each PR:**
+
+1. Add result to summary tracking
+2. Print blank line for readability
+3. Continue to next PR
+
+**Don't stop on failures:**
+- One PR failure doesn't affect others
+- Process all PRs in the list
+- Collect all results for final summary
