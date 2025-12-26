@@ -1,3 +1,26 @@
+> **⚠️ DEPRECATED:** This monolithic agent has been replaced by the modular architecture.
+>
+> **Use instead:** `dependabot-orchestrator` + worker agents
+> - Orchestrator: `claude/agents/dependabot-orchestrator.md`
+> - Workers: `pr-analyzer`, `test-runner`, `security-checker`
+>
+> **Why deprecated:**
+> - Monolithic design (741 lines, single responsibility violation)
+> - Expensive (Opus for everything, including simple coordination)
+> - Slow (large context window, single model)
+> - Not extensible (no reusable components)
+>
+> **New architecture benefits:**
+> - 3x cost reduction (Haiku orchestrator vs Opus monolith)
+> - 2-3x speed improvement (lighter models, smaller contexts)
+> - Modular (single responsibility per component)
+> - Extensible (reusable skills and worker agents)
+>
+> **Kept for:** Reference and rollback during transition period.
+> **Delete after:** 2 weeks validation or 20 successful runs of new architecture.
+>
+> **Date deprecated:** 2025-12-26
+
 ---
 name: dependabot-merger
 model: opus
