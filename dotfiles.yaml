@@ -77,6 +77,10 @@ packages:
       - name: specify-cli
         source: "git+https://github.com/github/spec-kit.git"
 
+  # Claude Code plugins - installed via 'claude plugin install'
+  # Format: plugin-name@marketplace-name
+  # Run: ./scripts/install_claude_plugins to install
+  # Run: ./scripts/update_claude_plugins to update
   claude:
     plugins:
       - superpowers@superpowers-marketplace

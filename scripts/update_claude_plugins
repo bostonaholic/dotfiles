@@ -27,6 +27,20 @@
 #   This only updates plugins that are listed in dotfiles.yaml.
 #   Claude CLI requires restart to apply plugin updates.
 #
+# TROUBLESHOOTING:
+#   Update fails for a plugin:
+#     - Run 'claude plugin marketplace update' to refresh metadata
+#     - Verify plugin is installed: check ~/.claude/plugins/installed_plugins.json
+#     - Try reinstalling: claude plugin uninstall <plugin> && claude plugin install <plugin>
+#
+#   "Plugin not found" errors:
+#     - Plugin may have been renamed in marketplace
+#     - Check marketplace for correct plugin name
+#
+#   Updates not taking effect:
+#     - Restart Claude Code after updates
+#     - Updates are downloaded but only applied on restart
+#
 ################################################################################
 
 set -euo pipefail

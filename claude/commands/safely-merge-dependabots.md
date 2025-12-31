@@ -1,5 +1,6 @@
 ---
 name: safely-merge-dependabots
+model: sonnet
 description: Autonomously analyze and safely merge Dependabot PRs with comprehensive testing
 ---
 

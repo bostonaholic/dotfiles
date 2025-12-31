@@ -25,6 +25,21 @@
 #   - yq (for parsing YAML)
 #   - dotfiles.yaml configuration file
 #
+# TROUBLESHOOTING:
+#   Plugin install fails:
+#     - Run 'claude plugin marketplace update' to refresh metadata
+#     - Check plugin name format: plugin-name@marketplace-name
+#     - Verify marketplace is registered: claude plugin marketplace list
+#
+#   Marketplace unreachable:
+#     - Check internet connection
+#     - Try: claude plugin marketplace update
+#     - Clear cache: rm -rf ~/.claude/plugins/cache
+#
+#   Permission errors:
+#     - Plugins install to ~/.claude/plugins/ (user writable)
+#     - Check disk space and permissions on ~/.claude
+#
 ################################################################################
 
 set -euo pipefail
@@ -33,6 +48,7 @@ set -euo pipefail
 readonly BLUE='\033[0;34m'
 readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[0;33m'
+readonly RED='\033[0;31m'
 readonly NC='\033[0m'
 
 # Configuration
@@ -49,6 +65,7 @@ VERBOSE="${VERBOSE:-false}"
 log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
 success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
 warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+error() { echo -e "${RED}[FAIL]${NC}  $1"; }
 debug() {
     if [[ $VERBOSE == true ]]; then
         echo -e "${BLUE}[DEBUG]${NC} $1"
@@ -79,6 +96,7 @@ main() {
     plugins=$(yq eval '.packages.claude.plugins[]' "$CONFIG_FILE" 2>/dev/null | tr -d '"')
 
     local installed=0
+    local failed=0
     local total=0
 
     while IFS= read -r plugin; do
@@ -88,20 +106,23 @@ main() {
                 log "[DRY RUN] Would install Claude plugin: $plugin"
             else
                 log "Installing Claude plugin: $plugin"
-                if claude plugin install "$plugin" --user >/dev/null 2>&1; then
+                if claude plugin install "$plugin" --scope user 2>&1 | grep -q "Successfully installed"; then
                     installed=$((installed + 1))
                     success "  ✓ $plugin installed"
                 else
-                    # Plugin might already be installed
-                    debug "  → $plugin already installed or failed"
-                    installed=$((installed + 1))
+                    failed=$((failed + 1))
+                    error "  ✗ $plugin failed to install"
                 fi
             fi
         fi
     done <<< "$plugins"
 
     if [[ $DRY_RUN == false ]]; then
-        success "Claude plugins installed: $installed/$total plugins"
+        if [[ $failed -gt 0 ]]; then
+            warn "Claude plugins: $installed/$total installed, $failed failed"
+        else
+            success "Claude plugins: $installed/$total installed"
+        fi
     else
         success "Claude plugins checked: $total plugins would be installed"
     fi
