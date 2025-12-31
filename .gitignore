@@ -6,3 +6,7 @@ vendor/
 # Git worktrees #
 #################
 .worktrees/
+
+# Beads (local-only) #
+######################
+.beads/
