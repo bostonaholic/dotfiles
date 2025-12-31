@@ -80,7 +80,7 @@ get_git_info() {
     local ahead_marker=""
     [[ "$ahead" -gt 0 ]] && ahead_marker="↑$ahead"
 
-    printf " \033[90mgit:(\033[33m%s%s%s\033[90m)\033[0m" "$branch" "$dirty" "$ahead_marker"
+    printf " 🌿 \033[90m(\033[33m%s%s%s\033[90m)\033[0m" "$branch" "$dirty" "$ahead_marker"
 }
 
 # Context window usage with progress bar
@@ -122,7 +122,7 @@ get_context_display() {
     [[ $ctx -gt 40 ]] && ctx_color="\033[33m"  # yellow (41-70%)
     [[ $ctx -gt 70 ]] && ctx_color="\033[31m"  # red (71%+, approaching auto-compact)
 
-    printf " ${ctx_color}[%s %d%%]\033[0m" "$bar" "$ctx"
+    printf " 🧠 ${ctx_color}[%s %d%%]\033[0m" "$bar" "$ctx"
 }
 
 # Cost tracking display
@@ -137,7 +137,7 @@ get_cost_display() {
 
     local cost_formatted
     cost_formatted=$(printf "%.4f" "$total_cost")
-    printf " \033[33m\$%s\033[0m" "$cost_formatted"
+    printf " 💰 \033[33m\$%s\033[0m" "$cost_formatted"
 }
 
 # Output style indicator
@@ -146,7 +146,7 @@ get_style_display() {
     style=$(get_output_style)
 
     if [[ -n "$style" ]] && [[ "$style" != "default" ]]; then
-        printf " \033[36m[%s]\033[0m" "$style"
+        printf " 🎨 \033[36m[%s]\033[0m" "$style"
     fi
 }
 
@@ -166,7 +166,7 @@ main() {
     style=$(get_style_display)
 
     # Assemble and print status line
-    printf "\033[32m\$\033[0m \033[36m%s\033[0m%s%s%s%s \033[35m%s\033[0m" \
+    printf "📁 \033[36m%s\033[0m%s%s%s%s ⚡ \033[35m%s\033[0m" \
         "$dir_display" \
         "$git_info" \
         "$context" \
