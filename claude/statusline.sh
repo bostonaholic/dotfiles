@@ -1,5 +1,16 @@
 #!/bin/bash
 # Status line for Claude Code
+#
+# Example output:
+#   📁 dotfiles 🌿 (main*↑2) 🧠 [████░░░░░░ 35%] 💰 $0.1234 ⚡ Opus 4.5
+#
+# Components:
+#   📁 directory     - Git repo name or path (git-aware)
+#   🌿 (branch*↑n)   - Branch name, * if dirty, ↑n if commits ahead
+#   🧠 [████░░ nn%]  - Context window usage (white/yellow/red)
+#   💰 $n.nnnn       - Session cost in USD
+#   🎨 [style]       - Output style (if not default)
+#   ⚡ model         - Current model name
 
 # Claude Code Status Line Script
 # Provides git-aware status display with context window tracking
