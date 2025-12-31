@@ -1,17 +1,12 @@
 {
-  "model": "sonnet",
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline.sh"
-  },
   "alwaysThinkingEnabled": true,
-  "includeCoAuthoredBy": false,
-  "env": {
-    "MAX_THINKING_TOKENS": "32000"
-  },
   "enabledPlugins": {
     "superpowers@superpowers-marketplace": true
   },
+  "env": {
+    "MAX_THINKING_TOKENS": "32000"
+  },
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Bash(awk:*)",
@@ -39,5 +34,9 @@
     "deny": [
       "Read(./.env.*)"
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh"
   }
 }
