@@ -1,5 +1,6 @@
 ---
 name: review-ruby
+model: opus
 description: Audit Ruby codebase for over-engineering and unnecessary abstractions with actionable refactoring steps
 ---
 

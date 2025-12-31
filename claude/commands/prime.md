@@ -1,5 +1,6 @@
 ---
 name: prime
+model: haiku
 description: Load essential project context (file structure, docs) for effective assistance
 ---
 

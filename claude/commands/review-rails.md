@@ -1,5 +1,6 @@
 ---
 name: review-rails
+model: opus
 description: Audit Rails codebase for over-engineering and unnecessary abstractions with actionable refactoring steps
 ---
 

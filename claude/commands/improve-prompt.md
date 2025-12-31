@@ -1,5 +1,6 @@
 ---
 name: improve-prompt
+model: opus
 description: Improve a prompt using concept elevation for clarity and conciseness
 ---
 

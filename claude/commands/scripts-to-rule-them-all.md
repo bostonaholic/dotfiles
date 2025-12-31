@@ -1,5 +1,6 @@
 ---
 name: scripts-to-rule-them-all
+model: sonnet
 description: Implement GitHub's 'scripts-to-rule-them-all' pattern for any project by detecting its architecture and creating standardized scripts
 ---
 

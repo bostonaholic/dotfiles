@@ -1,3 +1,9 @@
+---
+name: git-commit
+model: haiku
+description: Commit with clear messages explaining WHY, following repository conventions
+---
+
 # Git Commit Changes
 
 I'm using the git-commit skill to create a commit for your changes.

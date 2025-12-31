@@ -1,5 +1,6 @@
 ---
 name: review-code
+model: opus
 description: Conduct thorough code review using systematic evaluation criteria
 ---
 
