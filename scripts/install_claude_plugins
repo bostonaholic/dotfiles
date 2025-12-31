@@ -1,0 +1,113 @@
+#!/bin/bash
+################################################################################
+# Install Claude Code Plugins
+#
+# DESCRIPTION:
+#   Installs Claude Code plugins listed in dotfiles.yaml configuration.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_claude_plugins
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
+# WHAT IT DOES:
+#   1. Checks if claude CLI is installed, skips if not found
+#   2. Updates marketplace metadata to get latest plugin versions
+#   3. Reads plugin list from packages.claude.plugins in dotfiles.yaml
+#   4. Installs each plugin using 'claude plugin install'
+#   5. Reports statistics on plugins installed
+#
+# DEPENDENCIES:
+#   - claude CLI (skips if not installed)
+#   - yq (for parsing YAML)
+#   - dotfiles.yaml configuration file
+#
+################################################################################
+
+set -euo pipefail
+
+# Colors for output
+readonly BLUE='\033[0;34m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[0;33m'
+readonly NC='\033[0m'
+
+# Configuration
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly DOTFILES_DIR
+CONFIG_FILE="$DOTFILES_DIR/dotfiles.yaml"
+readonly CONFIG_FILE
+
+# Options from environment or defaults
+DRY_RUN="${DRY_RUN:-false}"
+VERBOSE="${VERBOSE:-false}"
+
+# Logging functions
+log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
+success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
+warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+debug() {
+    if [[ $VERBOSE == true ]]; then
+        echo -e "${BLUE}[DEBUG]${NC} $1"
+    fi
+}
+
+# Main function
+main() {
+    log "Installing Claude Code plugins..."
+
+    # Check if claude CLI is available
+    if ! command -v claude &> /dev/null; then
+        warn "claude CLI not found. Skipping plugin installation"
+        warn "Install Claude Code first, then run: $0"
+        return
+    fi
+
+    log "Claude version: $(claude --version)"
+
+    # Update marketplace metadata first
+    if [[ $DRY_RUN == false ]]; then
+        log "Updating plugin marketplace metadata..."
+        claude plugin marketplace update >/dev/null 2>&1 || warn "Failed to update marketplace"
+    fi
+
+    # Parse plugins from YAML using yq
+    local plugins
+    plugins=$(yq eval '.packages.claude.plugins[]' "$CONFIG_FILE" 2>/dev/null | tr -d '"')
+
+    local installed=0
+    local total=0
+
+    while IFS= read -r plugin; do
+        if [[ -n "$plugin" ]]; then
+            total=$((total + 1))
+            if [[ $DRY_RUN == true ]]; then
+                log "[DRY RUN] Would install Claude plugin: $plugin"
+            else
+                log "Installing Claude plugin: $plugin"
+                if claude plugin install "$plugin" --user >/dev/null 2>&1; then
+                    installed=$((installed + 1))
+                    success "  ✓ $plugin installed"
+                else
+                    # Plugin might already be installed
+                    debug "  → $plugin already installed or failed"
+                    installed=$((installed + 1))
+                fi
+            fi
+        fi
+    done <<< "$plugins"
+
+    if [[ $DRY_RUN == false ]]; then
+        success "Claude plugins installed: $installed/$total plugins"
+    else
+        success "Claude plugins checked: $total plugins would be installed"
+    fi
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

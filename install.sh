@@ -17,7 +17,7 @@
 #   -v, --verbose       Enable verbose output
 #   -y, --yes           Answer yes to all prompts
 #   --no-backup         Don't backup existing files
-#   --only COMPONENTS   Install only specified components (symlinks,homebrew,npm,uv,scripts)
+#   --only COMPONENTS   Install only specified components (symlinks,homebrew,npm,uv,claude,scripts)
 #   --skip-scripts      Skip pre/post installation scripts
 #
 # EXAMPLES:
@@ -94,6 +94,7 @@ COMPONENTS:
     homebrew    Install Homebrew packages
     npm         Install npm packages
     uv          Install uv tools
+    claude      Install Claude Code plugins
     scripts     Run installation scripts
 
 EXAMPLES:
@@ -254,6 +255,17 @@ install_uv() {
     "$DOTFILES_DIR/scripts/install_uv_tools"
 }
 
+# Install Claude Code plugins
+install_claude() {
+    if ! should_install "claude"; then
+        return
+    fi
+
+    # Export options for the script
+    export DRY_RUN VERBOSE
+    "$DOTFILES_DIR/scripts/install_claude_plugins"
+}
+
 # Run installation scripts
 run_scripts() {
     if [[ $SKIP_SCRIPTS == true ]] || ! should_install "scripts"; then
@@ -374,6 +386,8 @@ main() {
     install_npm
     echo
     install_uv
+    echo
+    install_claude
     echo
 
     # Run post-install scripts

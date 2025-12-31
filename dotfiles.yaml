@@ -76,6 +76,11 @@ packages:
       - name: specify-cli
         source: "git+https://github.com/github/spec-kit.git"
 
+  claude:
+    plugins:
+      - superpowers@superpowers-marketplace
+      - typescript-lsp@claude-plugins-official
+
 scripts:
   pre_install:
     - description: "Validate sudo credentials"

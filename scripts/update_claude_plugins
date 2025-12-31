@@ -1,0 +1,110 @@
+#!/bin/bash
+################################################################################
+# Update Claude Code Plugins
+#
+# DESCRIPTION:
+#   Updates Claude Code plugins listed in dotfiles.yaml configuration.
+#   First updates marketplace metadata, then updates each configured plugin.
+#
+# USAGE:
+#   Called by update.sh, or run directly:
+#   ./update_claude_plugins
+#
+# WHAT IT DOES:
+#   1. Checks if claude CLI is installed, skips if not found
+#   2. Updates marketplace metadata to get latest plugin versions
+#   3. Reads plugin list from packages.claude.plugins in dotfiles.yaml
+#   4. Updates each plugin using 'claude plugin update'
+#   5. Reports results for each plugin
+#
+# DEPENDENCIES:
+#   - claude CLI (skips if not installed)
+#   - yq (for parsing YAML)
+#   - dotfiles.yaml configuration file
+#   - Internet connection
+#
+# NOTES:
+#   This only updates plugins that are listed in dotfiles.yaml.
+#   Claude CLI requires restart to apply plugin updates.
+#
+################################################################################
+
+set -euo pipefail
+
+# Colors for output
+readonly BLUE='\033[0;34m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[0;33m'
+readonly NC='\033[0m'
+
+# Configuration
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly DOTFILES_DIR
+CONFIG_FILE="$DOTFILES_DIR/dotfiles.yaml"
+readonly CONFIG_FILE
+
+# Logging functions
+log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
+success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
+warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+
+# Main function
+main() {
+    if ! command -v claude &> /dev/null; then
+        warn "claude CLI not installed, skipping plugin updates"
+        return
+    fi
+
+    log "Updating Claude Code plugins..."
+
+    # Update marketplace metadata first
+    log "Updating plugin marketplace metadata..."
+    if claude plugin marketplace update >/dev/null 2>&1; then
+        success "  ✓ Marketplace metadata updated"
+    else
+        warn "  ✗ Failed to update marketplace metadata"
+    fi
+
+    # Parse plugins from YAML using yq
+    local plugins
+    plugins=$(yq eval '.packages.claude.plugins[]' "$CONFIG_FILE" 2>/dev/null | tr -d '"')
+
+    local updated=0
+    local total=0
+    local already_current=0
+
+    while IFS= read -r plugin; do
+        if [[ -n "$plugin" ]]; then
+            total=$((total + 1))
+            log "Updating plugin: $plugin"
+
+            # Capture output to check if update was needed
+            output=$(claude plugin update "$plugin" 2>&1 || true)
+
+            if echo "$output" | grep -q "updated from"; then
+                updated=$((updated + 1))
+                success "  ✓ $plugin updated"
+            elif echo "$output" | grep -q "already at the latest version\|already at latest version"; then
+                already_current=$((already_current + 1))
+                success "  → $plugin already at latest version"
+            else
+                warn "  ✗ Failed to update or check $plugin"
+            fi
+        fi
+    done <<< "$plugins"
+
+    echo
+    if [[ $updated -gt 0 ]]; then
+        success "Claude plugins updated: $updated/$total plugins"
+        log "⚠️  Restart Claude Code to apply plugin updates"
+    elif [[ $already_current -eq $total ]]; then
+        success "All Claude plugins are up to date"
+    else
+        success "Claude plugins checked: $total plugins"
+    fi
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

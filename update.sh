@@ -63,9 +63,7 @@ brewup
 success "Homebrew updated"
 
 # Update Claude plugins
-if command -v claude >/dev/null 2>&1; then
-  claude plugin marketplace update
-fi
+echo && "$DOTFILES_DIR/scripts/update_claude_plugins"
 
 # Vimrc
 # https://github.com/amix/vimrc
