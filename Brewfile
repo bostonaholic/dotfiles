@@ -48,6 +48,7 @@ brew 'pinentry-mac'
 brew 'clojure/tools/clojure'
 brew 'planck'
 brew 'leiningen'
+brew 'borkdude/brew/babashka'
 brew 'borkdude/brew/clj-kondo'
 
 # Java
