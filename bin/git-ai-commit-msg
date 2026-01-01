@@ -103,5 +103,5 @@ Generate ONLY the commit message, no explanations or additional text. If the cha
 EOF
 
 # Call Claude CLI and output result
-claude --model sonnet --print --dangerously-skip-permissions < "$PROMPT_FILE" 2>/dev/null
+claude --model haiku --print --dangerously-skip-permissions < "$PROMPT_FILE" 2>/dev/null
 rm "$PROMPT_FILE"
