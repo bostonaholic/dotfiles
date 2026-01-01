@@ -127,7 +127,7 @@
         git-info (when cwd (get-git-info cwd))]
     (println (format-status-line (assoc data :git git-info)))))
 
-(defn -main [& args]
+(defn -main [& _args]
   (-> *in* slurp run))
 
 (when (= *file* (System/getProperty "babashka.file"))
