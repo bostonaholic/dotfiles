@@ -37,6 +37,6 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash ~/.claude/statusline.sh"
+    "command": "bb ~/.claude/statusline.clj"
   }
 }
