@@ -91,8 +91,7 @@
             pct (quot (* tokens 100) ctx-size)
             filled (quot pct 10)
             empty (- 10 filled)
-            bar (str (apply str (repeat filled "█"))
-                     (apply str (repeat empty "░")))
+            bar (apply str (concat (repeat filled "█") (repeat empty "░")))
             color (cond
                     (> pct 70) :red
                     (> pct 40) :yellow
@@ -129,7 +128,7 @@
     (println (format-status-line (assoc data :git git-info)))))
 
 (defn -main [& args]
-  (run (slurp *in*)))
+  (-> *in* slurp run))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (apply -main *command-line-args*))
