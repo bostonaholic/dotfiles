@@ -81,10 +81,10 @@
            (colorize :gray ")")))))
 
 (defn format-context [{:keys [context_window]}]
-  (let [ctx-size (:context_window_size context_window 0)
-        usage (:current_usage context_window)]
-    (when (and usage (pos? ctx-size))
-      (let [input-tokens (:input_tokens usage 0)
+  (let [ctx-size (:context_window_size context_window 0)]
+    (when (pos? ctx-size)
+      (let [usage (:current_usage context_window)
+            input-tokens (:input_tokens usage 0)
             cache-creation (:cache_creation_input_tokens usage 0)
             cache-read (:cache_read_input_tokens usage 0)
             tokens (+ input-tokens cache-creation cache-read)

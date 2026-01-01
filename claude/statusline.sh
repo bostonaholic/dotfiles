@@ -98,26 +98,26 @@ get_git_info() {
 get_context_display() {
     local ctx_size
     ctx_size=$(get_context_window_size)
-    local usage
-    usage=$(get_current_usage)
-
-    if [[ "$usage" == "null" ]] || [[ "$usage" == "{}" ]]; then
-        echo ""
-        return
-    fi
-
-    local input_tokens
-    input_tokens=$(echo "$usage" | jq '.input_tokens // 0')
-    local cache_creation
-    cache_creation=$(echo "$usage" | jq '.cache_creation_input_tokens // 0')
-    local cache_read
-    cache_read=$(echo "$usage" | jq '.cache_read_input_tokens // 0')
-    local tokens=$((input_tokens + cache_creation + cache_read))
 
     if [[ $ctx_size -eq 0 ]]; then
         echo ""
         return
     fi
+
+    local usage
+    usage=$(get_current_usage)
+
+    local input_tokens=0
+    local cache_creation=0
+    local cache_read=0
+
+    if [[ "$usage" != "null" ]] && [[ "$usage" != "{}" ]]; then
+        input_tokens=$(echo "$usage" | jq '.input_tokens // 0')
+        cache_creation=$(echo "$usage" | jq '.cache_creation_input_tokens // 0')
+        cache_read=$(echo "$usage" | jq '.cache_read_input_tokens // 0')
+    fi
+
+    local tokens=$((input_tokens + cache_creation + cache_read))
 
     local ctx=$((tokens * 100 / ctx_size))
     local filled=$((ctx / 10))
