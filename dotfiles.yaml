@@ -53,6 +53,7 @@ symlinks:
   emacs/templates: ~/.emacs.d/private/templates
   vim/my_configs.vim: ~/.vim_runtime/my_configs.vim
   vscode/keybindings.json: ~/Library/Application Support/Code/User/keybindings.json
+  vscode/settings.json: ~/Library/Application Support/Code/User/settings.json
 
   # Other tools
   home/colors: ~/.colors
