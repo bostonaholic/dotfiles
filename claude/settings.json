@@ -2,7 +2,8 @@
   "alwaysThinkingEnabled": true,
   "enabledPlugins": {
     "superpowers@superpowers-marketplace": true,
-    "ralph-wiggum@claude-plugins-official": true
+    "ralph-wiggum@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true
   },
   "env": {
     "MAX_THINKING_TOKENS": "31999"
