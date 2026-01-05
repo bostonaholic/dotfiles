@@ -11,6 +11,7 @@ directories:
   - ~/.rbenv
   - ~/.oh-my-zsh/custom/plugins/bostonaholic
   - ~/.oh-my-zsh/custom/themes
+  - ~/Library/Application Support/Code/User
 
 symlinks:
   # Claude
@@ -50,6 +51,7 @@ symlinks:
   # Editors
   emacs/spacemacs: ~/.spacemacs
   vim/my_configs.vim: ~/.vim_runtime/my_configs.vim
+  vscode/keybindings.json: ~/Library/Application Support/Code/User/keybindings.json
 
   # Other tools
   home/colors: ~/.colors
