@@ -5,6 +5,7 @@ directories:
   - ~/.claude
   - ~/.config/ghostty
   - ~/.config/git
+  - ~/.cursor
   - ~/.lein
   - ~/.gnupg
   - ~/.rbenv
@@ -34,6 +35,9 @@ symlinks:
 
   # Terminal
   ghostty/config: ~/.config/ghostty/config
+
+  # Cursor
+  cursor/rules: ~/.cursor/rules
 
   # Ruby
   ruby/pryrc: ~/.pryrc
