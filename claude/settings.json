@@ -34,7 +34,8 @@
       "Bash(whoami:*)"
     ],
     "deny": [
-      "Read(./.env.*)"
+      "Read(./.env.*)",
+      "Bash(rm -rf:*)"
     ]
   },
   "statusLine": {
