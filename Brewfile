@@ -19,6 +19,8 @@ brew 'aspell'
 brew 'bd'          # tap steveyegge/beads
 cask 'claude'
 cask 'claude-code'
+cask 'codex'       # OpenAI's coding agent
+brew 'gemini-cli'  # Google's Gemini CLI
 brew 'cloc'
 brew 'ctags'
 cask 'docker-desktop'

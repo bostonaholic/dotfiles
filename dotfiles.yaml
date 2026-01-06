@@ -72,9 +72,6 @@ packages:
 
   npm:
     global_packages:
-      - "@anthropic-ai/claude-code"
-      - "@google/gemini-cli"
-      - "@openai/codex"
       - prettier
       - prettier-eslint
       - prettier-eslint-cli
