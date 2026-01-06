@@ -33,6 +33,9 @@
       "Bash(which:*)",
       "Bash(whoami:*)"
     ],
+    "ask": [
+      "Bash(git push:*)"
+    ],
     "deny": [
       "Read(./.env.*)",
       "Bash(rm -rf:*)"
