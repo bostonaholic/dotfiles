@@ -37,7 +37,7 @@
       "Bash(git push:*)"
     ],
     "deny": [
-      "Read(./.env.*)",
+      "Read(.env*)",
       "Bash(rm -rf:*)"
     ]
   },
