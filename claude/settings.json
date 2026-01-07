@@ -1,10 +1,4 @@
 {
-  "alwaysThinkingEnabled": true,
-  "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true,
-    "ralph-wiggum@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true
-  },
   "env": {
     "MAX_THINKING_TOKENS": "31999"
   },
@@ -33,16 +27,22 @@
       "Bash(which:*)",
       "Bash(whoami:*)"
     ],
-    "ask": [
-      "Bash(git push:*)"
-    ],
     "deny": [
       "Read(.env*)",
       "Bash(rm -rf:*)"
+    ],
+    "ask": [
+      "Bash(git push:*)"
     ]
   },
   "statusLine": {
     "type": "command",
     "command": "bb ~/.claude/statusline.clj"
-  }
+  },
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true,
+    "ralph-wiggum@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true
 }
