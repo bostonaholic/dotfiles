@@ -1,6 +1,8 @@
 ---
 name: oracle
-description: "Use this agent when you need deep analytical thinking, strategic problem-solving, or expert-level analysis beyond surface-level checks. Examples:\n\n<example>\nContext: User has just made a commit and wants to ensure no unintended behavioral changes occurred.\n\nuser: \"I just refactored the notification system. Use the oracle to review the last commit's changes and ensure the logic for when notification sounds play hasn't changed.\"\n\nassistant: \"I'll use the Task tool to launch the oracle agent to analyze the commit and verify the notification logic remains unchanged.\"\n</example>\n\n<example>\nContext: User is debugging a difficult issue and needs systematic problem-solving.\n\nuser: \"Help me debug this cache staleness issue in cache.ts and store.ts. Use the oracle to find the root cause.\"\n\nassistant: \"I'll use the Task tool to launch the oracle agent to systematically trace the data flow and identify the source of staleness.\"\n</example>\n\n<example>\nContext: User has identified code duplication and needs a strategic refactoring plan.\n\nuser: \"Figure out how we can refactor the duplication between foobar() and barfoo() while staying backwards compatible. Work with the oracle on this.\"\n\nassistant: \"I'll analyze the functions first, then use the Task tool to launch the oracle agent to develop a refactoring strategy that preserves the API.\"\n</example>"
+description: >
+  Use this agent when you need deep analytical thinking, strategic
+  problem-solving, or expert-level analysis beyond surface-level checks.
 tools: Read, Grep, Glob, Bash, WebFetch, TodoWrite, WebSearch, BashOutput, KillShell, SlashCommand
 model: opus
 ---

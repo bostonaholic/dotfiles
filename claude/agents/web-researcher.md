@@ -1,6 +1,11 @@
 ---
 name: web-researcher
-description: Use this agent when the user needs to conduct internet research on a specific topic, gather information from multiple sources, synthesize findings, or explore a research question. This includes fact-finding, competitive analysis, technology comparisons, learning about new concepts, or investigating specific questions that require web-based research.\n\n**Examples:**\n\n<example>\nContext: User wants to understand a new technology before implementing it.\nuser: "What are the best practices for implementing WebSockets in a Node.js application?"\nassistant: "I'll use the web-researcher agent to gather comprehensive information about WebSocket implementation best practices."\n<Task tool call to web-researcher agent>\n</example>\n\n<example>\nContext: User needs to compare options for a technical decision.\nuser: "I need to choose between Redis and Memcached for our caching layer"\nassistant: "Let me launch the web-researcher agent to research and compare Redis and Memcached for your use case."\n<Task tool call to web-researcher agent>\n</example>\n\n<example>\nContext: User is debugging an obscure error and needs to find solutions.\nuser: "I'm getting a weird 'EMFILE: too many open files' error in production"\nassistant: "I'll use the web-researcher agent to investigate this error and find documented solutions and root causes."\n<Task tool call to web-researcher agent>\n</example>\n\n<example>\nContext: User wants to learn about a topic they're unfamiliar with.\nuser: "Can you research how vector databases work and which ones are popular?"\nassistant: "I'll launch the web-researcher agent to conduct thorough research on vector databases, their mechanics, and current market leaders."\n<Task tool call to web-researcher agent>\n</example>
+description: >
+  Use this agent when the user needs to conduct internet research on a specific
+  topic, gather information from multiple sources, synthesize findings, or
+  explore a research question. This includes fact-finding, competitive analysis,
+  technology comparisons, learning about new concepts, or investigating
+  specific questions that require web-based research.
 model: sonnet
 color: green
 ---

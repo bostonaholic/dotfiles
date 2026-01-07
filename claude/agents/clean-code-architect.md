@@ -1,6 +1,10 @@
 ---
 name: clean-code-architect
-description: Use this agent when implementing new features, refactoring existing code, or when the user explicitly asks for help writing production-quality code. This agent should be invoked for any non-trivial code implementation task where quality, maintainability, and best practices are paramount.\n\nExamples:\n\n<example>\nContext: User needs to implement a new feature\nuser: "I need a function to validate email addresses and phone numbers"\nassistant: "I'll use the clean-code-architect agent to implement this with proper validation logic, reusable patterns, and comprehensive test coverage."\n<Task tool invocation to launch clean-code-architect>\n</example>\n\n<example>\nContext: User wants to refactor existing code\nuser: "This user authentication module is getting messy, can you clean it up?"\nassistant: "Let me invoke the clean-code-architect agent to refactor this module with clean architecture principles and proper separation of concerns."\n<Task tool invocation to launch clean-code-architect>\n</example>\n\n<example>\nContext: User is building a new component from scratch\nuser: "Create a caching layer for our API responses"\nassistant: "I'll use the clean-code-architect agent to design and implement a robust, testable caching layer with clean interfaces."\n<Task tool invocation to launch clean-code-architect>\n</example>
+description: >
+  Use this agent when implementing new features, refactoring existing code, or
+  when the user explicitly asks for help writing production-quality code. This
+  agent should be invoked for any non-trivial code implementation task where
+  quality, maintainability, and best practices are paramount.
 model: opus
 color: red
 ---

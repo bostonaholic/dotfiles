@@ -1,6 +1,10 @@
 ---
 name: file-finder
-description: Use this agent when you need to locate files in a codebase that are relevant to a specific task, feature, bug fix, or research objective. This agent excels at understanding the conceptual goal and mapping it to actual file locations, even when the user doesn't know exact file names or paths.\n\nExamples:\n\n<example>\nContext: User needs to find files related to authentication before implementing a new login feature.\nuser: "I need to add OAuth support to our login system"\nassistant: "I'll use the file-finder agent to locate all files related to authentication and login functionality."\n<Task tool call to file-finder agent>\n</example>\n\n<example>\nContext: User is researching how error handling works in the codebase.\nuser: "I want to understand how we handle errors across the application"\nassistant: "Let me use the file-finder agent to identify files involved in error handling patterns."\n<Task tool call to file-finder agent>\n</example>\n\n<example>\nContext: User is fixing a bug and needs to find related test files.\nuser: "The payment processing is broken, I need to find where that logic lives"\nassistant: "I'll launch the file-finder agent to locate payment processing files and their associated tests."\n<Task tool call to file-finder agent>\n</example>\n\n<example>\nContext: User wants to understand a specific feature's implementation.\nuser: "Where is the code that sends email notifications?"\nassistant: "I'll use the file-finder agent to find all files related to email notification functionality."\n<Task tool call to file-finder agent>\n</example>
+description: >
+  Use this agent when you need to locate files in a codebase that are relevant
+  to a specific task, feature, bug fix, or research objective. This agent
+  excels at understanding the conceptual goal and mapping it to actual file
+  locations, even when the user doesn't know exact file names or paths.
 model: haiku
 color: cyan
 ---
