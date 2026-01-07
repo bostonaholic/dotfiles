@@ -1,5 +1,3 @@
-" TODO
-
 " line numbers
 set number
 set norelativenumber
