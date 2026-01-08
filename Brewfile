@@ -105,4 +105,5 @@ brew 'fzf'       # Command-line fuzzy finder, fzf-tab omz plugin
 brew 'graphviz'
 brew 'markdown'
 brew 'markdownlint-cli' # Markdown linting tool for consistent formatting
-brew 'ossp-uuid' # ISO-C API and CLI for generating UUIDs
+brew 'ossp-uuid'          # ISO-C API and CLI for generating UUIDs
+brew 'terminal-notifier'  # macOS notifications from command line

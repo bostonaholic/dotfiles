@@ -1,4 +1,26 @@
 {
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/bin/alerter -title 'Claude Code' -message 'Waiting for input' -appIcon $HOME/bin/icons/claude.png -sound Hero -group claude-idle"
+          }
+        ]
+      },
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/bin/alerter -title 'Claude Code' -message 'Needs permission' -appIcon $HOME/bin/icons/claude.png -sound Hero -group claude-permission"
+          }
+        ]
+      }
+    ]
+  },
   "env": {
     "MAX_THINKING_TOKENS": "31999"
   },

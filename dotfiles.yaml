@@ -2,6 +2,7 @@
 # This file defines all symlinks, directories, and packages to be installed
 
 directories:
+  - ~/bin
   - ~/.claude
   - ~/.config/ghostty
   - ~/.config/git
@@ -14,6 +15,10 @@ directories:
   - ~/Library/Application Support/Code/User
 
 symlinks:
+  # Scripts
+  bin/alerter: ~/bin/alerter
+  bin/icons: ~/bin/icons
+
   # Claude
   claude/agents: ~/.claude/agents
   claude/commands: ~/.claude/commands
