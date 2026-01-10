@@ -2,11 +2,11 @@
 # Status line for Claude Code
 #
 # Example output:
-#   📁 dotfiles 🌿 (main*↑2) 🧠 [████░░░░░░ 35%] 💰 $0.1234 ⚡ Opus 4.5
+#   📁 dotfiles 🌿 (main *↑2) 🧠 [████░░░░░░ 35%] 💰 $0.1234 ⚡ Opus 4.5
 #
 # Components:
 #   📁 directory     - Git repo name or path (git-aware)
-#   🌿 (branch*↑n)   - Branch name, * if dirty, ↑n if commits ahead
+#   🌿 (branch *↑n)  - Branch name, * if dirty, ↑n if commits ahead
 #   🧠 [████░░ nn%]  - Context window usage (white/yellow/red)
 #   💰 $n.nnnn       - Session cost in USD
 #   🎨 [style]       - Output style (if not default)
@@ -91,7 +91,7 @@ get_git_info() {
     local ahead_marker=""
     [[ "$ahead" -gt 0 ]] && ahead_marker="↑$ahead"
 
-    printf " 🌿 \033[90m(\033[33m%s%s%s\033[90m)\033[0m" "$branch" "$dirty" "$ahead_marker"
+    printf " 🌿 \033[90m(\033[33m%s %s%s\033[90m)\033[0m" "$branch" "$dirty" "$ahead_marker"
 }
 
 # Context window usage with progress bar

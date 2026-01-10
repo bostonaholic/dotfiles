@@ -2,7 +2,7 @@
 ;; Status line for Claude Code - Clojure/Babashka implementation
 ;;
 ;; Example output:
-;;   📁 dotfiles 🌿 (main*↑2) 🧠 [████░░░░░░ 35%] 💰 $0.1234 ⚡ Opus 4.5
+;;   📁 dotfiles 🌿 (main *↑2) 🧠 [████░░░░░░ 35%] 💰 $0.1234 ⚡ Opus 4.5
 ;;
 ;; Usage:
 ;;   echo '{"workspace":...}' | ./statusline.clj
@@ -77,7 +77,7 @@
           ahead-marker (when (pos? ahead) (str "↑" ahead))]
       (str " 🌿 "
            (colorize :gray "(")
-           (colorize :yellow (str branch dirty-marker ahead-marker))
+           (colorize :yellow (str branch " " dirty-marker ahead-marker))
            (colorize :gray ")")))))
 
 (defn format-context [{:keys [context_window]}]
