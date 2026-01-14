@@ -33,6 +33,18 @@ alias iso8601_date="date +%Y-%m-%dT%H:%M:%S%z"
 alias upcase="tr '[:lower:]' '[:upper:]'"
 alias downcase="tr '[:upper:]' '[:lower:]'"
 
+# Modern CLI tools
+alias cat="bat --style=plain --paging=never"
+alias df="duf --sort size"
+alias du="dua"
+alias find="fd"
+alias grep="rg"
+alias lg="lazygit"
+alias ls="eza --group-directories-first --icons --no-quotes --tree --level 1"
+alias man="tldr"
+alias ping="gping"
+alias top="btop"
+
 # Git
 alias gti=git
 

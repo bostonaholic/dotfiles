@@ -75,17 +75,26 @@ brew 'uv' # Extremely fast Python package installer and resolver, for MCP server
 # Unix
 brew 'ack'
 brew 'autoenv'
-brew 'btop'
 brew 'curl'
 brew 'direnv' # for managing environment variables
-brew 'fd'     # Simple, fast and user-friendly alternative to 'find'
 brew 'htop'
 brew 'httpie'
 brew 'pre-commit' # Git hook framework for running checks before commits
-brew 'ripgrep'
 brew 'rlwrap'
 brew 'shellcheck'
 brew 'tree'
+
+# Modern CLI tools
+brew 'bat'         # cat
+brew 'btop'        # top
+brew 'eza'         # ls
+brew 'fd'          # find
+brew 'dua-cli'     # du
+brew 'duf'         # df
+brew 'gping'       # ping
+brew 'lazygit'     # git
+brew 'ripgrep'     # grep
+brew 'tldr'        # man
 
 # Video editing
 cask 'filebot'        # Renaming movies and TV shows
