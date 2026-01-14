@@ -1,122 +1,149 @@
-# Dotfiles Repository Guide
+# AI Coding Assistant Guide
 
-This repository manages personal dotfiles using a declarative YAML configuration with an installation script.
+Personal dotfiles managed via declarative YAML configuration. All changes flow
+through `dotfiles.yaml` and `install.sh`.
 
-## Core Workflow
+## Quick Reference Commands
 
-### Installation and Updates
+```bash
+# Preview changes (always run first)
+./install.sh --dry-run
 
-- Use `./install.sh` for full setup (interactive by default)
-- Use `./install.sh --dry-run` to preview changes before applying
-- Use `./install.sh --only <component>` to install specific components (symlinks, homebrew, npm)
-- After modifying `dotfiles.yaml`, run `./install.sh --only symlinks` to update just symlinks
-- Use `./update.sh` to pull latest changes and update packages
+# Apply symlink changes only
+./install.sh --only symlinks
 
-**Configuration is Declarative**
-All installations are managed through `dotfiles.yaml`. Never manually create symlinks or install packages outside this system update the YAML file instead, then run install.sh.
+# Full installation
+./install.sh -fy
 
-## Repository Structure
+# Update everything
+./update.sh
 
-- `dotfiles.yaml`: Central configuration defining directories, symlinks, packages, and scripts
-- `install.sh`: Idempotent installation script that reads dotfiles.yaml
-- `update.sh`: Updates repository, Homebrew packages, and Claude plugins
-- Individual config directories (zsh/, git/, ruby/, etc.) contain actual config files
-- `scripts/`: Helper scripts called during installation (oh-my-zsh, rbenv plugins, etc.)
+# Validate shell scripts
+shellcheck scripts/*
+```
 
-## Adding New Dotfiles
+## File Locations
 
-1. Add your config file to the appropriate directory in the repo (create new dir if needed)
-2. Edit `dotfiles.yaml` and add an entry to the `symlinks` section
-3. Run `./install.sh --only symlinks` to create the symlink
-4. Never use `ln` directly always go through dotfiles.yaml
+| Purpose | Location |
+| ------- | -------- |
+| Central config | `dotfiles.yaml` |
+| Homebrew packages | `Brewfile` |
+| Shell config | `zsh/zshrc`, `zsh/zprofile` |
+| Custom zsh plugin | `zsh/bostonaholic.plugin.zsh` |
+| Git config | `git/config` |
+| Claude commands | `claude/commands/*.md` |
+| Claude agents | `claude/agents/*.md` |
+| Claude skills | `claude/skills/*/SKILL.md` |
+| Install scripts | `scripts/install_*` |
 
-## Tools and Languages
+## Modification Workflow
 
-### Primary Development Stack
+### Adding a New Dotfile
 
-- Ruby: rbenv for version management, default gems in `ruby/default-gems`
-- Node.js: nodenv for version management
-- Clojure: Leiningen and clj-kondo for linting
-- Python: pyenv for versions, uv for fast package installation (used for MCP servers)
+1. Create the config file in appropriate directory
+2. Add symlink entry to `dotfiles.yaml` under `symlinks:`
+3. Run `./install.sh --only symlinks`
+4. Commit both files
 
-### Shell Environment
+### Adding a Homebrew Package
 
-- zsh with oh-my-zsh: Custom plugin at `zsh/bostonaholic.plugin.zsh`
-- Custom theme: `zsh/bostonaholic.zsh-theme`
-- For shell config changes, edit files in zsh/ then run install.sh
+1. Edit `Brewfile` with the package
+2. Run `brew bundle`
+3. Commit `Brewfile`
 
-### Git Configuration
+### Adding an npm Global Package
 
-- Main config at `git/config`, links to `~/.config/git/config`
-- For work computers: Create `~/.config/git/config.work` with work email/signing key
-- Git helpers scripts in `git/helpers/`
-- Global ignore patterns in `git/ignore`
+1. Add package name to `packages.npm.global_packages` in `dotfiles.yaml`
+2. Run `./install.sh --only npm`
+3. Commit `dotfiles.yaml`
 
-### Security and GPG
+### Adding a Claude Plugin
 
-- GPG agent configured via `gpg/gpg-agent.conf`
-- If GPG signing fails: `gpgconf --kill gpg-agent` or `brew link --overwrite gnupg`
-- pinentry-mac handles password prompts
+1. Add plugin to `packages.claude.plugins` in `dotfiles.yaml`
+2. Run `./scripts/install_claude_plugins`
+3. Commit `dotfiles.yaml`
 
-## Common Operations
+## Anti-Patterns
 
-### Package Management
+| Do Not | Instead |
+| ------ | ------- |
+| Run `ln -s` directly | Add to `dotfiles.yaml`, run install.sh |
+| Run `brew install X` | Add to `Brewfile`, run `brew bundle` |
+| Run `npm install -g X` | Add to `dotfiles.yaml`, run install.sh |
+| Edit files in `~/.config/` | Edit source files in repo, run install.sh |
+| Create backup copies manually | install.sh handles backups automatically |
 
-- Homebrew packages: Edit `Brewfile`, then `brew bundle`
-- NPM globals: Edit `packages.npm.global_packages` in dotfiles.yaml, then install
-- Ruby gems: Edit `ruby/default-gems`, they install automatically with new Ruby versions
+## Shell Scripts
 
-### Troubleshooting
+All scripts in `scripts/` must:
 
-- For ssh-agent errors, add `zstyle :omz:plugins:ssh-agent agent-forwarding on`
-- For zsh compaudit warnings, run `compaudit` to find insecure dirs, then `sudo chmod -R g-w <directory>`
-- Vim plugin errors needing requests: `pip3 install requests`
+- Pass shellcheck validation (pre-commit hook)
+- Be executable (`chmod +x`)
+- Use `set -euo pipefail`
+
+Run before committing:
+
+```bash
+shellcheck scripts/*
+```
+
+## Quality Gates
+
+Pre-commit hooks run automatically. Manual checks:
+
+```bash
+# Shell script validation
+shellcheck scripts/*.sh
+
+# Markdown linting
+markdownlint "**/*.md"
+```
+
+## Directory Structure
+
+```text
+dotfiles/
+  dotfiles.yaml     # Source of truth for all config
+  install.sh        # Idempotent installer
+  update.sh         # Pull updates, refresh packages
+  Brewfile          # Homebrew packages
+  scripts/          # Install and update scripts
+  zsh/              # Shell configuration
+  git/              # Git config and helpers
+  claude/           # Claude Code configuration
+    commands/       # Slash commands
+    agents/         # Subagent definitions
+    skills/         # Skill definitions
+    settings.json   # Claude Code settings
+  vim/              # Vim configuration
+  ruby/             # Ruby gems and pry config
+  node/             # Node version config
+  gpg/              # GPG agent config
+```
 
 ## Claude Code Integration
 
-This repository includes Claude Code configuration:
+Changes to `claude/` are immediately effective (symlinked to `~/.claude/`).
 
-- Commands in `claude/commands/`: Custom slash commands for workflows
-- Agents in `claude/agents/`: Role-specific agent configurations
-- Settings in `claude/settings.json`: Claude Code preferences
+- Commands: `claude/commands/*.md` - Slash command definitions
+- Agents: `claude/agents/*.md` - Subagent system prompts
+- Skills: `claude/skills/*/SKILL.md` - Skill definitions
+- Settings: `claude/settings.json` - Preferences and hooks
 
-When modifying Claude configs, changes are immediately available (symlinked from repo to ~/.claude).
+## Commit Conventions
 
-## Principles to Follow
+Follow conventional commits observed in this repo:
 
-Never manually symlink files use dotfiles.yaml and install.sh. This keeps the repository as the single source of truth.
+- `feat(scope):` - New feature
+- `fix(scope):` - Bug fix
+- `refactor(scope):` - Code restructuring
+- `style(scope):` - Formatting changes
+- `chore(scope):` - Maintenance tasks
 
-When adding new tools, consider:
+Examples from recent history:
 
-1. Is it widely used (>30% of the time)? Add to Brewfile
-2. Does it need configuration? Add config file to appropriate directory and update dotfiles.yaml
-3. Does it need post-install setup? Add to `scripts.post_install` in dotfiles.yaml
-
-## Landing the Plane (Session Completion)
-
-**When ending a work session**, you MUST complete ALL steps below. Work is NOT complete until `git push` succeeds.
-
-**MANDATORY WORKFLOW:**
-
-1. **File issues for remaining work** - Create issues for anything that needs follow-up
-2. **Run quality gates** (if code changed) - Tests, linters, builds
-3. **Update issue status** - Close finished work, update in-progress items
-4. **PUSH TO REMOTE** - This is MANDATORY:
-
-   ```bash
-   git pull --rebase
-   bd sync
-   git push
-   git status  # MUST show "up to date with origin"
-   ```
-
-5. **Clean up** - Clear stashes, prune remote branches
-6. **Verify** - All changes committed AND pushed
-7. **Hand off** - Provide context for next session
-
-**CRITICAL RULES:**
-
-- Work is NOT complete until `git push` succeeds
-- NEVER stop before pushing - that leaves work stranded locally
-- NEVER say "ready to push when you are" - YOU must push
-- If push fails, resolve and retry until it succeeds
+```text
+feat(statusline): add data extraction helpers to Clojure impl
+fix(settings): update enabledPlugins section for consistency
+refactor(statusline): remove deprecated status line shell script
+```
