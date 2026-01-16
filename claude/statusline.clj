@@ -67,21 +67,14 @@
        :ahead ahead})))
 
 ;; Formatting functions
-(defn format-directory [{:keys [git] :as data}]
+(defn format-project [{:keys [git] :as data}]
   (let [cwd (get-current-dir data)
         home (System/getenv "HOME")
         dir-name (cond
                    (= cwd home) "~"
-
-                   (:root git)
-                   (let [rel-path (subs cwd (count (:root git)))]
-                     (if (empty? rel-path)
-                       (:name git)
-                       (str (:name git) rel-path)))
-
-                   :else
-                   (let [parts (str/split cwd #"/")]
-                     (str/join "/" (take-last 2 parts))))]
+                   (:name git) (:name git)
+                   :else (let [parts (str/split cwd #"/")]
+                           (str/join "/" (take-last 2 parts))))]
     (str "📁 " (colorize :cyan dir-name))))
 
 (defn format-git-info [{:keys [git]}]
@@ -126,7 +119,7 @@
   (str " ⚡ " (colorize :magenta (get-model-name data))))
 
 (defn format-status-line [data]
-  (str (format-directory data)
+  (str (format-project data)
        (format-git-info data)
        (format-context data)
        (format-cost data)
