@@ -118,13 +118,39 @@
 (defn format-model [data]
   (str " ⚡ " (colorize :magenta (get-model-name data))))
 
+(def inspirational-phrases
+  ["Build something people want today"
+   "Simplicity is the ultimate sophistication"
+   "Make it work then make beautiful"
+   "Code is poetry in motion"
+   "Ship early ship often ship well"
+   "Clarity over cleverness always wins"
+   "Design for humans code for machines"
+   "Progress over perfection every time"
+   "Small steps lead to big wins"
+   "Fail fast learn faster succeed"
+   "Complexity is the enemy of execution"
+   "Constraints inspire the best solutions"
+   "Done is better than perfect today"])
+
+(defn get-inspirational-phrase []
+  (let [session-id (System/getenv "SESSION_ID")
+        seed (if session-id (hash session-id) (System/currentTimeMillis))
+        idx (mod seed (count inspirational-phrases))]
+    (nth inspirational-phrases idx)))
+
+(defn format-inspiration []
+  (colorize :gray (get-inspirational-phrase)))
+
 (defn format-status-line [data]
   (str (format-project data)
        (format-git-info data)
        (format-context data)
        (format-cost data)
        (format-style data)
-       (format-model data)))
+       (format-model data)
+       " • "
+       (format-inspiration)))
 
 ;; Main
 (defn run [input]
