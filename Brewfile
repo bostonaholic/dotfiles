@@ -29,6 +29,7 @@ tap 'd12frosted/emacs-plus'
 brew 'emacs-plus',
      restart_service: :changed,
      link: true
+brew 'gnutls' # for Emacs TLS support
 brew 'vim'
 
 # =============================================================================
@@ -121,7 +122,6 @@ brew 'yq' # YAML
 
 brew 'awscli'
 brew 'curl'
-brew 'gnutls'
 brew 'httpie'
 cask 'ngrok'
 
