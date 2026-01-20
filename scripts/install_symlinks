@@ -146,6 +146,84 @@ create_symlink() {
     return 0  # Success
 }
 
+# Symlink all files in source directory into target directory
+symlink_directory_contents() {
+    local source_dir=$1
+    local target_dir=$2
+    local created=0
+    local skipped=0
+    local already_correct=0
+    local failed=0
+
+    # Expand paths
+    target_dir=$(eval echo "$target_dir")
+    source_dir="$DOTFILES_DIR/$source_dir"
+
+    # Check if source directory exists
+    if [[ ! -d "$source_dir" ]]; then
+        warn "Source directory not found: $source_dir"
+        return 1
+    fi
+
+    # Check if target directory exists
+    if [[ ! -d "$target_dir" ]]; then
+        warn "Target directory not found: $target_dir (must already exist)"
+        return 1
+    fi
+
+    log "Symlinking contents of $source_dir into $target_dir"
+
+    # Iterate over files in source directory
+    for source_file in "$source_dir"/*; do
+        [[ -e "$source_file" ]] || continue  # Skip if no matches
+
+        local filename
+        filename=$(basename "$source_file")
+        local target_file="$target_dir/$filename"
+
+        # Handle existing target
+        if [[ -e "$target_file" || -L "$target_file" ]]; then
+            if [[ -L "$target_file" ]]; then
+                local current_target
+                current_target=$(readlink "$target_file")
+                if [[ "$current_target" == "$source_file" ]]; then
+                    debug "Symlink already correct: $target_file"
+                    already_correct=$((already_correct + 1))
+                    continue
+                fi
+            fi
+
+            if [[ $FORCE == false && $DRY_RUN == false ]]; then
+                printf "\n"
+                read -p "$(echo -e "${YELLOW}Overwrite $target_file? [y/N]${NC} ")" -n 1 -r
+                echo
+                if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+                    warn "Skipping $target_file"
+                    skipped=$((skipped + 1))
+                    continue
+                fi
+            fi
+
+            if [[ $DRY_RUN == false ]]; then
+                backup_file "$target_file"
+                rm -rf "$target_file"
+            fi
+        fi
+
+        # Create symlink
+        if [[ $DRY_RUN == true ]]; then
+            log "[DRY RUN] Would symlink: $source_file -> $target_file"
+        else
+            log "Creating symlink: $target_file -> $source_file"
+            ln -sf "$source_file" "$target_file"
+        fi
+        created=$((created + 1))
+    done
+
+    debug "  Created: $created, Already correct: $already_correct, Skipped: $skipped"
+    return 0
+}
+
 # Main function
 main() {
     log "Creating symlinks..."
@@ -192,6 +270,21 @@ main() {
     [[ $failed -gt 0 ]] && warn "  - Failed: $failed symlinks (source not found)"
 
     success "Symlink creation completed"
+
+    # Process symlink_contents entries (symlink directory contents, not directory itself)
+    log "Processing symlink_contents..."
+    local contents_data
+    if contents_data=$(yq eval '.symlink_contents | to_entries | .[] | [.key, .value] | @tsv' "$CONFIG_FILE" 2>/dev/null); then
+        while IFS=$'\t' read -r source target; do
+            if [[ -n "$source" && -n "$target" ]]; then
+                debug "Processing symlink_contents: $source -> $target"
+                symlink_directory_contents "$source" "$target" || true
+            fi
+        done <<< "$contents_data"
+        success "Symlink contents completed"
+    else
+        debug "No symlink_contents entries found"
+    fi
 }
 
 # Run if executed directly
