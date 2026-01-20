@@ -54,16 +54,16 @@ brew 'pre-commit'
 # =============================================================================
 # Unix tool replacements
 
-brew 'bat'      # cat
-brew 'btop'     # top
-brew 'dua-cli'  # du
-brew 'duf'      # df
-brew 'eza'      # ls
-brew 'fd'       # find
-brew 'fzf'      # ctrl-r, fuzzy finder
-brew 'gping'    # ping
-brew 'ripgrep'  # grep
-brew 'tldr'     # man
+brew 'bat'     # cat
+brew 'btop'    # top
+brew 'dua-cli' # du
+brew 'duf'     # df
+brew 'eza'     # ls
+brew 'fd'      # find
+brew 'fzf'     # ctrl-r, fuzzy finder
+brew 'gping'   # ping
+brew 'ripgrep' # grep
+brew 'tldr'    # man
 
 # =============================================================================
 # Languages: Clojure
