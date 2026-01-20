@@ -95,7 +95,8 @@ brew 'nodenv'
 # Languages: Ruby
 # =============================================================================
 
-brew 'openssl@3'  # for Ruby >= 3.1
+brew 'libyaml'   # for Psych YAML parser
+brew 'openssl@3' # for Ruby >= 3.1
 brew 'rbenv'
 brew 'readline'
 brew 'rust'       # for YJIT
@@ -111,9 +112,8 @@ brew 'uv'
 # Data & Serialization
 # =============================================================================
 
-brew 'jq'       # JSON
-brew 'libyaml'
-brew 'yq'       # YAML
+brew 'jq' # JSON
+brew 'yq' # YAML
 
 # =============================================================================
 # Networking
