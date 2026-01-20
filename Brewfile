@@ -152,7 +152,6 @@ brew 'ack'
 brew 'autoenv'
 brew 'coreutils'
 brew 'direnv'
-brew 'htop'
 brew 'rlwrap'
 brew 'tree'
 
