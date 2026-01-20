@@ -1,118 +1,194 @@
 # frozen_string_literal: true
 
-# How to use the Brewfile
+# Brewfile - Organized by functional categories
 #
-# brew bundle
+# Usage: brew bundle
 #
 
-# Taps
-tap 'borkdude/brew'
-tap 'clojure/tools'
-tap 'd12frosted/emacs-plus'
-tap 'steveyegge/beads'
-
-# set arguments for all 'brew install --cask' commands
+# Set arguments for all 'brew install --cask' commands
 cask_args appdir: '~/Applications', fontdir: '/Library/Fonts'
 
-# Programming
-brew 'aspell'
-brew 'bd'          # tap steveyegge/beads
+# =============================================================================
+# AI Coding Assistants
+# =============================================================================
+
+tap 'steveyegge/beads'
+
+brew 'bd'
 cask 'claude'
 cask 'claude-code'
-cask 'codex'       # OpenAI's coding agent
-brew 'gemini-cli'  # Google's Gemini CLI
-brew 'cloc'
-brew 'ctags'
-cask 'docker-desktop'
-brew 'emacs-plus', # tap d12frosted/emacs-plus
+cask 'codex'
+brew 'gemini-cli'
+
+# =============================================================================
+# Editors
+# =============================================================================
+
+tap 'd12frosted/emacs-plus'
+
+brew 'emacs-plus',
      restart_service: :changed,
      link: true
-brew 'gh'
-cask 'ghostty'
-brew 'git'
-brew 'git-lfs'
-brew 'libyaml'
-cask 'ngrok'
 brew 'vim'
-brew 'yq'
+
+# =============================================================================
+# Terminals & Shell
+# =============================================================================
+
+cask 'ghostty'
 brew 'zsh'
 brew 'zsh-completions'
 
-# Fonts
-cask 'font-source-code-pro'
+# =============================================================================
+# Version Control
+# =============================================================================
 
-# Security
-brew 'gnupg'
-brew 'gnutls'
-brew 'pinentry-mac'
+brew 'gh'
+brew 'git'
+brew 'git-lfs'
+brew 'lazygit'
+brew 'pre-commit'
 
-# Clojure
-brew 'clojure/tools/clojure'
-brew 'planck'
-brew 'leiningen'
+# =============================================================================
+# Modern CLI Tools
+# =============================================================================
+# Unix tool replacements
+
+brew 'bat'      # cat
+brew 'btop'     # top
+brew 'dua-cli'  # du
+brew 'duf'      # df
+brew 'eza'      # ls
+brew 'fd'       # find
+brew 'fzf'      # ctrl-r, fuzzy finder
+brew 'gping'    # ping
+brew 'ripgrep'  # grep
+brew 'tldr'     # man
+
+# =============================================================================
+# Languages: Clojure
+# =============================================================================
+
+tap 'borkdude/brew'
+tap 'clojure/tools'
+
 brew 'borkdude/brew/babashka'
 brew 'borkdude/brew/clj-kondo'
+brew 'clojure/tools/clojure'
+brew 'leiningen'
+brew 'planck'
 
-# Java
+# =============================================================================
+# Languages: Java
+# =============================================================================
+
 cask 'temurin@21'
 
-# JavaScript
-brew 'jq'
+# =============================================================================
+# Languages: Node
+# =============================================================================
+
 brew 'jslint4java'
 brew 'nodenv'
 
-# Ruby
-# ruby-build suggests using these
-brew 'openssl@3' # for Ruby versions >= 3.1
-brew 'rbenv' # ruby-build installed as a dependency
+# =============================================================================
+# Languages: Ruby
+# =============================================================================
+
+brew 'openssl@3'  # for Ruby >= 3.1
+brew 'rbenv'
 brew 'readline'
-brew 'rust' # for building Ruby with YJIT
+brew 'rust'       # for YJIT
 
-# Python
+# =============================================================================
+# Languages: Python
+# =============================================================================
+
 brew 'pyenv'
-brew 'uv' # Extremely fast Python package installer and resolver, for MCP servers
+brew 'uv'
 
-# Unix
+# =============================================================================
+# Data & Serialization
+# =============================================================================
+
+brew 'jq'       # JSON
+brew 'libyaml'
+brew 'yq'       # YAML
+
+# =============================================================================
+# Networking
+# =============================================================================
+
+brew 'awscli'
+brew 'curl'
+brew 'gnutls'
+brew 'httpie'
+cask 'ngrok'
+
+# =============================================================================
+# Security
+# =============================================================================
+
+brew 'gnupg'
+brew 'pinentry-mac'
+
+# =============================================================================
+# Development Tools
+# =============================================================================
+
+brew 'adr-tools'
+brew 'cloc'
+brew 'ctags'
+cask 'docker-desktop'
+brew 'markdownlint-cli'
+brew 'shellcheck'
+
+# =============================================================================
+# Shell Utilities
+# =============================================================================
+# Traditional Unix tools (not replaced by Modern CLI tools)
+
 brew 'ack'
 brew 'autoenv'
-brew 'curl'
-brew 'direnv' # for managing environment variables
+brew 'coreutils'
+brew 'direnv'
 brew 'htop'
-brew 'httpie'
-brew 'pre-commit' # Git hook framework for running checks before commits
 brew 'rlwrap'
-brew 'shellcheck'
 brew 'tree'
 
-# Modern CLI tools
-brew 'bat'         # cat
-brew 'btop'        # top
-brew 'eza'         # ls
-brew 'fd'          # find
-brew 'dua-cli'     # du
-brew 'duf'         # df
-brew 'gping'       # ping
-brew 'lazygit'     # git
-brew 'ripgrep'     # grep
-brew 'tldr'        # man
+# =============================================================================
+# Documentation
+# =============================================================================
 
-# Video editing
-cask 'filebot'        # Renaming movies and TV shows
-cask 'makemkv'        # Ripping DVDs and Blu-ray
-cask 'mkvtoolnix-app' # Splitting .mkv files
-
-# 3D printing
-cask 'blender' # 3D modeling
-
-# Other
-brew 'adr-tools' # Architecture Decision Records tool
-brew 'awscli'
-cask 'clipy'     # Clipboard manager
-brew 'coreutils' # GNU core utilities
-brew 'dfu-util'  # Device Firmware Upgrade Utilities
-brew 'fzf'       # Command-line fuzzy finder, fzf-tab omz plugin
+brew 'aspell'
 brew 'graphviz'
 brew 'markdown'
-brew 'markdownlint-cli' # Markdown linting tool for consistent formatting
-brew 'ossp-uuid'          # ISO-C API and CLI for generating UUIDs
-brew 'terminal-notifier'  # macOS notifications from command line
+
+# =============================================================================
+# macOS Utilities
+# =============================================================================
+
+cask 'clipy'
+brew 'dfu-util'
+brew 'ossp-uuid'
+brew 'terminal-notifier'
+
+# =============================================================================
+# Fonts
+# =============================================================================
+
+cask 'font-source-code-pro'
+
+# =============================================================================
+# Media: Video
+# =============================================================================
+
+cask 'filebot'
+cask 'makemkv'
+cask 'mkvtoolnix-app'
+
+# =============================================================================
+# Media: 3D
+# =============================================================================
+
+cask 'blender'
