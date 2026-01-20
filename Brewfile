@@ -14,7 +14,7 @@ cask_args appdir: '~/Applications', fontdir: '/Library/Fonts'
 
 tap 'steveyegge/beads'
 
-brew 'bd'
+brew 'bd' # AI-supervised issue tracker
 cask 'claude'
 cask 'claude-code'
 cask 'codex'
@@ -99,7 +99,7 @@ brew 'nodenv'
 brew 'libyaml'   # for Psych YAML parser
 brew 'openssl@3' # for Ruby >= 3.1
 brew 'rbenv'
-brew 'readline'
+brew 'readline' # for IRB/Pry line editing
 brew 'rust'       # for YJIT
 
 # =============================================================================
@@ -168,8 +168,8 @@ brew 'markdown'
 # =============================================================================
 
 cask 'clipy'
-brew 'dfu-util'
-brew 'ossp-uuid'
+brew 'dfu-util'  # for flashing keyboard firmware
+brew 'ossp-uuid' # UUID generation
 brew 'terminal-notifier'
 
 # =============================================================================
