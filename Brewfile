@@ -100,7 +100,7 @@ brew 'libyaml'   # for Psych YAML parser
 brew 'openssl@3' # for Ruby >= 3.1
 brew 'rbenv'
 brew 'readline' # for IRB/Pry line editing
-brew 'rust'       # for YJIT
+brew 'rust'     # for YJIT
 
 # =============================================================================
 # Languages: Python
