@@ -112,6 +112,19 @@ Errors with `ssh-agent`:
 
 Add `zstyle :omz:plugins:ssh-agent agent-forwarding on`
 
+### 1Password SSH Agent
+
+```plaintext
+sign_and_send_pubkey: signing failed for ED25519 "key name" from agent: communication with agent failed
+git@github.com: Permission denied (publickey).
+```
+
+This happens when 1Password is locked. Unlock 1Password and verify the agent is working:
+
+```bash
+ssh-add -l
+```
+
 ---
 
 Errors with `/usr/local/bin/gpg` not in the `$PATH`
