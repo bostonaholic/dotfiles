@@ -8,5 +8,6 @@
     "claudeCode.preferredLocation": "panel",
     "diffEditor.ignoreTrimWhitespace": false,
     "editor.colorDecorators": false,
-    "markdownlint.config": {}
+    "markdownlint.config": {},
+    "claudeCode.useTerminal": true
 }
