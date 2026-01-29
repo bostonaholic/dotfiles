@@ -1,0 +1,93 @@
+[init]
+    defaultBranch = main
+[user]
+    name = Matthew Boston
+    email = matthew.boston@shopify.com
+    signingkey = B388BCCE7A41A9BD
+[github]
+    user = bostonaholic
+[gpg "ssh"]
+	allowedSignersFile = /Users/matthew/.ssh/allowed_signers
+[commit]
+    verbose = true
+    gpgsign = true
+[alias]
+    aliases = !git config --get-regexp "alias.*" | cut -c 7-
+
+    amend = commit --amend
+
+    aa = add --all
+    ap = add --patch
+
+    br = branch
+    bd = branch -d
+    bdd = branch -D
+    brr = branch --move
+
+    cl = clone
+    ci = commit
+    cm = commit -m
+	  aic = !git-ai-commit
+    co = checkout
+    pu = push
+
+    di = diff
+    dh = diff HEAD
+    dc = diff --cached
+    ds = diff --staged
+    dw = diff --word-diff=color
+
+    fa = fetch --all --tags
+
+    l = "!. $HOME/.config/git/helpers && pretty_git_log"
+    la = !git l --all
+    recent = "!f() { GIT_NO_PAGER=1 git l -${1:-10}; }; f"
+    r = !git recent $1
+
+    head = !git l -1
+    h = !git head
+
+    ra = rebase --abort
+    rc = rebase --continue
+    rs = rebase --skip
+    rq = rebase --quit
+
+    # Refresh the current branch with the latest changes from main
+    refresh = !git stash && git checkout main && git pull origin main && git checkout - && git rebase main && (git stash pop || true)
+
+    remotes = remote --verbose
+
+    stashes = stash list
+    sl = stashes
+    sp = stash pop
+    su = stash --include-untracked
+
+    st = status --short --branch
+[include]
+    path = /Users/matthew/.config/dev/gitconfig
+[core]
+    editor = vim
+[pull]
+    rebase = true
+    tags = true
+    default = tracking
+[push]
+    autoSetupRemote = true
+[pager]
+    branch = false
+[rebase]
+    autosquash = true
+    autostash = true
+[fetch]
+    prune = true
+[remote "origin"]
+    prune = true
+[rerere]
+    enabled = true
+[tag]
+    # GPG sign annotated tags by default
+    forceSignAnnotated = true
+[merge]
+	conflictstyle = zdiff3
+[maintenance]
+	repo = /Users/matthew/world/trees/root/src
