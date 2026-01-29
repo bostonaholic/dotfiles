@@ -44,6 +44,7 @@ brew 'zsh-completions'
 # Version Control
 # =============================================================================
 
+brew 'bfg'        # BFG Repo-Cleaner, like git-filter-branch
 brew 'gh'
 brew 'git'
 brew 'git-lfs'
