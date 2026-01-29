@@ -1,0 +1,41 @@
+#!/bin/bash
+################################################################################
+# Timezsh - Benchmark Shell Startup Time
+#
+# DESCRIPTION:
+#   Measures shell startup time by running it 10 times and timing each run.
+#   Useful for diagnosing slow shell initialization and testing optimizations.
+#
+# USAGE:
+#   timezsh [shell-path]
+#
+# ARGUMENTS:
+#   shell-path  - Optional path to shell binary (defaults to $SHELL)
+#
+# EXAMPLES:
+#   timezsh              # Time current shell ($SHELL)
+#   timezsh /bin/zsh     # Time specific zsh binary
+#   timezsh /bin/bash    # Time bash startup
+#
+# OUTPUT:
+#   10 timing measurements showing:
+#   - Real time (wall clock)
+#   - User CPU time
+#   - System CPU time
+#
+# NOTES:
+#   Runs shell in interactive mode with immediate exit (-i -c exit).
+#   Average the results to get typical startup time.
+#   Fast shells should start in < 100ms.
+#
+################################################################################
+
+set -eu -o pipefail
+
+shell=${1-$SHELL}
+
+times=10
+while [ $times -gt 0 ]; do
+    /usr/bin/time "$shell" -i -c exit
+    ((times--))
+done

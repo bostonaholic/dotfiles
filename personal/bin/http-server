@@ -1,0 +1,31 @@
+#!/bin/bash
+################################################################################
+# HTTP Server - Start Personal HTTP Server
+#
+# DESCRIPTION:
+#   Starts a personal HTTP server project. This is a wrapper script that
+#   navigates to a specific project directory and runs its server script.
+#
+# USAGE:
+#   http-server
+#
+# WHAT IT DOES:
+#   1. Changes to ~/code/bostonaholic/http-server directory
+#   2. Runs ./script/server from that directory
+#
+# DEPENDENCIES:
+#   - http-server project at ~/code/bostonaholic/http-server
+#   - Server script at ./script/server in that directory
+#
+# NOTES:
+#   This is a personal convenience script for a specific project.
+#   Modify the path to point to your own http-server project.
+#
+################################################################################
+
+set -eux -o pipefail
+
+(
+    cd "${HOME}/code/bostonaholic/http-server"
+    ./script/server
+)

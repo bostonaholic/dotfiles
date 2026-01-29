@@ -1,0 +1,62 @@
+#!/bin/bash
+################################################################################
+# Ports - List Listening TCP Ports (Alfred Workflow)
+#
+# DESCRIPTION:
+#   Lists processes listening on TCP ports, optionally filtered by pattern.
+#   Outputs results in Alfred workflow XML format for integration with
+#   Alfred app on macOS.
+#
+# USAGE:
+#   ports [pattern]
+#
+# ARGUMENTS:
+#   pattern  - Optional pattern to filter results (case-insensitive)
+#
+# EXAMPLES:
+#   ports            # Show all listening ports
+#   ports rails      # Show only ports with "rails" in process name
+#   ports 3000       # Show processes on port 3000
+#
+# OUTPUT:
+#   Alfred workflow XML format with items containing:
+#   - Title: Process name and port number
+#   - Subtitle: Process ID (PID)
+#
+# DEPENDENCIES:
+#   - lsof (for listing open files/ports)
+#   - Designed for Alfred workflow integration
+#
+# NOTES:
+#   This script is specifically designed for the "ports" Alfred workflow.
+#   Output format is XML for Alfred consumption, not human-readable.
+#
+################################################################################
+
+set -eux -o pipefail
+
+pattern=$1
+
+PORTS=""
+if [ -z "$pattern" ]; then
+  PORTS=$(lsof -iTCP -sTCP:LISTEN)
+else
+  PORTS=$(lsof -iTCP -sTCP:LISTEN | grep -i "$pattern")
+fi
+
+
+i=0
+echo "<?xml version='1.0'?><items>"
+while read -r line; do
+  if [ $i -gt 0 ]; then
+    x=("$line")
+    boop=$(cut -d ":" -f 2 <<< "${x[8]}")
+    echo "<item uid='${x[1]}' arg='' valid='yes'>
+      <title>${x[0]}: ${boop}</title>
+      <subtitle>PID: ${x[1]}</subtitle>
+      <icon>icon.png</icon>
+    </item>"
+  fi
+  ((i++))
+done <<<"$PORTS"
+echo '</items>'

@@ -1,0 +1,31 @@
+#!/bin/bash
+################################################################################
+# Spacemacs Update
+#
+# DESCRIPTION:
+#   Updates Spacemacs to the latest version by pulling from the git repository.
+#   Simple wrapper around git pull for the Spacemacs installation.
+#
+# USAGE:
+#   spacemacsup
+#
+# WHAT IT DOES:
+#   1. Changes to ~/.emacs.d directory
+#   2. Pulls latest changes using git pull --rebase
+#
+# DEPENDENCIES:
+#   - Spacemacs installed at ~/.emacs.d
+#   - git
+#
+# NOTES:
+#   After updating, restart Emacs to load the new Spacemacs version.
+#   Spacemacs may prompt to update packages on next launch.
+#
+################################################################################
+
+set -eux -o pipefail
+
+(
+    cd "${HOME}/.emacs.d"
+    git pull --rebase
+)

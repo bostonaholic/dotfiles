@@ -1,0 +1,36 @@
+#!/bin/bash
+################################################################################
+# Brew Orphans - Find Unused Homebrew Packages
+#
+# DESCRIPTION:
+#   Lists Homebrew formulae that are not dependencies of any other installed
+#   package. Useful for identifying packages you may have installed directly
+#   but no longer need.
+#
+# USAGE:
+#   brew-orphans
+#
+# EXAMPLES:
+#   brew-orphans                     # List orphaned packages
+#   brew-orphans | wc -l             # Count orphaned packages
+#   brew uninstall $(brew-orphans)   # Remove all orphaned packages (dangerous!)
+#
+# OUTPUT:
+#   One package name per line for each orphaned formula.
+#
+# NOTES:
+#   - An orphaned package has no other packages depending on it
+#   - This doesn't mean the package is unused - you may still need it!
+#   - Review the list carefully before uninstalling anything
+#   - Automatically installed dependencies will not appear in this list
+#
+################################################################################
+
+set -eu -o pipefail
+
+for formula in $(brew list)
+do
+    if [[ $(brew uses --installed "$formula") = "" ]]; then
+        echo "$formula"
+    fi
+done

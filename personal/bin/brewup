@@ -1,0 +1,50 @@
+#!/bin/bash
+################################################################################
+# Brewup - Update and Clean Homebrew
+#
+# DESCRIPTION:
+#   Comprehensive Homebrew maintenance script that updates, upgrades,
+#   and cleans up Homebrew packages and casks.
+#
+# USAGE:
+#   brewup
+#
+# WHAT IT DOES:
+#   1. Updates Homebrew itself (brew update)
+#   2. Upgrades all installed formulae (brew upgrade)
+#   3. Upgrades all installed casks (brew upgrade --cask)
+#   4. Lists any remaining outdated formulae
+#   5. Lists any remaining outdated casks
+#   6. Scrubs the cache (brew cleanup -s)
+#   7. Removes all cached downloads
+#
+# DEPENDENCIES:
+#   - homebrew
+#
+# NOTES:
+#   This script uses 'set -eux' so all commands will be echoed and
+#   execution will stop on any error. This helps catch issues during
+#   the update process.
+#
+################################################################################
+
+set -eux -o pipefail
+
+(
+    cd "$(dirname "$0")"
+
+    brew update
+
+    brew upgrade
+
+    brew upgrade --cask
+
+    brew outdated
+
+    brew outdated --cask
+
+    # -s Scrub the cache
+    brew cleanup -s
+
+    rm -rfv "$(brew --cache)"
+)

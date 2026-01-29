@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+################################################################################
+# Git Undo - AI-Powered Git Undo Assistant
+#
+# DESCRIPTION:
+#   Uses Claude CLI to provide expert guidance on undoing git operations.
+#   Acts as a Git expert that understands your current repository state and
+#   provides specific commands to undo various operations safely.
+#
+# USAGE:
+#   git undo "<description of what to undo>"
+#
+# EXAMPLES:
+#   git undo "remove all untracked files"
+#   git undo "uncommit last 3 commits but keep changes"
+#   git undo "discard changes to specific file"
+#   git undo "undo last merge"
+#   git undo "recover deleted branch"
+#
+# DEPENDENCIES:
+#   - claude CLI (Anthropic's Claude CLI tool)
+#   - git repository (checks current state for context)
+#
+# NOTES:
+#   Provides specific, safe commands tailored to your question.
+#   Always explains what the command does before suggesting it.
+#   Warns about destructive operations.
+#
+################################################################################
+
+set -euo pipefail
+
+# Check if we're in a git repository
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "Error: Not in a git repository" >&2
+    exit 1
+fi
+
+# Check if claude CLI is available
+if ! command -v claude &> /dev/null; then
+    echo "Error: claude CLI not found" >&2
+    echo "Install it to use this feature: https://github.com/anthropics/anthropic-quickstarts/tree/main/computer-use-demo/claude-cli" >&2
+    exit 1
+fi
+
+# Get the user's undo request
+if [ $# -eq 0 ]; then
+    echo "Usage: git undo \"<description of what to undo>\"" >&2
+    echo "" >&2
+    echo "Examples:" >&2
+    echo "  git undo \"remove all untracked files\"" >&2
+    echo "  git undo \"uncommit last 3 commits but keep changes\"" >&2
+    echo "  git undo \"discard changes to specific file\"" >&2
+    exit 1
+fi
+
+UNDO_REQUEST="$*"
+
+# Get current git state for context
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "detached HEAD")
+GIT_STATUS=$(git status --short 2>/dev/null || echo "")
+RECENT_COMMITS=$(git log --oneline -5 2>/dev/null || echo "")
+
+# Build the prompt
+PROMPT_FILE=$(mktemp)
+cat > "$PROMPT_FILE" <<EOF
+You are an expert Git user helping someone undo a Git operation safely.
+
+Current Git State:
+- Branch: ${CURRENT_BRANCH}
+- Status: ${GIT_STATUS:-"(clean)"}
+- Recent commits:
+${RECENT_COMMITS:-"(no commits)"}
+
+User wants to: ${UNDO_REQUEST}
+
+Provide:
+1. A brief explanation of what this will do
+2. The exact git command(s) to run (formatted as code blocks)
+3. Any warnings about data loss or irreversible operations
+4. Alternative approaches if applicable
+
+Be concise and practical. Focus on the safest approach that accomplishes their goal.
+Output only the answer - no preamble or conclusion.
+EOF
+
+# Call Claude CLI
+claude --model sonnet --print --dangerously-skip-permissions < "$PROMPT_FILE"
+rm "$PROMPT_FILE"

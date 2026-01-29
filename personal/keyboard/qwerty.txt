@@ -1,0 +1,8 @@
+[caps]>[rctrl]
+[up]>[left]
+[down]>[right]
+[right]>[down]
+[left]>[up]
+[lctrl]>[lwin]
+[rctrl]>[rwin]
+[rwin]>[rctrl]

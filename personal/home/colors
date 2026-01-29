@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export CLEAR_LINE='\r\033[K'
+export GREEN='\033[0;32m'
+export NO_COLOR='\033[0m'
+export RED='\033[0;31m'
+export WHITE_BOLD='\033[1;37m'

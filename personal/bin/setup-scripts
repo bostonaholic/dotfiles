@@ -1,0 +1,45 @@
+#!/bin/bash
+################################################################################
+# Setup Scripts - Create Standard Script Directory
+#
+# DESCRIPTION:
+#   Creates a script/ directory with standard GitHub scripts-to-rule-them-all
+#   structure. Generates empty template scripts with execute permissions.
+#
+# USAGE:
+#   setup-scripts
+#
+# WHAT IT CREATES:
+#   script/bootstrap  - Setup dependencies and configuration
+#   script/setup      - Set up application for first time use
+#   script/update     - Update application to run at current version
+#   script/server     - Start the application server
+#   script/test       - Run test suite
+#   script/cibuild    - Run tests for continuous integration
+#   script/console    - Open interactive console
+#
+# BEHAVIOR:
+#   1. Creates script/ directory if it doesn't exist
+#   2. Creates each standard script file if not present
+#   3. Makes all scripts executable (chmod +x)
+#
+# NOTES:
+#   Follows GitHub's "Scripts to Rule Them All" pattern.
+#   Scripts are created empty - you need to add implementation.
+#   See: https://github.com/github/scripts-to-rule-them-all
+#
+################################################################################
+
+SCRIPT_DIR="script"
+if [ ! -d "$SCRIPT_DIR" ]; then
+  mkdir "$SCRIPT_DIR"
+fi
+
+scripts=("${SCRIPT_DIR}/bootstrap" "${SCRIPT_DIR}/setup" "${SCRIPT_DIR}/update" "${SCRIPT_DIR}/server" "${SCRIPT_DIR}/test" "${SCRIPT_DIR}/cibuild" "${SCRIPT_DIR}/console")
+
+for script in "${scripts[@]}"; do
+  if [ ! -f "$script" ]; then
+    touch "$script"
+    chmod +x "$script"
+  fi
+done

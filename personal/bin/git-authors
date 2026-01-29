@@ -1,0 +1,34 @@
+#!/bin/bash
+################################################################################
+# Git Authors - List Contributors by Commit Count
+#
+# DESCRIPTION:
+#   Lists all committers in a repository, directory, or file sorted by
+#   number of commits (descending). Useful for identifying main contributors
+#   and understanding code ownership.
+#
+# USAGE:
+#   git authors [path]
+#
+# ARGUMENTS:
+#   path  - Optional path to directory or file (defaults to entire repo)
+#
+# EXAMPLES:
+#   git authors                  # Show all authors for entire repo
+#   git authors app/models       # Show authors for a directory
+#   git authors src/main.rs      # Show authors for a single file
+#
+# OUTPUT:
+#   423  John Doe
+#   201  Jane Smith
+#    87  Bob Johnson
+#
+# NOTES:
+#   Uses 'git shortlog --summary' to count commits per author.
+#   Results sorted by commit count (highest first).
+#
+################################################################################
+
+set -eu -o pipefail
+git shortlog --summary "$@" \
+    | sort -nr

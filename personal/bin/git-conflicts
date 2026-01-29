@@ -1,0 +1,28 @@
+#!/bin/bash
+################################################################################
+# Git Conflicts - List Files with Merge Conflicts
+#
+# DESCRIPTION:
+#   Shows unique list of files that have unresolved merge conflicts.
+#   Useful during merge or rebase operations to see what needs resolving.
+#
+# USAGE:
+#   git conflicts
+#
+# EXAMPLES:
+#   git conflicts                # List all conflicted files
+#   git conflicts | wc -l        # Count conflicted files
+#
+# OUTPUT:
+#   src/main.rs
+#   tests/integration_test.rs
+#
+# NOTES:
+#   Uses 'git ls-files --unmerged' to find conflicted files.
+#   Returns empty output if no conflicts exist.
+#
+################################################################################
+
+set -eu -o pipefail
+
+git ls-files --unmerged | awk '{print $4}' | sort --unique

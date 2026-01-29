@@ -1,0 +1,98 @@
+#!/bin/bash
+################################################################################
+# Gemfresh - Ruby Dependency Freshness Report
+#
+# DESCRIPTION:
+#   Analyzes Ruby project dependencies to determine how outdated they are.
+#   Calculates percentage of outdated gems and total "libyears" behind.
+#   Helps identify technical debt and prioritize dependency updates.
+#
+# USAGE:
+#   gemfresh [-h]
+#
+# OPTIONS:
+#   -h  - Show help message
+#
+# OUTPUT:
+#   Dependency Freshness:
+#   Outdated: 12.5% (5/40)
+#   Libyears: 8
+#
+# DEPENDENCIES:
+#   - bundler (gem install bundler)
+#   - libyear-bundler (gem install libyear-bundler)
+#   - bc (for calculations)
+#   - ~/.colors (for colored output)
+#
+# WHAT IT CALCULATES:
+#   - Total dependency count
+#   - Number and percentage of outdated dependencies
+#   - Libyears: sum of years behind latest versions (https://libyear.com)
+#
+# NOTES:
+#   Must be run from a Ruby project directory containing a Gemfile.
+#   Libyear metric helps quantify dependency freshness objectively.
+#
+# AUTHOR:
+#   @stevenharman
+#   https://gist.github.com/stevenharman/6975adc0ceeaffd30ac2082268b7d896
+#
+################################################################################
+
+set -eux -o pipefail
+
+# shellcheck disable=SC1091
+source "${HOME}/.colors"
+
+while getopts ":h" opt; do
+  case "${opt}" in
+    h)
+      echo "Usage: gemfresh [-h]" >&2
+      exit 0
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+ensure_tool_available() {
+  tool=$1
+  binary=${2:-$1} # default to tool
+
+  if ! command -v "$binary" > /dev/null; then
+    printf "%b💀%b   You must install %s on your system before we can do the MATHS.%b\n" "${CLEAR_LINE}" "${RED}" "$tool" "${NO_COLOR}"
+    printf "ℹ️   Try 'gem install %s'\n" "$tool"
+    exit 1
+  fi
+}
+
+printf "[1/4]🔎   Checking binaries"
+ensure_tool_available bundler bundle
+ensure_tool_available libyear-bundler
+
+if ! [[ -e Gemfile ]];then
+    printf "%b💀%b   Gemfile not found. Are you in a Ruby project?%s\n" "${CLEAR_LINE}" "${RED}" "${NO_COLOR}"
+  exit 1
+fi
+
+printf "%b[2/4]🖇   Counting dependencies" "${CLEAR_LINE}"
+# List all dependncies by counting the literal * character in each line
+# shellcheck disable=SC2063
+dependency_count=$(bundle list | grep -c '*')
+
+printf "%b[3/4]📅   Determining outdated dependencies" "${CLEAR_LINE}"
+# We need to disable the pipefail option b/c `bundle outdated` exits with a 1 if any gems are outdated.
+set +o pipefail
+# Get list of outdated, remove blank lines, count the lines, and pipe to xargs to trim whitespace
+outdated_count=$(bundle outdated --parseable | sed "/^\s*$/d" | wc -l | xargs)
+outdated_percent=$(bc <<< "scale=3; (${outdated_count} / ${dependency_count}) * 100")
+set -o pipefail
+
+printf "%b[4/4]🧮   Calculating Libyears (https://libyear.com)" "${CLEAR_LINE}"
+libyears=$(libyear-bundler --libyears --grand-total | bc)
+
+printf "%b%bDependency Freshness:%b\n" "${CLEAR_LINE}" "${GREEN}" "${NO_COLOR}"
+printf "Outdated: %0.1f%% (${outdated_count}/${dependency_count})\n" "${outdated_percent}"
+printf "Libyears: %d\n" "${libyears}"

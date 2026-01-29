@@ -1,0 +1,38 @@
+#!/bin/bash
+################################################################################
+# Todos - Find Code Annotations
+#
+# DESCRIPTION:
+#   Searches the git repository for common code annotation tags like TODO,
+#   FIXME, HACK, etc. Useful for tracking technical debt and action items.
+#
+# USAGE:
+#   todos
+#
+# EXAMPLES:
+#   todos                    # Show all annotations
+#   todos | grep FIXME       # Show only FIXME items
+#   todos | wc -l            # Count total annotations
+#
+# TAGS SEARCHED:
+#   - TODO: Tasks to be done
+#   - FIXME: Broken code that needs fixing
+#   - HACK: Temporary workarounds
+#   - XXX: Warning about problematic code
+#   - NOTE: Important notes or explanations
+#
+# OUTPUT FORMAT:
+#   file:line: TAG(author): description
+#
+# NOTES:
+#   Uses 'git grep' so only searches tracked files.
+#   Supports optional author notation: TODO(username): description
+#   Only searches files in the git repository.
+#
+################################################################################
+
+set -eu -o pipefail
+
+TAGS="FIXME|HACK|NOTE|TODO|XXX"
+
+git grep -E "($TAGS)(\(.*\))?:"

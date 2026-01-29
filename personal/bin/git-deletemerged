@@ -1,0 +1,33 @@
+#!/bin/bash
+################################################################################
+# Git Delete Merged Branches
+#
+# DESCRIPTION:
+#   Deletes all local branches that have been merged into the current HEAD.
+#   Safe cleanup of branches after they've been merged. Protects the current
+#   branch from deletion.
+#
+# USAGE:
+#   git deletemerged
+#
+# EXAMPLES:
+#   git checkout main            # Switch to main branch
+#   git deletemerged             # Delete all merged branches
+#
+# BEHAVIOR:
+#   1. Lists all branches merged into current HEAD
+#   2. Filters out current branch (marked with *)
+#   3. Deletes each merged branch using 'git branch -d' (safe delete)
+#
+# NOTES:
+#   - Uses safe delete (-d) which prevents deletion of unmerged work
+#   - Only deletes LOCAL branches, not remote tracking branches
+#   - Run from your main/master branch for best results
+#   - Current branch is automatically excluded from deletion
+#
+################################################################################
+
+set -eu -o pipefail
+
+# Delete local branches which have already been merged into the current HEAD
+git branch --merged | grep -v "\*" | xargs -n 1 git branch -d
