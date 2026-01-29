@@ -1,8 +1,0 @@
-// Place your key bindings in this file to override the defaults
-[
-    {"key": "alt+j", "command": "editor.action.joinLines", "when": "editorTextFocus && !editorReadOnly"},
-
-    // Must enable the 'Unicode Hex Input' keyboard layout
-    {"key": "alt+n", "command": "scrollLineDown"},
-    {"key": "alt+p", "command": "scrollLineUp"}
-]
