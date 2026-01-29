@@ -87,12 +87,12 @@ brew upgrade
 
 echo && log "Installing shared Homebrew packages..."
 if [[ -f "$DOTFILES_DIR/Brewfile.shared" ]]; then
-    brew bundle --file="$DOTFILES_DIR/Brewfile.shared" --no-lock || warn "Some shared packages may have failed"
+    brew bundle --file="$DOTFILES_DIR/Brewfile.shared" || warn "Some shared packages may have failed"
 fi
 
 echo && log "Installing $PROFILE Homebrew packages..."
 if [[ -f "$DOTFILES_DIR/Brewfile.${PROFILE}" ]]; then
-    brew bundle --file="$DOTFILES_DIR/Brewfile.${PROFILE}" --no-lock || warn "Some $PROFILE packages may have failed"
+    brew bundle --file="$DOTFILES_DIR/Brewfile.${PROFILE}" || warn "Some $PROFILE packages may have failed"
 fi
 
 brew cleanup
