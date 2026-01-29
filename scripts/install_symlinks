@@ -275,12 +275,12 @@ main() {
     log "Processing symlink_contents..."
     local contents_data
     if contents_data=$(yq eval '.symlink_contents | to_entries | .[] | [.key, .value] | @tsv' "$CONFIG_FILE" 2>/dev/null); then
-        while IFS=$'\t' read -r source target; do
+        while IFS=$'\t' read -r source target <&4; do
             if [[ -n "$source" && -n "$target" ]]; then
                 debug "Processing symlink_contents: $source -> $target"
                 symlink_directory_contents "$source" "$target" || true
             fi
-        done <<< "$contents_data"
+        done 4<<< "$contents_data"
         success "Symlink contents completed"
     else
         debug "No symlink_contents entries found"
