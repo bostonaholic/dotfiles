@@ -1,0 +1,54 @@
+# Dotfiles Configuration - WORK
+# Work-specific configurations (Shopify environment)
+#
+# Usage: Merged with dotfiles.shared.yaml before installation
+
+symlinks:
+  # Work-specific scripts
+  work/bin/reflect.ts: ~/bin/reflect.ts
+
+  # Shell (work version with Shopify integrations)
+  work/zsh/zshrc: ~/.zshrc
+
+  # Claude (work version with Shopify proxy)
+  work/claude/settings.json: ~/.claude/settings.json
+  work/claude/settings.local.json: ~/.claude/settings.local.json
+  work/claude/statusline.sh: ~/.claude/statusline.sh
+
+  # Git (work version with Shopify email)
+  work/git/config: ~/.config/git/config
+
+  # Emacs (work version with chruby, treemacs)
+  work/emacs/spacemacs: ~/.spacemacs
+
+packages:
+  brew:
+    bundle_file: Brewfile.work
+
+  # Work uses Claude plugins from settings.json with marketplace mapping
+  claude:
+    plugins:
+      - plugin-dev@claude-plugins-official
+      - ralph-loop@claude-plugins-official
+      - rpikit@rpikit
+      - superpowers@superpowers-marketplace
+
+scripts:
+  post_install:
+    - description: "Link Emacs to ~/Applications"
+      command: "ln -sf /opt/homebrew/opt/emacs-plus/Emacs.app ~/Applications/Emacs.app"
+      condition: "[ -d /opt/homebrew/opt/emacs-plus/Emacs.app ]"
+
+    - description: "Install Claude Code via npm"
+      command: "npm install -g @anthropic-ai/claude-code"
+      condition: "! command -v claude"
+
+    - description: "Accept Xcode license"
+      command: "sudo xcodebuild -license accept"
+      condition: "command -v xcodebuild"
+      optional: true
+
+    - description: "Switch xcode-select to Xcode.app"
+      command: "sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer"
+      condition: "[ -d /Applications/Xcode.app ]"
+      optional: true
