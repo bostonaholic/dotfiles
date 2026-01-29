@@ -10,3 +10,7 @@ vendor/
 # Beads (local-only) #
 ######################
 .beads/
+
+# Profile selection (local-only) #
+##################################
+.dotfiles_profile
