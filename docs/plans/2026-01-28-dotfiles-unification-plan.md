@@ -84,6 +84,17 @@ Unify personal dotfiles (this repo) and work dotfiles (`/Users/matthew/code/bost
 
 **Purpose**: Confirm that configs assumed to be shared are actually identical between repos.
 
+**Findings** (2026-01-28):
+| Config | Status | Decision |
+|--------|--------|----------|
+| git/config | SIGNIFICANT DIFF | Profile-specific - Different emails, signing keys (SSH vs GPG), aliases |
+| git/ignore | MODERATE DIFF | Merge to shared - Personal has more entries |
+| vim/my_configs.vim | DOESN'T EXIST IN WORK | Personal-only |
+| emacs/spacemacs | SIGNIFICANT DIFF | Profile-specific - Different layers, rbenv vs chruby, copilot |
+| ghostty/config | MINOR DIFF | Can share - Only font-size differs (16 vs 14) |
+| gpg/gpg-agent.conf | MINOR DIFF | Can share - Personal has comments |
+| ruby/pryrc | IDENTICAL | Shared |
+
 #### Step 2.1: Diff git configs
 
 - **Files**: `git/config` vs `/Users/matthew/code/bostonaholic/shopify-dotfiles/git/.gitconfig`
@@ -535,14 +546,14 @@ If critical issues discovered after cutover:
 
 ## Status
 
-- [ ] Plan approved
-- [ ] Implementation started
-- [ ] Phase 1 complete (Preparation)
-- [ ] Phase 2 complete (Verify Shared Configs)
-- [ ] Phase 3 complete (Create Brewfiles)
-- [ ] Phase 4 complete (Create YAML Configuration Files)
-- [ ] Phase 5 complete (Create V2 Installation Scripts)
-- [ ] Phase 6 complete (Test on Personal Machine)
-- [ ] Phase 7 complete (Test on Work Machine)
-- [ ] Phase 8 complete (Cutover and Cleanup)
+- [x] Plan approved
+- [x] Implementation started
+- [x] Phase 1 complete (Preparation) - Note: Used bash/yq instead of Python for merge script
+- [x] Phase 2 complete (Verify Shared Configs) - Key finding: git/config and emacs/spacemacs need profile variants
+- [x] Phase 3 complete (Create Brewfiles)
+- [x] Phase 4 complete (Create YAML Configuration Files) - Also added git/config and emacs/spacemacs variants; restructured to shared/work/personal directories
+- [x] Phase 5 complete (Create V2 Installation Scripts)
+- [x] Phase 6 complete (Test on Personal Machine) - Fixed CONFIG_FILE export bug and --no-lock flag; all 71 symlinks created
+- [ ] Phase 7 complete (Test on Work Machine) - Deferred for manual testing
+- [x] Phase 8 complete (Cutover and Cleanup) - Scripts renamed, docs updated, committed
 - [ ] Implementation complete
