@@ -43,7 +43,7 @@ readonly NC='\033[0m'
 # Configuration
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 readonly DOTFILES_DIR
-CONFIG_FILE="$DOTFILES_DIR/dotfiles.yaml"
+CONFIG_FILE="${CONFIG_FILE:-$DOTFILES_DIR/dotfiles.yaml}"
 readonly CONFIG_FILE
 BACKUP_DIR="${BACKUP_DIR:-${HOME}/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)}"
 
