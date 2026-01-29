@@ -243,7 +243,7 @@ main() {
     fi
     debug "Found symlinks data: $(echo "$symlinks_data" | wc -l) lines"
 
-    while IFS=$'\t' read -r source target; do
+    while IFS=$'\t' read -r source target <&3; do
         if [[ -n "$source" && -n "$target" ]]; then
             total=$((total + 1))
             debug "Processing symlink: $source -> $target"
@@ -260,7 +260,7 @@ main() {
                 3) skipped=$((skipped + 1)) ;;
             esac
         fi
-    done <<< "$symlinks_data"
+    done 3<<< "$symlinks_data"
 
     log "Symlink summary:"
     log "  - Total: $total symlinks processed"
