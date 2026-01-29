@@ -35,6 +35,7 @@
       "Bash(git push:*)"
     ]
   },
+  "model": "opus",
   "hooks": {
     "Notification": [
       {
@@ -71,6 +72,5 @@
     "superpowers@superpowers-marketplace": true,
     "typescript-lsp@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true,
-  "model": "opus"
+  "alwaysThinkingEnabled": true
 }
