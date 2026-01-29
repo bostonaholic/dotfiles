@@ -14,3 +14,7 @@ vendor/
 # Profile selection (local-only) #
 ##################################
 .dotfiles_profile
+
+# Python #
+##########
+__pycache__/
