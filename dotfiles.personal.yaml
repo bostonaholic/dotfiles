@@ -1,0 +1,143 @@
+# Dotfiles Configuration - PERSONAL
+# Personal-specific configurations
+#
+# Usage: Merged with dotfiles.shared.yaml before installation
+
+directories:
+  - ~/.cursor
+  - ~/.lein
+  - ~/.rbenv
+  - ~/Library/Application Support/Code/User
+  - ~/.emacs.d/private/templates
+
+symlinks:
+  # Personal scripts (bin/)
+  personal/bin/brew-orphans: ~/bin/brew-orphans
+  personal/bin/brewup: ~/bin/brewup
+  personal/bin/cleanup: ~/bin/cleanup
+  personal/bin/docker-cleanup: ~/bin/docker-cleanup
+  personal/bin/dwi: ~/bin/dwi
+  personal/bin/gemfresh: ~/bin/gemfresh
+  personal/bin/git-age: ~/bin/git-age
+  personal/bin/git-authors: ~/bin/git-authors
+  personal/bin/git-batch: ~/bin/git-batch
+  personal/bin/git-churn: ~/bin/git-churn
+  personal/bin/git-conflicts: ~/bin/git-conflicts
+  personal/bin/git-deletealltags: ~/bin/git-deletealltags
+  personal/bin/git-deletemerged: ~/bin/git-deletemerged
+  personal/bin/git-numbers: ~/bin/git-numbers
+  personal/bin/git-stats: ~/bin/git-stats
+  personal/bin/git-undo: ~/bin/git-undo
+  personal/bin/grep-routes: ~/bin/grep-routes
+  personal/bin/http-server: ~/bin/http-server
+  personal/bin/macchanger: ~/bin/macchanger
+  personal/bin/pairing: ~/bin/pairing
+  personal/bin/pass: ~/bin/pass
+  personal/bin/ports: ~/bin/ports
+  personal/bin/rcopy: ~/bin/rcopy
+  personal/bin/replace: ~/bin/replace
+  personal/bin/rmove: ~/bin/rmove
+  personal/bin/run-command-on-git-revisions: ~/bin/run-command-on-git-revisions
+  personal/bin/sayit: ~/bin/sayit
+  personal/bin/setup-scripts: ~/bin/setup-scripts
+  personal/bin/spacemacsup: ~/bin/spacemacsup
+  personal/bin/timezsh: ~/bin/timezsh
+  personal/bin/todos: ~/bin/todos
+  personal/bin/vimup: ~/bin/vimup
+  personal/bin/wt: ~/bin/wt
+
+  # Shell (personal version)
+  personal/zsh/zshrc: ~/.zshrc
+  personal/zsh/zprofile: ~/.zprofile
+  personal/zsh/bostonaholic.zsh-theme: ~/.oh-my-zsh/custom/themes/bostonaholic.zsh-theme
+  personal/zsh/bostonaholic.plugin.zsh: ~/.oh-my-zsh/custom/plugins/bostonaholic/bostonaholic.plugin.zsh
+
+  # Claude (personal version)
+  personal/claude/settings.json: ~/.claude/settings.json
+  personal/claude/skills: ~/.claude/skills
+  personal/claude/statusline.clj: ~/.claude/statusline.clj
+
+  # Git (personal version with SSH signing)
+  personal/git/config: ~/.config/git/config
+  personal/git/allowed_signers: ~/.config/git/allowed_signers
+
+  # Cursor
+  personal/cursor/rules: ~/.cursor/rules
+
+  # Ruby
+  personal/ruby/rspec: ~/.rspec
+  personal/ruby/default-gems: ~/.rbenv/default-gems
+
+  # Node
+  personal/node/node-version: ~/.node-version
+
+  # Editors (personal versions)
+  personal/emacs/spacemacs: ~/.spacemacs
+  personal/vim/my_configs.vim: ~/.vim_runtime/my_configs.vim
+  personal/vscode/keybindings.json: ~/Library/Application Support/Code/User/keybindings.json
+  personal/vscode/settings.json: ~/Library/Application Support/Code/User/settings.json
+
+  # Other tools
+  personal/home/colors: ~/.colors
+  personal/ignore/ignore: ~/.ignore
+  personal/ignore/rgignore: ~/.rgignore
+  personal/javascript/jsbeautifyrc: ~/.jsbeautifyrc
+  personal/javascript/jshintrc: ~/.jshintrc
+  personal/clojure/profiles.clj: ~/.lein/profiles.clj
+  personal/keyboard/qwerty.txt: ~/qwerty.txt
+  personal/signature/signature: ~/.signature
+
+# Symlink all files from source directory into target directory
+symlink_contents:
+  personal/emacs/templates: ~/.emacs.d/private/templates
+
+packages:
+  brew:
+    bundle_file: Brewfile.personal
+
+  npm:
+    global_packages:
+      - prettier
+      - prettier-eslint
+      - prettier-eslint-cli
+      - tern
+      - ulid
+
+  uv:
+    tool_packages:
+      - name: specify-cli
+        source: "git+https://github.com/github/spec-kit.git"
+
+  claude:
+    plugins:
+      - beads@beads-marketplace
+      - code-simplifier@claude-plugins-official
+      - playwright@claude-plugins-official
+      - plugin-dev@claude-plugins-official
+      - ralph-loop@claude-plugins-official
+      - rpikit@rpikit
+      - superpowers@superpowers-marketplace
+      - typescript-lsp@claude-plugins-official
+
+scripts:
+  post_install:
+    - description: "Install rbenv plugins"
+      command: "scripts/install_rbenv_plugins"
+      condition: "[ -d ~/.rbenv ]"
+
+    - description: "Install nodenv"
+      command: "scripts/install_nodenv"
+      condition: "! command -v nodenv"
+
+    - description: "Install pre-commit hooks"
+      command: "pre-commit install"
+      condition: "command -v pre-commit"
+
+    - description: "Install Powerline fonts"
+      command: "scripts/install_powerline-fonts"
+      optional: true
+
+    - description: "Apply macOS settings"
+      command: "macos/macos"
+      condition: '[[ "$OSTYPE" == "darwin"* ]]'
+      optional: true
