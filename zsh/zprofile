@@ -6,6 +6,9 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # Basic PATH configuration
 export PATH="${HOME}/bin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/curl/bin:${PATH}"
 
+# PostgreSQL configuration
+export PATH="/opt/homebrew/opt/postgresql@16/bin:${PATH}"
+
 # pyenv configuration
 PYENV_ROOT="$(pyenv root)"
 export PYENV_ROOT
