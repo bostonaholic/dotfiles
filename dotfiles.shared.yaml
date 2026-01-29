@@ -1,0 +1,66 @@
+# Dotfiles Configuration - SHARED
+# Configurations installed on both work and personal machines
+#
+# Usage: Merged with profile-specific YAML before installation
+
+directories:
+  - ~/bin
+  - ~/.claude
+  - ~/.config/ghostty
+  - ~/.config/git
+  - ~/.gnupg
+  - ~/.oh-my-zsh/custom/plugins/bostonaholic
+  - ~/.oh-my-zsh/custom/themes
+
+symlinks:
+  # Shared scripts (bin/)
+  shared/bin/alerter: ~/bin/alerter
+  shared/bin/icons: ~/bin/icons
+  shared/bin/git-ai-commit: ~/bin/git-ai-commit
+  shared/bin/git-ai-commit-msg: ~/bin/git-ai-commit-msg
+  shared/bin/monday: ~/bin/monday
+
+  # Claude (shared components)
+  shared/claude/agents: ~/.claude/agents
+  shared/claude/commands: ~/.claude/commands
+  shared/claude/CLAUDE.md: ~/.claude/CLAUDE.md
+
+  # Git (shared components)
+  shared/git/helpers: ~/.config/git/helpers
+  shared/git/ignore: ~/.config/git/ignore
+
+  # Terminal
+  shared/ghostty/config: ~/.config/ghostty/config
+
+  # GPG
+  shared/gpg/gpg-agent.conf: ~/.gnupg/gpg-agent.conf
+
+  # Ruby
+  shared/ruby/pryrc: ~/.pryrc
+
+packages:
+  brew:
+    bundle_file: Brewfile.shared
+
+scripts:
+  pre_install:
+    - description: "Validate sudo credentials"
+      command: "sudo --validate"
+
+  post_install:
+    - description: "Install oh-my-zsh"
+      command: "scripts/install_oh-my-zsh"
+      condition: "! [ -d ~/.oh-my-zsh ]"
+
+    - description: "Install Spacemacs"
+      command: "scripts/install_spacemacs"
+      condition: "! [ -d ~/.emacs.d ]"
+
+    - description: "Install vimrc"
+      command: "scripts/install_vimrc"
+      condition: "! [ -d ~/.vim_runtime ]"
+
+options:
+  backup_dir: ~/.dotfiles_backup
+  default_shell: zsh
+  verbose: false

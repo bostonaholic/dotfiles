@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__playground-slack-mcp__slack_configure_auth"
+    ],
+    "deny": []
+  }
+}

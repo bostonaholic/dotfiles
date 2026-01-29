@@ -1,0 +1,63 @@
+{
+  "apiKeyHelper": "/opt/dev/bin/user/devx llm-gateway print-token --key",
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://proxy.shopify.ai/vendors/anthropic-claude-code",
+    "MAX_THINKING_TOKENS": "31999"
+  },
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(DEV_NO_AUTO_UPDATE=1 /opt/dev/bin/dev:*)",
+      "Bash(DEV_NO_AUTO_UPDATE=1 /opt/dev/bin/devx:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh pr view:*)",
+      "Bash(git config:*)",
+      "Bash(git --version)",
+      "Bash(touch:*)"
+    ],
+    "deny": [
+      "Read(.env*)",
+      "Bash(rm -rf:*)"
+    ],
+    "ask": [
+      "Bash(git push:*)"
+    ]
+  },
+  "model": "opus",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/bin/alerter -title 'Claude Code' -message 'Waiting for input' -appIcon $HOME/bin/icons/claude.png -sound Hero -group claude-idle"
+          }
+        ]
+      },
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/bin/alerter -title 'Claude Code' -message 'Needs permission' -appIcon $HOME/bin/icons/claude.png -sound Hero -group claude-permission"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true,
+    "rpikit@rpikit": true,
+    "ralph-loop@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true
+}
