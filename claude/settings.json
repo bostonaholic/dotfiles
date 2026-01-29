@@ -71,5 +71,6 @@
     "superpowers@superpowers-marketplace": true,
     "typescript-lsp@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "model": "opus"
 }
