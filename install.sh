@@ -8,7 +8,7 @@
 #   then runs the main installer with the merged configuration.
 #
 # USAGE:
-#   ./install-v2.sh [OPTIONS]
+#   ./install.sh [OPTIONS]
 #
 # OPTIONS:
 #   All options are passed through to install.sh
@@ -169,7 +169,7 @@ main() {
     # Step 3: Run main installer with merged config
     log "Running installer with merged configuration..."
     echo
-    "$DOTFILES_DIR/install.sh" --config "$MERGED_CONFIG" "${PASSTHROUGH_ARGS[@]}"
+    "$DOTFILES_DIR/install.v1.sh" --config "$MERGED_CONFIG" "${PASSTHROUGH_ARGS[@]}"
     echo
 
     # Step 4: Install Homebrew packages (shared + profile)
