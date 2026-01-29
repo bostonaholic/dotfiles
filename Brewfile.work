@@ -1,0 +1,31 @@
+# frozen_string_literal: true
+
+# Brewfile.work - Work-specific packages (Shopify environment)
+#
+# Usage: brew bundle --file=Brewfile.work
+#
+# Note: Run after Brewfile.shared
+#
+
+# =============================================================================
+# AI Tools
+# =============================================================================
+
+tap 'jnsahaj/lumen'
+
+brew 'jnsahaj/lumen/lumen' # AI code review assistant
+
+# =============================================================================
+# Development Tools
+# =============================================================================
+
+brew 'watchman' # File watching service (for React Native, etc.)
+
+# =============================================================================
+# Languages
+# =============================================================================
+# Work uses Homebrew-managed versions (Shopify tooling handles version management)
+
+brew 'node'
+brew 'openssl' # Note: personal uses openssl@3
+brew 'python'
