@@ -1,0 +1,40 @@
+#!/bin/bash
+################################################################################
+# Monday - Weekly Dotfiles Update
+#
+# DESCRIPTION:
+#   Runs a complete update of dotfiles and all managed components.
+#   Intended to be run at the start of the week to ensure everything is current.
+#
+# USAGE:
+#   monday
+#
+# WHAT IT DOES:
+#   1. Changes to ~/dotfiles directory
+#   2. Runs update.sh which updates:
+#      - Dotfiles repository
+#      - Homebrew packages
+#      - Claude plugins
+#      - Vim/Spacemacs configurations
+#      - Ruby/Node/Python package managers
+#   3. Waits for all updates to complete
+#
+# DEPENDENCIES:
+#   - Dotfiles repository at ~/dotfiles
+#   - update.sh script
+#
+# NOTES:
+#   Named "monday" as a reminder to update everything at week start.
+#   Can take several minutes depending on number of updates available.
+#
+################################################################################
+
+set -eux -o pipefail
+
+(
+    cd "${HOME}/dotfiles"
+
+    ./update.sh
+
+    wait
+)

@@ -1,0 +1,24 @@
+# OS generated #
+################
+.DS_Store
+.Trashes
+Thumbs.db
+
+# IntelliJ #
+############
+.idea/
+*.iml
+
+# VS Code #
+##########
+.vscode/
+.lsp/
+
+# Progamming #
+##############
+scratch*
+.worktrees/
+.envrc
+
+**/.claude/settings.local.json
+.claude-code-mcp.log

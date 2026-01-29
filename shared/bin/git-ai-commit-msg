@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+################################################################################
+# Git AI Commit Message Generator
+#
+# DESCRIPTION:
+#   Generates commit messages using Claude AI without creating commits.
+#   Analyzes staged changes and outputs a conventional commit message to stdout.
+#   Non-interactive - suitable for git hooks and automation.
+#
+# USAGE:
+#   git ai-commit-msg [optional-context]
+#
+# ARGUMENTS:
+#   optional-context  - Additional context to guide message generation
+#
+# EXAMPLES:
+#   git ai-commit-msg                        # Generate message
+#   git ai-commit-msg "Refactoring for performance"  # With context
+#   git commit -m "$(git ai-commit-msg)"     # Use in git command
+#
+# COMMIT MESSAGE FORMAT:
+#   Follows conventional commit format:
+#   - type(scope): description
+#   - Types: feat, fix, docs, style, refactor, test, chore
+#   - First line under 72 characters
+#   - Focus on WHY, not just WHAT
+#   - Imperative mood (add, not added/adds)
+#
+# EXIT CODES:
+#   0 - Success (message generated)
+#   1 - Error (not in git repo, no staged changes, claude not available)
+#
+# DEPENDENCIES:
+#   - git (with staged changes)
+#   - claude CLI (Anthropic's Claude CLI tool)
+#
+# NOTES:
+#   Output goes to stdout, errors/diagnostics suppressed.
+#   Used by git-ai-commit for interactive workflow.
+#
+################################################################################
+
+set -euo pipefail
+
+# Get optional user context from first argument
+USER_CONTEXT="${1:-}"
+
+# Check if we're in a git repository
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    exit 1
+fi
+
+# Check if there are staged changes
+if git diff --cached --quiet; then
+    exit 1
+fi
+
+# Check if claude CLI is available
+if ! command -v claude &> /dev/null; then
+    exit 1
+fi
+
+# Get the staged diff (filter out null bytes)
+DIFF=$(git diff --cached | tr -d '\000')
+
+# Get recent commit messages for context (filter out null bytes)
+RECENT_COMMITS=$(git log --format='%s' -10 2>/dev/null | tr -d '\000' || echo "")
+
+# Build the prompt with optional user context
+PROMPT_FILE=$(mktemp)
+cat > "$PROMPT_FILE" <<EOF
+You are a git commit message expert. Analyze the following staged git diff and generate a concise, meaningful commit message.
+
+Follow these guidelines:
+1. Use conventional commit format: type(scope): description
+   - Types: feat, fix, docs, style, refactor, test, chore
+   - Scope is optional but encouraged
+2. Keep the first line under 72 characters
+3. Focus on WHY the change was made, not just WHAT changed
+4. Be specific and avoid vague messages like 'update files' or 'fix bug'
+5. Use imperative mood (e.g., 'add' not 'added' or 'adds')
+
+Here are recent commits from this repository for style reference:
+${RECENT_COMMITS}
+EOF
+
+# Add user context if provided
+if [ -n "$USER_CONTEXT" ]; then
+    cat >> "$PROMPT_FILE" <<EOF
+
+Additional context from the developer:
+${USER_CONTEXT}
+EOF
+fi
+
+# Add the diff and closing instructions
+cat >> "$PROMPT_FILE" <<EOF
+
+Staged diff:
+${DIFF}
+
+Generate ONLY the commit message, no explanations or additional text. If the change is complex, you may use a multi-line message with a blank line separating the subject from the body.
+EOF
+
+# Call Claude CLI and output result
+claude --model haiku --print --dangerously-skip-permissions < "$PROMPT_FILE" 2>/dev/null
+rm "$PROMPT_FILE"

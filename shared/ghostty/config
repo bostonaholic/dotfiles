@@ -1,0 +1,19 @@
+# https://usgraphics.com/products/berkeley-mono
+font-family = TX-02 Regular
+font-size = 16
+keybind = cmd+opt+left=previous_tab
+keybind = cmd+opt+right=next_tab
+keybind = shift+enter=text:\n
+
+mouse-hide-while-typing = true
+mouse-scroll-multiplier = 6
+shell-integration-features = ssh-terminfo,ssh-env
+window-inherit-working-directory = false
+window-new-tab-position = end
+window-padding-balance = true
+window-padding-x = 6
+window-padding-y = 6
+window-save-state = always
+
+# Theme - automatically switches based on system appearance
+theme = light:Builtin Solarized Light,dark:Builtin Solarized Dark
