@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 export PATH=$HOME/dotfiles/bin:$PATH
 
@@ -63,6 +63,52 @@ function wt() {
         command wt "$@"
     fi
 }
+
+# Completion for wt command (fzf-tab will automatically use fzf)
+function _wt() {
+    local -a subcommands
+    subcommands=(
+        'add:Create a new worktree'
+        'ls:List all worktrees'
+        'rm:Remove a worktree'
+        'cd:Change to worktree directory'
+        'path:Show path to a worktree'
+        'prune:Clean up stale worktree references'
+        'help:Show help'
+    )
+
+    _arguments -C \
+        '1: :->command' \
+        '*: :->args'
+
+    case $state in
+        command)
+            _describe -t commands 'wt command' subcommands
+            ;;
+        args)
+            case ${words[2]} in
+                cd|rm|path)
+                    # List worktree branches for completion
+                    local -a branches
+                    if git rev-parse --git-dir &>/dev/null; then
+                        branches=(${(f)"$(git worktree list --porcelain 2>/dev/null | awk '/^branch / { br = substr($0, 8); gsub(/^refs\/heads\//, "", br); print br }')"})
+                        _describe -t branches 'worktree branch' branches
+                    fi
+                    ;;
+                add)
+                    # For add, complete with all branches (local and remote)
+                    local -a all_branches
+                    if git rev-parse --git-dir &>/dev/null; then
+                        all_branches=(${(f)"$(git branch -a --format='%(refname:short)' 2>/dev/null | sed 's|^origin/||' | sort -u)"})
+                        _describe -t branches 'branch' all_branches
+                    fi
+                    ;;
+            esac
+            ;;
+    esac
+}
+
+compdef _wt wt
 
 # Ruby
 function bundle_close() {

@@ -7,3 +7,4 @@ repos:
       - id: shellcheck
         name: ShellCheck
         description: Run shellcheck to validate shell scripts
+        exclude: '\.plugin\.zsh$'
