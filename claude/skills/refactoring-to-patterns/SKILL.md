@@ -134,12 +134,14 @@ end
 ## When to Apply
 
 **Apply when:**
+
 - Smell is clear and recurring
 - Pattern simplifies the code
 - Team understands the pattern
 - Extension point needed now (not "someday")
 
 **Avoid when:**
+
 - Code already simple
 - Pattern adds more complexity than it removes
 - Guessing at future requirements (three strikes rule)

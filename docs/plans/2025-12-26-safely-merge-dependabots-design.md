@@ -21,6 +21,7 @@ An autonomous Claude Code command that discovers open Dependabot PRs, deeply ana
 ### Component 1: Command (`/safely-merge-dependabots`)
 
 User-facing entry point that:
+
 - Triggers the autonomous agent
 - Accepts optional arguments:
   - Specific PR numbers: `/safely-merge-dependabots 123 124`
@@ -31,6 +32,7 @@ User-facing entry point that:
 ### Component 2: Autonomous Agent (`dependabot-merger`)
 
 Core orchestrator that:
+
 - Discovers all open Dependabot PRs via `gh pr list`
 - Processes each PR sequentially
 - Leverages existing skills (gh-cli, systematic-debugging)
@@ -41,6 +43,7 @@ Core orchestrator that:
 ### Component 3: Analysis Workflow
 
 Five-phase analysis per PR:
+
 1. **Semver Classification** - Identify patch/minor/major updates
 2. **Changelog & Breaking Change Detection** - Multi-layered analysis
 3. **Dependency Tree Impact** - Check for conflicts and transitive issues
@@ -67,7 +70,7 @@ Five-phase analysis per PR:
 
 ## Decision Logic
 
-```
+```text
 For each Dependabot PR:
 ├─ Is it a major version update?
 │  └─ YES → SKIP (report: "Requires manual review")
@@ -105,6 +108,7 @@ For each Dependabot PR:
 **Project Understanding Strategy:**
 
 ### Phase 1: Project Discovery
+
 1. Explore project structure - read root directory contents
 2. Build context about the project:
    - What language(s) are used?
@@ -118,13 +122,16 @@ For each Dependabot PR:
    - What commands exist in automation directories? (bin/, scripts/, script/)
 
 ### Phase 2: Test Command Discovery
+
 Based on the context built above:
+
 1. **Prefer explicit documentation** - If README or docs mention test commands, use those
 2. **Check CI configuration** - This is the source of truth for what actually runs
 3. **Look for automation scripts** - Many projects have wrapper scripts
 4. **Fall back to framework defaults** - Only if no explicit commands found
 
 ### Phase 3: Test Execution
+
 - Use git worktree for branch isolation
 - Install dependencies if needed (detected from context)
 - Run tests with appropriate timeout (default: 10 minutes, configurable)
@@ -136,6 +143,7 @@ Based on the context built above:
 **Multi-Layered Analysis:**
 
 ### Layer 1: Changelog Analysis
+
 - Fetch release notes from GitHub API
 - Parse markdown structure (headers, lists, sections)
 - Look for breaking change indicators:
@@ -144,6 +152,7 @@ Based on the context built above:
   - Version jump patterns: 1.x → 2.0 with substantial changes listed
 
 ### Layer 2: API Surface Analysis
+
 - Grep the dependency's diff (if available via GitHub) for:
   - Removed public methods/functions/classes
   - Changed function signatures
@@ -153,11 +162,13 @@ Based on the context built above:
   - Check if removed APIs are actually used in your code
 
 ### Layer 3: Dependency Behavior Check
+
 - Review the dependency's own dependencies for major updates
 - Check if transitive dependencies introduce breaking changes
 - Validate that dependency resolution still works
 
 ### Layer 4: Community Signals
+
 - Check PR comments for warning signs from other users
 - Look for high issue activity on the release
 - GitHub Discussions or Issues mentioning "breaking" near release date
@@ -165,6 +176,7 @@ Based on the context built above:
 ### Risk Scoring
 
 Combine signals into a risk score:
+
 - Major version + breaking changes keyword = HIGH RISK → Skip
 - Minor version + "removed" in changelog = MEDIUM RISK → Extra scrutiny
 - Patch version + security fix = LOW RISK → Fast path
@@ -173,11 +185,13 @@ Combine signals into a risk score:
 ## Error Handling and Recovery
 
 **Failure Isolation:**
+
 - Each PR analysis is completely isolated
 - One failure doesn't stop the entire workflow
 - All errors are logged with context
 
 **Per-PR Error Handling:**
+
 - PR checkout fails → Log error, skip to next PR
 - Dependency install fails → Mark as "needs manual review", continue
 - Tests fail → Use systematic-debugging skill to diagnose, report findings, skip merge
@@ -185,6 +199,7 @@ Combine signals into a risk score:
 - Any phase times out → Fail safely, report timeout, skip merge
 
 **Graceful Degradation:**
+
 - Missing CI config → Use best-effort test discovery
 - Missing README → Skip documentation check, rely on other signals
 - GitHub API rate limits → Report clearly, suggest retry timing
@@ -194,7 +209,7 @@ Combine signals into a risk score:
 
 **Real-time updates as agent works:**
 
-```
+```text
 🔍 Discovering Dependabot PRs...
 Found 5 open Dependabot PRs
 
@@ -220,6 +235,7 @@ Summary Report:
 ```
 
 **Final Summary Report:**
+
 - Count of PRs processed/merged/skipped
 - Links to merged PRs
 - Detailed skip reasons with recommendations

@@ -15,13 +15,14 @@
 ## Task 1: Create Command Definition
 
 **Files:**
+
 - Create: `claude/commands/safely-merge-dependabots.md`
 
-**Step 1: Create command file with metadata and documentation**
+### Step 1.1: Create command file with metadata and documentation
 
 Create `claude/commands/safely-merge-dependabots.md`:
 
-```markdown
+````markdown
 ---
 name: safely-merge-dependabots
 description: Autonomously analyze and safely merge Dependabot PRs with comprehensive testing
@@ -52,6 +53,7 @@ $ARGUMENTS
 ### Argument Parsing
 
 Parse arguments to extract:
+
 - PR numbers: Any numeric arguments
 - Dry-run flag: Check for `--dry-run` in arguments
 - Timeout: Extract value after `--timeout` flag
@@ -73,6 +75,7 @@ This command invokes the `dependabot-merger` autonomous agent to:
 ## Safety Policy
 
 **Auto-merge conditions:**
+
 - ✓ PATCH or MINOR version updates only
 - ✓ All tests must pass
 - ✓ No breaking changes detected
@@ -80,6 +83,7 @@ This command invokes the `dependabot-merger` autonomous agent to:
 - ✓ Security fixes verified (if applicable)
 
 **Always skip (require manual review):**
+
 - ✗ MAJOR version updates
 - ✗ Breaking changes detected
 - ✗ Test failures
@@ -120,6 +124,7 @@ context:
 ```
 
 The agent will:
+
 - Load the `gh-cli` skill for GitHub operations
 - Load the `systematic-debugging` skill for test failure diagnosis
 - Execute the complete analysis and merge workflow
@@ -127,7 +132,7 @@ The agent will:
 
 ## Expected Output
 
-```
+```text
 🔍 Discovering Dependabot PRs...
 Found 5 open Dependabot PRs
 
@@ -158,18 +163,19 @@ Total time: 8m 43s
 - Each PR analyzed sequentially for safety and clear audit trail
 - All decisions logged with detailed reasoning
 - Never merges if any safety check fails
-```
+````
 
-**Step 2: Verify command file follows naming conventions**
+### Step 1.2: Verify command file follows naming conventions
 
 Check against existing commands:
+
 ```bash
 ls -la claude/commands/
 ```
 
 Expected: File exists, follows .md convention, has proper frontmatter
 
-**Step 3: Commit command definition**
+### Step 1.3: Commit command definition
 
 ```bash
 git add claude/commands/safely-merge-dependabots.md
@@ -185,13 +191,14 @@ safety checks."
 ## Task 2: Create Autonomous Agent - Part 1 (Setup & Discovery)
 
 **Files:**
+
 - Create: `claude/agents/dependabot-merger.md`
 
-**Step 1: Create agent file with metadata and overview**
+### Step 2.1: Create agent file with metadata and overview
 
 Create `claude/agents/dependabot-merger.md`:
 
-```markdown
+````markdown
 ---
 name: dependabot-merger
 model: opus
@@ -210,6 +217,7 @@ You are an autonomous agent that safely analyzes and merges Dependabot pull requ
 ### Prerequisites
 
 Before starting, load required skills:
+
 - Load `gh-cli` skill for GitHub operations
 - Load `systematic-debugging` skill for test failure diagnosis
 
@@ -225,13 +233,14 @@ TIMEOUT="10m"        # Test timeout duration
 ```
 
 Parse the arguments string to extract:
+
 - PR numbers: Any numeric values
 - `--dry-run` flag presence
 - `--timeout <value>` value
 
 **Report configuration:**
 
-```
+```text
 Configuration:
   Mode: [Dry-run / Live merge]
   PR Filter: [All Dependabot PRs / Specific PRs: #123, #124]
@@ -263,7 +272,7 @@ fi
 
 **Step 3: Report discovery results**
 
-```
+```text
 🔍 Discovering Dependabot PRs...
 Found 5 open Dependabot PRs:
   - PR #123: Bump nokogiri from 1.13.0 to 1.13.10
@@ -274,7 +283,8 @@ Found 5 open Dependabot PRs:
 ```
 
 If no PRs found:
-```
+
+```text
 🔍 Discovering Dependabot PRs...
 No open Dependabot PRs found. Nothing to process.
 ```
@@ -286,19 +296,19 @@ Exit gracefully with success status.
 For each PR in the list:
 
 1. Report starting analysis
-2. Execute 5-phase analysis (detailed below)
-3. Make merge decision
-4. Execute merge (if safe and not dry-run)
-5. Report results
-6. Continue to next PR (failures don't stop workflow)
+1. Execute 5-phase analysis (detailed below)
+1. Make merge decision
+1. Execute merge (if safe and not dry-run)
+1. Report results
+1. Continue to next PR (failures don't stop workflow)
 
-```
+```text
 📦 PR #123: Bump nokogiri from 1.13.0 to 1.13.10
   Processing...
 ```
-```
+````
 
-**Step 2: Commit agent setup and discovery**
+### Step 2.2: Commit agent setup and discovery
 
 ```bash
 git add claude/agents/dependabot-merger.md
@@ -315,13 +325,14 @@ Implements Phase 0-2 of agent workflow:
 ## Task 3: Create Autonomous Agent - Part 2 (Analysis Phase 1-2)
 
 **Files:**
+
 - Modify: `claude/agents/dependabot-merger.md`
 
-**Step 1: Add Phase 3 - Per-PR Analysis (Semver & Changelog)**
+### Step 3.1: Add Phase 3 - Per-PR Analysis (Semver & Changelog)
 
 Append to `claude/agents/dependabot-merger.md`:
 
-```markdown
+````markdown
 ### Phase 3: Five-Phase Analysis Per PR
 
 #### Analysis Phase 1: Semver Classification
@@ -340,15 +351,17 @@ gh pr view $PR_NUMBER --json title
 **Classify version change:**
 
 Use semantic versioning rules (MAJOR.MINOR.PATCH):
+
 - PATCH: Third number increases (1.13.0 → 1.13.10) - Low risk
 - MINOR: Second number increases (1.13.0 → 1.14.0) - Medium risk
 - MAJOR: First number increases (1.13.0 → 2.0.0) - High risk
 
 **Decision:**
+
 - MAJOR version → SKIP immediately, report: "Requires manual review for major version update"
 - MINOR or PATCH → Continue to next phase
 
-```
+```text
   ├─ Semver: PATCH (safe) ✓
   or
   ├─ Semver: MAJOR (requires review)
@@ -376,6 +389,7 @@ gh pr view $PR_NUMBER --json body
 Search changelog/release notes for breaking change indicators:
 
 **High-severity keywords (immediate SKIP):**
+
 - "BREAKING CHANGE"
 - "BREAKING:"
 - "breaking change"
@@ -385,6 +399,7 @@ Search changelog/release notes for breaking change indicators:
 - "Upgrading from"
 
 **Medium-severity keywords (extra scrutiny):**
+
 - "removed"
 - "deprecated"
 - "no longer"
@@ -393,6 +408,7 @@ Search changelog/release notes for breaking change indicators:
 - "changed behavior"
 
 **Context matters:**
+
 - "removed deprecated feature" → Breaking if you use that feature
 - "removed internal method" → Likely safe (internal API)
 - "fixed bug in X" → Safe (bug fixes are usually safe)
@@ -429,6 +445,7 @@ gh pr view $PR_NUMBER --json comments
 **Risk Scoring:**
 
 Combine all signals:
+
 - High-severity keyword found → HIGH RISK → SKIP
 - Medium-severity keyword + MINOR version → MEDIUM RISK → Extra scrutiny
 - Clean changelog + PATCH version → LOW RISK → Continue
@@ -436,16 +453,16 @@ Combine all signals:
 
 **Report:**
 
-```
+```text
   ├─ Changelog: Reviewing release notes...
   ├─ Breaking changes: None detected ✓
   or
   ├─ Breaking changes: DETECTED - "removed deprecated API" ✗
   └─ Decision: SKIP - Breaking changes detected
 ```
-```
+````
 
-**Step 2: Commit analysis phases 1-2**
+### Step 3.2: Commit analysis phases 1-2
 
 ```bash
 git add claude/agents/dependabot-merger.md
@@ -462,18 +479,20 @@ Implements Analysis Phase 1-2:
 ## Task 4: Create Autonomous Agent - Part 3 (Analysis Phase 3-5)
 
 **Files:**
+
 - Modify: `claude/agents/dependabot-merger.md`
 
-**Step 1: Add Analysis Phase 3 - Dependency Tree Check**
+### Step 4.1: Add Analysis Phase 3 - Dependency Tree Check
 
 Append to `claude/agents/dependabot-merger.md`:
 
-```markdown
+````markdown
 #### Analysis Phase 3: Dependency Tree Impact
 
 **Build project context first (if not already done):**
 
 Understand the project structure:
+
 - What's the package manager? (Gemfile→Bundler, package.json→npm/yarn, requirements.txt→pip, etc.)
 - Where are dependency files?
 - Are there lockfiles?
@@ -483,6 +502,7 @@ Understand the project structure:
 Execute package-manager-specific commands:
 
 **Ruby/Bundler:**
+
 ```bash
 # Check for dependency conflicts
 bundle check
@@ -492,6 +512,7 @@ bundle audit check
 ```
 
 **Node/npm:**
+
 ```bash
 # Check for dependency conflicts
 npm ls <package-name>
@@ -501,6 +522,7 @@ npm audit
 ```
 
 **Node/Yarn:**
+
 ```bash
 # Check for dependency conflicts
 yarn why <package-name>
@@ -510,6 +532,7 @@ yarn audit
 ```
 
 **Python/pip:**
+
 ```bash
 # Check if dependencies resolve
 pip check
@@ -519,13 +542,14 @@ pip install -r requirements.txt --dry-run
 ```
 
 **Evaluate results:**
+
 - No conflicts → Continue ✓
 - Conflicts detected → SKIP with details
 - Security vulnerabilities in other deps → Report but continue (this PR might fix them)
 
 **Report:**
 
-```
+```text
   ├─ Dependencies: No conflicts ✓
   or
   ├─ Dependencies: Conflicts detected ✗
@@ -540,6 +564,7 @@ pip install -r requirements.txt --dry-run
 **Step 1: Build project context**
 
 If not already done, understand:
+
 - Project structure (source, tests, configs)
 - Programming language(s)
 - Testing framework
@@ -548,6 +573,7 @@ If not already done, understand:
 **Discovery strategy:**
 
 1. **Check CI configuration** (source of truth):
+
    ```bash
    # GitHub Actions
    cat .github/workflows/*.yml | grep -A 10 "test"
@@ -559,7 +585,8 @@ If not already done, understand:
    cat .travis.yml | grep -A 10 "script"
    ```
 
-2. **Check documentation:**
+1. **Check documentation:**
+
    ```bash
    # README usually documents test commands
    grep -i "test\|running\|development" README.md
@@ -568,7 +595,8 @@ If not already done, understand:
    grep -i "test" CONTRIBUTING.md
    ```
 
-3. **Check for automation scripts:**
+1. **Check for automation scripts:**
+
    ```bash
    # Common locations
    ls -la bin/ script/ scripts/ | grep -i test
@@ -576,13 +604,13 @@ If not already done, understand:
    # Common names: test, test.sh, run_tests, etc.
    ```
 
-4. **Check package manager scripts:**
+1. **Check package manager scripts:**
    - `package.json` → `scripts.test`
    - `Gemfile` + `Rakefile` → `rake -T` (list tasks)
    - `Makefile` → `make help` or `cat Makefile | grep test`
    - `pyproject.toml` → test command config
 
-5. **Fall back to framework defaults:**
+1. **Fall back to framework defaults:**
    - Ruby: `rspec` or `rake test` or `ruby -Itest test/**/*_test.rb`
    - Node: `npm test` or `jest` or `mocha`
    - Python: `pytest` or `python -m unittest`
@@ -600,6 +628,7 @@ cd "$WORKTREE_PATH"
 **Step 3: Install dependencies**
 
 Based on package manager:
+
 - Bundler: `bundle install`
 - npm: `npm install`
 - yarn: `yarn install`
@@ -623,6 +652,7 @@ EXIT_CODE=$?
 - Other exit codes → Tests failed
 
 **If tests fail:**
+
 - Use `systematic-debugging` skill to diagnose
 - Capture test output
 - Parse for specific failures
@@ -638,7 +668,7 @@ git worktree remove "$WORKTREE_PATH" --force
 
 **Report:**
 
-```
+```text
   ├─ Tests: Running test suite...
   ├─ Tests: 847 passed in 2m 14s ✓
   or
@@ -662,20 +692,21 @@ gh pr view $PR_NUMBER --json body | grep -i "security\|CVE\|vulnerability"
 ```
 
 **If security fix:**
+
 - Note in report: "Fixes CVE-XXXX-YYYY"
 - Increases priority (security patches should merge ASAP)
 - Does not override other safety checks (tests must still pass)
 
 **Report:**
 
-```
+```text
   ├─ Security: Fixes CVE-2023-12345 ✓
   or
   ├─ Security: No security advisories
 ```
-```
+````
 
-**Step 2: Commit analysis phases 3-5**
+### Step 4.2: Commit analysis phases 3-5
 
 ```bash
 git add claude/agents/dependabot-merger.md
@@ -692,27 +723,29 @@ Implements Analysis Phase 3-5:
 ## Task 5: Create Autonomous Agent - Part 4 (Decision & Merge)
 
 **Files:**
+
 - Modify: `claude/agents/dependabot-merger.md`
 
-**Step 1: Add decision logic and merge execution**
+### Step 5.1: Add decision logic and merge execution
 
 Append to `claude/agents/dependabot-merger.md`:
 
-```markdown
+````markdown
 ### Phase 4: Make Merge Decision
 
 **Evaluate all analysis results:**
 
 Decision tree:
+
 1. Is it a MAJOR version? → SKIP
-2. Are breaking changes detected? → SKIP
-3. Are there dependency conflicts? → SKIP
-4. Did tests fail? → SKIP
-5. All checks passed? → MERGE (if not dry-run)
+1. Are breaking changes detected? → SKIP
+1. Are there dependency conflicts? → SKIP
+1. Did tests fail? → SKIP
+1. All checks passed? → MERGE (if not dry-run)
 
 **Report decision:**
 
-```
+```text
   └─ Decision: MERGE ✓
   or
   └─ Decision: SKIP - <reason>
@@ -721,6 +754,7 @@ Decision tree:
 **Create decision record:**
 
 Track for final summary:
+
 ```javascript
 {
   pr_number: 123,
@@ -737,6 +771,7 @@ Track for final summary:
 ### Phase 5: Execute Merge (If Approved)
 
 **Only if:**
+
 - Decision is MERGE
 - DRY_RUN is false
 
@@ -767,6 +802,7 @@ gh pr merge $PR_NUMBER --merge --auto
 **Handle merge errors:**
 
 If merge fails:
+
 - Capture error message
 - Report clearly
 - Mark as SKIP in final summary
@@ -774,7 +810,7 @@ If merge fails:
 
 **Report:**
 
-```
+```text
   └─ Action: Merged successfully ✓
   or
   └─ Action: Merge failed - <error message>
@@ -787,17 +823,17 @@ If merge fails:
 **After each PR:**
 
 1. Add result to summary tracking
-2. Print blank line for readability
-3. Continue to next PR
+1. Print blank line for readability
+1. Continue to next PR
 
 **Don't stop on failures:**
+
 - One PR failure doesn't affect others
 - Process all PRs in the list
 - Collect all results for final summary
+````
 
-```
-
-**Step 2: Commit decision and merge logic**
+### Step 5.2: Commit decision and merge logic
 
 ```bash
 git add claude/agents/dependabot-merger.md
@@ -815,68 +851,76 @@ Implements Phase 4-5:
 ## Task 6: Create Autonomous Agent - Part 5 (Error Handling & Reporting)
 
 **Files:**
+
 - Modify: `claude/agents/dependabot-merger.md`
 
-**Step 1: Add error handling and final reporting**
+### Step 6.1: Add error handling and final reporting
 
 Append to `claude/agents/dependabot-merger.md`:
 
-```markdown
+````markdown
 ### Phase 7: Error Handling Strategy
 
 **Failure isolation principles:**
 
 1. **Each PR is independent** - One failure doesn't stop workflow
-2. **Fail safely** - Errors always result in SKIP, never in bad merge
-3. **Log everything** - All errors captured with context
-4. **Graceful degradation** - Missing info increases scrutiny, doesn't crash
+1. **Fail safely** - Errors always result in SKIP, never in bad merge
+1. **Log everything** - All errors captured with context
+1. **Graceful degradation** - Missing info increases scrutiny, doesn't crash
 
 **Error categories and responses:**
 
 **GitHub API errors:**
-```
+
+```text
 Error: Rate limit exceeded
 Response: Report clearly, show reset time, suggest retry
 Action: Stop processing (can't continue without API)
 ```
 
 **Git errors:**
-```
+
+```text
 Error: Worktree creation failed
 Response: Report error, skip PR, continue to next
 Action: Clean up any partial worktree, continue
 ```
 
 **Test errors:**
-```
+
+```text
 Error: Test command not found
 Response: Report unable to verify tests, SKIP for safety
 Action: Continue to next PR
 ```
 
 **Timeout errors:**
-```
+
+```text
 Error: Tests exceeded timeout
 Response: Report timeout, SKIP (might be hanging)
 Action: Kill test process, clean up worktree, continue
 ```
 
 **Network errors:**
-```
+
+```text
 Error: Failed to fetch changelog
 Response: Note missing changelog, increase scrutiny
 Action: Continue analysis with available info
 ```
 
 **Dependency install errors:**
-```
+
+```text
 Error: Bundle install failed
 Response: Report error, SKIP (can't run tests without deps)
 Action: Clean up worktree, continue to next PR
 ```
 
 **Merge errors:**
-```
+
+```text
 Error: PR has conflicts
 Response: Report conflicts, SKIP, suggest manual resolution
 Action: Continue to next PR
@@ -894,7 +938,7 @@ Action: Continue to next PR
 
 **Structure:**
 
-```
+```text
 ═══════════════════════════════════════════════════════════
 SUMMARY: Dependabot PR Analysis Complete
 ═══════════════════════════════════════════════════════════
@@ -959,6 +1003,7 @@ Mode: [Live merge / Dry-run]
 ```
 
 **Include in summary:**
+
 - Total PRs processed
 - Count of merged vs skipped
 - Details for each merged PR (version, security, test results)
@@ -968,7 +1013,8 @@ Mode: [Live merge / Dry-run]
 - Mode (dry-run or live)
 
 **If dry-run mode:**
-```
+
+```text
 NOTE: Dry-run mode - No PRs were actually merged.
 To merge, run: /safely-merge-dependabots
 ```
@@ -977,35 +1023,40 @@ To merge, run: /safely-merge-dependabots
 
 **Report completion:**
 
-```
+```text
 Agent execution complete. Summary report above.
 ```
 
 **Exit status:**
+
 - Success: Even if some PRs skipped (that's expected behavior)
 - Failure: Only if agent couldn't execute at all (GitHub API unavailable, etc.)
 
 ## Agent Guidelines
 
 **Communication style:**
+
 - Use emoji for visual progress (🔍 📦 ✓ ✗)
 - Progress updates after each phase
 - Clear decision reasoning
 - Technical details without overwhelming
 
 **Autonomous operation:**
+
 - No user prompts during execution
 - Make decisions based on defined criteria
 - Report progress clearly
 - Only stop if critical error (GitHub API down, etc.)
 
 **Safety first:**
+
 - When in doubt, SKIP (fail safe)
 - Never merge if any check fails
 - All decisions logged and auditable
 - Dry-run mode for risk-free preview
 
 **Performance:**
+
 - Process PRs sequentially (not parallel)
 - Clean up resources (worktrees) after each PR
 - Timeout protection on tests
@@ -1014,24 +1065,27 @@ Agent execution complete. Summary report above.
 ## Skills Integration
 
 **Use `gh-cli` skill for:**
+
 - All GitHub PR operations
 - Repository settings queries
 - PR viewing, diffing, merging
 
 **Use `systematic-debugging` skill for:**
+
 - Diagnosing test failures
 - Parsing test output
 - Identifying root causes
 
 **Never:**
+
 - Merge without running tests
 - Merge major version updates
 - Merge with failing tests
 - Skip safety checks
 - Proceed with missing critical context
-```
+````
 
-**Step 2: Commit error handling and reporting**
+### Step 6.2: Commit error handling and reporting
 
 ```bash
 git add claude/agents/dependabot-merger.md
@@ -1049,15 +1103,16 @@ Implements Phase 7-8:
 ## Task 7: Update Dotfiles Configuration
 
 **Files:**
+
 - Read: `dotfiles.yaml`
 
-**Step 1: Check if claude/ symlinks are already configured**
+### Step 7.1: Check if claude/ symlinks are already configured
 
 ```bash
 cat dotfiles.yaml | grep -A 20 "symlinks:" | grep claude
 ```
 
-**Step 2: If not present, add claude symlinks**
+### Step 7.2: If not present, add claude symlinks
 
 If `claude/commands` and `claude/agents` are not symlinked, they need to be added to `dotfiles.yaml`:
 
@@ -1073,7 +1128,7 @@ symlinks:
 
 If already configured, skip this step.
 
-**Step 3: If modified, commit the change**
+### Step 7.3: If modified, commit the change
 
 ```bash
 # Only if dotfiles.yaml was modified
@@ -1089,10 +1144,11 @@ available to Claude Code."
 ## Task 8: Test Command Manually
 
 **Files:**
+
 - Test: `claude/commands/safely-merge-dependabots.md`
 - Test: `claude/agents/dependabot-merger.md`
 
-**Step 1: Verify files are in place**
+### Step 8.1: Verify files are in place
 
 ```bash
 ls -la claude/commands/safely-merge-dependabots.md
@@ -1101,7 +1157,7 @@ ls -la claude/agents/dependabot-merger.md
 
 Expected: Both files exist
 
-**Step 2: Check command syntax**
+### Step 8.2: Check command syntax
 
 ```bash
 # Verify frontmatter is valid YAML
@@ -1111,7 +1167,7 @@ head -5 claude/agents/dependabot-merger.md
 
 Expected: Valid YAML frontmatter with name, description, model
 
-**Step 3: Verify markdown formatting**
+### Step 8.3: Verify markdown formatting
 
 ```bash
 # Check for common markdown issues
@@ -1124,7 +1180,7 @@ cat claude/agents/dependabot-merger.md | grep -E "^#{1,6} " | head
 
 Expected: Proper heading hierarchy
 
-**Step 4: Manual integration test (if in a repo with Dependabot PRs)**
+### Step 8.4: Manual integration test (if in a repo with Dependabot PRs)
 
 If you have access to a repository with Dependabot PRs:
 
@@ -1137,7 +1193,7 @@ Expected: Agent executes, discovers PRs, analyzes, reports (no actual merges)
 
 If successful, note in commit message. If not available, note that testing should be done in a target repository.
 
-**Step 5: Document testing status**
+### Step 8.5: Document testing status
 
 Create a note about testing:
 
@@ -1179,13 +1235,14 @@ Dependabot PRs. Use --dry-run flag for risk-free initial testing."
 ## Task 9: Update Documentation
 
 **Files:**
+
 - Modify: `claude/CLAUDE.md` (or appropriate project documentation)
 
-**Step 1: Add command to documentation**
+### Step 9.1: Add command to documentation
 
 If there's a section listing Claude commands, add entry:
 
-```markdown
+````markdown
 ### Available Commands
 
 ...
@@ -1201,15 +1258,16 @@ Autonomously analyze and safely merge Dependabot PRs with comprehensive testing.
 - Supports dry-run mode and custom timeouts
 
 Usage:
+
 - `/safely-merge-dependabots` - Process all Dependabot PRs
 - `/safely-merge-dependabots --dry-run` - Preview without merging
 - `/safely-merge-dependabots 123 124` - Process specific PRs
 - `/safely-merge-dependabots --timeout 20m` - Override test timeout
 
 See: `claude/commands/safely-merge-dependabots.md` for full documentation
-```
+````
 
-**Step 2: Commit documentation update**
+### Step 9.2: Commit documentation update
 
 ```bash
 git add claude/CLAUDE.md  # or appropriate file
@@ -1224,9 +1282,10 @@ to the project's Claude Code command reference."
 ## Task 10: Final Verification and Cleanup
 
 **Files:**
+
 - Review: All created files
 
-**Step 1: Review all commits**
+### Step 10.1: Review all commits
 
 ```bash
 git log --oneline feature/safely-merge-dependabots ^main
@@ -1234,7 +1293,7 @@ git log --oneline feature/safely-merge-dependabots ^main
 
 Expected: Clean commit history with descriptive messages
 
-**Step 2: Verify all files are committed**
+### Step 10.2: Verify all files are committed
 
 ```bash
 git status
@@ -1242,7 +1301,7 @@ git status
 
 Expected: Clean working tree
 
-**Step 3: Review file structure**
+### Step 10.3: Review file structure
 
 ```bash
 ls -la claude/commands/safely-merge-dependabots.md
@@ -1253,11 +1312,11 @@ cat docs/plans/2025-12-26-safely-merge-dependabots-implementation.md | head -20
 
 Expected: All files exist and are well-formed
 
-**Step 4: Create summary of implementation**
+### Step 10.4: Create summary of implementation
 
 Document what was built:
 
-```
+```text
 Implementation complete:
 
 Files created:
@@ -1296,15 +1355,17 @@ Next steps:
 All tasks completed. The `/safely-merge-dependabots` command is ready for use.
 
 **Testing recommendations:**
+
 1. Find a repository with Dependabot PRs (or create test PRs)
-2. Run `/safely-merge-dependabots --dry-run` first
-3. Review the analysis and decisions
-4. If satisfied, run `/safely-merge-dependabots` for real merges
-5. Monitor first few merges closely
+1. Run `/safely-merge-dependabots --dry-run` first
+1. Review the analysis and decisions
+1. If satisfied, run `/safely-merge-dependabots` for real merges
+1. Monitor first few merges closely
 
 **Rollout strategy:**
+
 1. Test in low-risk personal projects first
-2. Test with patch updates only
-3. Gradually trust with minor updates
-4. Never allow major updates (by design)
-5. Build confidence over multiple successful merges
+1. Test with patch updates only
+1. Gradually trust with minor updates
+1. Never allow major updates (by design)
+1. Build confidence over multiple successful merges

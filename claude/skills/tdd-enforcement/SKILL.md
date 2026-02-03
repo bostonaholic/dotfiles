@@ -102,6 +102,7 @@ def test_premium_customers_receive_20_percent_discount():
 ```
 
 **Now TDD workflow is smooth:**
+
 1. Write test for pure function (no mocks needed)
 2. See it fail (red)
 3. Implement pure logic (green)

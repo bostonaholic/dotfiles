@@ -61,6 +61,7 @@ Named color map instead of inline escape codes:
 ## Benchmarking
 
 Both versions benchmarked with `--benchmark` flag:
+
 - 100 iterations with timing
 - Same test input JSON for fair comparison
 

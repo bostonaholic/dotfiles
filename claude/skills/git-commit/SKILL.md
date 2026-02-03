@@ -53,7 +53,7 @@ git log -1 --stat # Confirm commit
 
 ## Message Format
 
-```
+```text
 <type>: <subject - imperative mood, 50 chars>
 
 <body - explain WHY, wrap at 72 chars>
@@ -68,6 +68,7 @@ git log -1 --stat # Confirm commit
 ## Pre-commit Hook Changes
 
 If hooks modify files:
+
 1. Check authorship: `git log -1 --format='%an %ae'`
 2. Check not pushed: `git status` shows "ahead"
 3. If both true: `git add <files> && git commit --amend --no-edit`
@@ -76,6 +77,7 @@ If hooks modify files:
 ## Safety Rules
 
 **Never without explicit request:**
+
 - `--force`, `--force-with-lease`
 - `--amend` on others' commits or pushed commits
 - `--no-verify`, `--no-gpg-sign`
@@ -83,13 +85,14 @@ If hooks modify files:
 - `git config` changes
 
 **Never commit:**
+
 - `.env`, credentials, secrets, keys
 - Broken code (tests must pass)
 - Unrelated changes mixed together
 
 ## Examples
 
-```
+```text
 fix: prevent race condition in session creation
 
 Sessions were created before user validation completed, allowing
@@ -97,7 +100,7 @@ invalid users to briefly access protected resources. Moves session
 creation to after validation succeeds.
 ```
 
-```
+```text
 refactor: extract validation using Replace Conditional with Polymorphism
 
 Payment processor had 4-level nested conditionals. Applied Fowler's

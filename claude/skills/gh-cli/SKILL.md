@@ -27,6 +27,7 @@ GitHub operations should be fast, scriptable, and verifiable. Stay in terminal f
 ## Workflow 1: Creating a Pull Request
 
 ### 1. Gather Context (parallel)
+
 ```bash
 git status
 git diff main...HEAD
@@ -34,12 +35,14 @@ git log main..HEAD --oneline
 ```
 
 ### 2. Analyze
+
 - Understand every change in diff
 - No "wip" or "debug" commits
 - Branch has clear purpose
 - Tests exist for new functionality
 
 ### 3. Create PR
+
 ```bash
 git push -u origin HEAD
 
@@ -58,6 +61,7 @@ EOF
 ```
 
 ### 4. Verify
+
 ```bash
 gh pr view      # Confirm PR created
 gh pr checks    # Verify CI started
@@ -107,12 +111,14 @@ gh pr view 123 --json mergeable,mergeStateStatus
 ## Safety Protocols
 
 **Never do without explicit user request:**
+
 - `gh pr merge` - Always confirm first
 - `gh pr close` / `gh issue close`
 - `gh pr merge --admin` - Bypasses checks
 - Operations on repos you don't own
 
 **Always verify before operations:**
+
 - `gh auth status` - Check authentication
 - `gh repo view` - Confirm correct repo
 - `gh pr checks` - CI must pass before merge

@@ -13,22 +13,23 @@
 ## Task 1: Create dependency-analysis skill
 
 **Files:**
+
 - Create: `claude/skills/dependency-analysis/SKILL.md`
 - Create: `claude/skills/dependency-analysis/patterns/breaking-change-keywords.txt`
 - Create: `claude/skills/dependency-analysis/patterns/changelog-sections.txt`
 - Create: `claude/skills/dependency-analysis/templates/safety-report.md`
 
-**Step 1: Create skill directory structure**
+### Step 1: Create skill directory structure
 
 ```bash
 mkdir -p claude/skills/dependency-analysis/{patterns,templates}
 ```
 
-**Step 2: Write SKILL.md**
+### Step 2: Write SKILL.md
 
 Create `claude/skills/dependency-analysis/SKILL.md`:
 
-```markdown
+````markdown
 ---
 name: dependency-analysis
 description: Breaking change detection patterns and dependency safety analysis for PR reviews
@@ -141,9 +142,10 @@ Agent using this skill:
 - `patterns/breaking-change-keywords.txt` - Keyword lists by severity
 - `patterns/changelog-sections.txt` - Common section names
 - `templates/safety-report.md` - Output template
-```
 
-**Step 3: Write breaking-change-keywords.txt**
+````
+
+### Step 3: Write breaking-change-keywords.txt
 
 Create `claude/skills/dependency-analysis/patterns/breaking-change-keywords.txt`:
 
@@ -196,7 +198,7 @@ minimum version
 peer dependency
 ```
 
-**Step 4: Write changelog-sections.txt**
+### Step 4: Write changelog-sections.txt
 
 Create `claude/skills/dependency-analysis/patterns/changelog-sections.txt`:
 
@@ -208,8 +210,8 @@ Create `claude/skills/dependency-analysis/patterns/changelog-sections.txt`:
 BREAKING CHANGES
 Breaking Changes
 BREAKING
-⚠️ Breaking Changes
-💥 Breaking Changes
+Breaking Changes
+Breaking Changes
 Migration Guide
 Upgrade Guide
 Upgrading
@@ -254,15 +256,15 @@ CVE
 Vulnerabilities
 ```
 
-**Step 5: Write safety-report.md template**
+### Step 5: Write safety-report.md template
 
 Create `claude/skills/dependency-analysis/templates/safety-report.md`:
 
-```markdown
+````markdown
 # Dependency Safety Report
 
 **Dependency:** {package_name}
-**Version Change:** {old_version} → {new_version}
+**Version Change:** {old_version} -> {new_version}
 **Semver Classification:** {MAJOR|MINOR|PATCH}
 
 ## Risk Assessment
@@ -294,26 +296,30 @@ Create `claude/skills/dependency-analysis/templates/safety-report.md`:
 ## Evidence
 
 ### Changelog Excerpts
-```
+
+```text
 {relevant changelog sections}
 ```
 
 ### Keywords Found
+
 {list any breaking change keywords detected}
 
 ## Next Steps
 
 {if SKIP or MANUAL_REVIEW, provide guidance}
-```
 
-**Step 6: Verify skill structure**
+````
+
+### Step 6: Verify skill structure
 
 ```bash
 ls -R claude/skills/dependency-analysis/
 ```
 
 Expected output:
-```
+
+```text
 claude/skills/dependency-analysis/:
 SKILL.md  patterns/  templates/
 
@@ -324,7 +330,7 @@ claude/skills/dependency-analysis/templates:
 safety-report.md
 ```
 
-**Step 7: Commit**
+### Step 7: Commit
 
 ```bash
 git add claude/skills/dependency-analysis/
@@ -345,22 +351,23 @@ Enables reusable dependency analysis across agents and workflows."
 ## Task 2: Create project-context-discovery skill
 
 **Files:**
+
 - Create: `claude/skills/project-context-discovery/SKILL.md`
 - Create: `claude/skills/project-context-discovery/patterns/package-managers.yaml`
 - Create: `claude/skills/project-context-discovery/patterns/test-frameworks.yaml`
 - Create: `claude/skills/project-context-discovery/patterns/ci-configs.yaml`
 
-**Step 1: Create skill directory structure**
+### Step 1: Create skill directory structure (Task 2)
 
 ```bash
 mkdir -p claude/skills/project-context-discovery/patterns
 ```
 
-**Step 2: Write SKILL.md**
+### Step 2: Write SKILL.md (Task 2)
 
 Create `claude/skills/project-context-discovery/SKILL.md`:
 
-```markdown
+````markdown
 ---
 name: project-context-discovery
 description: Discover project structure, package managers, test frameworks, and automation without hardcoded assumptions
@@ -391,69 +398,72 @@ Use this skill when:
 ### Phase 1: Project Structure Exploration
 
 1. **List root directory contents**
+
    ```bash
    ls -la
    ```
 
-2. **Identify language(s) from file extensions**
-   - `.rb` → Ruby
-   - `.js`/`.ts` → JavaScript/TypeScript
-   - `.py` → Python
-   - `.go` → Go
-   - `.rs` → Rust
+1. **Identify language(s) from file extensions**
+   - `.rb` -> Ruby
+   - `.js`/`.ts` -> JavaScript/TypeScript
+   - `.py` -> Python
+   - `.go` -> Go
+   - `.rs` -> Rust
    - Multiple languages? Note all
 
-3. **Find configuration files** (see `patterns/package-managers.yaml`)
-   - `package.json` → npm/yarn/pnpm
-   - `Gemfile` → Bundler (Ruby)
-   - `Cargo.toml` → Cargo (Rust)
-   - `go.mod` → Go modules
-   - `pyproject.toml` → Poetry/pip
-   - `requirements.txt` → pip
+1. **Find configuration files** (see `patterns/package-managers.yaml`)
+   - `package.json` -> npm/yarn/pnpm
+   - `Gemfile` -> Bundler (Ruby)
+   - `Cargo.toml` -> Cargo (Rust)
+   - `go.mod` -> Go modules
+   - `pyproject.toml` -> Poetry/pip
+   - `requirements.txt` -> pip
 
 ### Phase 2: Test Framework Discovery
 
 1. **Check CI configuration first** (see `patterns/ci-configs.yaml`)
-   - `.github/workflows/*.yml` → GitHub Actions
-   - `.circleci/config.yml` → CircleCI
-   - `.travis.yml` → Travis CI
-   - `Jenkinsfile` → Jenkins
+   - `.github/workflows/*.yml` -> GitHub Actions
+   - `.circleci/config.yml` -> CircleCI
+   - `.travis.yml` -> Travis CI
+   - `Jenkinsfile` -> Jenkins
 
    CI config is **source of truth** for what actually runs.
 
-2. **Parse CI test commands**
+1. **Parse CI test commands**
    Look for `run:` or `script:` sections with test commands.
 
-3. **Check package manager configuration** (see `patterns/test-frameworks.yaml`)
-   - `package.json` → check `scripts.test`
-   - `Gemfile` → check for test gems (rspec, minitest)
-   - `Cargo.toml` → check for test dependencies
-   - `pyproject.toml` → check test tools
+1. **Check package manager configuration** (see `patterns/test-frameworks.yaml`)
+   - `package.json` -> check `scripts.test`
+   - `Gemfile` -> check for test gems (rspec, minitest)
+   - `Cargo.toml` -> check for test dependencies
+   - `pyproject.toml` -> check test tools
 
-4. **Look for test directories**
+1. **Look for test directories**
+
    ```bash
    ls -d test/ tests/ spec/ __tests__/ 2>/dev/null
    ```
 
-5. **Check for framework config files**
-   - `jest.config.js` → Jest
-   - `.rspec` → RSpec
-   - `pytest.ini` → pytest
-   - `phpunit.xml` → PHPUnit
+1. **Check for framework config files**
+   - `jest.config.js` -> Jest
+   - `.rspec` -> RSpec
+   - `pytest.ini` -> pytest
+   - `phpunit.xml` -> PHPUnit
 
 ### Phase 3: Automation Script Discovery
 
 1. **Check documented commands** (prefer explicit over implicit)
-   - `README.md` → look for "Testing", "Development", "Getting Started"
-   - `CONTRIBUTING.md` → look for contribution workflow
-   - `Makefile` → look for test targets
+   - `README.md` -> look for "Testing", "Development", "Getting Started"
+   - `CONTRIBUTING.md` -> look for contribution workflow
+   - `Makefile` -> look for test targets
 
-2. **Check automation directories**
+1. **Check automation directories**
+
    ```bash
    ls bin/ scripts/ script/ .local/bin/ 2>/dev/null
    ```
 
-3. **Check package manager scripts**
+1. **Check package manager scripts**
    - npm: `npm run` (lists all scripts)
    - Bundler: `bundle exec rake -T`
    - Make: `make help` or `make -n`
@@ -463,6 +473,7 @@ Use this skill when:
 Based on discovered package manager:
 
 **Node.js:**
+
 ```bash
 if [ -f package-lock.json ]; then npm ci
 elif [ -f yarn.lock ]; then yarn install --frozen-lockfile
@@ -471,22 +482,26 @@ else npm install; fi
 ```
 
 **Ruby:**
+
 ```bash
 bundle install
 ```
 
 **Python:**
+
 ```bash
 if [ -f pyproject.toml ]; then poetry install
 elif [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 ```
 
 **Go:**
+
 ```bash
 go mod download
 ```
 
 **Rust:**
+
 ```bash
 cargo build
 ```
@@ -494,28 +509,34 @@ cargo build
 ### Phase 5: Test Command Construction
 
 **Preference order:**
+
 1. **Explicit documentation** (README/CONTRIBUTING)
-2. **CI configuration** (source of truth)
-3. **Package manager scripts** (npm test, rake test)
-4. **Framework defaults** (only as fallback)
+1. **CI configuration** (source of truth)
+1. **Package manager scripts** (npm test, rake test)
+1. **Framework defaults** (only as fallback)
 
 **Examples:**
 
 If CI config shows:
+
 ```yaml
 run: npm run test:ci
 ```
+
 Use: `npm run test:ci`
 
 If package.json shows:
+
 ```json
 "scripts": {
   "test": "jest --coverage"
 }
 ```
+
 Use: `npm test`
 
 If no explicit command, framework defaults:
+
 - Jest: `npx jest`
 - RSpec: `bundle exec rspec`
 - pytest: `pytest`
@@ -525,10 +546,11 @@ If no explicit command, framework defaults:
 ## Graceful Degradation
 
 If discovery fails at any phase:
+
 1. Note what couldn't be determined
-2. Make best-effort guess with caveats
-3. Provide fallback options
-4. Report incomplete discovery to user
+1. Make best-effort guess with caveats
+1. Provide fallback options
+1. Report incomplete discovery to user
 
 **Never fail completely** - always provide a path forward.
 
@@ -549,14 +571,15 @@ Agent using this skill:
 7. Execute: npm ci && npm run test:unit && npm run test:integration
 ```
 
-## Supporting Files
+## Supporting Files (Project Context Discovery)
 
 - `patterns/package-managers.yaml` - Package manager detection rules
 - `patterns/test-frameworks.yaml` - Test framework indicators
 - `patterns/ci-configs.yaml` - CI configuration file paths
-```
 
-**Step 3: Write package-managers.yaml**
+````
+
+### Step 3: Write package-managers.yaml
 
 Create `claude/skills/project-context-discovery/patterns/package-managers.yaml`:
 
@@ -640,7 +663,7 @@ priority:
   - go_modules
 ```
 
-**Step 4: Write test-frameworks.yaml**
+### Step 4: Write test-frameworks.yaml
 
 Create `claude/skills/project-context-discovery/patterns/test-frameworks.yaml`:
 
@@ -748,7 +771,7 @@ detection_strategy:
   6: "Fall back to framework defaults"
 ```
 
-**Step 5: Write ci-configs.yaml**
+### Step 5: Write ci-configs.yaml
 
 Create `claude/skills/project-context-discovery/patterns/ci-configs.yaml`:
 
@@ -824,14 +847,15 @@ ci_analysis:
     - cargo build
 ```
 
-**Step 6: Verify skill structure**
+### Step 6: Verify skill structure (Task 2)
 
 ```bash
 ls -R claude/skills/project-context-discovery/
 ```
 
 Expected output:
-```
+
+```text
 claude/skills/project-context-discovery/:
 SKILL.md  patterns/
 
@@ -839,7 +863,7 @@ claude/skills/project-context-discovery/patterns:
 ci-configs.yaml  package-managers.yaml  test-frameworks.yaml
 ```
 
-**Step 7: Commit**
+### Step 7: Commit (Task 2)
 
 ```bash
 git add claude/skills/project-context-discovery/
@@ -860,9 +884,10 @@ Enables context-aware testing without hardcoded assumptions."
 ## Task 3: Extend gh-cli skill with merge workflow
 
 **Files:**
+
 - Create: `claude/skills/gh-cli/workflows/merge-pr.md`
 
-**Step 1: Check if gh-cli skill exists**
+### Step 1: Check if gh-cli skill exists
 
 ```bash
 ls claude/skills/gh-cli/ 2>/dev/null || echo "Skill not found"
@@ -870,17 +895,17 @@ ls claude/skills/gh-cli/ 2>/dev/null || echo "Skill not found"
 
 If skill doesn't exist, note that we'll create a minimal gh-cli skill structure.
 
-**Step 2: Create workflows directory if needed**
+### Step 2: Create workflows directory if needed
 
 ```bash
 mkdir -p claude/skills/gh-cli/workflows
 ```
 
-**Step 3: Write merge-pr.md workflow**
+### Step 3: Write merge-pr.md workflow
 
 Create `claude/skills/gh-cli/workflows/merge-pr.md`:
 
-```markdown
+````markdown
 # GitHub PR Merge Workflow
 
 Safe PR merging strategies using GitHub CLI.
@@ -901,11 +926,13 @@ gh repo view --json mergeCommitAllowed,squashMergeAllowed,rebaseMergeAllowed
 ### Strategy Selection
 
 **Prefer in this order:**
+
 1. **Squash** - Clean history for dependency updates
-2. **Merge commit** - Preserves PR structure
-3. **Rebase** - Linear history
+1. **Merge commit** - Preserves PR structure
+1. **Rebase** - Linear history
 
 For automated dependency updates (Dependabot, Renovate):
+
 - **Always use squash** if available
 - Single logical change = single commit
 
@@ -927,6 +954,7 @@ gh pr merge <number> --auto --rebase --delete-branch
 ```
 
 **Why auto-merge:**
+
 - Waits for CI checks to pass
 - Waits for required reviews
 - Safer than immediate merge
@@ -963,7 +991,7 @@ gh pr view <number> --json state,merged,mergedAt
 # }
 ```
 
-## Error Handling
+## Error Handling (Merge Workflow)
 
 ### Merge Conflicts
 
@@ -977,6 +1005,7 @@ gh pr view <number> --json mergeable
 ```
 
 If conflicting:
+
 - Skip merge
 - Report conflict to user
 - Recommend manual resolution
@@ -996,6 +1025,7 @@ Never merge with failing checks.
 ### Permission Errors
 
 If merge fails with permission error:
+
 - Report to user
 - Provide PR URL for manual merge
 - Don't retry automatically
@@ -1006,17 +1036,17 @@ If merge fails with permission error:
    - Keeps repository clean
    - No orphaned branches
 
-2. **Prefer --auto over immediate merge**
+1. **Prefer --auto over immediate merge**
    - Safer (waits for checks)
    - Non-blocking
    - Handles race conditions
 
-3. **Verify merge succeeded**
+1. **Verify merge succeeded**
    - Don't assume success
    - Check actual state
    - Report failures clearly
 
-4. **Handle dry-run mode**
+1. **Handle dry-run mode**
    - Show what would be merged
    - Don't execute actual merge
    - Provide clear indication
@@ -1068,15 +1098,17 @@ echo "  Method: auto-merge (wait for checks)"
 ## Integration with Agents
 
 Agents using this workflow should:
-1. Check merge strategy availability
-2. Verify PR is mergeable
-3. Check CI status
-4. Enable auto-merge (preferred)
-5. Verify auto-merge enabled
-6. Report success/failure clearly
-```
 
-**Step 4: Verify workflow created**
+1. Check merge strategy availability
+1. Verify PR is mergeable
+1. Check CI status
+1. Enable auto-merge (preferred)
+1. Verify auto-merge enabled
+1. Report success/failure clearly
+
+````
+
+### Step 4: Verify workflow created
 
 ```bash
 ls -la claude/skills/gh-cli/workflows/merge-pr.md
@@ -1084,7 +1116,7 @@ ls -la claude/skills/gh-cli/workflows/merge-pr.md
 
 Expected: File exists with merge workflow content.
 
-**Step 5: Commit**
+### Step 5: Commit (Task 3)
 
 ```bash
 git add claude/skills/gh-cli/
@@ -1105,13 +1137,14 @@ Enables safe automated PR merging in agents."
 ## Task 4: Create pr-analyzer worker agent
 
 **Files:**
+
 - Create: `claude/agents/pr-analyzer.md`
 
-**Step 1: Write pr-analyzer agent**
+### Step 1: Write pr-analyzer agent
 
 Create `claude/agents/pr-analyzer.md`:
 
-```markdown
+````markdown
 ---
 name: pr-analyzer
 description: Analyze a single Dependabot PR for safety - semver, breaking changes, dependencies
@@ -1148,6 +1181,7 @@ gh pr view $PR_NUMBER --json title,author,body,files
 ```
 
 **Extract:**
+
 - Package name
 - Old version
 - New version
@@ -1157,54 +1191,61 @@ gh pr view $PR_NUMBER --json title,author,body,files
 ### Phase 2: Semver Classification
 
 Parse version numbers:
-- Old: `1.13.0` → [1, 13, 0]
-- New: `1.13.10` → [1, 13, 10]
+
+- Old: `1.13.0` -> [1, 13, 0]
+- New: `1.13.10` -> [1, 13, 10]
 
 **Apply semver rules:**
-- If major (first number) changed → MAJOR
-- Else if minor (second number) changed → MINOR
-- Else if patch (third number) changed → PATCH
+
+- If major (first number) changed -> MAJOR
+- Else if minor (second number) changed -> MINOR
+- Else if patch (third number) changed -> PATCH
 
 **Risk by semver:**
-- MAJOR → HIGH RISK (always skip)
-- MINOR → MEDIUM RISK (needs analysis)
-- PATCH → LOW RISK (safe if no breaking changes)
+
+- MAJOR -> HIGH RISK (always skip)
+- MINOR -> MEDIUM RISK (needs analysis)
+- PATCH -> LOW RISK (safe if no breaking changes)
 
 **Decision:**
-- MAJOR → Return immediately with "skip" recommendation
-- MINOR/PATCH → Continue to next phase
+
+- MAJOR -> Return immediately with "skip" recommendation
+- MINOR/PATCH -> Continue to next phase
 
 ### Phase 3: Breaking Change Detection
 
 **Use `dependency-analysis` skill** for four-layer analysis.
 
-**Layer 1: Fetch Changelog**
+#### Layer 1: Fetch Changelog
 
 ```bash
 # Try to fetch release notes from GitHub
 # Pattern: owner/repo can be extracted from git remote
 remote=$(git remote get-url origin)
-# Parse: git@github.com:owner/repo.git → owner/repo
-#     or https://github.com/owner/repo.git → owner/repo
+# Parse: git@github.com:owner/repo.git -> owner/repo
+#     or https://github.com/owner/repo.git -> owner/repo
 
 # Get release notes
 gh release view "v$NEW_VERSION" --repo "$PACKAGE_REPO" --json body -q .body
 ```
 
 If release notes found:
+
 - Parse markdown structure
 - Look for breaking change sections (use skill patterns)
 
-**Layer 2: Keyword Search**
+#### Layer 2: Keyword Search
 
 Search changelog/release notes for keywords from `dependency-analysis` skill:
+
 - High severity: "BREAKING CHANGE", "backwards incompatible"
 - Medium severity: "removed", "deprecated", "no longer"
 - Low severity: "changed default", "renamed"
 
-**Layer 3: API Surface Analysis**
+#### Layer 3: API Surface Analysis
 
 For MINOR/MAJOR versions:
+
 ```bash
 # Fetch the diff or commit messages
 gh pr diff $PR_NUMBER
@@ -1215,7 +1256,7 @@ gh pr diff $PR_NUMBER
 # - New peer dependencies
 ```
 
-**Layer 4: Community Signals**
+#### Layer 4: Community Signals
 
 ```bash
 # Check recent issues mentioning "breaking"
@@ -1228,16 +1269,19 @@ gh issue list --repo "$PACKAGE_REPO" --search "breaking" --limit 5 --json number
 **Risk Scoring (use dependency-analysis skill rubric):**
 
 HIGH RISK if:
+
 - MAJOR version
 - "BREAKING CHANGE" found
 - Migration guide present
 - Removed APIs detected
 
 MEDIUM RISK if:
+
 - MINOR version with "removed"/"deprecated"
 - Substantial changelog with many changes
 
 LOW RISK if:
+
 - PATCH version
 - Security fix only
 - Minor bugfixes
@@ -1257,7 +1301,7 @@ bundle check 2>&1 | grep -i "conflict"
 # For cargo:
 cargo check 2>&1 | grep -i "conflict"
 
-# If any conflicts found → HIGH RISK
+# If any conflicts found -> HIGH RISK
 ```
 
 ### Phase 5: Generate Safety Report
@@ -1284,7 +1328,7 @@ Use `dependency-analysis` skill template (`templates/safety-report.md`):
 }
 ```
 
-## Output Format
+## Output Format (PR Analyzer)
 
 Return structured JSON for orchestrator:
 
@@ -1305,29 +1349,33 @@ Return structured JSON for orchestrator:
 }
 ```
 
-## Error Handling
+## Error Handling (PR Analyzer)
 
 **Changelog fetch fails:**
+
 - Note in report
 - Increase scrutiny for MINOR/MAJOR
 - Still analyze what's available
 - Continue with analysis
 
 **GitHub API rate limit:**
+
 - Report to orchestrator
 - Return incomplete analysis
 - Recommendation: "manual-review"
 
 **Cannot parse version:**
+
 - Report error
 - Recommendation: "manual-review"
 
 **Unknown package repository:**
+
 - Skip Layer 1, 4 (no changelog/community check)
 - Rely on semver + Layer 2 (keyword search in PR body)
 - Note limitation in report
 
-## Example Execution
+## Example Execution (PR Analyzer)
 
 ```markdown
 Input: PR #123
@@ -1362,17 +1410,19 @@ Step 5: Generate report
 Output: {safe: true, risk: "low", ...}
 ```
 
-## Integration with Orchestrator
+## Integration with Orchestrator (PR Analyzer)
 
 Orchestrator invokes this agent with:
+
 ```markdown
 Analyze PR #123 for safety. Return structured JSON report.
 ```
 
 Agent returns JSON for orchestrator to make merge decision.
-```
 
-**Step 2: Verify agent file**
+````
+
+### Step 2: Verify agent file
 
 ```bash
 wc -l claude/agents/pr-analyzer.md
@@ -1380,7 +1430,7 @@ wc -l claude/agents/pr-analyzer.md
 
 Expected: ~250 lines
 
-**Step 3: Test agent structure**
+### Step 3: Test agent structure
 
 ```bash
 # Check YAML frontmatter
@@ -1388,7 +1438,8 @@ head -5 claude/agents/pr-analyzer.md
 ```
 
 Expected output:
-```
+
+```text
 ---
 name: pr-analyzer
 description: Analyze a single Dependabot PR for safety - semver, breaking changes, dependencies
@@ -1396,7 +1447,7 @@ model: sonnet
 ---
 ```
 
-**Step 4: Commit**
+### Step 4: Commit (Task 4)
 
 ```bash
 git add claude/agents/pr-analyzer.md
@@ -1417,13 +1468,14 @@ Output: JSON report for orchestrator decision-making"
 ## Task 5: Create test-runner worker agent
 
 **Files:**
+
 - Create: `claude/agents/test-runner.md`
 
-**Step 1: Write test-runner agent**
+### Step 1: Write test-runner agent
 
 Create `claude/agents/test-runner.md`:
 
-```markdown
+````markdown
 ---
 name: test-runner
 description: Execute tests for a PR in isolated git worktree with comprehensive diagnostics
@@ -1574,6 +1626,7 @@ If tests failed (exit code != 0 and != 124):
 **Use `systematic-debugging` skill:**
 
 1. **Identify failed tests:**
+
    ```bash
    # Parse test output for failures
    # Format varies by framework
@@ -1581,20 +1634,21 @@ If tests failed (exit code != 0 and != 124):
    # RSpec: "Failures: rspec spec/file_spec.rb:42"
    ```
 
-2. **Categorize failures:**
+1. **Categorize failures:**
    - Syntax errors
    - Import/require errors
    - Assertion failures
    - Timeout errors
    - Setup/teardown errors
 
-3. **Diagnose root cause:**
+1. **Diagnose root cause:**
    - Is failure related to dependency change?
    - Is it a pre-existing failure?
    - Is it a test environment issue?
 
-4. **Provide diagnostic report:**
-   ```
+1. **Provide diagnostic report:**
+
+   ```text
    Test Failure Diagnosis:
    - 3 tests failed in test/api.test.js
    - Error: Cannot find module 'removed-package'
@@ -1622,7 +1676,7 @@ if [ -d "$WORKTREE_PATH" ]; then
 fi
 ```
 
-## Output Format
+## Output Format (Test Runner)
 
 Return structured JSON for orchestrator:
 
@@ -1674,31 +1728,35 @@ If timed out:
 }
 ```
 
-## Error Handling
+## Error Handling (Test Runner)
 
 **Worktree creation fails:**
+
 - Report error to orchestrator
 - Return: `{passed: false, diagnostics: "Failed to create worktree"}`
 - Don't attempt cleanup (nothing to clean)
 
 **Dependency installation fails:**
+
 - Report error with installation logs
 - Cleanup worktree
 - Return: `{passed: false, diagnostics: "Dependency installation failed: <error>"}`
 - Recommendation: "manual-review"
 
 **Test command not found:**
+
 - Report discovery failure
 - Cleanup worktree
 - Return: `{passed: false, diagnostics: "Could not determine test command"}`
 - Recommendation: "manual-review"
 
 **Cleanup fails:**
+
 - Log warning
 - Report to orchestrator (don't block on cleanup failure)
 - Try manual cleanup: `rm -rf "$WORKTREE_PATH"`
 
-## Example Execution
+## Example Execution (Test Runner)
 
 ```markdown
 Input: PR #123, timeout: 10m
@@ -1734,9 +1792,10 @@ Phase 6: Cleanup
 Output: {passed: true, tests_run: 847, ...}
 ```
 
-## Integration with Orchestrator
+## Integration with Orchestrator (Test Runner)
 
 Orchestrator invokes this agent with:
+
 ```markdown
 Run tests for PR #123 with timeout 10m. Return structured JSON report.
 ```
@@ -1749,9 +1808,10 @@ Agent returns JSON for orchestrator to make merge decision.
 - Worktree isolation prevents main directory pollution
 - Cleanup always runs (via trap or explicit)
 - Timeout prevents infinite hangs
-```
 
-**Step 2: Verify agent file**
+````
+
+### Step 2: Verify agent file (Task 5)
 
 ```bash
 wc -l claude/agents/test-runner.md
@@ -1759,14 +1819,14 @@ wc -l claude/agents/test-runner.md
 
 Expected: ~300 lines
 
-**Step 3: Test agent structure**
+### Step 3: Test agent structure (Task 5)
 
 ```bash
 # Check YAML frontmatter
 head -5 claude/agents/test-runner.md
 ```
 
-**Step 4: Commit**
+### Step 4: Commit (Task 5)
 
 ```bash
 git add claude/agents/test-runner.md
@@ -1789,13 +1849,14 @@ Output: JSON with test results and diagnostics"
 ## Task 6: Create security-checker worker agent
 
 **Files:**
+
 - Create: `claude/agents/security-checker.md`
 
-**Step 1: Write security-checker agent**
+### Step 1: Write security-checker agent
 
 Create `claude/agents/security-checker.md`:
 
-```markdown
+````markdown
 ---
 name: security-checker
 description: Verify security advisories for Dependabot PRs via GitHub API
@@ -1833,12 +1894,14 @@ gh pr view $PR_NUMBER --json body -q .body
 ```
 
 **Look for patterns:**
+
 - "Vulnerabilities fixed"
 - "CVE-" followed by year and number
 - "Security update"
 - "Security fix"
 
 If no security indicators found:
+
 - Return: `{is_security_fix: false}`
 - Skip remaining phases
 
@@ -1861,6 +1924,7 @@ done
 ```
 
 **Expected output format:**
+
 ```json
 {
   "cve": "CVE-2023-12345",
@@ -1886,14 +1950,16 @@ FIXED_IN=$(gh api /advisories/$CVE --jq '.patched_versions[]')
 ```
 
 **Verification result:**
+
 - Fix verified: New version meets or exceeds patched version
 - Fix not verified: Version too old or info unavailable
 
-## Output Format
+## Output Format (Security Checker)
 
 Return structured JSON for orchestrator:
 
 **Security fix found:**
+
 ```json
 {
   "is_security_fix": true,
@@ -1912,6 +1978,7 @@ Return structured JSON for orchestrator:
 ```
 
 **Not a security fix:**
+
 ```json
 {
   "is_security_fix": false,
@@ -1923,6 +1990,7 @@ Return structured JSON for orchestrator:
 ```
 
 **Security fix but verification failed:**
+
 ```json
 {
   "is_security_fix": true,
@@ -1939,22 +2007,25 @@ Return structured JSON for orchestrator:
 }
 ```
 
-## Error Handling
+## Error Handling (Security Checker)
 
 **GitHub API rate limit:**
+
 - Return: `{is_security_fix: null, error: "Rate limit exceeded"}`
 - Orchestrator should skip or manual-review
 
 **CVE not found:**
+
 - Note in output
 - Return what's available
 - Fix_verified: false
 
 **Cannot parse PR body:**
+
 - Return: `{is_security_fix: false}`
 - Continue (not critical)
 
-## Example Execution
+## Example Execution (Security Checker)
 
 ```markdown
 Input: PR #123
@@ -1978,9 +2049,10 @@ Phase 3: Verify fix applied
 Output: {is_security_fix: true, severity: "high", fix_verified: true}
 ```
 
-## Integration with Orchestrator
+## Integration with Orchestrator (Security Checker)
 
 Orchestrator invokes this agent when:
+
 - PR analyzer indicates potential security fix
 - Always check for Dependabot PRs (adds context)
 
@@ -1990,15 +2062,16 @@ Check security advisories for PR #123. Return structured JSON.
 
 Agent returns JSON for orchestrator reporting.
 
-## Performance Notes
+## Performance Notes (Security Checker)
 
 - Uses Haiku model (simple API calls, cheap)
 - Lightweight (only 3 phases, mostly API calls)
 - Fast execution (< 10 seconds typical)
 - Optional (only called when relevant)
-```
 
-**Step 2: Verify agent file**
+````
+
+### Step 2: Verify agent file (Task 6)
 
 ```bash
 wc -l claude/agents/security-checker.md
@@ -2006,13 +2079,13 @@ wc -l claude/agents/security-checker.md
 
 Expected: ~180 lines
 
-**Step 3: Test agent structure**
+### Step 3: Test agent structure (Task 6)
 
 ```bash
 head -5 claude/agents/security-checker.md
 ```
 
-**Step 4: Commit**
+### Step 4: Commit (Task 6)
 
 ```bash
 git add claude/agents/security-checker.md
@@ -2033,13 +2106,14 @@ Output: JSON with CVE details and verification status"
 ## Task 7: Create orchestrator agent
 
 **Files:**
+
 - Create: `claude/agents/dependabot-orchestrator.md`
 
-**Step 1: Write orchestrator agent**
+### Step 1: Write orchestrator agent
 
 Create `claude/agents/dependabot-orchestrator.md`:
 
-```markdown
+````markdown
 ---
 name: dependabot-orchestrator
 description: Lightweight orchestrator for coordinating Dependabot PR analysis and merging via worker agents
@@ -2076,6 +2150,7 @@ gh pr list \
 ```
 
 **Parse output:**
+
 ```json
 [
   {"number": 123, "title": "Bump nokogiri from 1.13.0 to 1.13.10"},
@@ -2086,8 +2161,9 @@ gh pr list \
 If `pr_numbers` provided, use those directly.
 
 **Report to user:**
-```
-🔍 Discovering Dependabot PRs...
+
+```text
+Discovering Dependabot PRs...
 Found 5 open Dependabot PRs: #123, #124, #125, #126, #127
 ```
 
@@ -2096,7 +2172,7 @@ Found 5 open Dependabot PRs: #123, #124, #125, #126, #127
 For each PR in list:
 
 ```markdown
-📦 PR #123: Bump nokogiri from 1.13.0 to 1.13.10
+PR #123: Bump nokogiri from 1.13.0 to 1.13.10
 ```
 
 #### Step 2.1: Dispatch pr-analyzer
@@ -2112,6 +2188,7 @@ Use Task tool to dispatch pr-analyzer agent:
 **Wait for pr-analyzer response.**
 
 **Parse JSON response:**
+
 ```json
 {
   "safe": true,
@@ -2125,20 +2202,23 @@ Use Task tool to dispatch pr-analyzer agent:
 ```
 
 **Report to user:**
-```
-  ├─ Semver: PATCH (safe)
-  ├─ Changelog: No breaking changes detected ✓
-  ├─ Dependencies: No conflicts ✓
+
+```text
+  - Semver: PATCH (safe)
+  - Changelog: No breaking changes detected
+  - Dependencies: No conflicts
 ```
 
 #### Step 2.2: Check Recommendation
 
 If `recommendation` is "skip" or "manual-review":
+
 - Record skip reason
 - Continue to next PR
 - Report:
-```
-  └─ Decision: SKIP - {reasoning}
+
+```text
+  - Decision: SKIP - {reasoning}
 ```
 
 If `recommendation` is "merge", continue to test execution.
@@ -2156,6 +2236,7 @@ Use Task tool to dispatch test-runner agent:
 **Wait for test-runner response.**
 
 **Parse JSON response:**
+
 ```json
 {
   "passed": true,
@@ -2168,19 +2249,22 @@ Use Task tool to dispatch test-runner agent:
 ```
 
 **Report to user:**
-```
-  ├─ Tests: Running test suite...
-  ├─ Tests: 847 passed in 2m 14s ✓
+
+```text
+  - Tests: Running test suite...
+  - Tests: 847 passed in 2m 14s
 ```
 
 #### Step 2.4: Check Test Results
 
 If `passed` is false:
+
 - Record skip reason with diagnostics
 - Continue to next PR
 - Report:
-```
-  └─ Decision: SKIP - Tests failed
+
+```text
+  - Decision: SKIP - Tests failed
       Diagnostics: {diagnostics}
 ```
 
@@ -2201,6 +2285,7 @@ Use Task tool to dispatch security-checker agent:
 **Wait for security-checker response.**
 
 **Parse JSON response:**
+
 ```json
 {
   "is_security_fix": true,
@@ -2211,8 +2296,9 @@ Use Task tool to dispatch security-checker agent:
 ```
 
 **Report to user:**
-```
-  ├─ Security: Fixes CVE-2023-12345 (high) ✓
+
+```text
+  - Security: Fixes CVE-2023-12345 (high)
 ```
 
 If not security fix, skip this step.
@@ -2220,11 +2306,12 @@ If not security fix, skip this step.
 #### Step 2.6: Make Merge Decision
 
 **All checks passed:**
+
 - pr-analyzer: safe = true
 - test-runner: passed = true
 - security-checker: verified (if applicable)
 
-**Decision: MERGE**
+#### Decision: MERGE
 
 #### Step 2.7: Execute Merge (if not dry-run)
 
@@ -2237,25 +2324,29 @@ gh pr merge $PR_NUMBER --auto --squash --delete-branch
 ```
 
 **Verify auto-merge enabled:**
+
 ```bash
 gh pr view $PR_NUMBER --json autoMergeRequest -q .autoMergeRequest
 ```
 
 If auto-merge enabled:
-```
-  └─ Decision: MERGE ✓ (auto-merge enabled, will merge when checks pass)
+
+```text
+  - Decision: MERGE (auto-merge enabled, will merge when checks pass)
 ```
 
 If auto-merge failed:
-```
-  └─ Decision: MERGE FAILED - {error}
+
+```text
+  - Decision: MERGE FAILED - {error}
 ```
 
 **Record merge success/failure.**
 
 If `dry_run` is true:
-```
-  └─ Decision: WOULD MERGE (dry-run mode)
+
+```text
+  - Decision: WOULD MERGE (dry-run mode)
 ```
 
 **Record would-merge count.**
@@ -2264,22 +2355,22 @@ If `dry_run` is true:
 
 After processing all PRs, generate summary:
 
-```
-═══════════════════════════════════════════════════════════
-                    Summary Report
-═══════════════════════════════════════════════════════════
+```text
+===============================================
+                Summary Report
+===============================================
 
-✓ Merged: 3 PRs
-  - PR #123: nokogiri 1.13.0 → 1.13.10 (PATCH, security fix)
-  - PR #125: rack 2.2.3 → 2.2.8 (PATCH)
-  - PR #127: rubocop 1.50.0 → 1.50.2 (PATCH)
+Merged: 3 PRs
+  - PR #123: nokogiri 1.13.0 -> 1.13.10 (PATCH, security fix)
+  - PR #125: rack 2.2.3 -> 2.2.8 (PATCH)
+  - PR #127: rubocop 1.50.0 -> 1.50.2 (PATCH)
 
-⏭️  Skipped: 2 PRs
-  - PR #124: react 18.2.0 → 19.0.0 (MAJOR version - requires manual review)
-  - PR #126: rspec 3.11.0 → 3.12.0 (MINOR - test failures)
+Skipped: 2 PRs
+  - PR #124: react 18.2.0 -> 19.0.0 (MAJOR version - requires manual review)
+  - PR #126: rspec 3.11.0 -> 3.12.0 (MINOR - test failures)
     Diagnostics: 3 tests failed due to deprecated API usage
 
-═══════════════════════════════════════════════════════════
+===============================================
 
 Total Time: 8m 43s
 Next Actions:
@@ -2288,45 +2379,50 @@ Next Actions:
 ```
 
 If dry-run mode:
-```
-═══════════════════════════════════════════════════════════
-                Summary Report (DRY RUN)
-═══════════════════════════════════════════════════════════
+
+```text
+===============================================
+            Summary Report (DRY RUN)
+===============================================
 
 Would Merge: 3 PRs
-  - PR #123: nokogiri 1.13.0 → 1.13.10 (PATCH, security fix)
-  - PR #125: rack 2.2.3 → 2.2.8 (PATCH)
-  - PR #127: rubocop 1.50.0 → 1.50.2 (PATCH)
+  - PR #123: nokogiri 1.13.0 -> 1.13.10 (PATCH, security fix)
+  - PR #125: rack 2.2.3 -> 2.2.8 (PATCH)
+  - PR #127: rubocop 1.50.0 -> 1.50.2 (PATCH)
 
 Would Skip: 2 PRs
-  - PR #124: react 18.2.0 → 19.0.0 (MAJOR version)
-  - PR #126: rspec 3.11.0 → 3.12.0 (test failures)
+  - PR #124: react 18.2.0 -> 19.0.0 (MAJOR version)
+  - PR #126: rspec 3.11.0 -> 3.12.0 (test failures)
 
-═══════════════════════════════════════════════════════════
+===============================================
 
 No PRs were actually merged (dry-run mode).
 To merge, run: /safely-merge-dependabots
 ```
 
-## Error Handling
+## Error Handling (Orchestrator)
 
 **Worker agent fails to respond:**
+
 - Log error
 - Record PR as "needs manual review"
 - Continue to next PR
 - Include in skip report
 
 **GitHub API errors:**
-- PR discovery fails → report error, exit
-- PR merge fails → record failure, continue to next PR
-- Rate limit hit → report clearly, suggest wait time
+
+- PR discovery fails -> report error, exit
+- PR merge fails -> record failure, continue to next PR
+- Rate limit hit -> report clearly, suggest wait time
 
 **Worker returns invalid JSON:**
+
 - Log parsing error
 - Record PR as "needs manual review"
 - Continue to next PR
 
 **Timeout (orchestrator level):**
+
 - If entire workflow takes > 30 minutes
 - Report progress so far
 - Recommend continuing with remaining PRs
@@ -2334,27 +2430,31 @@ To merge, run: /safely-merge-dependabots
 ## Design Principles
 
 **Pure Orchestration:**
+
 - No implementation details
 - Dispatch to workers
 - Make decisions based on worker results
 - Report progress clearly
 
 **Lightweight Context:**
+
 - Only coordination logic
 - Workers handle complexity
 - Minimal lines (~150)
 
 **Sequential Processing:**
+
 - One PR at a time
 - Clear audit trail
 - Failure isolation
 
 **Clear Reporting:**
+
 - Real-time progress
 - Visual separators
 - Actionable next steps
 
-## Example Execution
+## Example Execution (Orchestrator)
 
 ```markdown
 Input: pr_numbers: [], dry_run: false, timeout: "10m"
@@ -2365,23 +2465,23 @@ Phase 1: Discover PRs
 Phase 2: Process each PR
 
 PR #123:
-  - Dispatch pr-analyzer → {safe: true, risk: "low"}
-  - Dispatch test-runner → {passed: true, tests_run: 847}
-  - Dispatch security-checker → {is_security_fix: true, severity: "high"}
+  - Dispatch pr-analyzer -> {safe: true, risk: "low"}
+  - Dispatch test-runner -> {passed: true, tests_run: 847}
+  - Dispatch security-checker -> {is_security_fix: true, severity: "high"}
   - Decision: MERGE
   - Execute: gh pr merge 123 --auto --squash --delete-branch
-  - Result: Success ✓
+  - Result: Success
 
 PR #124:
-  - Dispatch pr-analyzer → {safe: false, risk: "high", recommendation: "skip"}
+  - Dispatch pr-analyzer -> {safe: false, risk: "high", recommendation: "skip"}
   - Decision: SKIP (MAJOR version)
 
 PR #125:
-  - Dispatch pr-analyzer → {safe: true, risk: "low"}
-  - Dispatch test-runner → {passed: true, tests_run: 203}
+  - Dispatch pr-analyzer -> {safe: true, risk: "low"}
+  - Dispatch test-runner -> {passed: true, tests_run: 203}
   - Decision: MERGE
   - Execute: gh pr merge 125 --auto --squash --delete-branch
-  - Result: Success ✓
+  - Result: Success
 
 Phase 3: Final Summary
   Merged: 2 PRs (#123, #125)
@@ -2392,17 +2492,20 @@ Phase 3: Final Summary
 ## Integration with Command
 
 Command invokes orchestrator with parsed arguments:
+
 ```markdown
 Analyze and merge Dependabot PRs with:
+
 - PR numbers: {pr_numbers or "all"}
 - Dry run: {true|false}
 - Timeout: {timeout}
 ```
 
 Orchestrator handles everything and reports final results.
-```
 
-**Step 2: Verify agent file**
+````
+
+### Step 2: Verify agent file (Task 7)
 
 ```bash
 wc -l claude/agents/dependabot-orchestrator.md
@@ -2410,13 +2513,13 @@ wc -l claude/agents/dependabot-orchestrator.md
 
 Expected: ~320 lines (still lightweight for an orchestrator!)
 
-**Step 3: Test agent structure**
+### Step 3: Test agent structure (Task 7)
 
 ```bash
 head -5 claude/agents/dependabot-orchestrator.md
 ```
 
-**Step 4: Commit**
+### Step 4: Commit (Task 7)
 
 ```bash
 git add claude/agents/dependabot-orchestrator.md
@@ -2441,9 +2544,10 @@ Design: Pure orchestration, no implementation details (~320 lines)"
 ## Task 8: Update command to use orchestrator
 
 **Files:**
+
 - Modify: `claude/commands/safely-merge-dependabots.md`
 
-**Step 1: Read current command file**
+### Step 1: Read current command file
 
 ```bash
 cat claude/commands/safely-merge-dependabots.md
@@ -2451,17 +2555,19 @@ cat claude/commands/safely-merge-dependabots.md
 
 Review current agent invocation section.
 
-**Step 2: Update agent invocation**
+### Step 2: Update agent invocation
 
 Modify the "Agent Invocation" section in `claude/commands/safely-merge-dependabots.md`:
 
 **OLD:**
+
 ```yaml
 agent: dependabot-merger
 model: opus
 ```
 
 **NEW:**
+
 ```yaml
 agent: dependabot-orchestrator
 model: haiku
@@ -2470,6 +2576,7 @@ model: haiku
 **Exact change:**
 
 Find:
+
 ```markdown
 ## Agent Invocation
 
@@ -2481,6 +2588,7 @@ model: opus
 ```
 
 Replace with:
+
 ```markdown
 ## Agent Invocation
 
@@ -2491,11 +2599,12 @@ agent: dependabot-orchestrator
 model: haiku
 ```
 
-**Step 3: Update expected output note (optional improvement)**
+### Step 3: Update expected output note (optional improvement)
 
 Find the "Expected Output" section and update the intro note:
 
 **Add before the example output:**
+
 ```markdown
 **Note:** Performance improved in v2 with modular architecture:
 - Haiku orchestrator (3x cheaper, 2x faster coordination)
@@ -2503,18 +2612,19 @@ Find the "Expected Output" section and update the intro note:
 - Enables future parallel PR analysis
 ```
 
-**Step 4: Verify changes**
+### Step 4: Verify changes
 
 ```bash
 git diff claude/commands/safely-merge-dependabots.md
 ```
 
 Should show:
-- `dependabot-merger` → `dependabot-orchestrator`
-- `opus` → `haiku`
+
+- `dependabot-merger` -> `dependabot-orchestrator`
+- `opus` -> `haiku`
 - Added performance note
 
-**Step 5: Commit**
+### Step 5: Commit (Task 8)
 
 ```bash
 git add claude/commands/safely-merge-dependabots.md
@@ -2534,15 +2644,16 @@ Command interface unchanged - transparent to users."
 ## Task 9: Deprecate old monolithic agent
 
 **Files:**
-- Rename: `claude/agents/dependabot-merger.md` → `claude/agents/dependabot-merger.deprecated.md`
+
+- Rename: `claude/agents/dependabot-merger.md` -> `claude/agents/dependabot-merger.deprecated.md`
 - Modify: `claude/agents/dependabot-merger.deprecated.md` (add deprecation notice)
 
-**Step 1: Add deprecation notice to file**
+### Step 1: Add deprecation notice to file
 
 Add at the very top of `claude/agents/dependabot-merger.md` (before YAML frontmatter):
 
 ```markdown
-> **⚠️ DEPRECATED:** This monolithic agent has been replaced by the modular architecture.
+> **DEPRECATED:** This monolithic agent has been replaced by the modular architecture.
 >
 > **Use instead:** `dependabot-orchestrator` + worker agents
 > - Orchestrator: `claude/agents/dependabot-orchestrator.md`
@@ -2570,31 +2681,32 @@ name: dependabot-merger
 ...
 ```
 
-**Step 2: Rename file**
+### Step 2: Rename file
 
 ```bash
 git mv claude/agents/dependabot-merger.md claude/agents/dependabot-merger.deprecated.md
 ```
 
-**Step 3: Verify rename**
+### Step 3: Verify rename
 
 ```bash
 git status
 ```
 
 Should show:
-```
+
+```text
 renamed: claude/agents/dependabot-merger.md -> claude/agents/dependabot-merger.deprecated.md
 ```
 
-**Step 4: Commit**
+### Step 4: Commit (Task 9)
 
 ```bash
 git add claude/agents/dependabot-merger.deprecated.md
 git commit -m "refactor(claude): deprecate monolithic dependabot-merger agent
 
 Mark as deprecated in favor of modular orchestrator architecture:
-- Renamed: dependabot-merger.md → dependabot-merger.deprecated.md
+- Renamed: dependabot-merger.md -> dependabot-merger.deprecated.md
 - Added deprecation notice with migration guide
 - Kept for rollback during 2-week validation period
 - Delete after validation confirms new architecture stable
@@ -2607,13 +2719,14 @@ Replacement: dependabot-orchestrator + 3 worker agents + 3 skills"
 ## Task 10: Create validation plan
 
 **Files:**
+
 - Create: `docs/plans/2025-12-26-dependabot-refactor-validation.md`
 
-**Step 1: Write validation plan**
+### Step 1: Write validation plan
 
 Create `docs/plans/2025-12-26-dependabot-refactor-validation.md`:
 
-```markdown
+````markdown
 # Dependabot Refactor Validation Plan
 
 **Date:** 2025-12-26
@@ -2672,6 +2785,7 @@ diff old-results.txt new-results.txt
 **Expected:** Same PRs would be merged/skipped.
 
 **If differences found:**
+
 - Document discrepancies
 - Determine if new architecture is safer (acceptable)
 - Fix if new architecture is less safe (required)
@@ -2691,10 +2805,12 @@ Run new architecture on real PRs:
 ```
 
 **Success Criteria:**
+
 - 20 successful PR processing runs, OR
 - 2 weeks without issues, whichever comes first
 
 **Track:**
+
 - Total PRs processed
 - PRs merged successfully
 - PRs skipped correctly
@@ -2712,19 +2828,21 @@ Run new architecture on real PRs:
 | Avg time per PR | ? | ? | ? |
 | Cost per PR (est.) | Opus tokens | Haiku/Sonnet tokens | ? |
 | Lines of code | 741 | <350 each | ? |
-| Reusable components | 0 | 3 skills | ∞ |
+| Reusable components | 0 | 3 skills | Infinite |
 
 **Calculate:**
+
 - Cost reduction: `(Monolith - Modular) / Monolith * 100%`
 - Speed improvement: `(Monolith - Modular) / Monolith * 100%`
 
 **Target:**
+
 - Cost: >50% reduction
 - Speed: >30% improvement
 
 ## Decision Criteria
 
-### ✅ Safe to Delete Monolith If:
+### Safe to Delete Monolith If
 
 - All functional parity checks pass
 - 20+ successful runs OR 2 weeks validation
@@ -2733,14 +2851,14 @@ Run new architecture on real PRs:
 - No critical issues found
 - Team comfortable with new architecture
 
-### ⚠️ Keep Monolith Longer If:
+### Keep Monolith Longer If
 
 - <20 runs OR <2 weeks elapsed
 - Performance targets not met (investigate why)
 - Functional differences require discussion
 - Team wants more validation time
 
-### ❌ Rollback to Monolith If:
+### Rollback to Monolith If
 
 - False positives found (merged unsafe PRs)
 - Critical bugs in workers or orchestrator
@@ -2757,8 +2875,8 @@ If rollback needed:
 cp claude/agents/dependabot-merger.deprecated.md claude/agents/dependabot-merger.md
 
 # Update command
-# Change agent: dependabot-orchestrator → dependabot-merger
-# Change model: haiku → opus
+# Change agent: dependabot-orchestrator -> dependabot-merger
+# Change model: haiku -> opus
 
 # Test old agent works
 /safely-merge-dependabots --dry-run
@@ -2791,6 +2909,7 @@ Modular orchestrator architecture is now the sole implementation."
 ## Monitoring During Validation
 
 **What to watch:**
+
 - CI status on merged PRs
 - User reports of issues
 - Error messages in orchestrator/workers
@@ -2798,6 +2917,7 @@ Modular orchestrator architecture is now the sole implementation."
 - Worker agent failures
 
 **Where to check:**
+
 - GitHub Actions logs
 - Merged PR CI status
 - Manual review of skipped PRs
@@ -2815,16 +2935,19 @@ After validation, update docs:
 ## Timeline
 
 **Week 1 (Dec 26 - Jan 2):**
+
 - Dry-run comparisons
 - Fix any discrepancies
 - Begin live validation
 
 **Week 2 (Jan 2 - Jan 9):**
+
 - Continue live validation
 - Collect performance metrics
 - Monitor merged PRs
 
 **End of Week 2:**
+
 - Review validation results
 - Make decision: keep, extend validation, or rollback
 - Delete monolith if validation passes
@@ -2854,9 +2977,10 @@ After validation complete, document decision:
 
 **Signed-off by:** [Name]
 ```
-```
 
-**Step 2: Verify validation plan**
+````
+
+### Step 2: Verify validation plan
 
 ```bash
 wc -l docs/plans/2025-12-26-dependabot-refactor-validation.md
@@ -2864,7 +2988,7 @@ wc -l docs/plans/2025-12-26-dependabot-refactor-validation.md
 
 Expected: ~250 lines
 
-**Step 3: Commit**
+### Step 3: Commit (Task 10)
 
 ```bash
 git add docs/plans/2025-12-26-dependabot-refactor-validation.md
@@ -2887,24 +3011,29 @@ Target: 50%+ cost reduction, 30%+ speed improvement"
 This implementation creates a modular orchestrator-worker architecture following December 2025 best practices:
 
 **Created:**
+
 - 3 reusable skills (dependency-analysis, project-context-discovery, gh-cli/merge-pr)
 - 3 specialized workers (pr-analyzer, test-runner, security-checker)
 - 1 lightweight orchestrator (dependabot-orchestrator)
 - Validation plan
 
 **Modified:**
+
 - Command invocation (orchestrator + haiku model)
 
 **Deprecated:**
+
 - Old monolithic agent (kept for rollback)
 
 **Expected Benefits:**
+
 - 3x cost reduction
 - 2-3x speed improvement
 - Modular, extensible components
 - Reusable skills across workflows
 
 **Next Steps:**
+
 - Execute validation plan
 - Monitor performance
 - Delete monolith after 2 weeks / 20 successful runs
