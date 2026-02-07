@@ -9,5 +9,7 @@
     "diffEditor.ignoreTrimWhitespace": false,
     "editor.colorDecorators": false,
     "markdownlint.config": {},
-    "claudeCode.useTerminal": true
+    "claudeCode.useTerminal": true,
+    "containers.containerClient": "com.microsoft.visualstudio.containers.docker",
+    "containers.orchestratorClient": "com.microsoft.visualstudio.orchestrators.dockercompose"
 }
