@@ -1,5 +1,3 @@
-#!/bin/zsh
-
 export PATH=$HOME/dotfiles/bin:$PATH
 
 ### ALIASES ###
