@@ -1,6 +1,12 @@
 ---
 name: rails-8
-description: This skill should be used when working with Ruby on Rails 8 applications, including tasks like "create a Rails model", "add a migration", "set up routes", "build a controller", "add validations", "configure associations", "write Rails tests", "implement authentication", "create background jobs", or when the user mentions Rails 8, Active Record, Action Controller, or Rails conventions.
+description: >-
+  Use when working in a Ruby on Rails application or when the user asks about
+  Rails models, controllers, views, migrations, routing, testing, Hotwire,
+  Active Record, or any Rails 8 framework component. Provides comprehensive
+  Rails 8 development guidance including the full MVC stack, built-in
+  authentication, database-backed adapters, Hotwire frontend, testing
+  strategies, and security best practices.
 ---
 
 # Ruby on Rails 8 Development
