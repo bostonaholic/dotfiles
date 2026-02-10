@@ -1,13 +1,6 @@
 ---
 name: rails-conventions
-description: >-
-  This skill should be used when writing Ruby on Rails code, reviewing Rails
-  pull requests, creating models, controllers, views, tests, or migrations.
-  It enforces opinionated coding conventions for Rails projects including
-  minitest over RSpec, fixtures over factories, vanilla Rails architecture,
-  DHH's controller philosophy, callback discipline, and modern Rails 8
-  patterns. Automatically triggered when working in any Rails application.
-version: 0.2.0
+description: This skill should be used when writing Ruby on Rails code, reviewing Rails pull requests, creating models, controllers, views, tests, or migrations. It enforces opinionated coding conventions for Rails projects including minitest over RSpec, fixtures over factories, vanilla Rails architecture, DHH's controller philosophy, callback discipline, and modern Rails 8 patterns. Automatically triggered when working in any Rails application.
 ---
 
 # Rails Coding Conventions

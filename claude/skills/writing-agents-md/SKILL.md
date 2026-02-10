@@ -1,9 +1,6 @@
 ---
 name: writing-agents-md
-description: >
-  Use when creating or updating AGENTS.md files. Provides the agents.md format
-  specification and best practices for writing effective guidance for AI coding
-  assistants.
+description: Use when creating or updating AGENTS.md files. Provides the agents.md format specification and best practices for writing effective guidance for AI coding assistants.
 ---
 
 # Writing AGENTS.md Files

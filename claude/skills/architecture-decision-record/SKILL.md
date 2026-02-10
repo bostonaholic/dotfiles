@@ -1,6 +1,6 @@
 ---
-name: "architecture-decision-review"
-description: "Framework for evaluating architectural decisions and generating high-quality Architecture Decision Records (ADRs)."
+name: architecture-decision-record
+description: Framework for evaluating architectural decisions and generating high-quality Architecture Decision Records (ADRs).
 ---
 
 # Architecture Decision Review & ADR Generator

@@ -1,6 +1,6 @@
 ---
-name: "technical-design-doc"
-description: "Generates clear technical design documents with architecture, trade-offs, and rollout plans."
+name: technical-design-doc
+description: Generates clear technical design documents with architecture, trade-offs, and rollout plans. Use when designing new features, refactoring, or making significant architectural changes. Covers design doc structure, content guidelines, and best practices for clarity and maintainability.
 ---
 
 # Technical Design Document Creator

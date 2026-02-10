@@ -1,10 +1,6 @@
 ---
-name: "systematic-code-review"
-description: "Structured code review framework using Conventional Comments for clear, actionable feedback."
-tags:
-  - code-review
-  - quality
-version: 2.0.0
+name: systematic-code-review
+description: Structured code review framework using Conventional Comments for clear, actionable feedback.
 ---
 
 # Systematic Code Review

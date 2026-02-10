@@ -1,11 +1,6 @@
 ---
-name: "software-testing-strategy"
-description: "Strategic testing framework: testing pyramid, test design patterns, anti-patterns. Complements tdd-enforcement (tactical) with comprehensive strategy."
-tags:
-  - testing
-  - quality
-  - strategy
-version: 2.0.0
+name: software-testing-strategy
+description: Strategic testing framework: testing pyramid, test design patterns, anti-patterns. Complements tdd-enforcement (tactical) with comprehensive strategy.
 ---
 
 # Software Testing Strategy

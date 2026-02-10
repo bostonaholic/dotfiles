@@ -1,10 +1,6 @@
 ---
 name: security-analysis
-description: >
-  This skill should be used when the user asks to "audit security",
-  "check for vulnerabilities", "scan for malicious code", "analyze security risks",
-  "detect data exfiltration", or mentions security patterns, threat detection,
-  or codebase safety assessment.
+description: This skill should be used when the user asks to "audit security", "check for vulnerabilities", "scan for malicious code", "analyze security risks", "detect data exfiltration", or mentions security patterns, threat detection, or codebase safety assessment.
 ---
 
 # Security Analysis Skill

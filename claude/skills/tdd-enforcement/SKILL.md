@@ -1,6 +1,6 @@
 ---
-name: "tdd-enforcement"
-description: "A workflow that enforces genuine test-driven development: tests first, behavior-focused, with strong edge-case coverage."
+name: tdd-enforcement
+description: A workflow that enforces genuine test-driven development: tests first, behavior-focused, with strong edge-case coverage.
 ---
 
 # Test-Driven Development Enforcement
