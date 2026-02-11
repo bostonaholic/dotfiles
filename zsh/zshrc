@@ -105,6 +105,7 @@ plugins=(
     ssh-agent
     starship
     yarn
+    zoxide
 )
 export plugins
 

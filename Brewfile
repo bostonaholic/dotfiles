@@ -38,6 +38,7 @@ brew 'vim'
 
 cask 'ghostty'
 brew 'starship'
+brew 'zoxide'
 brew 'zsh'
 brew 'zsh-completions'
 

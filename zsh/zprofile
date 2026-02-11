@@ -27,3 +27,6 @@ export RUBY_CONFIGURE_OPTS
 
 # Created by `pipx` on 2025-12-12 04:49:42
 export PATH="$PATH:/Users/matthew/.local/bin"
+
+# Use zoxide as cd replacement
+export ZOXIDE_CMD_OVERRIDE=cd
