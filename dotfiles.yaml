@@ -46,6 +46,7 @@ symlinks:
   cursor/rules: ~/.cursor/rules
 
   # Ruby
+  ruby/.ruby-version: ~/.ruby-version
   ruby/pryrc: ~/.pryrc
   ruby/rspec: ~/.rspec
   ruby/default-gems: ~/.rbenv/default-gems
