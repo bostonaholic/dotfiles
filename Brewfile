@@ -37,6 +37,7 @@ brew 'vim'
 # =============================================================================
 
 cask 'ghostty'
+brew 'starship'
 brew 'zsh'
 brew 'zsh-completions'
 
