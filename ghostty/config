@@ -1,5 +1,5 @@
 # https://usgraphics.com/products/berkeley-mono
-font-family = TX-02 Regular
+font-family = TX-02
 font-size = 16
 keybind = cmd+opt+left=previous_tab
 keybind = cmd+opt+right=next_tab
