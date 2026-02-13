@@ -96,6 +96,21 @@ To add a new dotfile to the installation:
 
 ## Post-install
 
+### Terminal Fonts
+
+The primary font is **TX-02** ([Berkeley Mono](https://berkeleygraphics.com/typefaces/berkeley-mono/)),
+installed manually by copying `.otf` files to `~/Library/Fonts/`. `brew bundle`
+installs **Symbols Nerd Font** for icon glyphs used by the Starship prompt.
+
+**Ghostty** handles Nerd Font symbols automatically — no extra configuration
+needed.
+
+**iTerm2** requires manual font setup:
+
+1. Settings > Profiles > Text > Font > **"TX-02"**
+2. Check **"Use a different font for non-ASCII text"**
+3. Set non-ASCII font to **"Symbols Nerd Font Mono"**
+
 ### Copilot.vim
 
 ```vimscript
