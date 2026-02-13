@@ -75,5 +75,6 @@
     "vercel@claude-plugins-official": true,
     "rpikit@rpikit": true
   },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "skipDangerousModePermissionPrompt": true
 }
