@@ -172,6 +172,7 @@ brew 'markdown'
 
 cask 'clipy'
 brew 'dfu-util'  # for flashing keyboard firmware
+cask 'emdash'
 brew 'ossp-uuid' # UUID generation
 cask 'raspberry-pi-imager'
 brew 'terminal-notifier'
