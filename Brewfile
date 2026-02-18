@@ -12,9 +12,7 @@ cask_args appdir: '~/Applications', fontdir: '/Library/Fonts'
 # AI Coding Assistants
 # =============================================================================
 
-tap 'steveyegge/beads'
-
-brew 'bd' # AI-supervised issue tracker
+brew 'beads' # AI-supervised issue tracker
 cask 'claude'
 cask 'claude-code'
 cask 'codex'
