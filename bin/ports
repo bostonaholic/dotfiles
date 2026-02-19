@@ -28,5 +28,5 @@ pattern="${1:-}"
 if [ -z "$pattern" ]; then
   sudo lsof -iTCP -sTCP:LISTEN -P
 else
-  sudo lsof -iTCP -sTCP:LISTEN -P | grep -i "$pattern" || true
+  sudo lsof -iTCP -sTCP:LISTEN -P | sed -n '1p;/'"$pattern"'/Ip'
 fi
