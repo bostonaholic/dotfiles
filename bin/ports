@@ -26,7 +26,7 @@ set -eu -o pipefail
 pattern="${1:-}"
 
 if [ -z "$pattern" ]; then
-  sudo lsof -iTCP -sTCP:LISTEN -P
+  lsof -iTCP -sTCP:LISTEN -P
 else
-  sudo lsof -iTCP -sTCP:LISTEN -P | awk -v pat="$pattern" 'NR==1{h=$0;next} tolower($0)~tolower(pat){if(h){print h;h=""}print}'
+  lsof -iTCP -sTCP:LISTEN -P | awk -v pat="$pattern" 'NR==1{h=$0;next} tolower($0)~tolower(pat){if(h){print h;h=""}print}'
 fi
