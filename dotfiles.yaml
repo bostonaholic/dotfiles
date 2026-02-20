@@ -41,6 +41,7 @@ symlinks:
 
   # Terminal
   ghostty/config: ~/.config/ghostty/config
+  starship/starship.toml: ~/.config/starship.toml
 
   # Cursor
   cursor/rules: ~/.cursor/rules

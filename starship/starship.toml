@@ -1,0 +1,79 @@
+# Starship Prompt Configuration
+# https://starship.rs/config/
+
+# Custom module ordering: repo_name and directory together, then git info
+format = "$username$hostname${custom.repo_name}$directory${custom.git_branch}${custom.git_status}$all"
+
+[directory]
+# Setting repo_root_style activates repo_root_format (without it, Starship
+# ignores repo_root_format and uses the regular format instead).
+repo_root_style = "cyan bold"
+# In git repos, only show subdirectory path after the root.
+# The repo name itself is handled by the custom.repo_name module.
+repo_root_format = "[$path]($style)[$read_only]($read_only_style) "
+
+# Disable built-in git modules — they show at bare repo roots where there
+# is no work tree.  Custom replacements below only activate inside work trees.
+[git_branch]
+disabled = true
+
+[git_status]
+disabled = true
+
+[custom.repo_name]
+description = "Show repository name, handling bare worktree setups"
+when = "git rev-parse --git-dir 2>/dev/null"
+command = """
+git_dir=$(git rev-parse --git-dir 2>/dev/null) || exit 1
+case "$git_dir" in
+  */.bare/worktrees/*)
+    bare_path="${git_dir%%/worktrees/*}"
+    basename "$(dirname "$bare_path")"
+    ;;
+  *.bare)
+    basename "$(dirname "$git_dir")"
+    ;;
+  *)
+    basename "$(git rev-parse --show-toplevel 2>/dev/null)" || exit 1
+    ;;
+esac
+"""
+format = "[$output](cyan bold)"
+
+[custom.git_branch]
+description = "Git branch — only inside work trees"
+when = "git rev-parse --is-inside-work-tree 2>/dev/null | grep -qx true"
+command = '''
+branch=$(git branch --show-current 2>/dev/null)
+if [ -n "$branch" ]; then
+  echo "$branch"
+else
+  git rev-parse --short HEAD 2>/dev/null || exit 1
+fi
+'''
+format = "on [$output](bold purple)"
+
+[custom.git_status]
+description = "Git status — only inside work trees"
+when = "git rev-parse --is-inside-work-tree 2>/dev/null | grep -qx true"
+command = '''
+s=$(git status --porcelain 2>/dev/null) || exit 1
+[ -z "$s" ] && exit 1
+r=""
+printf '%s\n' "$s" | grep -q '^[MADRC]' && r="${r}+"
+printf '%s\n' "$s" | grep -q '^ [MT]' && r="${r}!"
+printf '%s\n' "$s" | grep -q '^ D' && r="${r}✘"
+printf '%s\n' "$s" | grep -q '^??' && r="${r}?"
+printf '%s\n' "$s" | grep -q '^U.\|^.U\|^AA\|^DD' && r="${r}="
+[ -n "$(git stash list 2>/dev/null | head -1)" ] && r="$r"'$'
+t=$(git rev-list --left-right --count @{upstream}...HEAD 2>/dev/null)
+if [ -n "$t" ]; then
+  b=$(printf '%s' "$t" | cut -f1)
+  a=$(printf '%s' "$t" | cut -f2)
+  [ "$a" -gt 0 ] 2>/dev/null && r="${r}⇡"
+  [ "$b" -gt 0 ] 2>/dev/null && r="${r}⇣"
+fi
+[ -z "$r" ] && exit 1
+printf '[%s]' "$r"
+'''
+format = "[$output](red bold) "
