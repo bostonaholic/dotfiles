@@ -17,6 +17,7 @@ Thumbs.db
 # Programming #
 ##############
 scratch*
+.worktrees/
 .envrc
 
 **/.claude/settings.local.json

@@ -59,7 +59,7 @@
 
 	amend = commit --amend
 	amend-noe = commit --amend --no-edit
-	cl = clone
+	cl = clone-bare-for-worktrees
 	ci = commit
 	cm = commit -m
 	aic = !git-ai-commit
