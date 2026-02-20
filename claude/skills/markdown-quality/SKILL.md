@@ -1,6 +1,6 @@
 ---
 name: markdown-quality
-description: Use when creating or editing any markdown file (.md) - ensures consistent formatting and zero linting violations through mandatory validation
+description: Use when creating, editing, or fixing formatting in any markdown file (.md) - ensures markdown best practices and zero markdownlint violations
 ---
 
 # Markdown Quality
@@ -19,20 +19,13 @@ ALWAYS iterate until ALL errors are fixed
 
 ## Workflow
 
-```dot
-digraph markdown_quality {
-    "Edit markdown file" [shape=box];
-    "Run markdownlint" [shape=box];
-    "Any errors?" [shape=diamond];
-    "Fix ALL errors" [shape=box];
-    "Done" [shape=doublecircle];
-
-    "Edit markdown file" -> "Run markdownlint";
-    "Run markdownlint" -> "Any errors?";
-    "Any errors?" -> "Done" [label="no"];
-    "Any errors?" -> "Fix ALL errors" [label="yes"];
-    "Fix ALL errors" -> "Run markdownlint";
-}
+```mermaid
+flowchart LR
+    A[Edit markdown file] --> B[Run markdownlint]
+    B --> C{Any errors?}
+    C -- no --> D((Done))
+    C -- yes --> E[Fix ALL errors]
+    E --> B
 ```
 
 **After EVERY markdown edit:**
@@ -42,30 +35,32 @@ digraph markdown_quality {
 3. Run markdownlint again
 4. Repeat until zero errors
 
-## Red Flags - STOP and Run Markdownlint
+## Common Errors and Fixes
 
-These thoughts mean you're rationalizing:
+| Rule | Problem | Fix |
+| ---- | ------- | --- |
+| MD009 | Trailing spaces at end of line | Remove trailing whitespace |
+| MD022 | Heading not surrounded by blank lines | Add a blank line before and after every heading |
+| MD031 | Fenced code block not surrounded by blank lines | Add a blank line before and after every code fence |
+| MD032 | List not surrounded by blank lines | Add a blank line before and after every list |
+| MD034 | Bare URL used instead of link syntax | Wrap URL: `<https://example.com>` or `[text](url)` |
+| MD047 | File does not end with a single newline | Ensure exactly one newline at end of file |
 
-- "Just a quick typo fix"
-- "No structural changes"
-- "Too simple to need validation"
-- "File already passed linting before"
-- "Running linter is overkill"
-- "Only changed one line"
-- "Overhead would be disproportionate"
+**Lint-clean but poor readability:**
 
-**All of these mean: Run markdownlint anyway. No exceptions.**
+- Inconsistent list markers (mixing `-`, `*`, `+`) -- pick one and stick with it
+- Nesting deeper than 3 levels -- restructure with headings or separate sections
+- Mixed heading styles (`# ATX` vs `Setext`) -- use ATX (`#`) exclusively
+- Code blocks without a language identifier -- always specify (e.g., ` ```bash `)
 
-## Common Rationalizations
+## No-Exception Policy
 
 | Excuse | Reality |
 | ------ | ------- |
-| "Simple typo fix" | Can introduce spaces, length issues. Takes 2 seconds. |
-| "No structural changes" | Linting checks length, whitespace, blank lines. |
-| "Trust existing state" | Files regress. Verify current state. |
-| "Overhead" | Takes 1-2 seconds. Debugging takes minutes. |
-| "Only for structural" | Validation is for ALL changes. No exceptions. |
-| "Valid reasons" | Markdownlint defines standards. Fix or configure. |
+| "Just a quick typo fix" | Typo fixes introduce trailing spaces and line-length issues. Run linter. |
+| "No structural changes" | Linting checks whitespace, blank lines, and bare URLs -- not just structure. |
+| "File already passed before" | Files regress with every edit. Verify current state. |
+| "Overhead is disproportionate" | Linting takes 1-2 seconds. Debugging a broken file takes minutes. |
 
 ## When NOT to Use
 
@@ -73,9 +68,6 @@ These thoughts mean you're rationalizing:
 - Non-markdown file formats
 
 ## Common Mistakes
-
-**Mistake:** Running markdownlint only on new files, not edits
-**Fix:** Run after EVERY edit, no matter how small
 
 **Mistake:** Fixing only new errors, leaving pre-existing ones
 **Fix:** Fix ALL errors reported by markdownlint
