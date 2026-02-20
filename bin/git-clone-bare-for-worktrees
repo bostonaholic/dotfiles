@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ $# -lt 1 ]; then
+    echo "Usage: git clone-bare-for-worktrees <url> [<name>]" >&2
+    exit 1
+fi
+
+url=$1
+basename=${url##*/}
+name=${2:-${basename%.*}}
+
+if [[ ! "$name" =~ ^[a-zA-Z0-9._-]+$ ]]; then
+    echo "Error: Invalid project name '$name'" >&2
+    echo "Name must contain only alphanumeric characters, dots, hyphens, and underscores" >&2
+    exit 1
+fi
+
+if [ -d "$name" ]; then
+    echo "Error: Directory '$name' already exists" >&2
+    exit 1
+fi
+
+mkdir "$name"
+cd "$name"
+
+# Clone as bare into a hidden .bare directory
+git clone --bare "$url" .bare
+
+# Create a .git file that points to .bare
+echo "gitdir: ./.bare" > .git
+
+# Fix the fetch config (bare clones don't set this up)
+git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+
+# Fetch all remote branches
+git fetch origin
+
+# Now create your worktrees
+git worktree add main
