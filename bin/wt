@@ -40,14 +40,25 @@ require_bare_layout() {
     echo "$root"
 }
 
+validate_name() {
+    local name="$1"
+    if [[ "$name" == *".."* ]] || [[ "$name" == "/"* ]]; then
+        echo "Error: Invalid worktree name '$name'" >&2
+        exit 1
+    fi
+}
+
 cmd_main() {
     local root
     root=$(require_bare_layout)
     local worktree_dir="$root/main"
 
     if [ ! -d "$worktree_dir" ]; then
-        git -C "$root" worktree add main main 2>/dev/null \
-            || git -C "$root" worktree add main
+        if git -C "$root" show-ref --verify --quiet "refs/heads/main"; then
+            git -C "$root" worktree add main main
+        else
+            git -C "$root" worktree add main
+        fi
     fi
 
     echo "$worktree_dir"
@@ -62,6 +73,7 @@ cmd_add() {
     local name="$1"
     shift
     local start_point="${1:-origin/main}"
+    validate_name "$name"
 
     local root
     root=$(require_bare_layout)
@@ -101,6 +113,8 @@ cmd_rm() {
         exit 1
     fi
 
+    validate_name "$name"
+
     if [ "$name" = "main" ]; then
         echo "Error: Cannot remove persistent worktree 'main'." >&2
         exit 1
@@ -135,6 +149,7 @@ cmd_cd() {
     fi
 
     local name="$1"
+    validate_name "$name"
     local root
     root=$(require_bare_layout)
     local worktree_dir="$root/$name"
