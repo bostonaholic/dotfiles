@@ -57,6 +57,15 @@ function wt() {
                 return $?
             fi
             ;;
+        rm)
+            local main_path
+            main_path=$(command wt path main 2>/dev/null)
+            command wt "$@" || return
+            # cd out if the worktree we were in was just removed
+            if ! [[ -d "$PWD" ]]; then
+                builtin cd "$main_path" 2>/dev/null || builtin cd ~ || return
+            fi
+            ;;
         *)
             command wt "$@"
             ;;

@@ -55,9 +55,9 @@ cmd_main() {
 
     if [ ! -d "$worktree_dir" ]; then
         if git -C "$root" show-ref --verify --quiet "refs/heads/main"; then
-            git -C "$root" worktree add main main
+            git -C "$root" worktree add main main >&2
         else
-            git -C "$root" worktree add main
+            git -C "$root" worktree add main >&2
         fi
     fi
 
@@ -88,9 +88,9 @@ cmd_add() {
     # Check if branch exists locally or on remote
     if git -C "$root" show-ref --verify --quiet "refs/heads/$name" \
         || git -C "$root" show-ref --verify --quiet "refs/remotes/origin/$name"; then
-        git -C "$root" worktree add "$worktree_dir" "$name"
+        git -C "$root" worktree add "$worktree_dir" "$name" >&2
     else
-        git -C "$root" worktree add -b "$name" "$worktree_dir" "$start_point"
+        git -C "$root" worktree add -b "$name" "$worktree_dir" "$start_point" >&2
     fi
 
     echo "$worktree_dir"
