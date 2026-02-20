@@ -46,30 +46,32 @@ alias top="btop"
 # Git
 alias gti=git
 
-# Git worktree wrapper - handles 'cd' subcommand specially
+# Git worktree wrapper - intercepts subcommands that should cd
 function wt() {
-    if [ "$1" = "cd" ]; then
-        if [ -z "$2" ]; then
-            command wt cd
-            return $?
-        fi
-        local worktree_path
-        if worktree_path=$(command wt cd "$2") && [ -d "$worktree_path" ]; then
-            builtin cd "$worktree_path" || return
-        fi
-    else
-        command wt "$@"
-    fi
+    case "$1" in
+        main|add|cd)
+            local worktree_path
+            if worktree_path=$(command wt "$@") && [ -d "$worktree_path" ]; then
+                builtin cd "$worktree_path" || return
+            else
+                return $?
+            fi
+            ;;
+        *)
+            command wt "$@"
+            ;;
+    esac
 }
 
-# Completion for wt command (fzf-tab will automatically use fzf)
+# Completion for wt command
 function _wt() {
     local -a subcommands
     subcommands=(
+        'main:Enter main worktree'
         'add:Create a new worktree'
-        'ls:List all worktrees'
         'rm:Remove a worktree'
-        'cd:Change to worktree directory'
+        'ls:List all worktrees'
+        'cd:Enter a worktree by name'
         'path:Show path to a worktree'
         'prune:Clean up stale worktree references'
         'help:Show help'
@@ -86,17 +88,24 @@ function _wt() {
         args)
             case ${words[2]} in
                 cd|rm|path)
-                    # List worktree branches for completion
-                    local -a branches
-                    if git rev-parse --git-dir &>/dev/null; then
-                        branches=(${(f)"$(git worktree list --porcelain 2>/dev/null | awk '/^branch / { br = substr($0, 8); gsub(/^refs\/heads\//, "", br); print br }')"})
-                        _describe -t branches 'worktree branch' branches
+                    local root
+                    if root=$(command wt _root 2>/dev/null); then
+                        local -a worktrees
+                        worktrees=(${(f)"$(git -C "$root" worktree list --porcelain 2>/dev/null | awk -v root="$root/" '
+                            /^worktree / {
+                                path = substr($0, 10)
+                                if (path != root && path !~ /\.bare$/) {
+                                    sub(root, "", path)
+                                    print path
+                                }
+                            }
+                        ')"})
+                        _describe -t worktrees 'worktree' worktrees
                     fi
                     ;;
                 add)
-                    # For add, complete with all branches (local and remote)
-                    local -a all_branches
                     if git rev-parse --git-dir &>/dev/null; then
+                        local -a all_branches
                         all_branches=(${(f)"$(git branch -a --format='%(refname:short)' 2>/dev/null | sed 's|^origin/||' | sort -u)"})
                         _describe -t branches 'branch' all_branches
                     fi
