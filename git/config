@@ -59,6 +59,7 @@
 
 	amend = commit --amend
 	amend-noe = commit --amend --no-edit
+	cb = clone-bare-for-worktrees
 	cl = clone
 	ci = commit
 	cm = commit -m
