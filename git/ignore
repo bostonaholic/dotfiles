@@ -14,10 +14,9 @@ Thumbs.db
 .vscode/
 .lsp/
 
-# Progamming #
+# Programming #
 ##############
 scratch*
-.worktrees/
 .envrc
 
 **/.claude/settings.local.json
