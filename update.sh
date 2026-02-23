@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 ################################################################################
 # Dotfiles Updater
 #
@@ -40,37 +40,41 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts/lib.sh"
 # Dotfiles
 echo && log "Updating dotfiles source..."
 (
-    cd "${HOME}/dotfiles" || exit
+    cd "$DOTFILES_DIR" || exit
     git refresh
 )
 success "Dotfiles updated"
 
 # Homebrew and Homebrew Packages
-echo && log "Updating Homebrew and Homebrew Packages..."
-brewup
-success "Homebrew updated"
+if command -v brewup &>/dev/null; then
+    echo && log "Updating Homebrew and Homebrew Packages..."
+    brewup
+    success "Homebrew updated"
+else
+    warn "brewup not found, skipping Homebrew updates"
+fi
 
 # Update Claude plugins
 echo && "$DOTFILES_DIR/scripts/update_claude_plugins"
 
 # Vimrc
 # https://github.com/amix/vimrc
-if [[ -d "${HOME}/.vim_runtime" ]]; then
+if [[ -d "${HOME}/.vim_runtime" ]] && command -v vimup &>/dev/null; then
     echo && log "Updating Vimrc from https://github.com/amix/vimrc..."
     vimup
     success "Vimrc updated"
 else
-    warn "Vimrc not installed, skipping update"
+    warn "Vimrc not installed or vimup not found, skipping update"
 fi
 
 # Spacemacs
 # https://github.com/syl20bnr/spacemacs
-if [[ -d "${HOME}/.emacs.d" ]]; then
+if [[ -d "${HOME}/.emacs.d" ]] && command -v spacemacsup &>/dev/null; then
     echo && log "Updating Spacemacs from https://github.com/syl20bnr/spacemacs..."
     spacemacsup
     success "Spacemacs updated"
 else
-    warn "Spacemacs not installed, skipping update"
+    warn "Spacemacs not installed or spacemacsup not found, skipping update"
 fi
 
 # rbenv plugins
