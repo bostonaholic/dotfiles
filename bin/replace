@@ -51,6 +51,7 @@ else
 fi
 
 temp="${TMPDIR:-/tmp}/replace_temp_file.$$"
+trap 'rm -f "$temp"' EXIT
 IFS=$'\n'
 for item in $items; do
   sed "s/$find_this/$replace_with/g" "$item" > "$temp" && mv "$temp" "$item"

@@ -63,6 +63,7 @@ RECENT_COMMITS=$(git log --oneline -5 2>/dev/null || echo "")
 
 # Build the prompt
 PROMPT_FILE=$(mktemp)
+trap 'rm -f "$PROMPT_FILE"' EXIT
 cat > "$PROMPT_FILE" <<EOF
 You are an expert Git user helping someone undo a Git operation safely.
 
@@ -86,4 +87,3 @@ EOF
 
 # Call Claude CLI
 claude --model sonnet --print --dangerously-skip-permissions < "$PROMPT_FILE"
-rm "$PROMPT_FILE"

@@ -68,6 +68,7 @@ RECENT_COMMITS=$(git log --format='%s' -10 2>/dev/null | tr -d '\000' || echo ""
 
 # Build the prompt with optional user context
 PROMPT_FILE=$(mktemp)
+trap 'rm -f "$PROMPT_FILE"' EXIT
 cat > "$PROMPT_FILE" <<EOF
 You are a git commit message expert. Analyze the following staged git diff and generate a concise, meaningful commit message.
 
@@ -104,4 +105,3 @@ EOF
 
 # Call Claude CLI and output result
 claude --model haiku --print --dangerously-skip-permissions < "$PROMPT_FILE" 2>/dev/null
-rm "$PROMPT_FILE"

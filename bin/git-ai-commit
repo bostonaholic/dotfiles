@@ -100,10 +100,10 @@ case $REPLY in
     [Ee]*)
         # Edit the message
         TEMP_FILE=$(mktemp)
+        trap 'rm -f "$TEMP_FILE"' EXIT
         echo "$COMMIT_MSG" > "$TEMP_FILE"
         ${EDITOR:-vim} "$TEMP_FILE"
         COMMIT_MSG=$(cat "$TEMP_FILE")
-        rm "$TEMP_FILE"
 
         if [ -z "$COMMIT_MSG" ]; then
             printf "${RED}Error: Commit message is empty. Aborting.${NC}\n" >&2
