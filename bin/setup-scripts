@@ -30,6 +30,8 @@
 #
 ################################################################################
 
+set -euo pipefail
+
 SCRIPT_DIR="script"
 if [ ! -d "$SCRIPT_DIR" ]; then
   mkdir "$SCRIPT_DIR"

@@ -29,20 +29,15 @@
 #
 ################################################################################
 
-set -eux -o pipefail
+set -euo pipefail
 
 (
     cd "${HOME}/.vim_runtime"
     git reset --hard
     git clean -d --force
     git pull --rebase
-    python3 update_plugins.py
-
-    exit_code=$?
-
-    if [ "$exit_code" -eq 1 ];
-    then
+    python3 update_plugins.py || {
         pip3 install requests
         python3 update_plugins.py
-    fi
+    }
 )

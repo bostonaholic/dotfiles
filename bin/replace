@@ -35,7 +35,7 @@
 #
 ################################################################################
 
-set -eux -o pipefail
+set -euo pipefail
 
 find_this="$1"
 shift
@@ -52,7 +52,10 @@ fi
 
 temp="${TMPDIR:-/tmp}/replace_temp_file.$$"
 trap 'rm -f "$temp"' EXIT
+escaped_find=$(printf '%s\n' "$find_this" | sed 's/[[\.*^$()+?{|/]/\\&/g')
+escaped_replace=$(printf '%s\n' "$replace_with" | sed 's/[&/\]/\\&/g')
+
 IFS=$'\n'
 for item in $items; do
-  sed "s/$find_this/$replace_with/g" "$item" > "$temp" && mv "$temp" "$item"
+  sed "s/${escaped_find}/${escaped_replace}/g" "$item" > "$temp" && mv "$temp" "$item"
 done
