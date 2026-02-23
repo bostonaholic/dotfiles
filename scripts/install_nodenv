@@ -7,21 +7,23 @@
 #   Manages multiple Node.js versions on the same machine.
 #
 # USAGE:
+#   Called by install.sh, or run directly:
 #   ./install_nodenv
 #
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
 # WHAT IT DOES:
-#   1. Checks if nodenv is installed, installs via Homebrew if missing
-#   2. Installs the specified Node.js version using nodenv
-#   3. Sets the installed version as the global default
-#   4. Runs 'nodenv rehash' to make Node.js commands available
-#   5. Skips if nodenv and the version are already installed
+#   1. Reads desired Node.js version from node/node-version
+#   2. Checks if nodenv is installed, installs via Homebrew if missing
+#   3. Installs the specified Node.js version using nodenv
+#   4. Sets the installed version as the global default
+#   5. Runs 'nodenv rehash' to make Node.js commands available
 #
 # DEPENDENCIES:
 #   - homebrew (for installing nodenv)
 #   - Internet connection
-#
-# CONFIGURATION:
-#   - VERSION variable at top of script specifies Node.js version to install
 #
 # NOTES:
 #   After installation, add 'eval "$(nodenv init -)"' to your shell profile.
@@ -29,26 +31,54 @@
 #
 ################################################################################
 
-VERSION='22.15.1'
+set -euo pipefail
 
-function install_global_node() {
-    nodenv install $VERSION
-    nodenv global $VERSION
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+install_global_node() {
+    local version=$1
+
+    if [[ $DRY_RUN == true ]]; then
+        log "[DRY RUN] Would install Node.js $version via nodenv"
+        return
+    fi
+
+    log "Installing Node.js $version..."
+    nodenv install "$version"
+    nodenv global "$version"
     nodenv rehash
+    success "Node.js $version installed"
 }
 
-if [ ! -d "$HOME/.nodenv" ]; then
-    echo 'Setting up nodenv...'
-    brew install nodenv
+main() {
+    local version
+    version=$(<"$DOTFILES_DIR/node/node-version")
 
-    echo "nodenv is now set up! Installing latest Node..."
-    install_global_node
-else
-    echo 'nodenv is already installed on this machine.'
+    if [[ ! -d "$HOME/.nodenv" ]]; then
+        if [[ $DRY_RUN == true ]]; then
+            log "[DRY RUN] Would install nodenv via Homebrew"
+            log "[DRY RUN] Would install Node.js $version"
+            return
+        fi
 
-    if [ ! -d "$HOME/.nodenv/versions/$VERSION" ]; then
-        install_global_node
+        log "Installing nodenv..."
+        brew install nodenv
+        success "nodenv installed"
+
+        install_global_node "$version"
     else
-        echo "Node $VERSION is already installed on this machine."
+        log "nodenv is already installed"
+
+        if [[ ! -d "$HOME/.nodenv/versions/$version" ]]; then
+            install_global_node "$version"
+        else
+            log "Node.js $version is already installed"
+        fi
     fi
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
 fi

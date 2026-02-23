@@ -7,12 +7,17 @@
 #   special glyphs and symbols used by Powerline status bars and themes.
 #
 # USAGE:
+#   Called by install.sh, or run directly:
 #   ./install_powerline-fonts
 #
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
 # WHAT IT DOES:
-#   1. Clones the powerline/fonts repository (shallow clone)
+#   1. Clones the powerline/fonts repository into a temp directory
 #   2. Runs the install.sh script from the repository
-#   3. Cleans up by removing the cloned repository
+#   3. Cleans up the temp directory automatically via trap
 #
 # DEPENDENCIES:
 #   - git (for cloning repository)
@@ -21,16 +26,36 @@
 # NOTES:
 #   After installation, configure your terminal to use one of the installed
 #   Powerline fonts (e.g., "Source Code Pro for Powerline").
-#   The fonts directory is removed after installation to save space.
 #
 ################################################################################
 
-set -eux -o pipefail
+set -euo pipefail
 
-git clone https://github.com/powerline/fonts.git --depth=1
-(
-    cd fonts
-    sh install.sh
-)
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 
-rm -rfv fonts
+main() {
+    if [[ $DRY_RUN == true ]]; then
+        log "[DRY RUN] Would install Powerline fonts"
+        return
+    fi
+
+    log "Installing Powerline fonts..."
+
+    local tmpdir
+    tmpdir=$(mktemp -d)
+    trap 'rm -rf "$tmpdir"' EXIT
+
+    git clone https://github.com/powerline/fonts.git --depth=1 "$tmpdir"
+    (
+        cd "$tmpdir"
+        sh install.sh
+    )
+
+    success "Powerline fonts installed"
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

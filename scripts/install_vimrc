@@ -7,7 +7,12 @@
 #   with plugins, themes, and sensible defaults for productive editing.
 #
 # USAGE:
+#   Called by install.sh, or run directly:
 #   ./install_vimrc
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
 #
 # WHAT IT DOES:
 #   1. Checks if ~/.vim_runtime directory exists
@@ -28,18 +33,35 @@
 #
 ################################################################################
 
-set -eux -o pipefail
+set -euo pipefail
 
-DIRECTORY="$HOME/.vim_runtime"
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 
-if [ ! -d "$DIRECTORY" ]; then
-    git clone --depth=1 https://github.com/amix/vimrc.git "$DIRECTORY"
+main() {
+    local directory="$HOME/.vim_runtime"
+
+    if [[ -d "$directory" ]]; then
+        log "Vimrc is already installed, skipping"
+        return
+    fi
+
+    if [[ $DRY_RUN == true ]]; then
+        log "[DRY RUN] Would install Vimrc"
+        return
+    fi
+
+    log "Installing Vimrc..."
+    git clone --depth=1 https://github.com/amix/vimrc.git "$directory"
     (
-        cd "$DIRECTORY"
+        cd "$directory"
         pip3 install requests
         sh install_awesome_vimrc.sh
     )
-    echo "Done!"
-else
-    echo 'Vimrc is already installed on this machine.'
+    success "Vimrc installed"
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
 fi

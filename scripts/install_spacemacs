@@ -7,7 +7,12 @@
 #   defaults and an extensive layer system. Uses the develop branch.
 #
 # USAGE:
+#   Called by install.sh, or run directly:
 #   ./install_spacemacs
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
 #
 # WHAT IT DOES:
 #   1. Checks if ~/.emacs.d directory exists
@@ -27,20 +32,34 @@
 #
 ################################################################################
 
-set -eux -o pipefail
+set -euo pipefail
 
-DIRECTORY="$HOME/.emacs.d"
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 
-if [ ! -d "$DIRECTORY" ]; then
-    git clone https://github.com/syl20bnr/spacemacs "$DIRECTORY"
+main() {
+    local directory="$HOME/.emacs.d"
+
+    if [[ -d "$directory" ]]; then
+        log "Spacemacs is already installed, skipping"
+        return
+    fi
+
+    if [[ $DRY_RUN == true ]]; then
+        log "[DRY RUN] Would install Spacemacs"
+        return
+    fi
+
+    log "Installing Spacemacs..."
+    git clone https://github.com/syl20bnr/spacemacs "$directory"
     (
-        cd "$DIRECTORY"
+        cd "$directory"
         git checkout develop
     )
+    success "Spacemacs installed"
+}
 
-    # TODO: symlink templates
-
-    echo "Done!"
-else
-    echo 'Spacemacs is already installed on this machine.'
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
 fi

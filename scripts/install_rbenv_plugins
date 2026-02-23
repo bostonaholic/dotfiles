@@ -10,6 +10,10 @@
 #   Called by install.sh, or run directly:
 #   ./install_rbenv_plugins
 #
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
 # PLUGINS INSTALLED:
 #   - rbenv-default-gems: Automatically installs gems when installing new Ruby
 #   - rbenv-ctags: Generates ctags for installed Ruby versions
@@ -29,23 +33,51 @@
 #
 ################################################################################
 
-mkdir -p "$(rbenv root)/plugins"
+set -euo pipefail
 
-plugins=(
-    'rbenv/rbenv-default-gems'
-    'tpope/rbenv-ctags'
-)
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 
-for plugin in "${plugins[@]}"
-do
-    plugin_name=$(echo "${plugin}" | cut -d '/' -f 2)
-    plugin_repo="git@github.com:${plugin}.git"
+main() {
+    log "Installing rbenv plugins..."
 
-    # Only clone the plugin if it doesn't already exist
-    if [ ! -d "$(rbenv root)/plugins/${plugin_name}" ]; then
-        git clone "${plugin_repo}" "$(rbenv root)/plugins/${plugin_name}"
+    RBENV_ROOT="${RBENV_ROOT:-$HOME/.rbenv}"
+
+    if [[ $DRY_RUN == false ]]; then
+        mkdir -p "$RBENV_ROOT/plugins"
     fi
-done
 
-# Ensure the new plugins are available
-rbenv rehash
+    local plugins=(
+        'rbenv/rbenv-default-gems'
+        'tpope/rbenv-ctags'
+    )
+
+    for plugin in "${plugins[@]}"; do
+        local plugin_name plugin_repo
+        plugin_name=$(echo "$plugin" | cut -d '/' -f 2)
+        plugin_repo="git@github.com:${plugin}.git"
+
+        if [[ -d "$RBENV_ROOT/plugins/$plugin_name" ]]; then
+            debug "$plugin_name already installed"
+            continue
+        fi
+
+        if [[ $DRY_RUN == true ]]; then
+            log "[DRY RUN] Would install rbenv plugin: $plugin_name"
+        else
+            log "Installing rbenv plugin: $plugin_name"
+            git clone "$plugin_repo" "$RBENV_ROOT/plugins/$plugin_name"
+        fi
+    done
+
+    if [[ $DRY_RUN == false ]]; then
+        rbenv rehash
+    fi
+
+    success "rbenv plugins installed"
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

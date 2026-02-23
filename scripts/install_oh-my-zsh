@@ -10,6 +10,10 @@
 #   Called by install.sh, or run directly:
 #   ./install_oh-my-zsh
 #
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
 # WHAT IT DOES:
 #   - Checks if ~/.oh-my-zsh directory exists
 #   - If not present, downloads and runs the official Oh My Zsh installer
@@ -25,11 +29,30 @@
 #
 ################################################################################
 
-DIRECTORY="$HOME/.oh-my-zsh"
+set -euo pipefail
 
-if [ ! -d "$DIRECTORY" ]; then
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+main() {
+    local directory="$HOME/.oh-my-zsh"
+
+    if [[ -d "$directory" ]]; then
+        log "oh-my-zsh is already installed, skipping"
+        return
+    fi
+
+    if [[ $DRY_RUN == true ]]; then
+        log "[DRY RUN] Would install oh-my-zsh"
+        return
+    fi
+
+    log "Installing oh-my-zsh..."
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)"
-    echo "Done!"
-else
-    echo 'oh-my-zsh is already installed on this machine.'
+    success "oh-my-zsh installed"
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
 fi
