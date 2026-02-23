@@ -39,29 +39,8 @@
 
 set -euo pipefail
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
-
-error() {
-    echo -e "${RED}Error: $1${NC}" >&2
-    exit 1
-}
-
-info() {
-    echo -e "${BLUE}$1${NC}"
-}
-
-success() {
-    echo -e "${GREEN}$1${NC}"
-}
-
-warning() {
-    echo -e "${YELLOW}$1${NC}"
-}
+# shellcheck disable=SC1091
+source "${HOME}/.colors"
 
 # Parse command line arguments
 USER_CONTEXT=""
@@ -71,38 +50,43 @@ while getopts "c:" opt; do
             USER_CONTEXT="$OPTARG"
             ;;
         \?)
-            error "Invalid option: -$OPTARG. Usage: git-ai-commit [-c \"context\"]"
+            printf "${RED}Error: Invalid option: -%s. Usage: git-ai-commit [-c \"context\"]${NC}\n" "$OPTARG" >&2
+            exit 1
             ;;
         :)
-            error "Option -$OPTARG requires an argument"
+            printf "${RED}Error: Option -%s requires an argument${NC}\n" "$OPTARG" >&2
+            exit 1
             ;;
     esac
 done
 
 # Check if we're in a git repository
 if ! git rev-parse --git-dir > /dev/null 2>&1; then
-    error "Not in a git repository"
+    printf "${RED}Error: Not in a git repository${NC}\n" >&2
+    exit 1
 fi
 
 # Check if there are staged changes
 if git diff --cached --quiet; then
-    error "No staged changes to commit. Use 'git add' to stage changes first."
+    printf "${RED}Error: No staged changes to commit. Use 'git add' to stage changes first.${NC}\n" >&2
+    exit 1
 fi
 
 # Generate commit message using git-ai-commit-msg
 # Use the same directory as this script to find git-ai-commit-msg
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-info "Analyzing staged changes..."
+printf "${BLUE}Analyzing staged changes...${NC}\n"
 COMMIT_MSG=$("$SCRIPT_DIR/git-ai-commit-msg" "$USER_CONTEXT" 2>&1)
 EXIT_CODE=$?
 
 if [ $EXIT_CODE -ne 0 ] || [ -z "$COMMIT_MSG" ]; then
-    error "Failed to generate commit message: $COMMIT_MSG"
+    printf "${RED}Error: Failed to generate commit message: %s${NC}\n" "$COMMIT_MSG" >&2
+    exit 1
 fi
 
 # Display the generated message
 echo ""
-success "Generated commit message:"
+printf "${GREEN}Generated commit message:${NC}\n"
 echo "─────────────────────────────────────────"
 echo "$COMMIT_MSG"
 echo "─────────────────────────────────────────"
@@ -122,21 +106,22 @@ case $REPLY in
         rm "$TEMP_FILE"
 
         if [ -z "$COMMIT_MSG" ]; then
-            error "Commit message is empty. Aborting."
+            printf "${RED}Error: Commit message is empty. Aborting.${NC}\n" >&2
+            exit 1
         fi
 
-        info "Committing with edited message..."
+        printf "${BLUE}Committing with edited message...${NC}\n"
         git commit -F - <<< "$COMMIT_MSG"
-        success "✓ Commit created successfully!"
+        printf "${GREEN}✓ Commit created successfully!${NC}\n"
         ;;
     [Nn]*)
-        warning "Commit aborted."
+        printf "${YELLOW}Commit aborted.${NC}\n"
         exit 1
         ;;
     *)
         # Default: yes
-        info "Committing..."
+        printf "${BLUE}Committing...${NC}\n"
         git commit -F - <<< "$COMMIT_MSG"
-        success "✓ Commit created successfully!"
+        printf "${GREEN}✓ Commit created successfully!${NC}\n"
         ;;
 esac
