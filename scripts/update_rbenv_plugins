@@ -29,16 +29,8 @@
 
 set -euo pipefail
 
-# Colors for output
-readonly BLUE='\033[0;34m'
-readonly GREEN='\033[0;32m'
-readonly YELLOW='\033[0;33m'
-readonly NC='\033[0m'
-
-# Logging functions
-log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
-success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
-warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 
 # Main function
 main() {

@@ -33,35 +33,14 @@
 
 set -euo pipefail
 
-# Colors for output
-# readonly RED='\033[0;31m'
-readonly GREEN='\033[0;32m'
-readonly YELLOW='\033[0;33m'
-readonly BLUE='\033[0;34m'
-readonly NC='\033[0m'
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 
-# Configuration
-DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-readonly DOTFILES_DIR
-CONFIG_FILE="$DOTFILES_DIR/dotfiles.yaml"
-readonly CONFIG_FILE
 BACKUP_DIR="${BACKUP_DIR:-${HOME}/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)}"
 
-# Options from environment or defaults
-DRY_RUN="${DRY_RUN:-false}"
+# Additional options from environment or defaults
 FORCE="${FORCE:-false}"
-VERBOSE="${VERBOSE:-false}"
 BACKUP="${BACKUP:-true}"
-
-# Logging functions
-log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
-success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
-warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
-debug() { 
-    if [[ $VERBOSE == true ]]; then 
-        echo -e "${BLUE}[DEBUG]${NC} $1"
-    fi
-}
 
 # Backup file if it exists
 backup_file() {

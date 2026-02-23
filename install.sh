@@ -38,39 +38,20 @@
 
 set -euo pipefail
 
-# Colors for output
-readonly RED='\033[0;31m'
-readonly GREEN='\033[0;32m'
-readonly YELLOW='\033[0;33m'
-readonly BLUE='\033[0;34m'
-readonly NC='\033[0m' # No Color
+# shellcheck source=scripts/lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts/lib.sh"
 
-# Configuration
-DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-readonly DOTFILES_DIR
-CONFIG_FILE="$DOTFILES_DIR/dotfiles.yaml"
-readonly CONFIG_FILE
 BACKUP_DIR="${HOME}/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 readonly BACKUP_DIR
 
-# Options
-DRY_RUN=false
+# Additional options
 FORCE=false
-VERBOSE=false
 BACKUP=true
 COMPONENTS=""
 SKIP_SCRIPTS=false
 
-# Logging functions
-log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
-success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
-warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
-error() { echo -e "${RED}[ERROR]${NC} $1"; exit 1; }
-debug() { 
-    if [[ $VERBOSE == true ]]; then 
-        echo -e "${BLUE}[DEBUG]${NC} $1"
-    fi
-}
+# Fatal error -- prints and exits (lib.sh error() only prints)
+die() { error "$1"; exit 1; }
 
 # Help text
 usage() {
@@ -143,7 +124,7 @@ parse_args() {
                 shift
                 ;;
             *)
-                error "Unknown option: $1"
+                die "Unknown option: $1"
                 ;;
         esac
     done
@@ -166,7 +147,7 @@ check_dependencies() {
     local required_tools=("git")
     for tool in "${required_tools[@]}"; do
         if ! command -v "$tool" &> /dev/null; then
-            error "$tool is required but not installed"
+            die "$tool is required but not installed"
         fi
     done
 
@@ -266,7 +247,7 @@ install_claude() {
     "$DOTFILES_DIR/scripts/install_claude_plugins"
 }
 
-# Run installation scripts
+# Run installation scripts from dotfiles.yaml
 run_scripts() {
     if [[ $SKIP_SCRIPTS == true ]] || ! should_install "scripts"; then
         return
@@ -275,76 +256,46 @@ run_scripts() {
     local script_type=$1
     log "Running $script_type scripts..."
 
-    case $script_type in
-        pre_install)
-            if [[ $DRY_RUN == false ]]; then
-                log "Validating sudo credentials (you may need to enter your password)..."
-                sudo --validate
-                success "Sudo credentials validated"
-            else
-                log "[DRY RUN] Would validate sudo credentials"
+    export DRY_RUN VERBOSE
+
+    local count
+    count=$(yq eval ".scripts.${script_type} | length" "$CONFIG_FILE" 2>/dev/null || echo "0")
+
+    if [[ "$count" == "0" ]]; then
+        debug "No $script_type scripts configured"
+        return
+    fi
+
+    local ran=0
+    for ((i=0; i<count; i++)); do
+        local desc cmd cond optional
+        desc=$(yq eval ".scripts.${script_type}[$i].description" "$CONFIG_FILE")
+        cmd=$(yq eval ".scripts.${script_type}[$i].command" "$CONFIG_FILE")
+        cond=$(yq eval ".scripts.${script_type}[$i].condition // \"\"" "$CONFIG_FILE")
+        optional=$(yq eval ".scripts.${script_type}[$i].optional // false" "$CONFIG_FILE")
+
+        # Evaluate condition if present
+        if [[ -n "$cond" ]]; then
+            if ! eval "$cond" &>/dev/null; then
+                debug "Condition not met for: $desc"
+                continue
             fi
-            ;;
-        post_install)
-            # Run post-install scripts based on conditions
-            export DRY_RUN VERBOSE
+        fi
 
-            # oh-my-zsh
-            if [[ ! -d ~/.oh-my-zsh ]] && [[ -x "$DOTFILES_DIR/scripts/install_oh-my-zsh" ]]; then
-                if [[ $DRY_RUN == true ]]; then
-                    log "[DRY RUN] Would install oh-my-zsh"
-                else
-                    "$DOTFILES_DIR/scripts/install_oh-my-zsh"
-                fi
+        ran=$((ran + 1))
+        if [[ $DRY_RUN == true ]]; then
+            log "[DRY RUN] Would run: $desc"
+        else
+            log "$desc..."
+            if [[ "$optional" == "true" ]]; then
+                "$DOTFILES_DIR/$cmd" || warn "Optional step failed: $desc"
             else
-                [[ -d ~/.oh-my-zsh ]] && log "oh-my-zsh already installed, skipping"
+                "$DOTFILES_DIR/$cmd"
             fi
+        fi
+    done
 
-            # Spacemacs
-            if [[ ! -d ~/.emacs.d ]] && [[ -x "$DOTFILES_DIR/scripts/install_spacemacs" ]]; then
-                if [[ $DRY_RUN == true ]]; then
-                    log "[DRY RUN] Would install spacemacs"
-                else
-                    "$DOTFILES_DIR/scripts/install_spacemacs"
-                fi
-            else
-                [[ -d ~/.emacs.d ]] && log "Spacemacs already installed, skipping"
-            fi
-
-            # Vimrc
-            if [[ ! -d ~/.vim_runtime ]] && [[ -x "$DOTFILES_DIR/scripts/install_vimrc" ]]; then
-                if [[ $DRY_RUN == true ]]; then
-                    log "[DRY RUN] Would install vimrc"
-                else
-                    "$DOTFILES_DIR/scripts/install_vimrc"
-                fi
-            else
-                [[ -d ~/.vim_runtime ]] && log "Vimrc already installed, skipping"
-            fi
-
-            # Other optional scripts
-            for script in "$DOTFILES_DIR"/scripts/install_*; do
-                script_name=$(basename "$script")
-                # Skip the main install scripts we've already handled
-                case "$script_name" in
-                    install_directories|install_symlinks|install_homebrew|install_npm_packages|install_oh-my-zsh|install_spacemacs|install_vimrc)
-                        continue
-                        ;;
-                esac
-
-                if [[ -x "$script" ]]; then
-                    if [[ $DRY_RUN == true ]]; then
-                        log "[DRY RUN] Would run: $script_name"
-                    else
-                        log "Running: $script_name"
-                        "$script" || warn "Failed to run $script_name"
-                    fi
-                fi
-            done
-            ;;
-    esac
-
-    success "$script_type scripts completed"
+    success "$script_type scripts completed ($ran executed)"
 }
 
 # Main installation

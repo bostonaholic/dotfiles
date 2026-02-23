@@ -34,20 +34,8 @@
 
 set -euo pipefail
 
-# Colors for output
-readonly GREEN='\033[0;32m'
-readonly BLUE='\033[0;34m'
-readonly YELLOW='\033[0;33m'
-readonly NC='\033[0m' # No Color
-
-# Configuration
-DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-readonly DOTFILES_DIR
-
-# Logging functions
-log() { echo -e "${BLUE}[INFO]${NC}  $1"; }
-success() { echo -e "${GREEN}[DONE]${NC}  $1"; }
-warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+# shellcheck source=scripts/lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts/lib.sh"
 
 # Dotfiles
 echo && log "Updating dotfiles source..."
