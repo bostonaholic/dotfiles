@@ -52,6 +52,7 @@ fi
 
 temp="${TMPDIR:-/tmp}/replace_temp_file.$$"
 trap 'rm -f "$temp"' EXIT
+# shellcheck disable=SC2016 # Literal $ in sed character class is intentional
 escaped_find=$(printf '%s\n' "$find_this" | sed 's/[[\.*^$()+?{|/]/\\&/g')
 escaped_replace=$(printf '%s\n' "$replace_with" | sed 's/[&/\]/\\&/g')
 

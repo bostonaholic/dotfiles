@@ -50,11 +50,11 @@ while getopts "c:" opt; do
             USER_CONTEXT="$OPTARG"
             ;;
         \?)
-            printf "${RED}Error: Invalid option: -%s. Usage: git-ai-commit [-c \"context\"]${NC}\n" "$OPTARG" >&2
+            printf '%sError: Invalid option: -%s. Usage: git-ai-commit [-c "context"]%s\n' "${RED}" "$OPTARG" "${NC}" >&2
             exit 1
             ;;
         :)
-            printf "${RED}Error: Option -%s requires an argument${NC}\n" "$OPTARG" >&2
+            printf '%sError: Option -%s requires an argument%s\n' "${RED}" "$OPTARG" "${NC}" >&2
             exit 1
             ;;
     esac
@@ -62,31 +62,31 @@ done
 
 # Check if we're in a git repository
 if ! git rev-parse --git-dir > /dev/null 2>&1; then
-    printf "${RED}Error: Not in a git repository${NC}\n" >&2
+    printf '%sError: Not in a git repository%s\n' "${RED}" "${NC}" >&2
     exit 1
 fi
 
 # Check if there are staged changes
 if git diff --cached --quiet; then
-    printf "${RED}Error: No staged changes to commit. Use 'git add' to stage changes first.${NC}\n" >&2
+    printf "%sError: No staged changes to commit. Use 'git add' to stage changes first.%s\n" "${RED}" "${NC}" >&2
     exit 1
 fi
 
 # Generate commit message using git-ai-commit-msg
 # Use the same directory as this script to find git-ai-commit-msg
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-printf "${BLUE}Analyzing staged changes...${NC}\n"
+printf '%sAnalyzing staged changes...%s\n' "${BLUE}" "${NC}"
 COMMIT_MSG=$("$SCRIPT_DIR/git-ai-commit-msg" "$USER_CONTEXT" 2>&1)
 EXIT_CODE=$?
 
 if [ $EXIT_CODE -ne 0 ] || [ -z "$COMMIT_MSG" ]; then
-    printf "${RED}Error: Failed to generate commit message: %s${NC}\n" "$COMMIT_MSG" >&2
+    printf '%sError: Failed to generate commit message: %s%s\n' "${RED}" "$COMMIT_MSG" "${NC}" >&2
     exit 1
 fi
 
 # Display the generated message
 echo ""
-printf "${GREEN}Generated commit message:${NC}\n"
+printf '%sGenerated commit message:%s\n' "${GREEN}" "${NC}"
 echo "─────────────────────────────────────────"
 echo "$COMMIT_MSG"
 echo "─────────────────────────────────────────"
@@ -106,22 +106,22 @@ case $REPLY in
         COMMIT_MSG=$(cat "$TEMP_FILE")
 
         if [ -z "$COMMIT_MSG" ]; then
-            printf "${RED}Error: Commit message is empty. Aborting.${NC}\n" >&2
+            printf '%sError: Commit message is empty. Aborting.%s\n' "${RED}" "${NC}" >&2
             exit 1
         fi
 
-        printf "${BLUE}Committing with edited message...${NC}\n"
+        printf '%sCommitting with edited message...%s\n' "${BLUE}" "${NC}"
         git commit -F - <<< "$COMMIT_MSG"
-        printf "${GREEN}✓ Commit created successfully!${NC}\n"
+        printf '%s✓ Commit created successfully!%s\n' "${GREEN}" "${NC}"
         ;;
     [Nn]*)
-        printf "${YELLOW}Commit aborted.${NC}\n"
+        printf '%sCommit aborted.%s\n' "${YELLOW}" "${NC}"
         exit 1
         ;;
     *)
         # Default: yes
-        printf "${BLUE}Committing...${NC}\n"
+        printf '%sCommitting...%s\n' "${BLUE}" "${NC}"
         git commit -F - <<< "$COMMIT_MSG"
-        printf "${GREEN}✓ Commit created successfully!${NC}\n"
+        printf '%s✓ Commit created successfully!%s\n' "${GREEN}" "${NC}"
         ;;
 esac
