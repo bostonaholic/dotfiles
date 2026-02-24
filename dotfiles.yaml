@@ -139,6 +139,10 @@ scripts:
       command: "pre-commit install"
       condition: "command -v pre-commit"
 
+    - description: "Reinstall beads git hooks (chains to pre-commit)"
+      command: "bd hooks install"
+      condition: "command -v bd"
+
     - description: "Install Powerline fonts"
       command: "scripts/install_powerline-fonts"
       optional: true

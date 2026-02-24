@@ -7,5 +7,5 @@ repos:
       - id: shellcheck
         name: ShellCheck
         description: Run shellcheck to validate shell scripts
-        args: ['-x', '-S', 'warning']
-        exclude: '\.zsh$'
+        args: ['-x', '-S', 'warning', '--source-path=scripts']
+        exclude: '^zsh/|\.zsh$'
