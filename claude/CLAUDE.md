@@ -26,3 +26,7 @@ When writing code, always adhere to these principles inspired by legendary progr
 - John Ousterhout: **Fight complexity by designing deep modules with simple interfaces**. Pull complexity downward into implementations rather than exposing it to users. Strive for strategic design over tactical quick fixes.
 
 Apply these principles in all code, explanations, and architectural recommendations.
+
+## Git Workflow
+
+- When a pre-push hook fails and the failing commit has not yet been pushed to the remote, squash the fix into the original commit (e.g., `git commit --amend`) instead of creating a separate fix commit. This keeps history clean and avoids noise like "fix formatting" commits.
