@@ -48,6 +48,14 @@ alias gti=git
 
 # Git worktree wrapper - intercepts subcommands that should cd
 function wt() {
+    # Pass --help/-h straight through without capturing output
+    for arg in "$@"; do
+        if [[ "$arg" == "--help" || "$arg" == "-h" ]]; then
+            command wt "$@"
+            return
+        fi
+    done
+
     case "$1" in
         main|new|add|cd)
             local worktree_path

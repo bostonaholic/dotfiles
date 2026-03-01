@@ -219,6 +219,65 @@ cmd_prune() {
     git -C "$root" worktree prune "$@"
 }
 
+cmd_new_help() {
+    cat <<'EOF'
+Usage: wt new <name> [<start-point>]
+
+Create a worktree for a new branch.
+
+Arguments:
+  <name>          Name for the new branch and worktree directory
+  <start-point>   Starting commit (default: origin/main)
+EOF
+}
+
+cmd_add_help() {
+    cat <<'EOF'
+Usage: wt add <name>
+
+Create a worktree for an existing local or remote branch.
+
+Arguments:
+  <name>   Name of an existing branch to check out
+EOF
+}
+
+cmd_rm_help() {
+    cat <<'EOF'
+Usage: wt rm <name> [--keep-branch]
+
+Remove a worktree and delete its local branch.
+
+Arguments:
+  <name>          Worktree to remove (cannot be 'main')
+
+Options:
+  --keep-branch   Keep the local branch after removing the worktree
+EOF
+}
+
+cmd_cd_help() {
+    cat <<'EOF'
+Usage: wt cd <name>
+
+Enter a worktree by directory name.
+
+Arguments:
+  <name>   Worktree directory to change into
+EOF
+}
+
+cmd_path_help() {
+    cat <<'EOF'
+Usage: wt path <name>
+
+Print the absolute path to a worktree.
+
+Arguments:
+  <name>   Worktree directory to locate
+EOF
+}
+
 cmd_help() {
     cat <<'EOF'
 wt - git worktree manager for bare-clone layouts
@@ -253,6 +312,18 @@ main() {
 
     local subcommand="$1"
     shift
+
+    # Intercept --help/-h for any subcommand
+    for arg in "$@"; do
+        if [ "$arg" = "--help" ] || [ "$arg" = "-h" ]; then
+            if type "cmd_${subcommand}_help" &>/dev/null; then
+                "cmd_${subcommand}_help"
+            else
+                cmd_help
+            fi
+            exit 0
+        fi
+    done
 
     case "$subcommand" in
         main)           cmd_main "$@" ;;
