@@ -74,7 +74,8 @@ into the resulting worktree directory.
 |---------|--------|
 | `wt` or `wt ls` | List all worktrees |
 | `wt main` | cd into `main/` (creates if missing) |
-| `wt add <name> [<start-point>]` | Create worktree and cd into it |
+| `wt new <name> [<start-point>]` | Create worktree for a new branch (fails if branch exists) |
+| `wt add <name>` | Create worktree for an existing branch (fails if branch doesn't exist) |
 | `wt rm <name> [--keep-branch]` | Remove worktree + delete local branch |
 | `wt cd <name>` | cd into an existing worktree |
 | `wt path <name>` | Print path without cd |
@@ -86,7 +87,7 @@ into the resulting worktree directory.
 **Start work on a new feature:**
 
 ```bash
-wt add my-feature          # creates branch from origin/main, cd's in
+wt new my-feature          # creates branch from origin/main, cd's in
 ```
 
 **Check out an existing remote branch:**
@@ -98,7 +99,7 @@ wt add fix-bug             # detects origin/fix-bug, checks it out
 **Branch from a specific point:**
 
 ```bash
-wt add experiment v2.0.0   # creates branch from tag v2.0.0
+wt new experiment v2.0.0   # creates branch from tag v2.0.0
 ```
 
 **Return to main after feature work:**

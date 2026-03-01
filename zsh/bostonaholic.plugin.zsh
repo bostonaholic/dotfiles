@@ -49,7 +49,7 @@ alias gti=git
 # Git worktree wrapper - intercepts subcommands that should cd
 function wt() {
     case "$1" in
-        main|add|cd)
+        main|new|add|cd)
             local worktree_path
             if worktree_path=$(command wt "$@") && [ -d "$worktree_path" ]; then
                 builtin cd "$worktree_path" || return
@@ -77,7 +77,8 @@ function _wt() {
     local -a subcommands
     subcommands=(
         'main:Enter main worktree'
-        'add:Create a new worktree'
+        'new:Create worktree for a new branch'
+        'add:Create worktree for an existing branch'
         'rm:Remove a worktree'
         'ls:List all worktrees'
         'cd:Enter a worktree by name'

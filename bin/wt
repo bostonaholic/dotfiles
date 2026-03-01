@@ -7,7 +7,8 @@ set -euo pipefail
 #   wt                            List all worktrees
 #   wt ls                         List all worktrees
 #   wt main                       Enter main/ worktree (creates if needed)
-#   wt add <name> [<start-point>] Create <name>/ worktree (default: origin/main)
+#   wt new <name> [<start-point>] Create worktree for a new branch (default: origin/main)
+#   wt add <name>                 Create worktree for an existing branch
 #   wt rm <name> [--keep-branch]  Remove worktree and delete local branch
 #   wt cd <name>                  Enter a worktree by directory name
 #   wt path <name>                Show path to a worktree
@@ -64,9 +65,19 @@ cmd_main() {
     echo "$worktree_dir"
 }
 
-cmd_add() {
+local_branch_exists() {
+    local root="$1" name="$2"
+    git -C "$root" show-ref --verify --quiet "refs/heads/$name"
+}
+
+remote_branch_exists() {
+    local root="$1" name="$2"
+    git -C "$root" show-ref --verify --quiet "refs/remotes/origin/$name"
+}
+
+cmd_new() {
     if [ $# -lt 1 ]; then
-        echo "Usage: wt add <name> [<start-point>]" >&2
+        echo "Usage: wt new <name> [<start-point>]" >&2
         exit 1
     fi
 
@@ -80,19 +91,49 @@ cmd_add() {
     local worktree_dir="$root/$name"
 
     if [ -d "$worktree_dir" ]; then
+        echo "Error: Worktree already exists: $name" >&2
+        exit 1
+    fi
+
+    if local_branch_exists "$root" "$name"; then
+        echo "Error: Local branch '$name' already exists. Use 'wt add $name' instead." >&2
+        exit 1
+    fi
+
+    if remote_branch_exists "$root" "$name"; then
+        echo "Error: Remote branch 'origin/$name' already exists. Use 'wt add $name' instead." >&2
+        exit 1
+    fi
+
+    git -C "$root" worktree add --no-track -b "$name" "$worktree_dir" "$start_point" >&2
+    echo "$worktree_dir"
+}
+
+cmd_add() {
+    if [ $# -lt 1 ]; then
+        echo "Usage: wt add <name>" >&2
+        exit 1
+    fi
+
+    local name="$1"
+    validate_name "$name"
+
+    local root
+    root=$(require_bare_layout)
+    local worktree_dir="$root/$name"
+
+    if [ -d "$worktree_dir" ]; then
         echo "Worktree already exists: $name" >&2
         echo "$worktree_dir"
         return 0
     fi
 
-    # Check if branch exists locally or on remote
-    if git -C "$root" show-ref --verify --quiet "refs/heads/$name" \
-        || git -C "$root" show-ref --verify --quiet "refs/remotes/origin/$name"; then
-        git -C "$root" worktree add "$worktree_dir" "$name" >&2
-    else
-        git -C "$root" worktree add --no-track -b "$name" "$worktree_dir" "$start_point" >&2
+    if ! local_branch_exists "$root" "$name" && ! remote_branch_exists "$root" "$name"; then
+        echo "Error: Branch '$name' not found locally or on origin. Use 'wt new $name' to create it." >&2
+        exit 1
     fi
 
+    git -C "$root" worktree add "$worktree_dir" "$name" >&2
     echo "$worktree_dir"
 }
 
@@ -186,7 +227,8 @@ Usage:
   wt                            List all worktrees
   wt ls                         List all worktrees
   wt main                       Enter main/ worktree (creates if needed)
-  wt add <name> [<start-point>] Create <name>/ worktree (default: origin/main)
+  wt new <name> [<start-point>] Create worktree for a new branch (default: origin/main)
+  wt add <name>                 Create worktree for an existing branch
   wt rm <name> [--keep-branch]  Remove worktree and delete local branch
   wt cd <name>                  Enter a worktree by directory name
   wt path <name>                Show path to a worktree
@@ -214,6 +256,7 @@ main() {
 
     case "$subcommand" in
         main)           cmd_main "$@" ;;
+        new)            cmd_new "$@" ;;
         add)            cmd_add "$@" ;;
         rm)             cmd_rm "$@" ;;
         ls)             cmd_list "$@" ;;
