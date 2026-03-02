@@ -105,7 +105,26 @@ function _wt() {
             ;;
         args)
             case ${words[2]} in
-                cd|rm|path)
+                rm)
+                    local root
+                    if root=$(command wt _root 2>/dev/null); then
+                        local -a worktrees
+                        worktrees=(${(f)"$(git -C "$root" worktree list --porcelain 2>/dev/null | awk -v root="$root/" '
+                            /^worktree / {
+                                path = substr($0, 10)
+                                if (path != root && path !~ /\.bare$/) {
+                                    sub(root, "", path)
+                                    print path
+                                }
+                            }
+                        ')"})
+                        _describe -t worktrees 'worktree' worktrees
+                        _arguments '*: :' \
+                            '--keep-branch[Keep the local branch]' \
+                            '(-f --force)'{-f,--force}'[Force removal even with modifications]'
+                    fi
+                    ;;
+                cd|path)
                     local root
                     if root=$(command wt _root 2>/dev/null); then
                         local -a worktrees

@@ -9,7 +9,7 @@ set -euo pipefail
 #   wt main                       Enter main/ worktree (creates if needed)
 #   wt new <name> [<start-point>] Create worktree for a new branch (default: origin/main)
 #   wt add <name>                 Create worktree for an existing branch
-#   wt rm <name> [--keep-branch]  Remove worktree and delete local branch
+#   wt rm <name> [options]        Remove worktree and delete local branch
 #   wt cd <name>                  Enter a worktree by directory name
 #   wt path <name>                Show path to a worktree
 #   wt prune                      Clean up stale worktree references
@@ -139,11 +139,13 @@ cmd_add() {
 
 cmd_rm() {
     local keep_branch=false
+    local force=false
     local name=""
 
     while [ $# -gt 0 ]; do
         case "$1" in
             --keep-branch) keep_branch=true; shift ;;
+            -f|--force) force=true; shift ;;
             -*) echo "Unknown option: $1" >&2; exit 1 ;;
             *)  name="$1"; shift ;;
         esac
@@ -171,7 +173,11 @@ cmd_rm() {
         exit 1
     fi
 
-    git -C "$root" worktree remove "$worktree_dir"
+    local remove_args=("$worktree_dir")
+    if [ "$force" = true ]; then
+        remove_args+=(--force)
+    fi
+    git -C "$root" worktree remove "${remove_args[@]}"
 
     if [ "$keep_branch" = false ]; then
         if git -C "$root" show-ref --verify --quiet "refs/heads/$name"; then
@@ -244,7 +250,7 @@ EOF
 
 cmd_rm_help() {
     cat <<'EOF'
-Usage: wt rm <name> [--keep-branch]
+Usage: wt rm <name> [--keep-branch] [--force]
 
 Remove a worktree and delete its local branch.
 
@@ -253,6 +259,7 @@ Arguments:
 
 Options:
   --keep-branch   Keep the local branch after removing the worktree
+  -f, --force     Force removal even with modified or untracked files
 EOF
 }
 
@@ -288,7 +295,7 @@ Usage:
   wt main                       Enter main/ worktree (creates if needed)
   wt new <name> [<start-point>] Create worktree for a new branch (default: origin/main)
   wt add <name>                 Create worktree for an existing branch
-  wt rm <name> [--keep-branch]  Remove worktree and delete local branch
+  wt rm <name> [options]        Remove worktree and delete local branch
   wt cd <name>                  Enter a worktree by directory name
   wt path <name>                Show path to a worktree
   wt prune                      Clean up stale worktree references
