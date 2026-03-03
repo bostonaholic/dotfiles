@@ -104,6 +104,7 @@ plugins=(
     ruby
     ssh-agent
     starship
+    tmux
     yarn
     zoxide
 )
