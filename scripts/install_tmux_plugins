@@ -48,14 +48,16 @@ main() {
 
     # Install plugins via TPM
     # TPM resolves its path via `tmux show-environment -g TMUX_PLUGIN_MANAGER_PATH`,
-    # which is normally set by tpm/tpm when running inside tmux. For CLI installs,
-    # we set it explicitly in the tmux server environment.
+    # which is normally set by tpm/tpm when running inside tmux. For headless CLI
+    # installs, we create a temporary detached session to keep the server alive
+    # while setting the env var and running install_plugins.
     if [[ $DRY_RUN == true ]]; then
         log "[DRY RUN] Would install tmux plugins via TPM"
     else
         log "Installing tmux plugins via TPM..."
-        tmux start-server\; set-environment -g TMUX_PLUGIN_MANAGER_PATH "$PLUGIN_DIR/"
+        tmux new-session -d -s _tpm_install \; set-environment -g TMUX_PLUGIN_MANAGER_PATH "$PLUGIN_DIR/"
         "$TPM_DIR/bin/install_plugins"
+        tmux kill-session -t _tpm_install 2>/dev/null || true
     fi
 
     success "tmux plugins installed"
