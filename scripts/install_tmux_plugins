@@ -28,7 +28,8 @@ set -euo pipefail
 # shellcheck source=lib.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 
-TPM_DIR="$HOME/.tmux/plugins/tpm"
+PLUGIN_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/tmux/plugins"
+TPM_DIR="$PLUGIN_DIR/tpm"
 
 main() {
     log "Installing tmux plugins..."
@@ -53,7 +54,7 @@ main() {
         log "[DRY RUN] Would install tmux plugins via TPM"
     else
         log "Installing tmux plugins via TPM..."
-        tmux start-server\; set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins/"
+        tmux start-server\; set-environment -g TMUX_PLUGIN_MANAGER_PATH "$PLUGIN_DIR/"
         "$TPM_DIR/bin/install_plugins"
     fi
 

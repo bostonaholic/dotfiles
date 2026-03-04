@@ -26,7 +26,8 @@ set -euo pipefail
 # shellcheck source=lib.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 
-TPM_DIR="$HOME/.tmux/plugins/tpm"
+PLUGIN_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/tmux/plugins"
+TPM_DIR="$PLUGIN_DIR/tpm"
 
 main() {
     if [[ ! -d "$TPM_DIR" ]]; then
