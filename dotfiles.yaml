@@ -2,7 +2,6 @@
 # This file defines all symlinks, directories, and packages to be installed
 
 directories:
-  - ~/bin
   - ~/.claude
   - ~/.cursor
   - ~/.lein
@@ -14,8 +13,7 @@ directories:
 
 symlinks:
   # Scripts
-  bin/alerter: ~/bin/alerter
-  bin/icons: ~/bin/icons
+  bin: ~/bin
 
   # Claude
   claude/agents: ~/.claude/agents

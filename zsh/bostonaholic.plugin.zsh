@@ -1,5 +1,3 @@
-export PATH=$HOME/dotfiles/bin:$PATH
-
 ### ALIASES ###
 
 # --quit-if-one-screen causes it to quit if the content is less than one screen
