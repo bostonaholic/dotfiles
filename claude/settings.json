@@ -33,7 +33,9 @@
       "Bash(rm -rf:*)"
     ],
     "ask": [
-      "Bash(git push:*)"
+      "Bash(git push*--force*)",
+      "Bash(git push*main*)",
+      "Bash(git push*master*)"
     ]
   },
   "model": "opus",
