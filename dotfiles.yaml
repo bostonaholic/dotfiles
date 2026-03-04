@@ -7,7 +7,6 @@ directories:
   - ~/.config/btop
   - ~/.config/gh
   - ~/.config/ghostty
-  - ~/.config/git
   - ~/.config/tmux
   - ~/.cursor
   - ~/.lein
@@ -37,10 +36,7 @@ symlinks:
   zsh/bostonaholic.plugin.zsh: ~/.oh-my-zsh/custom/plugins/bostonaholic/bostonaholic.plugin.zsh
 
   # Git
-  git/config: ~/.config/git/config
-  git/helpers: ~/.config/git/helpers
-  git/ignore: ~/.config/git/ignore
-  git/allowed_signers: ~/.config/git/allowed_signers
+  git: ~/.config/git
 
   # System monitors
   btop/btop.conf: ~/.config/btop/btop.conf
