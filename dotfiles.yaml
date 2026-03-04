@@ -4,6 +4,7 @@
 directories:
   - ~/bin
   - ~/.claude
+  - ~/.config/btop
   - ~/.config/ghostty
   - ~/.config/git
   - ~/.config/tmux
@@ -39,6 +40,9 @@ symlinks:
   git/helpers: ~/.config/git/helpers
   git/ignore: ~/.config/git/ignore
   git/allowed_signers: ~/.config/git/allowed_signers
+
+  # System monitors
+  btop/btop.conf: ~/.config/btop/btop.conf
 
   # Terminal
   ghostty/config: ~/.config/ghostty/config
