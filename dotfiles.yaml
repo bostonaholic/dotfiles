@@ -5,6 +5,7 @@ directories:
   - ~/bin
   - ~/.claude
   - ~/.config/btop
+  - ~/.config/gh
   - ~/.config/ghostty
   - ~/.config/git
   - ~/.config/tmux
@@ -43,6 +44,9 @@ symlinks:
 
   # System monitors
   btop/btop.conf: ~/.config/btop/btop.conf
+
+  # GitHub CLI
+  gh/config.yml: ~/.config/gh/config.yml
 
   # Terminal
   ghostty/config: ~/.config/ghostty/config
