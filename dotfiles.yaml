@@ -6,7 +6,6 @@ directories:
   - ~/.claude
   - ~/.config/btop
   - ~/.config/gh
-  - ~/.config/ghostty
   - ~/.config/tmux
   - ~/.cursor
   - ~/.lein
@@ -45,7 +44,7 @@ symlinks:
   gh/config.yml: ~/.config/gh/config.yml
 
   # Terminal
-  ghostty/config: ~/.config/ghostty/config
+  ghostty: ~/.config/ghostty
   starship/starship.toml: ~/.config/starship.toml
   tmux/tmux.conf: ~/.config/tmux/tmux.conf
 
