@@ -137,6 +137,9 @@ scripts:
       command: "scripts/install_nodenv"
       condition: "! command -v nodenv"
 
+    - description: "Install tmux plugins (TPM)"
+      command: "scripts/install_tmux_plugins"
+
     - description: "Install pre-commit hooks"
       command: "pre-commit install"
       condition: "command -v pre-commit"

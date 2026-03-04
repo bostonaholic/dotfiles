@@ -1,0 +1,66 @@
+#!/bin/bash
+################################################################################
+# Install tmux Plugins
+#
+# DESCRIPTION:
+#   Installs TPM (Tmux Plugin Manager) and all plugins defined in tmux.conf.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_tmux_plugins
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
+# WHAT IT DOES:
+#   1. Clones TPM from GitHub if not already installed
+#   2. Runs TPM's install_plugins script to install plugins from tmux.conf
+#
+# DEPENDENCIES:
+#   - git (for cloning TPM)
+#   - Internet connection
+#
+################################################################################
+
+set -euo pipefail
+
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+TPM_DIR="$HOME/.tmux/plugins/tpm"
+
+main() {
+    log "Installing tmux plugins..."
+
+    # Install TPM if not present
+    if [[ ! -d "$TPM_DIR" ]]; then
+        if [[ $DRY_RUN == true ]]; then
+            log "[DRY RUN] Would clone TPM to $TPM_DIR"
+        else
+            log "Cloning TPM..."
+            git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
+        fi
+    else
+        debug "TPM already installed"
+    fi
+
+    # Install plugins via TPM
+    # TPM resolves its path via `tmux show-environment -g TMUX_PLUGIN_MANAGER_PATH`,
+    # which is normally set by tpm/tpm when running inside tmux. For CLI installs,
+    # we set it explicitly in the tmux server environment.
+    if [[ $DRY_RUN == true ]]; then
+        log "[DRY RUN] Would install tmux plugins via TPM"
+    else
+        log "Installing tmux plugins via TPM..."
+        tmux start-server\; set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins/"
+        "$TPM_DIR/bin/install_plugins"
+    fi
+
+    success "tmux plugins installed"
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

@@ -77,6 +77,9 @@ else
     warn "Spacemacs not installed or spacemacsup not found, skipping update"
 fi
 
+# tmux plugins
+echo && "$DOTFILES_DIR/scripts/update_tmux_plugins"
+
 # rbenv plugins
 echo && "$DOTFILES_DIR/scripts/update_rbenv_plugins"
 

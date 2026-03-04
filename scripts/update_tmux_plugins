@@ -1,0 +1,51 @@
+#!/bin/bash
+################################################################################
+# Update tmux Plugins
+#
+# DESCRIPTION:
+#   Updates TPM (Tmux Plugin Manager) and all installed tmux plugins.
+#
+# USAGE:
+#   Called by update.sh, or run directly:
+#   ./update_tmux_plugins
+#
+# WHAT IT DOES:
+#   1. Checks if TPM is installed, skips if not found
+#   2. Updates TPM itself via git pull
+#   3. Updates all installed plugins via TPM's update script
+#
+# DEPENDENCIES:
+#   - git (for updating TPM)
+#   - TPM (skips if not installed)
+#   - Internet connection
+#
+################################################################################
+
+set -euo pipefail
+
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+TPM_DIR="$HOME/.tmux/plugins/tpm"
+
+main() {
+    if [[ ! -d "$TPM_DIR" ]]; then
+        warn "TPM not installed, skipping tmux plugin updates"
+        return
+    fi
+
+    log "Updating tmux plugins..."
+
+    log "Updating TPM..."
+    (cd "$TPM_DIR" && git pull --quiet)
+
+    log "Updating tmux plugins via TPM..."
+    "$TPM_DIR/bin/update_plugins" all
+
+    success "tmux plugins updated"
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi
