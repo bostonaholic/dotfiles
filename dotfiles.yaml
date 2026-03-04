@@ -4,7 +4,6 @@
 directories:
   - ~/bin
   - ~/.claude
-  - ~/.config/btop
   - ~/.config/gh
   - ~/.cursor
   - ~/.lein
@@ -37,7 +36,7 @@ symlinks:
   git: ~/.config/git
 
   # System monitors
-  btop/btop.conf: ~/.config/btop/btop.conf
+  btop: ~/.config/btop
 
   # GitHub CLI
   gh/config.yml: ~/.config/gh/config.yml
