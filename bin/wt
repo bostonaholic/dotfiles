@@ -225,6 +225,14 @@ cmd_prune() {
     git -C "$root" worktree prune "$@"
 }
 
+cmd_main_help() {
+    cat <<'EOF'
+Usage: wt main
+
+Enter the main/ worktree, creating it if needed.
+EOF
+}
+
 cmd_new_help() {
     cat <<'EOF'
 Usage: wt new <name> [<start-point>]
@@ -263,6 +271,14 @@ Options:
 EOF
 }
 
+cmd_ls_help() {
+    cat <<'EOF'
+Usage: wt ls
+
+List all worktrees in the project.
+EOF
+}
+
 cmd_cd_help() {
     cat <<'EOF'
 Usage: wt cd <name>
@@ -282,6 +298,21 @@ Print the absolute path to a worktree.
 
 Arguments:
   <name>   Worktree directory to locate
+EOF
+}
+
+cmd_prune_help() {
+    cat <<'EOF'
+Usage: wt prune [options]
+
+Clean up stale worktree references.
+
+Removes worktree entries whose directories no longer exist on disk.
+
+Options:
+  -n, --dry-run          Show what would be removed without removing
+  -v, --verbose          Report pruned worktree references
+  --expire <time>        Only prune entries older than <time>
 EOF
 }
 
