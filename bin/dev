@@ -7,10 +7,11 @@
 #   windows: one for your shell and one running Claude Code.
 #
 # USAGE:
-#   dev
+#   dev [session-name]
 #
 # EXAMPLES:
 #   cd ~/projects/myapp && dev   # Creates session "myapp" with two windows
+#   dev myapp                    # Creates session "myapp" with explicit name
 #   dev                          # Reattaches if session already exists
 #
 # DEPENDENCIES:
@@ -22,10 +23,12 @@
 
 set -euo pipefail
 
-# Derive session name from git repo or current directory
-# Uses git-common-dir to resolve the repo root, which works for both
-# normal repos (.git) and bare repo worktrees (.bare)
-if git rev-parse --git-common-dir &>/dev/null; then
+# Use argument as session name, or derive from git repo / current directory
+if [ -n "${1:-}" ]; then
+    session="$1"
+elif git rev-parse --git-common-dir &>/dev/null; then
+    # Uses git-common-dir to resolve the repo root, which works for both
+    # normal repos (.git) and bare repo worktrees (.bare)
     session=$(basename "$(dirname "$(cd "$(git rev-parse --git-common-dir)" && pwd)")")
 else
     session=$(basename "$PWD")
