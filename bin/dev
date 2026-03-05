@@ -23,6 +23,11 @@
 
 set -euo pipefail
 
+if [[ "${1:-}" =~ ^(-h|--help)$ ]]; then
+    sed -n '3,/^####/{/^####/d; s/^# \{0,1\}//; p;}' "$0"
+    exit 0
+fi
+
 # Use argument as session name, or derive from git repo / current directory
 if [ -n "${1:-}" ]; then
     session="$1"
