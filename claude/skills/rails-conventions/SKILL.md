@@ -180,7 +180,7 @@ assert user.active?
 
 - Do not test Rails framework behavior (validations work)
 - Do not test private methods directly
-- Do not mock Active Record or database interactions
+- Never mock what you can use for real—use the real database, real Active Record, real collaborators. Reserve test doubles only for truly external services (payment gateways, third-party APIs)
 - Do not write system tests for things controller tests cover
 
 ## Database Conventions

@@ -140,7 +140,7 @@ Avoid:
 
 - Testing private helpers directly instead of behavior.
 - Large integration-style tests when a unit test would suffice.
-- Over-mocking internals instead of modeling realistic collaborators.
+- Mocking what you can use for real—use real implementations (databases, queues, collaborators) whenever possible. Reserve doubles only for truly external systems you cannot control.
 
 ---
 
@@ -166,4 +166,4 @@ For architecting code that makes TDD effortless, see the `writing-code` skill. S
 - TDD cycle runs fast (no I/O in decisions)
 - Tests are deterministic (pure decision logic)
 
-**When struggling with TDD:** If writing tests first requires heavy mocking, your code likely mixes decisions and effects. Use the writing-code pattern to separate concerns, then TDD becomes straightforward.
+**When struggling with TDD:** If writing tests first requires heavy mocking, your code likely mixes decisions and effects. Never mock what you can use for real—use the writing-code pattern to separate concerns so logic is testable with real objects, then TDD becomes straightforward.

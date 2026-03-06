@@ -74,14 +74,16 @@ Use for complex object creation. Provides defaults, fluent interface, reusabilit
 
 ### Test Doubles
 
-| Type | Purpose | Example |
-|------|---------|---------|
-| Mock | Verify method was called | Assert email service sent notification |
-| Stub | Control return values | API returns success then failure |
-| Fake | Working in-memory implementation | In-memory database |
-| Spy | Inspect calls after execution | Logger recorded error messages |
+**Rule: Never mock what you can use for real.** Use real implementations whenever possible—real databases, real queues, real collaborators. Mocks hide bugs and couple tests to implementation details. Reserve test doubles only for things you truly cannot use in tests (third-party APIs, payment gateways, external services with no sandbox).
 
-**Rule:** Mock external systems, not your own components. Test state, not interactions.
+| Type | When to Use | Example |
+|------|-------------|---------|
+| Real | Default choice—always prefer | Real database, real queue, real collaborator objects |
+| Fake | When real thing is too slow or unavailable | In-memory database for CI, local S3-compatible store |
+| Stub | External service with no test mode | Third-party API returns canned response |
+| Mock | Verify interaction with unreachable external | Assert payment gateway was called with correct amount |
+
+**If you're mocking your own code, your design needs work.** Separate decisions from effects (see `writing-code` skill) so logic is testable without doubles.
 
 ### Parameterized Tests
 
@@ -102,7 +104,7 @@ def test_slugify(input, expected):
 | Flaky Tests | Pass/fail randomly | Control time, isolate tests, use fakes |
 | Slow Tests | Unit tests take seconds | Remove I/O, test pure logic |
 | Test Interdependencies | Fail in different order | Isolate tests, complete setup per test |
-| Over-Mocking | Breaks when refactoring | Mock external systems only |
+| Over-Mocking | Breaks when refactoring | Never mock what you can use for real |
 | Logic in Tests | Tests have if/loops | Simplify, use parameterized tests |
 | Unclear Names | Can't tell what broke | `test_<scenario>_<expected_behavior>` |
 
@@ -164,5 +166,5 @@ end
 2. **Test behavior, not implementation** - Tests survive refactoring
 3. **Risk-based coverage** - Focus on critical paths, not percentages
 4. **Separate decisions from effects** - Enables fast unit tests (see writing-code skill)
-5. **Mock external systems only** - Test state, not interactions
+5. **Never mock what you can use for real** - Use real implementations; reserve doubles for truly external systems
 6. **Zero tolerance for flaky tests** - Fix immediately or delete

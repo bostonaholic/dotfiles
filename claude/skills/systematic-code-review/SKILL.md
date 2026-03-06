@@ -59,7 +59,7 @@ Follow this order—don't jump to nits.
 **Red Flags:**
 
 - Testing private methods instead of behavior
-- Heavy mocking of own components (indicates mixed concerns—see `writing-code` skill)
+- Mocking what can be used for real—never mock own components, databases, or collaborators. Heavy mocking indicates mixed concerns (see `writing-code` skill)
 - Tests slower than necessary
 
 ### 6. Evaluate Security
