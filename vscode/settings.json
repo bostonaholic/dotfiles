@@ -11,5 +11,6 @@
     "markdownlint.config": {},
     "claudeCode.useTerminal": true,
     "containers.containerClient": "com.microsoft.visualstudio.containers.docker",
-    "containers.orchestratorClient": "com.microsoft.visualstudio.orchestrators.dockercompose"
+    "containers.orchestratorClient": "com.microsoft.visualstudio.orchestrators.dockercompose",
+    "editor.minimap.enabled": false
 }
