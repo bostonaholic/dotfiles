@@ -17,7 +17,7 @@
 #   -v, --verbose       Enable verbose output
 #   -y, --yes           Answer yes to all prompts
 #   --no-backup         Don't backup existing files
-#   --only COMPONENTS   Install only specified components (symlinks,homebrew,npm,uv,claude,scripts)
+#   --only COMPONENTS   Install only specified components (symlinks,homebrew,npm,pipx,uv,claude,claude-mcp,scripts)
 #   --skip-scripts      Skip pre/post installation scripts
 #
 # EXAMPLES:
@@ -74,8 +74,10 @@ COMPONENTS:
     symlinks    Create all symlinks
     homebrew    Install Homebrew packages
     npm         Install npm packages
+    pipx        Install pipx packages
     uv          Install uv tools
     claude      Install Claude Code plugins
+    claude-mcp  Install Claude Code MCP servers
     scripts     Run installation scripts
 
 EXAMPLES:
@@ -225,6 +227,17 @@ install_npm() {
     "$DOTFILES_DIR/scripts/install_npm_packages"
 }
 
+# Install pipx packages
+install_pipx() {
+    if ! should_install "pipx"; then
+        return
+    fi
+
+    # Export options for the script
+    export DRY_RUN VERBOSE
+    "$DOTFILES_DIR/scripts/install_pipx_packages"
+}
+
 # Install uv tools
 install_uv() {
     if ! should_install "uv"; then
@@ -245,6 +258,17 @@ install_claude() {
     # Export options for the script
     export DRY_RUN VERBOSE
     "$DOTFILES_DIR/scripts/install_claude_plugins"
+}
+
+# Install Claude Code MCP servers
+install_claude_mcp() {
+    if ! should_install "claude-mcp"; then
+        return
+    fi
+
+    # Export options for the script
+    export DRY_RUN VERBOSE
+    "$DOTFILES_DIR/scripts/install_claude_mcp_servers"
 }
 
 # Run installation scripts from dotfiles.yaml
@@ -336,9 +360,13 @@ main() {
     echo
     install_npm
     echo
+    install_pipx
+    echo
     install_uv
     echo
     install_claude
+    echo
+    install_claude_mcp
     echo
 
     # Run post-install scripts

@@ -108,6 +108,7 @@ brew 'rust'     # for YJIT
 # Languages: Python
 # =============================================================================
 
+brew 'pipx'
 brew 'pyenv'
 brew 'uv'
 

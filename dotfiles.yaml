@@ -89,10 +89,23 @@ packages:
       - tern
       - ulid
 
+  pipx:
+    packages:
+      - jcodemunch-mcp
+
   uv:
     tool_packages:
       - name: specify-cli
         source: "git+https://github.com/github/spec-kit.git"
+
+  # Claude Code MCP servers - installed via 'claude mcp add'
+  # Run: ./scripts/install_claude_mcp_servers to install
+  claude_mcp:
+    servers:
+      - name: jcodemunch
+        command: uvx
+        args:
+          - jcodemunch-mcp
 
   # Claude Code plugins - installed via 'claude plugin install'
   # Format: plugin-name@marketplace-name

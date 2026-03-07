@@ -1,0 +1,93 @@
+#!/bin/bash
+################################################################################
+# Install pipx Packages
+#
+# DESCRIPTION:
+#   Installs Python CLI tools using pipx (isolated environments per tool).
+#   Reads package list from dotfiles.yaml and installs them using 'pipx install'.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_pipx_packages
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
+# WHAT IT DOES:
+#   1. Checks if pipx is installed, skips if not found
+#   2. Reads packages from packages.pipx.packages in dotfiles.yaml
+#   3. Installs each package using 'pipx install <name>'
+#   4. Reports statistics on packages installed
+#
+# DEPENDENCIES:
+#   - pipx (skips if not installed; install with: brew install pipx)
+#   - yq (for parsing YAML)
+#   - dotfiles.yaml configuration file
+#
+################################################################################
+
+set -euo pipefail
+
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+# Main function
+main() {
+    log "Installing pipx packages..."
+
+    # Check if pipx is available
+    if ! command -v pipx &> /dev/null; then
+        warn "pipx not found. Skipping pipx package installation"
+        warn "Install pipx first (brew install pipx), then run: $0"
+        return
+    fi
+
+    log "pipx version: $(pipx --version)"
+
+    # Parse pipx packages from YAML using yq
+    local packages
+    packages=$(yq eval '.packages.pipx.packages[]' "$CONFIG_FILE" 2>/dev/null | tr -d '"')
+
+    if [[ -z "$packages" ]]; then
+        log "No pipx packages to install"
+        return
+    fi
+
+    local installed=0
+    local total=0
+
+    while IFS= read -r package; do
+        if [[ -n "$package" ]]; then
+            total=$((total + 1))
+            if [[ $DRY_RUN == true ]]; then
+                log "[DRY RUN] Would install pipx package: $package"
+            else
+                log "Installing pipx package: $package"
+                if pipx install "$package" 2>&1 | grep -qE "(installed package|already seems to be installed)"; then
+                    installed=$((installed + 1))
+                    success "  ✓ $package installed"
+                else
+                    # Try again to capture the actual result
+                    if pipx list 2>/dev/null | grep -q "$package"; then
+                        installed=$((installed + 1))
+                        success "  ✓ $package already installed"
+                    else
+                        warn "  ✗ Failed to install $package"
+                    fi
+                fi
+            fi
+        fi
+    done <<< "$packages"
+
+    if [[ $DRY_RUN == false ]]; then
+        success "pipx packages: $installed/$total installed"
+    else
+        success "pipx packages checked: $total packages would be installed"
+    fi
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi
