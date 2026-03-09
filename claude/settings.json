@@ -40,6 +40,17 @@
   },
   "model": "opus",
   "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "case \"$CLAUDE_TOOL_INPUT_FILE_PATH\" in *.md) markdownlint --fix \"$CLAUDE_TOOL_INPUT_FILE_PATH\" 2>/dev/null; exit 0 ;; esac"
+          }
+        ]
+      }
+    ],
     "Notification": [
       {
         "matcher": "idle_prompt",
