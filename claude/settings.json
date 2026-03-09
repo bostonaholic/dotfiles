@@ -39,6 +39,7 @@
     ]
   },
   "model": "opus",
+  "teammateMode": "tmux",
   "hooks": {
     "PostToolUse": [
       {
