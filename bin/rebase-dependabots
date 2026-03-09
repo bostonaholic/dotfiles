@@ -1,0 +1,24 @@
+#!/bin/bash
+################################################################################
+# rebase-dependabots - Headless Dependabot PR rebaser
+#
+# DESCRIPTION:
+#   Runs Claude Code in headless mode to comment "@dependabot rebase" on all
+#   open Dependabot PRs. Safe operation that only adds comments.
+#
+# USAGE:
+#   rebase-dependabots
+#
+# DEPENDENCIES:
+#   - claude (Claude Code CLI)
+#   - gh (GitHub CLI, used by Claude)
+#
+################################################################################
+
+set -euo pipefail
+
+echo "Starting headless Dependabot rebase..."
+echo ""
+
+claude -p "Run /rebase-dependabots" \
+    --allowedTools "Bash,Skill,ToolSearch"
