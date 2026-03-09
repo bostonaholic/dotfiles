@@ -27,6 +27,36 @@ When writing code, always adhere to these principles inspired by legendary progr
 
 Apply these principles in all code, explanations, and architectural recommendations.
 
+## General Guidelines
+
+- **Minimal fixes by default.** When fixing bugs, make the smallest targeted
+  change necessary. Do not refactor types, rename interfaces, or restructure
+  surrounding code unless explicitly asked for a refactor.
+- **Update tests, don't revert code.** When CI/tests fail after intentional code
+  changes, update the test assertions to match the new behavior. Do not revert
+  the code to match old tests. Ask if unsure whether a change was intentional.
+- **Be efficient.** Batch operations where possible. Don't read files one by one
+  when you can search or glob. Avoid excessive methodical approaches that slow
+  down simple tasks.
+- **Shell alias awareness:** `rm` is aliased to `rm -i`. Use `\rm` or
+  `command rm` to avoid interactive prompts that block automation.
+
+## Claude Code Integration
+
+- Project-local slash commands go in `.claude/commands/`, NOT in plugin
+  directories. Always verify the correct location before creating command files.
+
 ## Git Workflow
 
-- When a pre-push hook fails and the failing commit has not yet been pushed to the remote, squash the fix into the original commit (e.g., `git commit --amend`) instead of creating a separate fix commit. This keeps history clean and avoids noise like "fix formatting" commits.
+- When a pre-push hook fails and the failing commit has not yet been pushed to
+  the remote, squash the fix into the original commit (e.g.,
+  `git commit --amend`) instead of creating a separate fix commit. This keeps
+  history clean and avoids noise like "fix formatting" commits.
+
+## Git Worktrees
+
+When working in git worktrees:
+
+- Husky hooks and `.env` files may not be available in worktrees
+- The `wt` command handles env file copying from the main worktree
+- After worktree cleanup, check for and remove auto-created tracking branches
