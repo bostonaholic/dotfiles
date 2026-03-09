@@ -41,6 +41,16 @@ Apply these principles in all code, explanations, and architectural recommendati
 - **Shell alias awareness:** `rm` is aliased to `rm -i`. Use `\rm` or
   `command rm` to avoid interactive prompts that block automation.
 
+## Parallel Agent Work
+
+After completing parallel agent work, always present a summary table:
+
+| Agent | Task | Status | Issues |
+| ----- | ---- | ------ | ------ |
+
+Do not skip any agents. Include agents that failed or produced incomplete
+results.
+
 ## Claude Code Integration
 
 - Project-local slash commands go in `.claude/commands/`, NOT in plugin
