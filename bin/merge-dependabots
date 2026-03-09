@@ -1,0 +1,40 @@
+#!/bin/bash
+################################################################################
+# merge-dependabots - Headless Dependabot PR merger
+#
+# DESCRIPTION:
+#   Runs Claude Code in headless mode to discover, analyze, and safely merge
+#   Dependabot PRs. Wraps the /safely-merge-dependabots slash command for
+#   non-interactive execution.
+#
+# USAGE:
+#   merge-dependabots [options] [PR numbers...]
+#
+# OPTIONS:
+#   --dry-run           Analyze only, don't merge anything
+#   --timeout <duration> Override test timeout (default: 10m)
+#
+# EXAMPLES:
+#   merge-dependabots                      # Merge all safe Dependabot PRs
+#   merge-dependabots --dry-run            # Preview what would be merged
+#   merge-dependabots 123 124              # Process specific PRs
+#   merge-dependabots --timeout 20m        # Longer test timeout
+#
+# DEPENDENCIES:
+#   - claude (Claude Code CLI)
+#   - gh (GitHub CLI, used by Claude)
+#
+################################################################################
+
+set -euo pipefail
+
+args="$*"
+
+prompt="Run /safely-merge-dependabots ${args}"
+
+echo "Starting headless Dependabot merge..."
+echo "Arguments: ${args:-<none, discovering all PRs>}"
+echo ""
+
+claude -p "$prompt" \
+    --allowedTools "Agent,Bash,Read,Glob,Grep,Skill,ToolSearch"
