@@ -11,10 +11,12 @@
 #   rebase-dependabots [options] [PR numbers...]
 #
 # OPTIONS:
+#   --dry-run           List PRs that would be rebased, without commenting
 #   -q, --quiet         Suppress progress output (only show final result)
 #
 # EXAMPLES:
 #   rebase-dependabots                     # Rebase all open Dependabot PRs
+#   rebase-dependabots --dry-run           # Preview which PRs would be rebased
 #   rebase-dependabots 123 124             # Rebase specific PRs
 #   rebase-dependabots --quiet             # No progress, just final output
 #
