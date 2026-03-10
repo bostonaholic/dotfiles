@@ -7,18 +7,43 @@
 #   open Dependabot PRs. Safe operation that only adds comments.
 #
 # USAGE:
-#   rebase-dependabots
+#   rebase-dependabots [options]
+#
+# OPTIONS:
+#   -q, --quiet         Suppress progress output (only show final result)
 #
 # DEPENDENCIES:
 #   - claude (Claude Code CLI)
 #   - gh (GitHub CLI, used by Claude)
+#   - jq (for parsing streaming output)
 #
 ################################################################################
 
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+STREAM_FILTER="$SCRIPT_DIR/lib/claude-stream-filter.jq"
+
+quiet=false
+
+for arg in "$@"; do
+    case "$arg" in
+        -q|--quiet)
+            quiet=true
+            ;;
+    esac
+done
+
 echo "Starting headless Dependabot rebase..."
 echo ""
 
-claude -p "Run /rebase-dependabots" \
-    --allowedTools "Bash,Skill,ToolSearch"
+if "$quiet"; then
+    claude -p "Run /rebase-dependabots" \
+        --allowedTools "Bash,Skill,ToolSearch"
+else
+    claude -p "Run /rebase-dependabots" \
+        --verbose \
+        --output-format stream-json \
+        --allowedTools "Bash,Skill,ToolSearch" \
+    | jq --unbuffered -r -f "$STREAM_FILTER"
+fi

@@ -13,22 +13,42 @@
 # OPTIONS:
 #   --dry-run           Analyze only, don't merge anything
 #   --timeout <duration> Override test timeout (default: 10m)
+#   -q, --quiet         Suppress progress output (only show final result)
 #
 # EXAMPLES:
 #   merge-dependabots                      # Merge all safe Dependabot PRs
 #   merge-dependabots --dry-run            # Preview what would be merged
 #   merge-dependabots 123 124              # Process specific PRs
 #   merge-dependabots --timeout 20m        # Longer test timeout
+#   merge-dependabots --quiet              # No progress, just final output
 #
 # DEPENDENCIES:
 #   - claude (Claude Code CLI)
 #   - gh (GitHub CLI, used by Claude)
+#   - jq (for parsing streaming output)
 #
 ################################################################################
 
 set -euo pipefail
 
-args="$*"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+STREAM_FILTER="$SCRIPT_DIR/lib/claude-stream-filter.jq"
+
+quiet=false
+claude_args=()
+
+for arg in "$@"; do
+    case "$arg" in
+        -q|--quiet)
+            quiet=true
+            ;;
+        *)
+            claude_args+=("$arg")
+            ;;
+    esac
+done
+
+args="${claude_args[*]:-}"
 
 prompt="Run /safely-merge-dependabots ${args}"
 
@@ -36,5 +56,13 @@ echo "Starting headless Dependabot merge..."
 echo "Arguments: ${args:-<none, discovering all PRs>}"
 echo ""
 
-claude -p "$prompt" \
-    --allowedTools "Agent,Bash,Read,Glob,Grep,Skill,ToolSearch"
+if "$quiet"; then
+    claude -p "$prompt" \
+        --allowedTools "Agent,Bash,Read,Glob,Grep,Skill,ToolSearch"
+else
+    claude -p "$prompt" \
+        --verbose \
+        --output-format stream-json \
+        --allowedTools "Agent,Bash,Read,Glob,Grep,Skill,ToolSearch" \
+    | jq --unbuffered -r -f "$STREAM_FILTER"
+fi
