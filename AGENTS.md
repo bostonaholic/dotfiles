@@ -33,7 +33,7 @@ shellcheck scripts/*
 | Git config | `git/config` |
 | Claude commands | `claude/commands/*.md` |
 | Claude agents | `claude/agents/*.md` |
-| Claude skills | `claude/skills/*/SKILL.md` |
+| Agent skills | `agents/skills/*/SKILL.md` |
 | Install scripts | `scripts/install_*` |
 
 ## Modification Workflow
@@ -110,10 +110,11 @@ dotfiles/
   scripts/          # Install and update scripts
   zsh/              # Shell configuration
   git/              # Git config and helpers
+  agents/           # Cross-tool agent configuration
+    skills/         # Skill definitions (agentskills.io standard)
   claude/           # Claude Code configuration
     commands/       # Slash commands
     agents/         # Subagent definitions
-    skills/         # Skill definitions
     settings.json   # Claude Code settings
   vim/              # Vim configuration
   ruby/             # Ruby gems and pry config
@@ -127,8 +128,11 @@ Changes to `claude/` are immediately effective (symlinked to `~/.claude/`).
 
 - Commands: `claude/commands/*.md` - Slash command definitions
 - Agents: `claude/agents/*.md` - Subagent system prompts
-- Skills: `claude/skills/*/SKILL.md` - Skill definitions
 - Settings: `claude/settings.json` - Preferences and hooks
+
+Skills live in `agents/skills/` and are symlinked to both `~/.claude/skills/`
+and `~/.agents/skills/` for cross-tool compatibility (Claude Code, Gemini CLI,
+Codex, OpenCode).
 
 ## Commit Conventions
 

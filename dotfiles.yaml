@@ -2,6 +2,7 @@
 # This file defines all symlinks, directories, and packages to be installed
 
 directories:
+  - ~/.agents
   - ~/.claude
   - ~/.cursor
   - ~/.lein
@@ -20,8 +21,11 @@ symlinks:
   claude/commands: ~/.claude/commands
   claude/CLAUDE.md: ~/.claude/CLAUDE.md
   claude/settings.json: ~/.claude/settings.json
-  claude/skills: ~/.claude/skills
   claude/statusline.clj: ~/.claude/statusline.clj
+
+  # Agent Skills (cross-tool standard using https://agentskills.io)
+  agents/skills: ~/.claude/skills
+  agents/skills: ~/.agents/skills
 
   # Shell
   zsh/zshrc: ~/.zshrc
