@@ -4,13 +4,19 @@
 #
 # DESCRIPTION:
 #   Runs Claude Code in headless mode to comment "@dependabot rebase" on all
-#   open Dependabot PRs. Safe operation that only adds comments.
+#   open Dependabot PRs. Wraps the /rebase-dependabots slash command for
+#   non-interactive execution.
 #
 # USAGE:
-#   rebase-dependabots [options]
+#   rebase-dependabots [options] [PR numbers...]
 #
 # OPTIONS:
 #   -q, --quiet         Suppress progress output (only show final result)
+#
+# EXAMPLES:
+#   rebase-dependabots                     # Rebase all open Dependabot PRs
+#   rebase-dependabots 123 124             # Rebase specific PRs
+#   rebase-dependabots --quiet             # No progress, just final output
 #
 # DEPENDENCIES:
 #   - claude (Claude Code CLI)
@@ -25,23 +31,32 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 STREAM_FILTER="$SCRIPT_DIR/lib/claude-stream-filter.jq"
 
 quiet=false
+claude_args=()
 
 for arg in "$@"; do
     case "$arg" in
         -q|--quiet)
             quiet=true
             ;;
+        *)
+            claude_args+=("$arg")
+            ;;
     esac
 done
 
+args="${claude_args[*]:-}"
+
+prompt="Run /rebase-dependabots ${args}"
+
 echo "Starting headless Dependabot rebase..."
+echo "Arguments: ${args:-<none, discovering all PRs>}"
 echo ""
 
 if "$quiet"; then
-    claude -p "Run /rebase-dependabots" \
+    claude -p "$prompt" \
         --allowedTools "Bash,Skill,ToolSearch"
 else
-    claude -p "Run /rebase-dependabots" \
+    claude -p "$prompt" \
         --verbose \
         --output-format stream-json \
         --allowedTools "Bash,Skill,ToolSearch" \
