@@ -45,7 +45,7 @@ copy_env_files() {
     local root="$1" worktree_dir="$2"
     local main_dir="$root/main"
     [ -d "$main_dir" ] || return 0
-    for f in .env .env.local; do
+    for f in .env .env.keys .env.local; do
         if [ -f "$main_dir/$f" ] && [ ! -f "$worktree_dir/$f" ]; then
             cp "$main_dir/$f" "$worktree_dir/$f"
             echo "wt: copied $f from main worktree" >&2
