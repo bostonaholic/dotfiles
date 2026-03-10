@@ -39,7 +39,6 @@
     ]
   },
   "model": "opus",
-  "teammateMode": "tmux",
   "hooks": {
     "PostToolUse": [
       {
@@ -90,5 +89,6 @@
     "rpikit@rpikit": true
   },
   "alwaysThinkingEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "teammateMode": "tmux"
 }
