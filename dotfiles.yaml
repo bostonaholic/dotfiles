@@ -23,6 +23,9 @@ symlinks:
   claude/settings.json: ~/.claude/settings.json
   claude/statusline.clj: ~/.claude/statusline.clj
 
+  # Gemini CLI
+  gemini/settings.json: ~/.gemini/settings.json
+
   # Agent Skills (cross-tool standard using https://agentskills.io)
   agents/skills: ~/.claude/skills
   agents/skills: ~/.agents/skills
