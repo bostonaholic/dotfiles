@@ -102,11 +102,11 @@ function _wt() {
             _describe -t commands 'wt command' subcommands
             ;;
         args)
+            local root
             case ${words[2]} in
                 rm)
-                    local root
                     if root=$(command wt _root 2>/dev/null); then
-                        local -a worktrees
+                        local -a worktrees flags
                         worktrees=(${(f)"$(git -C "$root" worktree list --porcelain 2>/dev/null | awk -v root="$root/" '
                             /^worktree / {
                                 path = substr($0, 10)
@@ -116,14 +116,16 @@ function _wt() {
                                 }
                             }
                         ')"})
+                        flags=(
+                            '--keep-branch:Keep the local branch'
+                            '-f:Force removal even with modifications'
+                            '--force:Force removal even with modifications'
+                        )
                         _describe -t worktrees 'worktree' worktrees
-                        _arguments '*: :' \
-                            '--keep-branch[Keep the local branch]' \
-                            '(-f --force)'{-f,--force}'[Force removal even with modifications]'
+                        _describe -t flags 'option' flags
                     fi
                     ;;
                 cd|path)
-                    local root
                     if root=$(command wt _root 2>/dev/null); then
                         local -a worktrees
                         worktrees=(${(f)"$(git -C "$root" worktree list --porcelain 2>/dev/null | awk -v root="$root/" '
@@ -144,6 +146,25 @@ function _wt() {
                         all_branches=(${(f)"$(git branch -a --format='%(refname:short)' 2>/dev/null | sed 's|^origin/||' | sort -u)"})
                         _describe -t branches 'branch' all_branches
                     fi
+                    ;;
+                new)
+                    # Second arg is start-point (branch/tag/ref)
+                    if [[ $CURRENT -eq 4 ]] && git rev-parse --git-dir &>/dev/null; then
+                        local -a all_branches
+                        all_branches=(${(f)"$(git branch -a --format='%(refname:short)' 2>/dev/null | sed 's|^origin/||' | sort -u)"})
+                        _describe -t branches 'start-point' all_branches
+                    fi
+                    ;;
+                prune)
+                    local -a flags
+                    flags=(
+                        '-n:Show what would be removed without removing'
+                        '--dry-run:Show what would be removed without removing'
+                        '-v:Report pruned worktree references'
+                        '--verbose:Report pruned worktree references'
+                        '--expire:Only prune entries older than given time'
+                    )
+                    _describe -t flags 'option' flags
                     ;;
             esac
             ;;

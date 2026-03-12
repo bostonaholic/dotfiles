@@ -8,10 +8,10 @@ set -euo pipefail
 #   wt ls                         List all worktrees
 #   wt main                       Enter main/ worktree (creates if needed)
 #   wt new <name> [<start-point>] Create worktree for a new branch (default: origin/main)
-#   wt add <name>                 Create worktree for an existing branch
-#   wt rm <name> [options]        Remove worktree and delete local branch
-#   wt cd <name>                  Enter a worktree by directory name
-#   wt path <name>                Show path to a worktree
+#   wt add [<name>]               Create worktree for an existing branch
+#   wt rm [<name>] [options]      Remove worktree and delete local branch
+#   wt cd [<name>]                Enter a worktree by directory name
+#   wt path [<name>]              Show path to a worktree
 #   wt prune                      Clean up stale worktree references
 #   wt help                       Show this help
 #
@@ -59,6 +59,40 @@ validate_name() {
         echo "Error: Invalid worktree name '$name'" >&2
         exit 1
     fi
+}
+
+# List non-main worktree names (for fzf selection)
+list_worktree_names() {
+    local root="$1"
+    git -C "$root" worktree list --porcelain 2>/dev/null | awk -v root="$root/" '
+        /^worktree / {
+            path = substr($0, 10)
+            if (path != root && path !~ /\.bare$/) {
+                sub(root, "", path)
+                print path
+            }
+        }
+    '
+}
+
+# Prompt user to select a worktree via fzf
+select_worktree() {
+    local root="$1" prompt="${2:-worktree}"
+    if ! command -v fzf &>/dev/null || [ ! -t 0 ]; then
+        return 1
+    fi
+    list_worktree_names "$root" | fzf --height=~50% --prompt="$prompt> " --select-1 --exit-0
+}
+
+# Prompt user to select a branch via fzf
+select_branch() {
+    local root="$1" prompt="${2:-branch}"
+    if ! command -v fzf &>/dev/null || [ ! -t 0 ]; then
+        return 1
+    fi
+    git -C "$root" branch -a --format='%(refname:short)' 2>/dev/null \
+        | sed 's|^origin/||' | sort -u \
+        | fzf --height=~50% --prompt="$prompt> " --select-1 --exit-0
 }
 
 cmd_main() {
@@ -123,16 +157,16 @@ cmd_new() {
 }
 
 cmd_add() {
-    if [ $# -lt 1 ]; then
-        echo "Usage: wt add <name>" >&2
-        exit 1
-    fi
-
-    local name="$1"
-    validate_name "$name"
-
     local root
     root=$(require_bare_layout)
+
+    local name
+    if [ $# -lt 1 ]; then
+        name=$(select_branch "$root" "add branch") || { echo "Usage: wt add <name>" >&2; exit 1; }
+    else
+        name="$1"
+    fi
+    validate_name "$name"
     local worktree_dir="$root/$name"
 
     if [ -d "$worktree_dir" ]; then
@@ -165,9 +199,11 @@ cmd_rm() {
         esac
     done
 
+    local root
+    root=$(require_bare_layout)
+
     if [ -z "$name" ]; then
-        echo "Usage: wt rm <name> [--keep-branch]" >&2
-        exit 1
+        name=$(select_worktree "$root" "rm") || { echo "Usage: wt rm <name> [--keep-branch]" >&2; exit 1; }
     fi
 
     validate_name "$name"
@@ -176,9 +212,6 @@ cmd_rm() {
         echo "Error: Cannot remove persistent worktree 'main'." >&2
         exit 1
     fi
-
-    local root
-    root=$(require_bare_layout)
     local worktree_dir="$root/$name"
 
     if [ ! -d "$worktree_dir" ]; then
@@ -204,15 +237,17 @@ cmd_rm() {
 }
 
 cmd_cd() {
-    if [ $# -lt 1 ]; then
-        echo "Usage: wt cd <name>" >&2
-        exit 1
-    fi
-
-    local name="$1"
-    validate_name "$name"
     local root
     root=$(require_bare_layout)
+
+    local name
+    if [ $# -lt 1 ]; then
+        name=$(select_worktree "$root" "cd") || { echo "Usage: wt cd <name>" >&2; exit 1; }
+    else
+        name="$1"
+    fi
+
+    validate_name "$name"
     local worktree_dir="$root/$name"
 
     if [ ! -d "$worktree_dir" ]; then
@@ -261,23 +296,23 @@ EOF
 
 cmd_add_help() {
     cat <<'EOF'
-Usage: wt add <name>
+Usage: wt add [<name>]
 
-Create a worktree for an existing local or remote branch.
+Create a worktree for an existing local or remote branch. If no name is given, uses fzf to select.
 
 Arguments:
-  <name>   Name of an existing branch to check out
+  <name>   Name of an existing branch to check out (optional with fzf)
 EOF
 }
 
 cmd_rm_help() {
     cat <<'EOF'
-Usage: wt rm <name> [--keep-branch] [--force]
+Usage: wt rm [<name>] [--keep-branch] [--force]
 
-Remove a worktree and delete its local branch.
+Remove a worktree and delete its local branch. If no name is given, uses fzf to select.
 
 Arguments:
-  <name>          Worktree to remove (cannot be 'main')
+  <name>          Worktree to remove (cannot be 'main'; optional with fzf)
 
 Options:
   --keep-branch   Keep the local branch after removing the worktree
@@ -295,23 +330,23 @@ EOF
 
 cmd_cd_help() {
     cat <<'EOF'
-Usage: wt cd <name>
+Usage: wt cd [<name>]
 
-Enter a worktree by directory name.
+Enter a worktree by directory name. If no name is given, uses fzf to select.
 
 Arguments:
-  <name>   Worktree directory to change into
+  <name>   Worktree directory to change into (optional with fzf)
 EOF
 }
 
 cmd_path_help() {
     cat <<'EOF'
-Usage: wt path <name>
+Usage: wt path [<name>]
 
-Print the absolute path to a worktree.
+Print the absolute path to a worktree. If no name is given, uses fzf to select.
 
 Arguments:
-  <name>   Worktree directory to locate
+  <name>   Worktree directory to locate (optional with fzf)
 EOF
 }
 
@@ -339,10 +374,10 @@ Usage:
   wt ls                         List all worktrees
   wt main                       Enter main/ worktree (creates if needed)
   wt new <name> [<start-point>] Create worktree for a new branch (default: origin/main)
-  wt add <name>                 Create worktree for an existing branch
-  wt rm <name> [options]        Remove worktree and delete local branch
-  wt cd <name>                  Enter a worktree by directory name
-  wt path <name>                Show path to a worktree
+  wt add [<name>]               Create worktree for an existing branch
+  wt rm [<name>] [options]      Remove worktree and delete local branch
+  wt cd [<name>]                Enter a worktree by directory name
+  wt path [<name>]              Show path to a worktree
   wt prune                      Clean up stale worktree references
   wt help                       Show this help
 
