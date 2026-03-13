@@ -1,6 +1,6 @@
 ---
 name: pr-verification
-description: Use when verifying pull requests by checking out code in an isolated git worktree, running the full test suite, and reporting results. Trigger phrases: "verify this PR", "test this PR", "check if PR passes", "validate PR before merge", "run tests on PR".
+description: "Use when verifying pull requests by checking out code in an isolated git worktree, running the full test suite, and reporting results."
 ---
 
 # PR Verification
