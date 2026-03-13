@@ -15,6 +15,8 @@ alias ..="cd .."
 alias claude="claude --dangerously-skip-permissions"
 alias cc="claude"
 
+alias π="pi"
+
 alias rgrep="grep --recursive"
 
 alias date_seconds="date +%s"
