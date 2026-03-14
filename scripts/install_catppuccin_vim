@@ -1,0 +1,49 @@
+#!/bin/bash
+################################################################################
+# Install Catppuccin Vim Theme
+#
+# DESCRIPTION:
+#   Installs the Catppuccin colorscheme as a custom plugin for The Ultimate Vimrc.
+#   Clones into ~/.vim_runtime/my_plugins/ where Pathogen picks it up.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_catppuccin_vim
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
+# DEPENDENCIES:
+#   - git
+#   - ~/.vim_runtime must exist (install_vimrc runs first)
+#
+################################################################################
+
+set -euo pipefail
+
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+main() {
+    local plugin_dir="$HOME/.vim_runtime/my_plugins/catppuccin"
+
+    if [[ -d "$plugin_dir" ]]; then
+        log "Catppuccin vim theme is already installed, skipping"
+        return
+    fi
+
+    if [[ $DRY_RUN == true ]]; then
+        log "[DRY RUN] Would install Catppuccin vim theme"
+        return
+    fi
+
+    log "Installing Catppuccin vim theme..."
+    git clone --depth=1 https://github.com/catppuccin/vim.git "$plugin_dir"
+    success "Catppuccin vim theme installed"
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

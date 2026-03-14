@@ -147,6 +147,10 @@ scripts:
       command: "scripts/install_vimrc"
       condition: "! [ -d ~/.vim_runtime ]"
 
+    - description: "Install Catppuccin vim theme"
+      command: "scripts/install_catppuccin_vim"
+      condition: "[ -d ~/.vim_runtime ] && ! [ -d ~/.vim_runtime/my_plugins/catppuccin ]"
+
     - description: "Install rbenv plugins"
       command: "scripts/install_rbenv_plugins"
       condition: "[ -d ~/.rbenv ]"

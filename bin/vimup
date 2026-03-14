@@ -41,3 +41,11 @@ set -euo pipefail
         python3 update_plugins.py
     }
 )
+
+# Update custom plugins in my_plugins
+for plugin_dir in "${HOME}"/.vim_runtime/my_plugins/*/; do
+    [ -d "${plugin_dir}.git" ] || continue
+    plugin_name=$(basename "$plugin_dir")
+    echo "Updating custom plugin: ${plugin_name}..."
+    git -C "$plugin_dir" pull --rebase
+done
