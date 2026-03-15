@@ -10,3 +10,7 @@ vendor/
 # tmux plugins (installed by TPM) #
 ####################################
 tmux/plugins/
+
+# Dolt database files (added by bd init)
+.dolt/
+*.db
