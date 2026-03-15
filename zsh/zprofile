@@ -41,3 +41,6 @@ export ZOXIDE_CMD_OVERRIDE=cd
 
 # Added by Obsidian
 export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
+
+# Created for rust
+export PATH="$PATH:$HOME/.cargo/bin"
