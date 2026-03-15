@@ -24,9 +24,7 @@ brew 'gemini-cli'
 
 tap 'd12frosted/emacs-plus'
 
-brew 'emacs-plus',
-     restart_service: :changed,
-     link: true
+cask 'emacs-plus-app'
 brew 'gnutls' # for Emacs TLS support
 brew 'neovim'
 brew 'vim'
