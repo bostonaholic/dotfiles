@@ -1,6 +1,6 @@
 ---
 name: test-driven-bug-fix
-description: "Use when fixing a bug to enforce a red-green-refactor discipline. Write a failing test that reproduces the bug BEFORE touching any production code, then make the minimal fix to turn it green."
+description: Use when fixing a bug to enforce a red-green-refactor discipline. Write a failing test that reproduces the bug BEFORE touching any production code, then make the minimal fix to turn it green.
 ---
 
 # Test-Driven Bug Fix
