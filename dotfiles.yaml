@@ -74,6 +74,7 @@ symlinks:
   gpg/gpg-agent.conf: ~/.gnupg/gpg-agent.conf
   ignore/ignore: ~/.ignore
   ignore/rgignore: ~/.rgignore
+  markdownlint/.markdownlintrc: ~/.markdownlintrc
   javascript/jsbeautifyrc: ~/.jsbeautifyrc
   javascript/jshintrc: ~/.jshintrc
   clojure/profiles.clj: ~/.lein/profiles.clj
