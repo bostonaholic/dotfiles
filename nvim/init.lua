@@ -16,6 +16,10 @@ vim.opt.relativenumber = false
 vim.opt.numberwidth = 3
 vim.opt.termguicolors = true
 
+-- Leader key (must be set before lazy.nvim)
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 -- Plugins
 require("lazy").setup({
   {
