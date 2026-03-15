@@ -34,8 +34,8 @@ fi
 if [ -n "${1:-}" ]; then
     session="$1"
 elif git rev-parse --git-common-dir &>/dev/null; then
-    # Uses git-common-dir to resolve the repo root, which works for both
-    # normal repos (.git) and bare repo worktrees (.bare)
+    # Uses git-common-dir to resolve the repo root, which works for
+    # normal repos (.git) and repos with .worktrees/
     session=$(basename "$(dirname "$(cd "$(git rev-parse --git-common-dir)" && pwd)")")
 else
     session=$(basename "$PWD")

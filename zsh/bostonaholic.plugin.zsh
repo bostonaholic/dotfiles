@@ -66,12 +66,12 @@ function wt() {
             fi
             ;;
         rm)
-            local main_path
-            main_path=$(command wt path main 2>/dev/null)
+            local root_path
+            root_path=$(git rev-parse --show-toplevel 2>/dev/null)
             command wt "$@" || return
             # cd out if the worktree we were in was just removed
             if ! [[ -d "$PWD" ]]; then
-                builtin cd "$main_path" 2>/dev/null || builtin cd ~ || return
+                builtin cd "$root_path" 2>/dev/null || builtin cd ~ || return
             fi
             ;;
         *)
@@ -109,12 +109,11 @@ function _wt() {
                 rm)
                     if root=$(command wt _root 2>/dev/null); then
                         local -a worktrees flags
-                        worktrees=(${(f)"$(git -C "$root" worktree list --porcelain 2>/dev/null | awk -v root="$root/" '
+                        worktrees=(${(f)"$(git -C "$root" worktree list --porcelain 2>/dev/null | awk -v prefix="$root/.worktrees/" '
                             /^worktree / {
                                 path = substr($0, 10)
-                                if (path != root && path !~ /\.bare$/) {
-                                    sub(root, "", path)
-                                    print path
+                                if (index(path, prefix) == 1) {
+                                    print substr(path, length(prefix) + 1)
                                 }
                             }
                         ')"})
@@ -130,12 +129,11 @@ function _wt() {
                 cd|path)
                     if root=$(command wt _root 2>/dev/null); then
                         local -a worktrees
-                        worktrees=(${(f)"$(git -C "$root" worktree list --porcelain 2>/dev/null | awk -v root="$root/" '
+                        worktrees=(${(f)"$(git -C "$root" worktree list --porcelain 2>/dev/null | awk -v prefix="$root/.worktrees/" '
                             /^worktree / {
                                 path = substr($0, 10)
-                                if (path != root && path !~ /\.bare$/) {
-                                    sub(root, "", path)
-                                    print path
+                                if (index(path, prefix) == 1) {
+                                    print substr(path, length(prefix) + 1)
                                 }
                             }
                         ')"})

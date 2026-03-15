@@ -12,8 +12,8 @@ repo_root_style = "cyan bold"
 # The repo name itself is handled by the custom.repo_name module.
 repo_root_format = "[$path]($style)[$read_only]($read_only_style) "
 
-# Disable built-in git modules — they show at bare repo roots where there
-# is no work tree.  Custom replacements below only activate inside work trees.
+# Disable built-in git modules — custom replacements below only activate
+# inside work trees.
 [git_branch]
 disabled = true
 
@@ -21,22 +21,10 @@ disabled = true
 disabled = true
 
 [custom.repo_name]
-description = "Show repository name, handling bare worktree setups"
+description = "Show repository name, handling worktree setups"
 when = "git rev-parse --git-dir 2>/dev/null"
 command = """
-git_dir=$(git rev-parse --git-dir 2>/dev/null) || exit 1
-case "$git_dir" in
-  */.bare/worktrees/*)
-    bare_path="${git_dir%%/worktrees/*}"
-    basename "$(dirname "$bare_path")"
-    ;;
-  *.bare)
-    basename "$(dirname "$git_dir")"
-    ;;
-  *)
-    basename "$(git rev-parse --show-toplevel 2>/dev/null)" || exit 1
-    ;;
-esac
+basename "$(git rev-parse --show-toplevel 2>/dev/null)" || exit 1
 """
 format = "[$output](cyan bold)"
 

@@ -68,5 +68,5 @@ results.
 When working in git worktrees:
 
 - Husky hooks and `.env` files may not be available in worktrees
-- The `wt` command handles env file copying from the main worktree
+- The `wt` command handles env file copying from the repo root
 - After worktree cleanup, check for and remove auto-created tracking branches

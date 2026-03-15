@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# wt - git worktree manager for bare-clone layouts
+# wt - git worktree manager
 #
 # Usage:
 #   wt                            List all worktrees
 #   wt ls                         List all worktrees
-#   wt main                       Enter main/ worktree (creates if needed)
+#   wt main                       cd to repo root (main branch)
 #   wt new <name> [<start-point>] Create worktree for a new branch (default: origin/main)
 #   wt add [<name>]               Create worktree for an existing branch
 #   wt rm [<name>] [options]      Remove worktree and delete local branch
@@ -15,27 +15,17 @@ set -euo pipefail
 #   wt prune                      Clean up stale worktree references
 #   wt help                       Show this help
 #
-# Requires a bare-clone layout created by 'git clone-bare-for-worktrees'.
-# All worktrees are siblings of .bare/ in the project root.
+# Worktrees live in .worktrees/ under the repo root.
 
-# Find project root by walking up from cwd looking for .bare/ + .git pointer.
+# Find the repo root using git.
 find_project_root() {
-    local dir="$PWD"
-    while [ "$dir" != "/" ]; do
-        if [ -d "$dir/.bare" ] && [ -f "$dir/.git" ]; then
-            echo "$dir"
-            return 0
-        fi
-        dir=$(dirname "$dir")
-    done
-    return 1
+    git rev-parse --show-toplevel 2>/dev/null
 }
 
-require_bare_layout() {
+require_git_repo() {
     local root
     if ! root=$(find_project_root); then
-        echo "Error: Not in a bare-clone worktree layout." >&2
-        echo "Set up a project with: git clone-bare-for-worktrees <url>" >&2
+        echo "Error: Not inside a git repository." >&2
         exit 1
     fi
     echo "$root"
@@ -43,12 +33,10 @@ require_bare_layout() {
 
 copy_env_files() {
     local root="$1" worktree_dir="$2"
-    local main_dir="$root/main"
-    [ -d "$main_dir" ] || return 0
     for f in .env .env.keys .env.local; do
-        if [ -f "$main_dir/$f" ] && [ ! -f "$worktree_dir/$f" ]; then
-            cp "$main_dir/$f" "$worktree_dir/$f"
-            echo "wt: copied $f from main worktree" >&2
+        if [ -f "$root/$f" ] && [ ! -f "$worktree_dir/$f" ]; then
+            cp "$root/$f" "$worktree_dir/$f"
+            echo "wt: copied $f from repo root" >&2
         fi
     done
 }
@@ -61,15 +49,22 @@ validate_name() {
     fi
 }
 
-# List non-main worktree names (for fzf selection)
+ensure_worktrees_dir() {
+    local root="$1"
+    if [ ! -d "$root/.worktrees" ]; then
+        mkdir -p "$root/.worktrees"
+        echo "wt: created .worktrees/ directory" >&2
+    fi
+}
+
+# List worktree names from .worktrees/ (for fzf selection)
 list_worktree_names() {
     local root="$1"
-    git -C "$root" worktree list --porcelain 2>/dev/null | awk -v root="$root/" '
+    git -C "$root" worktree list --porcelain 2>/dev/null | awk -v prefix="$root/.worktrees/" '
         /^worktree / {
             path = substr($0, 10)
-            if (path != root && path !~ /\.bare$/) {
-                sub(root, "", path)
-                print path
+            if (index(path, prefix) == 1) {
+                print substr(path, length(prefix) + 1)
             }
         }
     '
@@ -97,18 +92,8 @@ select_branch() {
 
 cmd_main() {
     local root
-    root=$(require_bare_layout)
-    local worktree_dir="$root/main"
-
-    if [ ! -d "$worktree_dir" ]; then
-        if git -C "$root" show-ref --verify --quiet "refs/heads/main"; then
-            git -C "$root" worktree add main main >&2
-        else
-            git -C "$root" worktree add main >&2
-        fi
-    fi
-
-    echo "$worktree_dir"
+    root=$(require_git_repo)
+    echo "$root"
 }
 
 local_branch_exists() {
@@ -133,8 +118,9 @@ cmd_new() {
     validate_name "$name"
 
     local root
-    root=$(require_bare_layout)
-    local worktree_dir="$root/$name"
+    root=$(require_git_repo)
+    ensure_worktrees_dir "$root"
+    local worktree_dir="$root/.worktrees/$name"
 
     if [ -d "$worktree_dir" ]; then
         echo "Error: Worktree already exists: $name" >&2
@@ -158,7 +144,7 @@ cmd_new() {
 
 cmd_add() {
     local root
-    root=$(require_bare_layout)
+    root=$(require_git_repo)
 
     local name
     if [ $# -lt 1 ]; then
@@ -167,7 +153,8 @@ cmd_add() {
         name="$1"
     fi
     validate_name "$name"
-    local worktree_dir="$root/$name"
+    ensure_worktrees_dir "$root"
+    local worktree_dir="$root/.worktrees/$name"
 
     if [ -d "$worktree_dir" ]; then
         echo "Worktree already exists: $name" >&2
@@ -200,7 +187,7 @@ cmd_rm() {
     done
 
     local root
-    root=$(require_bare_layout)
+    root=$(require_git_repo)
 
     if [ -z "$name" ]; then
         name=$(select_worktree "$root" "rm") || { echo "Usage: wt rm <name> [--keep-branch]" >&2; exit 1; }
@@ -208,11 +195,13 @@ cmd_rm() {
 
     validate_name "$name"
 
-    if [ "$name" = "main" ]; then
-        echo "Error: Cannot remove persistent worktree 'main'." >&2
+    local main_branch
+    main_branch=$(git -C "$root" symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|^origin/||') || main_branch="main"
+    if [ "$name" = "$main_branch" ]; then
+        echo "Error: Cannot remove the main branch '$main_branch'." >&2
         exit 1
     fi
-    local worktree_dir="$root/$name"
+    local worktree_dir="$root/.worktrees/$name"
 
     if [ ! -d "$worktree_dir" ]; then
         echo "Worktree not found: $name" >&2
@@ -238,7 +227,7 @@ cmd_rm() {
 
 cmd_cd() {
     local root
-    root=$(require_bare_layout)
+    root=$(require_git_repo)
 
     local name
     if [ $# -lt 1 ]; then
@@ -248,7 +237,7 @@ cmd_cd() {
     fi
 
     validate_name "$name"
-    local worktree_dir="$root/$name"
+    local worktree_dir="$root/.worktrees/$name"
 
     if [ ! -d "$worktree_dir" ]; then
         echo "Worktree not found: $name" >&2
@@ -264,13 +253,13 @@ cmd_path() {
 
 cmd_list() {
     local root
-    root=$(require_bare_layout)
+    root=$(require_git_repo)
     git -C "$root" worktree list "$@"
 }
 
 cmd_prune() {
     local root
-    root=$(require_bare_layout)
+    root=$(require_git_repo)
     git -C "$root" worktree prune "$@"
 }
 
@@ -278,7 +267,7 @@ cmd_main_help() {
     cat <<'EOF'
 Usage: wt main
 
-Enter the main/ worktree, creating it if needed.
+cd to repo root (main branch).
 EOF
 }
 
@@ -312,7 +301,7 @@ Usage: wt rm [<name>] [--keep-branch] [--force]
 Remove a worktree and delete its local branch. If no name is given, uses fzf to select.
 
 Arguments:
-  <name>          Worktree to remove (cannot be 'main'; optional with fzf)
+  <name>          Worktree to remove (cannot be the main branch; optional with fzf)
 
 Options:
   --keep-branch   Keep the local branch after removing the worktree
@@ -367,12 +356,12 @@ EOF
 
 cmd_help() {
     cat <<'EOF'
-wt - git worktree manager for bare-clone layouts
+wt - git worktree manager
 
 Usage:
   wt                            List all worktrees
   wt ls                         List all worktrees
-  wt main                       Enter main/ worktree (creates if needed)
+  wt main                       cd to repo root (main branch)
   wt new <name> [<start-point>] Create worktree for a new branch (default: origin/main)
   wt add [<name>]               Create worktree for an existing branch
   wt rm [<name>] [options]      Remove worktree and delete local branch
@@ -381,14 +370,13 @@ Usage:
   wt prune                      Clean up stale worktree references
   wt help                       Show this help
 
-Requires a bare-clone layout created by 'git clone-bare-for-worktrees'.
-All worktrees are siblings of .bare/ in the project root.
+Worktrees live in .worktrees/ under the repo root.
 EOF
 }
 
 # Hidden subcommand for zsh completions to get the project root.
 cmd__root() {
-    require_bare_layout
+    require_git_repo
 }
 
 main() {
