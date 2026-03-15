@@ -28,6 +28,7 @@ brew 'emacs-plus',
      restart_service: :changed,
      link: true
 brew 'gnutls' # for Emacs TLS support
+brew 'neovim'
 brew 'vim'
 
 # =============================================================================
