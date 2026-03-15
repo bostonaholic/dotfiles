@@ -1,13 +1,6 @@
 ---
 name: btop
-description: >
-  This skill should be used when the user asks to "open btop", "launch the
-  system monitor", "show resource usage", "check CPU/memory", "monitor
-  processes", "open top", or when investigating system performance issues.
-  Also use when the user wants to filter processes, change btop presets, or
-  configure the btop layout. Note: btop is an interactive TUI — AI agents
-  cannot operate it directly and must use programmatic alternatives for
-  automated monitoring.
+description: This skill should be used when the user asks to "open btop", "launch the system monitor", "show resource usage", "check CPU/memory", "monitor processes", "open top", or when investigating system performance issues. Also use when the user wants to filter processes, change btop presets, or configure the btop layout. Note: btop is an interactive TUI — AI agents cannot operate it directly and must use programmatic alternatives for automated monitoring.
 ---
 
 # btop

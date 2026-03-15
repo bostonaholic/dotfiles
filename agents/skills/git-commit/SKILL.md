@@ -1,9 +1,6 @@
 ---
 name: git-commit
-description: >-
-  This skill should be used when the user asks to "commit changes", "create a
-  commit", "git commit", "commit my work", or when committing code changes.
-  Follows the 50/72 rule, conventional commits, and atomic commit principles.
+description: This skill should be used when the user asks to "commit changes", "create a commit", "git commit", "commit my work", or when committing code changes. Follows the 50/72 rule, conventional commits, and atomic commit principles.
 ---
 
 # Git Commit

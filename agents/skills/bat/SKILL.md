@@ -1,12 +1,6 @@
 ---
 name: bat
-description: >
-  This skill should be used when the user asks to view files with syntax
-  highlighting, inspect file contents with line numbers, see git diff
-  integration in file output, or use bat as a modern cat replacement.
-  Trigger phrases: "show me the file with highlighting", "view file with
-  line numbers", "bat the file", "show git changes in file", "preview file
-  contents", "cat the file", "read file with syntax highlighting".
+description: This skill should be used when the user asks to view files with syntax highlighting, inspect file contents with line numbers, see git diff integration in file output, or use bat as a modern cat replacement. Trigger phrases: "show me the file with highlighting", "view file with line numbers", "bat the file", "show git changes in file", "preview file contents", "cat the file", "read file with syntax highlighting".
 ---
 
 # bat — Syntax-Highlighted File Viewer

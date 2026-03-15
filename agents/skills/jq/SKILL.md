@@ -1,11 +1,6 @@
 ---
 name: jq
-description: >-
-  This skill should be used when the user asks to "parse JSON", "filter JSON",
-  "transform JSON", "extract fields from JSON", "query JSON data",
-  "format JSON output", "convert JSON to CSV", "reshape JSON",
-  "merge JSON files", or when working with JSON data on the command line.
-  Covers jq filters, built-in functions, and advanced patterns.
+description: This skill should be used when the user asks to "parse JSON", "filter JSON", "transform JSON", "extract fields from JSON", "query JSON data", "format JSON output", "convert JSON to CSV", "reshape JSON", "merge JSON files", or when working with JSON data on the command line. Covers jq filters, built-in functions, and advanced patterns.
 ---
 
 # jq — Command-Line JSON Processor

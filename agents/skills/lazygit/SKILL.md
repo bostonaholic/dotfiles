@@ -1,13 +1,6 @@
 ---
 name: lazygit
-description: >
-  This skill should be used when the user asks to "open lazygit", "use lg",
-  "interactively stage changes", "do an interactive rebase", "resolve merge
-  conflicts visually", "browse git log", or any task that benefits from
-  lazygit's terminal UI. Also use when the user says "lg" (their alias for
-  lazygit). Note: lazygit is an interactive TUI — AI agents cannot operate it
-  directly. Use this skill to guide users on when and how to invoke it, and to
-  handle any programmatic git operations via the git CLI instead.
+description: This skill should be used when the user asks to "open lazygit", "use lg", "interactively stage changes", "do an interactive rebase", "resolve merge conflicts visually", "browse git log", or any task that benefits from lazygit's terminal UI. Also use when the user says "lg" (their alias for lazygit). Note: lazygit is an interactive TUI — AI agents cannot operate it directly. Use this skill to guide users on when and how to invoke it, and to handle any programmatic git operations via the git CLI instead.
 ---
 
 # lazygit Skill

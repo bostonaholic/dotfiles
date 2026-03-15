@@ -1,11 +1,6 @@
 ---
 name: bare-worktrees
-description: >-
-  This skill should be used when the user asks to "clone a repo", "set up
-  worktrees", "create a worktree", "switch worktrees", "add a worktree",
-  "remove a worktree", or mentions bare-clone layouts, the wt command, or
-  git clone-bare-for-worktrees. Provides the bare-clone worktree workflow
-  using the wt CLI and git cb alias.
+description: This skill should be used when the user asks to "clone a repo", "set up worktrees", "create a worktree", "switch worktrees", "add a worktree", "remove a worktree", or mentions bare-clone layouts, the wt command, or git clone-bare-for-worktrees. Provides the bare-clone worktree workflow using the wt CLI and git cb alias.
 ---
 
 # Bare-Clone Worktree Workflow

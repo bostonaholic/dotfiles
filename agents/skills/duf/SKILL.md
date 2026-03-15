@@ -1,11 +1,6 @@
 ---
 name: duf
-description: >
-  This skill should be used when the user asks about disk space, disk usage,
-  mounted filesystems, storage availability, or wants to see what's using disk
-  space. Trigger phrases: "check disk space", "how much disk space", "what's
-  mounted", "disk usage", "free space", "storage available", "filesystem info",
-  "show me df", or "duf".
+description: This skill should be used when the user asks about disk space, disk usage, mounted filesystems, storage availability, or wants to see what's using disk space. Trigger phrases: "check disk space", "how much disk space", "what's mounted", "disk usage", "free space", "storage available", "filesystem info", "show me df", or "duf".
 ---
 
 # duf — Disk Usage/Free Utility
