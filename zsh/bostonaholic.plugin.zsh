@@ -67,7 +67,7 @@ function wt() {
             ;;
         rm)
             local root_path
-            root_path=$(git rev-parse --show-toplevel 2>/dev/null)
+            root_path=$(command wt _root 2>/dev/null)
             command wt "$@" || return
             # cd out if the worktree we were in was just removed
             if ! [[ -d "$PWD" ]]; then

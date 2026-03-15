@@ -18,8 +18,11 @@ set -euo pipefail
 # Worktrees live in .worktrees/ under the repo root.
 
 # Find the repo root using git.
+# Uses --git-common-dir to resolve through linked worktrees to the main repo.
 find_project_root() {
-    git rev-parse --show-toplevel 2>/dev/null
+    local git_common_dir
+    git_common_dir=$(cd "$(git rev-parse --git-common-dir 2>/dev/null)" && pwd) || return 1
+    echo "${git_common_dir%/.git}"
 }
 
 require_git_repo() {
