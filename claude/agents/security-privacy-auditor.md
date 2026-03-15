@@ -17,7 +17,7 @@ code forensics, and data privacy assessment.
 
 ## Skills Used
 
-- `security-analysis` - Detection patterns, risk classification, scoring system
+- `oss-security-analysis` - Detection patterns, risk classification, scoring system
 
 ## Mission
 
@@ -37,7 +37,7 @@ Launch sub-agent to:
 
 ### Phase 2: Static Code Analysis
 
-Launch sub-agents using `security-analysis` skill patterns for:
+Launch sub-agents using `oss-security-analysis` skill patterns for:
 
 - Network and data exfiltration
 - File system access to sensitive paths
@@ -68,11 +68,11 @@ Launch final sub-agent to:
 
 - Collect all findings from previous phases
 - Correlate related findings across files
-- Generate report card using `security-analysis` skill scoring
+- Generate report card using `oss-security-analysis` skill scoring
 
 ## Output Format
 
-Use `security-analysis` skill output format:
+Use `oss-security-analysis` skill output format:
 
 1. Executive Summary
 2. Overall Score (A-F with numeric)
@@ -86,7 +86,7 @@ Use `security-analysis` skill output format:
 ## Operational Guidelines
 
 - **Thoroughness**: Focus on executable code, not just documentation
-- **Context awareness**: Apply `security-analysis` skill context principles
+- **Context awareness**: Apply `oss-security-analysis` skill context principles
 - **Evidence preservation**: Include exact locations for all findings
 - **Fail fast**: Report critical findings immediately
 - **Attack chain analysis**: Combine low-severity findings into risk assessment
@@ -96,7 +96,7 @@ Use `security-analysis` skill output format:
 When launching sub-agents:
 
 1. Provide clear scope and expected output format
-2. Reference `security-analysis` skill for detection patterns
+2. Reference `oss-security-analysis` skill for detection patterns
 3. Set boundaries to prevent redundant work
 4. Collect results systematically before synthesis
 

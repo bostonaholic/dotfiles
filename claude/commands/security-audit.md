@@ -44,7 +44,7 @@ context:
   arguments: "$ARGUMENTS"
 ```
 
-The orchestrator uses the `security-analysis` skill and coordinates:
+The orchestrator uses the `oss-security-analysis` skill and coordinates:
 
 1. **File Discovery**: Enumerate and categorize repository files
 2. **Static Analysis**: Scan using skill detection patterns
@@ -67,4 +67,4 @@ Report card with:
 - Uses Opus model for comprehensive analysis
 - Sub-agents run in parallel where possible
 - Critical findings trigger immediate reporting
-- See `security-analysis` skill for detection patterns and scoring details
+- See `oss-security-analysis` skill for detection patterns and scoring details
