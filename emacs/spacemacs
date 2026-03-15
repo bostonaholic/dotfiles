@@ -46,14 +46,8 @@ This function should only modify configuration layer settings."
      (clojure :variables
               clojure-enable-linters 'clj-kondo)
      csv
-     dash
      docker
      emacs-lisp
-     (erc :variables
-          erc-server-list '(("irc.freenode.net"
-                             :port "6697"
-                             :ssl t
-                             :nick my/irc-nick)))
      (git :variables
           git-magit-status-fullscreen t
           magit-repository-directories '(("~/code/")))
@@ -69,7 +63,6 @@ This function should only modify configuration layer settings."
      multiple-cursors
      nginx
      org
-     plantuml
      python
      react
      (ruby :variables
