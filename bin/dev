@@ -3,22 +3,20 @@
 # dev - Start a development session
 #
 # DESCRIPTION:
-#   Launches a tmux session named after the current git project with three
-#   windows: one for your shell, one running Claude Code, and one running
-#   lazygit.
+#   Launches a tmux session named after the current git project with two
+#   windows: one for your shell and one running Claude Code.
 #
 # USAGE:
 #   dev [session-name]
 #
 # EXAMPLES:
-#   cd ~/projects/myapp && dev   # Creates session "myapp" with two windows
+#   cd ~/projects/myapp && dev   # Creates session "myapp"
 #   dev myapp                    # Creates session "myapp" with explicit name
 #   dev                          # Reattaches if session already exists
 #
 # DEPENDENCIES:
 #   - tmux
 #   - claude (Claude Code CLI)
-#   - lazygit
 #   - git (optional, falls back to directory name)
 #
 ################################################################################
@@ -56,10 +54,7 @@ fi
 # Create session with first window named after the project
 tmux new-session -d -s "$session" -c "$PWD"
 
-# Create second window running lazygit
-tmux new-window -t "=$session:" -n "git" -c "$PWD" "lazygit"
-
-# Create third window running Claude Code
+# Create second window running Claude Code
 tmux new-window -t "=$session:" -n "claude" -c "$PWD" "/opt/homebrew/bin/claude --dangerously-skip-permissions"
 
 # Select the first window
