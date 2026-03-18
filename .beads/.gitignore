@@ -32,6 +32,9 @@ dolt-server.log
 dolt-server.lock
 dolt-server.port
 
+# Credential key (machine-specific secret)
+.beads-credential-key
+
 # Backup data (auto-exported JSONL, local-only)
 backup/
 
