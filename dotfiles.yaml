@@ -23,6 +23,9 @@ symlinks:
   claude/settings.json: ~/.claude/settings.json
   claude/statusline.clj: ~/.claude/statusline.clj
 
+  # Obsidian
+  claude/commands/summarize.md: ~/Documents/obsidian-vault/.claude/commands/summarize.md
+
   # Gemini CLI
   gemini/settings.json: ~/.gemini/settings.json
 
