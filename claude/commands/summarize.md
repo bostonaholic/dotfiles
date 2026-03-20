@@ -38,4 +38,4 @@ List 2-5 concrete actions the reader can take based on the content. Each takeawa
 - Connect directly to something discussed in the note
 - Be relevant to someone in a knowledge work or software engineering context when possible
 
-Do not modify any other part of the note.
+Do not modify any other part of the note — no frontmatter changes (tags, status, finished, etc.).
