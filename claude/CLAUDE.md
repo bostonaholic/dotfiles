@@ -27,6 +27,14 @@ When writing code, always adhere to these principles inspired by legendary progr
 
 Apply these principles in all code, explanations, and architectural recommendations.
 
+## Learned Rules
+
+- **Keep generic tools generic.** When building framework-agnostic tools,
+  use placeholder examples (e.g., `[test framework]`, `[manifest file]`)
+  instead of hardcoding specific technologies like Rails or Next.js. Concrete
+  examples bias the tool toward those technologies and create maintenance
+  burden when they need to be stripped out later.
+
 ## General Guidelines
 
 - **Minimal fixes by default.** When fixing bugs, make the smallest targeted
