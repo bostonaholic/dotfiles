@@ -25,6 +25,7 @@ symlinks:
 
   # Obsidian
   claude/commands/summarize.md: ~/Documents/obsidian-vault/.claude/commands/summarize.md
+  agents/skills/summarize: ~/Documents/obsidian-vault/.claude/skills/summarize
 
   # Gemini CLI
   gemini/settings.json: ~/.gemini/settings.json
