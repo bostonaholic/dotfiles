@@ -40,6 +40,9 @@ Apply these principles in all code, explanations, and architectural recommendati
   down simple tasks.
 - **Shell alias awareness:** `rm` is aliased to `rm -i`. Use `\rm` or
   `command rm` to avoid interactive prompts that block automation.
+- **Check off PR test plans in-place.** When validating a PR's test plan,
+  update the PR body (`gh pr edit`) to check off each item as it passes.
+  Don't just report results in chat — the PR itself is the source of truth.
 
 ## Parallel Agent Work
 
