@@ -1,9 +1,6 @@
 ---
-description: Summarize an Obsidian note by replacing #summarize-later with a high-level summary of its content
-arguments:
-  - name: title
-    description: The title of the note to summarize (e.g. "How Do You Want to Remember?")
-    required: true
+name: summarize
+description: Summarize an Obsidian note by replacing `#summarize-later` with a high-level summary of its content
 ---
 
 # Summarize Note

@@ -34,6 +34,7 @@ shellcheck scripts/*
 | Claude commands | `claude/commands/*.md` |
 | Claude agents | `claude/agents/*.md` |
 | Agent skills | `agents/skills/*/SKILL.md` |
+| Obsidian skills | `obsidian/skills/*/SKILL.md` |
 | Install scripts | `scripts/install_*` |
 
 ## Modification Workflow
@@ -112,6 +113,8 @@ dotfiles/
   git/              # Git config and helpers
   agents/           # Cross-tool agent configuration
     skills/         # Skill definitions (agentskills.io standard)
+  obsidian/         # Obsidian vault configuration
+    skills/         # Obsidian-only skills (symlinked to vault)
   claude/           # Claude Code configuration
     commands/       # Slash commands
     agents/         # Subagent definitions
@@ -132,7 +135,8 @@ Changes to `claude/` are immediately effective (symlinked to `~/.claude/`).
 
 Skills live in `agents/skills/` and are symlinked to both `~/.claude/skills/`
 and `~/.agents/skills/` for cross-tool compatibility (Claude Code, Gemini CLI,
-Codex, OpenCode).
+Codex, OpenCode). Obsidian-specific skills live in `obsidian/skills/` and are
+symlinked only to the Obsidian vault.
 
 ## Commit Conventions
 
