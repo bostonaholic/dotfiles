@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 ################################################################################
-# dev - Start a development session
+# work - Start a development session
 #
 # DESCRIPTION:
 #   Launches a tmux session named after the current git project with two
 #   windows: one for your shell and one running Claude Code.
 #
 # USAGE:
-#   dev [session-name]
+#   work [session-name]
 #
 # EXAMPLES:
-#   cd ~/projects/myapp && dev   # Creates session "myapp"
-#   dev myapp                    # Creates session "myapp" with explicit name
-#   dev                          # Reattaches if session already exists
+#   cd ~/projects/myapp && work   # Creates session "myapp"
+#   work myapp                    # Creates session "myapp" with explicit name
+#   work                          # Reattaches if session already exists
 #
 # DEPENDENCIES:
 #   - tmux
