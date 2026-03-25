@@ -150,3 +150,6 @@ fi
 
 # 1Password SSH agent
 export SSH_AUTH_SOCK=~/.1password/agent.sock
+
+# Added for dev
+export PATH="/Users/matthew/code/bostonaholic/dev/bin:$PATH"
