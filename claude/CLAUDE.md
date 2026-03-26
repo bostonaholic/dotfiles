@@ -69,6 +69,10 @@ results.
 
 ## Git Workflow
 
+- **Never create merge commits.** Always keep git history linear. When
+  integrating branches (including worktree branches), use `git rebase` or
+  `git cherry-pick` to replay commits onto the target, then fast-forward.
+  Never use `git merge --no-ff` or any merge that creates a merge commit.
 - When a pre-push hook fails and the failing commit has not yet been pushed to
   the remote, squash the fix into the original commit (e.g.,
   `git commit --amend`) instead of creating a separate fix commit. This keeps
