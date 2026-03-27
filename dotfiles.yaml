@@ -168,6 +168,9 @@ scripts:
     - description: "Install tmux plugins (TPM)"
       command: "scripts/install_tmux_plugins"
 
+    - description: "Symlink local Claude Code plugins"
+      command: "scripts/install_claude_local_plugins"
+
     - description: "Install pre-commit hooks"
       command: "pre-commit install"
       condition: "command -v pre-commit"

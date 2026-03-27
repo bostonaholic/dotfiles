@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Install local Claude Code plugins as development symlinks.
+#
+# For each plugin:
+#   1. Add the source directory as a local marketplace (if not already added)
+#   2. Install the plugin from that marketplace (if not already installed)
+#   3. Replace the cache copy with a symlink to the source directory
+#
+# This way changes to the source are picked up immediately.
+
+declare -A LOCAL_PLUGINS=(
+  # source_dir -> plugin@marketplace
+  ["$HOME/code/bostonaholic/one-shot"]="one-shot@one-shot"
+)
+
+for source in "${!LOCAL_PLUGINS[@]}"; do
+  plugin="${LOCAL_PLUGINS[$source]}"
+
+  if [[ ! -d "$source" ]]; then
+    echo "  [skip] $source does not exist"
+    continue
+  fi
+
+  # Add as marketplace if not already present
+  marketplace="${plugin#*@}"
+  if ! claude plugin marketplace list 2>/dev/null | grep -q "$marketplace"; then
+    echo "  [add]  marketplace $marketplace from $source"
+    claude plugin marketplace add "$source" 2>/dev/null
+  fi
+
+  # Install plugin if not already installed
+  if ! claude plugin list 2>/dev/null | grep -q "$plugin"; then
+    echo "  [install] $plugin"
+    claude plugin install "$plugin" 2>/dev/null
+  fi
+
+  # Replace cache copy with symlink to source
+  plugin_name="${plugin%@*}"
+  cache_dir="$HOME/.claude/plugins/cache/$marketplace/$plugin_name"
+  if [[ -d "$cache_dir" ]]; then
+    # Find the version directory (there should be exactly one)
+    for version_dir in "$cache_dir"/*/; do
+      if [[ -L "${version_dir%/}" ]]; then
+        existing=$(readlink "${version_dir%/}")
+        if [[ "$existing" == "$source" ]]; then
+          echo "  [ok]   $plugin -> $source"
+          continue 2
+        fi
+      fi
+      if [[ -d "$version_dir" && ! -L "${version_dir%/}" ]]; then
+        echo "  [link] replacing cache with symlink for $plugin"
+        command rm -rf "${version_dir%/}"
+        ln -s "$source" "${version_dir%/}"
+        echo "  [ok]   $plugin -> $source"
+        continue 2
+      fi
+    done
+  fi
+done
