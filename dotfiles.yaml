@@ -7,6 +7,7 @@ directories:
   - ~/.cursor
   - ~/.lein
   - ~/.gnupg
+  - ~/.pi/agent
   - ~/.rbenv
   - ~/.oh-my-zsh/custom/plugins/bostonaholic
   - ~/.oh-my-zsh/custom/themes
@@ -29,6 +30,9 @@ symlinks:
 
   # Gemini CLI
   gemini/settings.json: ~/.gemini/settings.json
+
+  # Pi (coding agent)
+  pi/agent/settings.json: ~/.pi/agent/settings.json
 
   # Agent Skills (cross-tool standard using https://agentskills.io)
   agents/skills: ~/.claude/skills
