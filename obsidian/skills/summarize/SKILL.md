@@ -1,19 +1,21 @@
 ---
 name: summarize
-description: Summarize an Obsidian note by replacing `#summarize-later` with a high-level summary of its content
+description: 'This skill should be used when the user asks to "summarize a note", "summarize this article", "replace #summarize-later", "add a summary to a note", "generate takeaways", or mentions summarizing Obsidian notes. Replaces the #summarize-later tag with a high-level summary and actionable takeaways.'
 ---
 
 # Summarize Note
 
-Find the note titled "$ARGUMENTS.title" in the vault by searching for it with Grep or Glob.
+Summarize an Obsidian note by replacing the `#summarize-later` tag with a structured summary and actionable takeaways. No other part of the note is modified — frontmatter (tags, status, finished, etc.) remains untouched.
 
-Read the full note content.
+## Workflow
 
-Replace the `#summarize-later` tag with a high-level summary followed by actionable takeaways.
+1. **Find the note** — Search the vault using Grep or Glob to locate the note by title.
+2. **Read the full content** — Load the entire note to understand its argument, evidence, and conclusions.
+3. **Replace `#summarize-later`** — Swap the tag with the summary block described below.
 
-## Summary
+## Summary Format
 
-Write a single paragraph (3-6 sentences) that:
+Replace `#summarize-later` with a single paragraph (3-6 sentences) that:
 
 - Captures the core argument or thesis, not just the topic
 - Includes key findings, numbers, or outcomes if present
@@ -22,17 +24,20 @@ Write a single paragraph (3-6 sentences) that:
 
 ## Actionable Takeaways
 
-Below the summary paragraph, add a sub-section:
+Immediately below the summary paragraph, add:
 
 ```
 ### Actionable Takeaways
 ```
 
-List 2-5 concrete actions the reader can take based on the content. Each takeaway should:
+List 2-5 concrete actions the reader can take based on the content. Each takeaway:
 
-- Start with a verb (e.g. "Try", "Start", "Replace", "Ask", "Schedule")
-- Be specific enough to act on today, not vague advice
-- Connect directly to something discussed in the note
-- Be relevant to someone in a knowledge work or software engineering context when possible
+- Starts with a verb (e.g. "Try", "Start", "Replace", "Ask", "Schedule")
+- Is specific enough to act on today, not vague advice
+- Connects directly to something discussed in the note
+- Is relevant to someone in a knowledge work or software engineering context when possible
 
-Do not modify any other part of the note — no frontmatter changes (tags, status, finished, etc.).
+## Constraints
+
+- Do not modify any other part of the note — no frontmatter changes, no restructuring existing content.
+- Only replace the `#summarize-later` tag. If the tag is not found, report that to the user rather than guessing where to insert.
