@@ -1,6 +1,6 @@
 ---
 name: tldr
-description: This skill should be used when the user asks to look up command usage, check how to use a CLI tool, find practical examples for a command, or when an AI agent needs to quickly understand an unfamiliar shell command. Trigger phrases: "how do I use X", "show me examples for X", "look up X", "tldr X", "man X", "what flags does X have", "how does X work", "quick reference for X", "check the docs for X".
+description: 'This skill should be used when the user asks to look up command usage, check how to use a CLI tool, find practical examples for a command, or when an AI agent needs to quickly understand an unfamiliar shell command. Trigger phrases: "how do I use X", "show me examples for X", "look up X", "tldr X", "man X", "what flags does X have", "how does X work", "quick reference for X", "check the docs for X".'
 ---
 
 # tldr — Simplified Command Reference
