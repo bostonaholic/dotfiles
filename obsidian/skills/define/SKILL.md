@@ -1,6 +1,6 @@
 ---
 name: define
-description: This skill should be used when the user asks to "define a term", "add a definition", "replace `define-later`", "define this note", or mentions defining terms in Obsidian notes. Replaces the `#define-later` tag with a concise definition derived from the note's title.
+description: 'This skill should be used when the user asks to "define a term", "add a definition", "replace `define-later`", "define this note", or mentions defining terms in Obsidian notes. Replaces the `#define-later` tag with a concise definition derived from the note title.'
 ---
 
 # Define Term
