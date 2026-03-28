@@ -64,11 +64,12 @@ up:                              # Array of setup tasks (run by dev up)
   - bundler                      # Run bundle install (project-local)
   - yarn                         # Run yarn install
   - bun                          # Run bun install
+  - env                          # Copy env files from main worktree (worktrees only)
   - mysql                        # Ensure MySQL is running
   - redis                        # Ensure Redis is running
   - claude                       # Ensure Claude desktop app is installed
   - claude-code                  # Ensure Claude Code CLI is installed
-  - bootstrap_migrate            # Run bin/rails db:prepare
+  - railsdb            # Run bin/rails db:prepare
   - custom:                      # Shell-based custom task
       name: "copy .env"
       met?: "test -f .env"
@@ -83,8 +84,8 @@ check:                           # Named linter commands for dev check
   rubocop: "bundle exec rubocop"
   eslint: "yarn eslint ."
 
-open:                            # Named URLs for dev open
-  app: "http://localhost:3000"
+open:                            # Named URLs for dev open (github is built-in — no config needed)
+  app: "http://127.0.0.1:3000"
   ci: "https://github.com/org/repo/actions"
 
 commands:                        # Custom commands (dev <name>)
@@ -103,7 +104,7 @@ commands:                        # Custom commands (dev <name>)
 | `test` | Runnable | no | `dev test` config |
 | `console` | Runnable | no | `dev console` config |
 | `check` | Hash[String, String] | no | Name to shell command mapping |
-| `open` | Hash[String, String] | no | Name to URL mapping |
+| `open` | Hash[String, String] | no | Name to URL mapping (`github` is built-in — no config needed) |
 | `commands` | Hash[String, Runnable] | no | Custom commands (`dev <name>`) |
 
 ### Custom Commands
@@ -124,8 +125,9 @@ commands:
     run: "bin/rails db:migrate"
     env:
       RAILS_ENV: development
-    rollback: "bin/rails db:rollback"    # dev migrate rollback
-    status: "bin/rails db:migrate:status" # dev migrate status
+    subcommands:
+      rollback: "bin/rails db:rollback"    # dev migrate rollback
+      status: "bin/rails db:migrate:status" # dev migrate status
 ```
 
 Custom commands use the same Runnable schema as `build`/`server`/`test`/`console` — they support `run`, `env`, `build_first`, `desc`, and subcommands. They also require `dev up` to have been run first (gated on `.dev/` directory).
@@ -147,13 +149,13 @@ test:
     NODE_ENV: test
   build_first: false                  # Run dev build first (default: false)
   desc: "Run unit tests"             # Optional description
-  watch: "bun run test"              # Subcommand: dev test watch
-  coverage: "bun run test:coverage"  # Subcommand: dev test coverage
-  e2e: "bun run test:e2e"            # Subcommand: dev test e2e
+  subcommands:
+    watch: "bun run test"            # Subcommand: dev test watch
+    coverage: "bun run test:coverage"  # Subcommand: dev test coverage
+    e2e: "bun run test:e2e"          # Subcommand: dev test e2e
 ```
 
-**Known keys:** `run`, `env`, `build_first`, `desc`, `implemented`.
-All other string-valued keys become subcommands accessible via `dev <command> <name>`.
+**Known keys:** `run`, `env`, `build_first`, `desc`, `implemented`, `subcommands`.
 
 Set `implemented: false` to disable a command (`dev console` will say "not configured").
 
@@ -166,11 +168,13 @@ Set `implemented: false` to disable a command (`dev console` will say "not confi
 | `bundler` | none | `bundle config set --local path vendor/bundle` then `bundle install` |
 | `yarn` | none | `yarn install` |
 | `bun` | none | `bun install` |
+| `env` | none | Copies missing env files (`.env`, `.env.local`, `.envrc`, `.env.keys`) from the main git worktree when running inside a git worktree |
+| `npm` | none | `npm install` |
 | `mysql` | none | Starts MySQL via `brew services start mysql` |
 | `redis` | none | Starts Redis via `brew services start redis` |
 | `claude` | none | Installs Claude desktop app via `brew install --cask claude` |
 | `claude-code` | none | Installs Claude Code CLI via `brew install --cask claude-code` |
-| `bootstrap_migrate` | none | Runs `bin/rails db:prepare` |
+| `railsdb` | none | Runs `bin/rails db:prepare` |
 | `custom` | `name`, `met?`, `meet` (all required) | Shell-based idempotent task |
 
 Tasks with version arguments accept both forms:
@@ -237,7 +241,7 @@ up:
   - bundler
   - mysql
   - redis
-  - bootstrap_migrate
+  - railsdb
   - custom:
       name: "copy .env"
       met?: "test -f .env"
@@ -251,7 +255,7 @@ check:
   rubocop: "bundle exec rubocop"
 
 open:
-  app: "http://localhost:3000"
+  app: "http://127.0.0.1:3000"
 ```
 
 ### Node.js / TypeScript
@@ -302,7 +306,7 @@ up:
   - yarn
   - mysql
   - redis
-  - bootstrap_migrate
+  - railsdb
 
 server:
   run: "bin/dev"
@@ -319,8 +323,8 @@ check:
   eslint: "yarn eslint ."
 
 open:
-  app: "http://localhost:3000"
-  github: "https://github.com/org/repo"
+  app: "http://127.0.0.1:3000"
+  # Note: github is built-in — no open: entry needed for dev open github
 
 commands:
   deploy: "scripts/deploy.sh"
@@ -354,7 +358,7 @@ check:
   typecheck: "bun run typecheck"
 
 open:
-  app: "http://localhost:3000"
+  app: "http://127.0.0.1:3000"
   vercel: "https://vercel.com/team/project"
 ```
 
@@ -392,9 +396,9 @@ check:
   format: "bun run format:check"
 
 open:
-  app: "http://localhost:3000"
-  api: "http://localhost:4000"
-  docs: "http://localhost:3001"
+  app: "http://127.0.0.1:3000"
+  api: "http://127.0.0.1:4000"
+  docs: "http://127.0.0.1:3001"
 ```
 
 ## Key Concepts
