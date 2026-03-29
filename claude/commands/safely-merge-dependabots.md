@@ -42,7 +42,7 @@ This command invokes the `dependabot-orchestrator` agent to coordinate specializ
 2. **Analyze Each PR**: Dispatch worker agents for comprehensive analysis
    - **pr-analyzer**: Semver classification, breaking change detection, dependency conflicts
    - **test-runner**: Test suite execution in isolated worktree
-   - **security-checker**: CVE verification (when applicable)
+   - **dependabot-security-checker**: CVE verification (when applicable)
 3. **Make Decisions**: Auto-merge safe updates, skip risky ones
 4. **Report Results**: Detailed summary with merge/skip counts and reasoning
 
@@ -103,7 +103,7 @@ The orchestrator will:
 - Dispatch specialized worker agents per PR:
   - **pr-analyzer** (Sonnet): Deep safety analysis
   - **test-runner** (Sonnet): Test execution with diagnostics
-  - **security-checker** (Haiku): CVE verification
+  - **dependabot-security-checker** (Haiku): CVE verification
 - Make merge decisions based on worker results
 - Execute merges via `gh-cli` merge-pr workflow
 - Report progress and final results

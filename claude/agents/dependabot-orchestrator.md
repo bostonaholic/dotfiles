@@ -155,19 +155,19 @@ If `passed` is false:
 
 If `passed` is true, continue to security check (optional).
 
-#### Step 2.5: Dispatch security-checker (optional)
+#### Step 2.5: Dispatch dependabot-security-checker (optional)
 
 If PR body or pr-analyzer indicates security fix:
 
 ```markdown
-Use Task tool to dispatch security-checker agent:
+Use Task tool to dispatch dependabot-security-checker agent:
 - description: "Check security advisories for PR #123"
 - prompt: "Check security advisories for PR #123. Return JSON with: is_security_fix, cves, severity, fix_verified"
 - subagent_type: general-purpose
 - model: haiku
 ```
 
-**Wait for security-checker response.**
+**Wait for dependabot-security-checker response.**
 
 **Parse JSON response:**
 
@@ -194,7 +194,7 @@ If not security fix, skip this step.
 
 - pr-analyzer: safe = true
 - test-runner: passed = true
-- security-checker: verified (if applicable)
+- dependabot-security-checker: verified (if applicable)
 
 ### Decision: MERGE
 
@@ -352,7 +352,7 @@ Phase 2: Process each PR
 PR #123:
   - Dispatch pr-analyzer → {safe: true, risk: "low"}
   - Dispatch test-runner → {passed: true, tests_run: 847}
-  - Dispatch security-checker → {is_security_fix: true, severity: "high"}
+  - Dispatch dependabot-security-checker → {is_security_fix: true, severity: "high"}
   - Decision: MERGE
   - Execute: gh pr merge 123 --auto --squash --delete-branch
   - Result: Success ✓
