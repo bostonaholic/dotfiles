@@ -38,6 +38,9 @@ dolt-server.port
 # Backup data (auto-exported JSONL, local-only)
 backup/
 
+# Interaction audit log (append-only, machine-local)
+interactions.jsonl
+
 # Legacy files (from pre-Dolt versions)
 *.db
 *.db?*
