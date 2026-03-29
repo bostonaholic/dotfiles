@@ -84,6 +84,9 @@ if [ $EXIT_CODE -ne 0 ] || [ -z "$COMMIT_MSG" ]; then
     exit 1
 fi
 
+# Strip markdown code fences if the AI wrapped the message in them
+COMMIT_MSG=$(echo "$COMMIT_MSG" | sed '/^```.*$/d')
+
 # Display the generated message
 echo ""
 printf '%sGenerated commit message:%s\n' "${GREEN}" "${NC}"

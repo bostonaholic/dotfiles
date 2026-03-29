@@ -100,7 +100,7 @@ cat >> "$PROMPT_FILE" <<EOF
 Staged diff:
 ${DIFF}
 
-Generate ONLY the commit message, no explanations or additional text. If the change is complex, you may use a multi-line message with a blank line separating the subject from the body.
+Generate ONLY the raw commit message text. Do NOT wrap it in markdown code fences, backticks, or any formatting. Do NOT add explanations or commentary. Output the commit message exactly as it should appear in the git log. If the change is complex, you may use a multi-line message with a blank line separating the subject from the body.
 EOF
 
 # Call Claude CLI and output result
