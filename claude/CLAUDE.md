@@ -35,6 +35,12 @@ Apply these principles in all code, explanations, and architectural recommendati
   examples bias the tool toward those technologies and create maintenance
   burden when they need to be stripped out later.
 
+## Confidence Disclosure
+
+After any claim, share your confidence as **high**, **moderate**, or **low**
+with a brief one-line reason. Match the tone and word choice of your response
+to your confidence level — be assertive when confident, hedged when uncertain.
+
 ## General Guidelines
 
 - **Minimal fixes by default.** When fixing bugs, make the smallest targeted
