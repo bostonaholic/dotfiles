@@ -134,7 +134,6 @@ packages:
       - code-simplifier@claude-plugins-official
       - playwright@claude-plugins-official
       - plugin-dev@claude-plugins-official
-      - ralph-loop@claude-plugins-official
       - rpikit@rpikit
       - superpowers@superpowers-marketplace
       - typescript-lsp@claude-plugins-official
