@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.colorTheme": "Catppuccin Latte",
     "git.autofetch": true,
     "files.autoSave": "afterDelay",
     "git.confirmSync": false,
@@ -13,5 +13,5 @@
     "containers.containerClient": "com.microsoft.visualstudio.containers.docker",
     "containers.orchestratorClient": "com.microsoft.visualstudio.orchestrators.dockercompose",
     "editor.minimap.enabled": false,
-    "workbench.iconTheme": "catppuccin-mocha"
+    "workbench.iconTheme": "catppuccin-latte"
 }
