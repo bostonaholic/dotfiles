@@ -10,7 +10,6 @@ directories:
   - ~/.pi/agent
   - ~/.rbenv
   - ~/.oh-my-zsh/custom/plugins/bostonaholic
-  - ~/.oh-my-zsh/custom/themes
   - ~/Library/Application Support/Code/User
 
 symlinks:
@@ -41,7 +40,6 @@ symlinks:
   # Shell
   zsh/zshrc: ~/.zshrc
   zsh/zprofile: ~/.zprofile
-  zsh/bostonaholic.zsh-theme: ~/.oh-my-zsh/custom/themes/bostonaholic.zsh-theme
   zsh/bostonaholic.plugin.zsh: ~/.oh-my-zsh/custom/plugins/bostonaholic/bostonaholic.plugin.zsh
 
   # Git

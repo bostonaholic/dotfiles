@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # -*-Shell-script-*-
 
@@ -98,8 +98,6 @@ plugins=(
     node
     npm
     postgres
-    #pyenv
-    #python
     rails
     rbenv
     ruby
