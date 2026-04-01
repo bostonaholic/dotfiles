@@ -10,7 +10,6 @@ metadata:
     - "**/zlogin"
     - "**/zlogout"
     - "**/*.plugin.zsh"
-    - "**/*.zsh-theme"
   bashPattern:
     - "source.*zsh"
     - "export\\s+(PATH|EDITOR|PAGER|SHELL)"
@@ -74,7 +73,7 @@ Put here:
 - **Aliases** (CLI shortcuts, modern tool replacements, git aliases)
 - **Shell functions** (wt wrapper, bundle_close, cljs)
 - **Completion definitions** for custom functions (`compdef`)
-- **Interactive environment variables** tied to CLI behavior (`$LESS`, `$HISTCONTROL`, `$LS_COLORS`)
+- **Interactive environment variables** tied to CLI behavior (`$LESS`, `$LS_COLORS`)
 
 Current contents: aliases (cat/bat, ls/eza, grep/rg, etc.), wt() git worktree wrapper + completions, utility functions.
 
@@ -96,7 +95,7 @@ Would be appropriate for:
 Is it an exported variable or PATH entry?
 ├── Yes → Is it needed by non-interactive processes or GUI apps?
 │   ├── Yes → zsh/zprofile
-│   └── No → Is it interactive shell behavior ($LESS, $HISTCONTROL)?
+│   └── No → Is it interactive shell behavior ($LESS)?
 │       ├── Yes → zsh/bostonaholic.plugin.zsh
 │       └── No → zsh/zprofile (default for exports)
 ├── No → Is it an alias or shell function?
