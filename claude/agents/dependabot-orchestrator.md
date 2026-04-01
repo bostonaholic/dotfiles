@@ -50,21 +50,42 @@ If `pr_numbers` provided, fetch their mergeable status:
 gh pr view $PR_NUMBER --json number,title,mergeable
 ```
 
-**Triage PRs into two queues:**
+#### Check for Dependabot retry instructions
 
-- **ready**: `mergeable` is `MERGEABLE` or `UNKNOWN` → process immediately
-- **needs_rebase**: `mergeable` is `CONFLICTING` → request rebase first
+For each discovered PR, fetch comments from Dependabot looking for retry instructions:
+
+```bash
+gh pr view $PR_NUMBER --json comments --jq '[.comments[] | select(.author.login == "dependabot[bot]") | .body] | last'
+```
+
+**Look for patterns** in the most recent Dependabot comment:
+
+- `commenting \x60@dependabot rebase\x60` → needs rebase
+- `commenting \x60@dependabot recreate\x60` → needs recreate (Dependabot failed to update)
+- `commenting \x60@dependabot retry\x60` → needs retry
+- Any other `@dependabot <command>` in a "you can retry" context → extract and follow
+
+These instructions take precedence over the `mergeable` status. A PR may show `MERGEABLE` but still have a Dependabot error comment requesting `@dependabot recreate`.
+
+**Triage PRs into three queues:**
+
+- **ready**: `mergeable` is `MERGEABLE` or `UNKNOWN`, no Dependabot retry instructions → process immediately
+- **needs_rebase**: `mergeable` is `CONFLICTING` OR Dependabot comment suggests `@dependabot rebase` → request rebase first
+- **needs_action**: Dependabot comment suggests `@dependabot recreate`, `@dependabot retry`, or other command → follow instruction first
 
 **Report to user:**
 
 ```text
 Discovering Dependabot PRs...
 Found 5 open Dependabot PRs: #123, #124, #125, #126, #127
-  Ready: #123, #125, #126, #127
+  Ready: #123, #125, #127
   Needs rebase: #124
+  Needs action: #126 (@dependabot recreate)
 ```
 
-### Phase 1.5: Request Rebases
+### Phase 1.5: Follow Dependabot Instructions
+
+#### Rebases
 
 For each PR in the `needs_rebase` queue:
 
@@ -72,14 +93,30 @@ For each PR in the `needs_rebase` queue:
 gh pr comment $PR_NUMBER --body "@dependabot rebase"
 ```
 
-**Report to user:**
-
 ```text
-Requesting rebase for #124...
   ├─ Commented @dependabot rebase on #124
 ```
 
-Track the timestamp when rebase was requested. These PRs will be re-checked in Phase 4.
+Track the timestamp when rebase was requested. These PRs will be re-checked in Phase 3.
+
+#### Other actions (recreate, retry, etc.)
+
+For each PR in the `needs_action` queue, comment the exact command Dependabot requested:
+
+```bash
+gh pr comment $PR_NUMBER --body "@dependabot recreate"
+```
+
+```text
+  ├─ Commented @dependabot recreate on #126
+```
+
+**Behavior by command:**
+
+- **`@dependabot rebase`**: Moves to `needs_rebase` queue for polling in Phase 3.
+- **`@dependabot recreate`**: Dependabot will close this PR and open a new one. Record as "recreated" — the new PR will be picked up on the next run of the skill.
+- **`@dependabot retry`**: Dependabot will retry the failed update. Record as "retried" — poll the same PR in Phase 3 (same as rebase).
+- **Unknown command**: Comment it anyway, record as "action taken", skip further processing.
 
 ### Phase 2: Process PRs Sequentially
 
@@ -467,12 +504,16 @@ After processing all PRs (including rebased ones), generate summary:
 ⏳ Rebase timed out: 1 PR
   - PR #128: sass 1.70.0 → 1.71.0 (rebase requested, retry later)
 
+🔄 Recreated: 1 PR
+  - PR #131: lint-staged 16.3.3 → 16.4.0 (commented @dependabot recreate, re-run to process new PR)
+
 ═══════════════════════════════════════════════════════════
 
 Total Time: 12m 18s
 Next Actions:
   - Review skipped PRs manually: gh pr view 126, gh pr view 130
   - Retry timed-out rebases: /safely-merge-dependabots 128
+  - Re-run to pick up recreated PRs: /safely-merge-dependabots
   - Monitor auto-merge PRs: gh pr checks 123, 124, 125, 127, 129
 ```
 
@@ -496,6 +537,9 @@ Would Skip: 1 PR
 
 Pending Rebase: 1 PR
   - PR #128: sass 1.70.0 → 1.71.0 (would process after rebase)
+
+Would Recreate: 1 PR
+  - PR #131: lint-staged 16.3.3 → 16.4.0 (would comment @dependabot recreate)
 
 ═══════════════════════════════════════════════════════════
 
@@ -582,12 +626,14 @@ To merge, run: /safely-merge-dependabots
 Input: pr_numbers: [], dry_run: false, timeout: "10m"
 
 Phase 1: Discover PRs
-  Found 4 PRs: #123, #124, #125, #126
+  Found 5 PRs: #123, #124, #125, #126, #131
   Ready: #123, #124, #125
   Needs rebase: #126
+  Needs action: #131 (@dependabot recreate - "something went wrong")
 
-Phase 1.5: Request Rebases
+Phase 1.5: Follow Dependabot Instructions
   Commented @dependabot rebase on #126
+  Commented @dependabot recreate on #131 (will be closed and reopened)
 
 Phase 2: Process ready PRs
 
@@ -628,6 +674,7 @@ Phase 3: Poll Pending Rebases
 Phase 4: Final Summary
   Merged: 3 PRs (#123, #124, #126)
   Merged with fixes: 1 PR (#125)
+  Recreated: 1 PR (#131 - re-run to process new PR)
   Skipped: 0 PRs
   Total time: 7m 42s
 ```

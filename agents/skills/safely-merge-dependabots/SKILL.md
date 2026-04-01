@@ -19,8 +19,8 @@ Autonomously discover, analyze, and safely merge Dependabot PRs. Uses multi-laye
 
 Invoke the `dependabot-orchestrator` agent to coordinate specialized worker agents:
 
-1. **Discover PRs**: Find all open Dependabot PRs (or use specified PR numbers), detect merge conflicts
-2. **Request Rebases**: Comment `@dependabot rebase` on PRs with merge conflicts
+1. **Discover PRs**: Find all open Dependabot PRs (or use specified PR numbers), detect merge conflicts and Dependabot retry instructions
+2. **Follow Dependabot Instructions**: Comment `@dependabot rebase`, `@dependabot recreate`, etc. when Dependabot has left retry instructions on a PR
 3. **Analyze Each PR**: Dispatch worker agents for comprehensive analysis
    - **pr-analyzer**: Semver classification, breaking change detection, dependency conflicts
    - **breaking-change-investigator** (when MAJOR): Search codebase for actual usage of affected APIs
@@ -46,8 +46,14 @@ Invoke the `dependabot-orchestrator` agent to coordinate specialized worker agen
 - If impacted but trivially fixable: make changes in PR branch, test, merge
 - If impacted and non-trivial: skip with detailed impact report
 
+**Dependabot retry instructions:**
+- Detect Dependabot comments suggesting `@dependabot rebase`, `@dependabot recreate`, etc.
+- Follow the suggested command by commenting on the PR
+- `rebase`: poll until complete, then run full analysis pipeline
+- `recreate`: PR will be closed and reopened; report as "recreated, re-run to process"
+- Also comment `@dependabot rebase` on PRs with merge conflicts (even without explicit instructions)
+
 **Pending rebase:**
-- Comment `@dependabot rebase` on PRs with merge conflicts
 - Poll until rebase completes (up to 5 minutes per PR)
 - Re-run full analysis pipeline after rebase
 - If rebase times out: skip with note to retry later
