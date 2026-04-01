@@ -152,4 +152,6 @@ fi
 export SSH_AUTH_SOCK=~/.1password/agent.sock
 
 # Added for dev
-export PATH="/Users/matthew/code/bostonaholic/dev/bin:$PATH"
+if [[ -d "$HOME/code/bostonaholic/dev/bin" ]]; then
+  export PATH="$HOME/code/bostonaholic/dev/bin:$PATH"
+fi

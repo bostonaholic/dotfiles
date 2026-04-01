@@ -5,9 +5,6 @@
 # --no-init does away with that behavior
 export LESS="--quit-if-one-screen --no-init $LESS"
 
-# Do not store commands in the bash history that start with a space
-export HISTCONTROL=ignorespace
-
 # CLI
 alias ..="cd .."
 
