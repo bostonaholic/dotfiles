@@ -1,0 +1,59 @@
+#!/bin/bash
+################################################################################
+# Install fzf-tab Plugin
+#
+# DESCRIPTION:
+#   Installs fzf-tab, a zsh plugin that replaces the default completion
+#   selection menu with fzf.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_fzf_tab
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN      - If true, preview changes without making them (default: false)
+#   VERBOSE      - If true, show detailed output (default: false)
+#   ZSH_CUSTOM   - Oh My Zsh custom directory (default: ~/.oh-my-zsh/custom)
+#
+# WHAT IT DOES:
+#   - Checks if fzf-tab is already cloned into the oh-my-zsh custom plugins dir
+#   - If not present, clones it from GitHub
+#   - If already installed, skips installation
+#
+# DEPENDENCIES:
+#   - git (for cloning)
+#   - Oh My Zsh (provides $ZSH_CUSTOM directory)
+#   - Internet connection
+#
+# NOTES:
+#   fzf-tab must also be listed in the plugins array in zshrc to be loaded.
+#
+################################################################################
+
+set -euo pipefail
+
+# shellcheck disable=SC1091 source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+main() {
+    local target_dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fzf-tab"
+
+    if [[ -d "$target_dir" ]]; then
+        log "fzf-tab is already installed, skipping"
+        return
+    fi
+
+    if [[ $DRY_RUN == true ]]; then
+        log "[DRY RUN] Would clone fzf-tab to $target_dir"
+        return
+    fi
+
+    log "Installing fzf-tab..."
+    git clone https://github.com/Aloxaf/fzf-tab "$target_dir"
+    success "fzf-tab installed"
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

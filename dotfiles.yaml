@@ -145,6 +145,10 @@ scripts:
       command: "scripts/install_oh-my-zsh"
       condition: "! [ -d ~/.oh-my-zsh ]"
 
+    - description: "Install fzf-tab plugin"
+      command: "scripts/install_fzf_tab"
+      condition: "! [ -d ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fzf-tab ]"
+
     - description: "Install Spacemacs"
       command: "scripts/install_spacemacs"
       condition: "! [ -d ~/.emacs.d ]"
