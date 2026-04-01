@@ -19,26 +19,41 @@ Autonomously discover, analyze, and safely merge Dependabot PRs. Uses multi-laye
 
 Invoke the `dependabot-orchestrator` agent to coordinate specialized worker agents:
 
-1. **Discover PRs**: Find all open Dependabot PRs (or use specified PR numbers)
-2. **Analyze Each PR**: Dispatch worker agents for comprehensive analysis
+1. **Discover PRs**: Find all open Dependabot PRs (or use specified PR numbers), detect merge conflicts
+2. **Request Rebases**: Comment `@dependabot rebase` on PRs with merge conflicts
+3. **Analyze Each PR**: Dispatch worker agents for comprehensive analysis
    - **pr-analyzer**: Semver classification, breaking change detection, dependency conflicts
+   - **breaking-change-investigator** (when MAJOR): Search codebase for actual usage of affected APIs
    - **test-runner**: Test suite execution in isolated worktree
    - **dependabot-security-checker**: CVE verification (when applicable)
-3. **Make Decisions**: Auto-merge safe updates, skip risky ones
-4. **Report Results**: Detailed summary with merge/skip counts and reasoning
+4. **Make Decisions**: Auto-merge safe updates, fix trivial breaking changes, skip truly risky ones
+5. **Poll Pending Rebases**: Re-check PRs that were rebasing, run full analysis when ready
+6. **Report Results**: Detailed summary with merge/skip/rebase counts and reasoning
 
 ## Safety Policy
 
 **Auto-merge when ALL conditions met:**
-- PATCH or MINOR version update only
+- PATCH or MINOR version update
 - All tests pass
 - No breaking changes detected
 - No dependency conflicts
 - Security fixes verified (if applicable)
 
+**Investigate before skipping (MAJOR / breaking changes):**
+- Fetch changelog and identify specific breaking changes
+- Search codebase for actual usage of affected APIs
+- If codebase is NOT impacted: proceed to test and merge
+- If impacted but trivially fixable: make changes in PR branch, test, merge
+- If impacted and non-trivial: skip with detailed impact report
+
+**Pending rebase:**
+- Comment `@dependabot rebase` on PRs with merge conflicts
+- Poll until rebase completes (up to 5 minutes per PR)
+- Re-run full analysis pipeline after rebase
+- If rebase times out: skip with note to retry later
+
 **Always skip (require manual review):**
-- MAJOR version updates
-- Breaking changes detected
+- Non-trivial breaking changes that affect the codebase
 - Test failures
 - Dependency conflicts
 - Missing critical context
