@@ -11,7 +11,7 @@ export LESS="--quit-if-one-screen --no-init $LESS"
 alias ..="cd .."
 
 # Claude with fallback: tries claude-swarm first, falls back to normal claude if it fails
-alias claude="claude --dangerously-skip-permissions"
+alias claude="caffeinate -i claude --dangerously-skip-permissions"
 alias cc="claude"
 alias cw="claude --worktree"
 
