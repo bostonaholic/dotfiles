@@ -22,3 +22,6 @@ scratch*
 
 **/.claude/settings.local.json
 .claude-code-mcp.log
+
+.dev/
+.team/
