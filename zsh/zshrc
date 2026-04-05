@@ -73,39 +73,59 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    # custom
+    # Custom
     bostonaholic
-    ngrok
-    nodenv
 
-    # built-in
-    asdf
-    brew
-    bundler
+    # Shell & Terminal
     common-aliases
     direnv
-    docker
-    docker-compose
-    emacs
     fzf
     fzf-tab
-    gem
+    starship
+    tmux
+    zoxide
+
+    # Version Control
     gh
     git
     gitfast
-    gpg-agent
-    lein
-    node
-    npm
-    postgres
+
+    # Editors
+    emacs
+
+    # Languages: Ruby
+    bundler
+    gem
     rails
     rbenv
     ruby
-    ssh-agent
-    starship
-    tmux
+
+    # Languages: Node
+    node
+    nodenv
+    npm
     yarn
-    zoxide
+
+    # Languages: Clojure
+    lein
+
+    # Containers
+    docker
+    docker-compose
+
+    # Databases
+    postgres
+
+    # Networking
+    ngrok
+
+    # Security
+    gpg-agent
+    ssh-agent
+
+    # Development Tools
+    asdf
+    brew
 )
 export plugins
 
