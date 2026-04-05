@@ -15,12 +15,12 @@ Define a term by replacing the `#define-later` tag with a short, plain-language 
 
 ## Definition Format
 
-Replace `#define-later` with 1-3 sentences that:
+Replace `#define-later` with 1-2 sentences (aim for under 40 words) that:
 
-- Define the term from the note's title in plain language
-- Are concise and direct — no preamble, no filler
-- Capture what it is, not its full history or every nuance
-- Use the tone of a knowledgeable peer giving a quick explanation
+- Lead with what the term *is* or *does* — no preamble
+- Prefer one crisp sentence over two weaker ones
+- Skip history, attribution, and tangential applications unless they are the point
+- Use Obsidian `[[wiki links]]` for related concepts already in the vault, and `**==bold highlight==**` for the core insight
 
 Do not add headings, bullet points, or any other structural elements — just the definition text.
 
