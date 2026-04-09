@@ -56,7 +56,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "$HOME/bin/alerter -title 'Claude Code' -message 'Waiting for input' -appIcon $HOME/bin/icons/claude.png -sound Hero -group claude-idle"
+            "command": "$HOME/bin/alerter -title 'Claude Code' -message 'Waiting for input' -appIcon $HOME/bin/icons/claude.png -sound Glass -group claude-idle"
           }
         ]
       },
@@ -65,7 +65,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "$HOME/bin/alerter -title 'Claude Code' -message 'Needs permission' -appIcon $HOME/bin/icons/claude.png -sound Hero -group claude-permission"
+            "command": "$HOME/bin/alerter -title 'Claude Code' -message 'Needs permission' -appIcon $HOME/bin/icons/claude.png -sound Glass -group claude-permission"
           }
         ]
       }
