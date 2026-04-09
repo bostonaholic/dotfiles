@@ -58,7 +58,7 @@
 	brr = branch --move
 
 	amend = commit --amend
-	amend-noe = commit --amend --no-edit
+	nit = commit --amend --no-edit
 	cb = clone-bare-for-worktrees
 	cl = clone
 	ci = commit
