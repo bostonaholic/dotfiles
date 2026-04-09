@@ -13,5 +13,6 @@
     "containers.containerClient": "com.microsoft.visualstudio.containers.docker",
     "containers.orchestratorClient": "com.microsoft.visualstudio.orchestrators.dockercompose",
     "editor.minimap.enabled": false,
-    "workbench.iconTheme": "catppuccin-latte"
+    "workbench.iconTheme": "catppuccin-latte",
+    "chat.viewSessions.orientation": "stacked"
 }
