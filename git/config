@@ -53,8 +53,8 @@
 	bs = "!. $HOME/.config/git/helpers && pretty_git_branch_sorted"
 	br = branch
 	bra = branch --all
-	bd = branch -d
-	bdd = branch -D
+	bd = branch --delete
+	bdd = branch --delete --force
 	brr = branch --move
 
 	amend = commit --amend
@@ -62,7 +62,7 @@
 	cb = clone-bare-for-worktrees
 	cl = clone
 	ci = commit
-	cm = commit -m
+	cm = commit --message
 	aic = !git-ai-commit
 	co = checkout
 	pu = push
