@@ -89,5 +89,8 @@ echo && "$DOTFILES_DIR/scripts/update_npm_packages"
 # uv tools
 echo && "$DOTFILES_DIR/scripts/update_uv_tools"
 
+# Agent skills
+echo && "$DOTFILES_DIR/scripts/update_agent_skills"
+
 echo
 success "All updates completed!"

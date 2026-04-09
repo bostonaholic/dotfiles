@@ -1,0 +1,99 @@
+#!/bin/bash
+################################################################################
+# Install Agent Skills
+#
+# DESCRIPTION:
+#   Installs agent skills listed in dotfiles.yaml via 'npx skills add'.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_agent_skills
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
+# WHAT IT DOES:
+#   1. Checks if npx is available, skips if not found
+#   2. Reads skill list from packages.agent_skills in dotfiles.yaml
+#   3. Installs each skill globally using 'npx skills add'
+#   4. Reports statistics on skills installed
+#
+# DEPENDENCIES:
+#   - npx (via Node.js)
+#   - yq (for parsing YAML)
+#   - dotfiles.yaml configuration file
+#
+################################################################################
+
+set -euo pipefail
+
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+main() {
+    log "Installing agent skills..."
+
+    if ! command -v npx &> /dev/null; then
+        warn "npx not found. Skipping agent skills installation"
+        warn "Install Node.js first, then run: $0"
+        return
+    fi
+
+    local count
+    count=$(yq eval '.packages.agent_skills | length' "$CONFIG_FILE" 2>/dev/null)
+
+    if [[ "$count" == "0" || "$count" == "null" ]]; then
+        log "No agent skills configured in dotfiles.yaml"
+        return
+    fi
+
+    local installed=0
+    local failed=0
+    local total=0
+
+    for i in $(seq 0 $((count - 1))); do
+        local source skill
+        source=$(yq eval ".packages.agent_skills[$i].source" "$CONFIG_FILE")
+        skill=$(yq eval ".packages.agent_skills[$i].skill" "$CONFIG_FILE")
+
+        if [[ -z "$source" || "$source" == "null" ]]; then
+            continue
+        fi
+
+        total=$((total + 1))
+
+        local skill_flag=""
+        if [[ -n "$skill" && "$skill" != "null" ]]; then
+            skill_flag="--skill $skill"
+        fi
+
+        if [[ $DRY_RUN == true ]]; then
+            log "[DRY RUN] Would install agent skill: $skill from $source"
+        else
+            log "Installing agent skill: ${skill:-all} from $source"
+            # shellcheck disable=SC2086
+            if npx skills add "$source" $skill_flag -g -y 2>&1; then
+                installed=$((installed + 1))
+                success "  installed ${skill:-all} from $source"
+            else
+                failed=$((failed + 1))
+                error "  failed to install ${skill:-all} from $source"
+            fi
+        fi
+    done
+
+    if [[ $DRY_RUN == false ]]; then
+        if [[ $failed -gt 0 ]]; then
+            warn "Agent skills: $installed/$total installed, $failed failed"
+        else
+            success "Agent skills: $installed/$total installed"
+        fi
+    else
+        success "Agent skills checked: $total skills would be installed"
+    fi
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

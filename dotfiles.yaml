@@ -122,6 +122,14 @@ packages:
         args:
           - jcodemunch-mcp
 
+  # Agent skills - installed via 'npx skills add'
+  # Format: source: GitHub URL or owner/repo, skill: skill name, agents: target agents
+  # Run: ./scripts/install_agent_skills to install
+  # Run: ./scripts/update_agent_skills to update
+  agent_skills:
+    - source: https://github.com/akshat10/skills
+      skill: first-principles-thinking
+
   # Claude Code plugins - installed via 'claude plugin install'
   # Format: plugin-name@marketplace-name
   # Run: ./scripts/install_claude_plugins to install
@@ -171,6 +179,10 @@ scripts:
 
     - description: "Install tmux plugins (TPM)"
       command: "scripts/install_tmux_plugins"
+
+    - description: "Install agent skills"
+      command: "scripts/install_agent_skills"
+      condition: "command -v npx"
 
     - description: "Symlink local Claude Code plugins"
       command: "scripts/install_claude_local_plugins"

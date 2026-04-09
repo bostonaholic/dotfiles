@@ -1,0 +1,39 @@
+#!/bin/bash
+################################################################################
+# Update Agent Skills
+#
+# DESCRIPTION:
+#   Updates all globally installed agent skills to their latest versions.
+#
+# USAGE:
+#   Called by update.sh, or run directly:
+#   ./update_agent_skills
+#
+# DEPENDENCIES:
+#   - npx (via Node.js)
+#
+################################################################################
+
+set -euo pipefail
+
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+main() {
+    log "Updating agent skills..."
+
+    if ! command -v npx &> /dev/null; then
+        warn "npx not found. Skipping agent skills update"
+        return
+    fi
+
+    if npx skills update -g 2>&1; then
+        success "Agent skills updated"
+    else
+        warn "Failed to update some agent skills"
+    fi
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi
