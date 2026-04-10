@@ -69,7 +69,10 @@ up:                              # Array of setup tasks (run by dev up)
   - redis                        # Ensure Redis is running
   - claude                       # Ensure Claude desktop app is installed
   - claude-code                  # Ensure Claude Code CLI is installed
-  - railsdb            # Run bin/rails db:prepare
+  - database                      # Run bin/rails db:prepare (or custom bootstrap/migrate)
+  - database:                      # With explicit bootstrap/migrate commands
+      bootstrap: "bin/rails db:create db:schema:load db:seed"
+      migrate: "bin/rails db:migrate"
   - custom:                      # Shell-based custom task
       name: "copy .env"
       met?: "test -f .env"
@@ -174,7 +177,7 @@ Set `implemented: false` to disable a command (`dev console` will say "not confi
 | `redis` | none | Starts Redis via `brew services start redis` |
 | `claude` | none | Installs Claude desktop app via `brew install --cask claude` |
 | `claude-code` | none | Installs Claude Code CLI via `brew install --cask claude-code` |
-| `railsdb` | none | Runs `bin/rails db:prepare` |
+| `database` | `bootstrap`, `migrate` (both optional) | Bare: runs `bin/rails db:prepare`. With args: tries `migrate` first, falls back to `bootstrap` |
 | `custom` | `name`, `met?`, `meet` (all required) | Shell-based idempotent task |
 
 Tasks with version arguments accept both forms:
@@ -241,7 +244,7 @@ up:
   - bundler
   - mysql
   - redis
-  - railsdb
+  - database
   - custom:
       name: "copy .env"
       met?: "test -f .env"
@@ -306,7 +309,7 @@ up:
   - yarn
   - mysql
   - redis
-  - railsdb
+  - database
 
 server:
   run: "bin/dev"
