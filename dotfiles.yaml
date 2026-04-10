@@ -131,6 +131,8 @@ packages:
       skill: first-principles-thinking
     - source: https://github.com/github/awesome-copilot
       skill: create-agentsmd
+    - source: https://github.com/vercel-labs/skills
+      skill: find-skills
 
   # Claude Code plugins - installed via 'claude plugin install'
   # Format: plugin-name@marketplace-name
