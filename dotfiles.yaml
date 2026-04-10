@@ -129,6 +129,8 @@ packages:
   agent_skills:
     - source: https://github.com/akshat10/skills
       skill: first-principles-thinking
+    - source: https://github.com/github/awesome-copilot
+      skill: create-agentsmd
 
   # Claude Code plugins - installed via 'claude plugin install'
   # Format: plugin-name@marketplace-name
