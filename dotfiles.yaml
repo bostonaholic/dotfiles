@@ -133,6 +133,8 @@ packages:
       skill: create-agentsmd
     - source: https://github.com/vercel-labs/skills
       skill: find-skills
+    - source: https://github.com/anthropics/skills
+      skill: frontend-design
 
   # Claude Code plugins - installed via 'claude plugin install'
   # Format: plugin-name@marketplace-name
