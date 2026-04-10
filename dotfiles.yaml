@@ -135,6 +135,8 @@ packages:
       skill: find-skills
     - source: https://github.com/anthropics/skills
       skill: frontend-design
+    - source: https://github.com/anthropics/skills
+      skill: skill-creator
 
   # Claude Code plugins - installed via 'claude plugin install'
   # Format: plugin-name@marketplace-name
