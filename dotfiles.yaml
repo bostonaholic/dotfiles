@@ -113,15 +113,6 @@ packages:
       - name: specify-cli
         source: "git+https://github.com/github/spec-kit.git"
 
-  # Claude Code MCP servers - installed via 'claude mcp add'
-  # Run: ./scripts/install_claude_mcp_servers to install
-  claude_mcp:
-    servers:
-      - name: jcodemunch
-        command: uvx
-        args:
-          - jcodemunch-mcp
-
   # Agent skills - installed via 'npx skills add'
   # Format: source: GitHub URL or owner/repo, skill: skill name, agents: target agents
   # Run: ./scripts/install_agent_skills to install
