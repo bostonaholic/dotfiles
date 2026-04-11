@@ -29,12 +29,12 @@
     ],
     "deny": [
       "Read(.env*)",
-      "Bash(rm -rf:*)"
     ],
     "ask": [
       "Bash(git push*--force*)",
       "Bash(git push*main*)",
-      "Bash(git push*master*)"
+      "Bash(git push*master*)",
+      "Bash(rm -rf:*)"
     ]
   },
   "model": "opus",
