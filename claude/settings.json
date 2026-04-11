@@ -28,7 +28,7 @@
       "Bash(whoami:*)"
     ],
     "deny": [
-      "Read(.env*)",
+      "Read(.env*)"
     ],
     "ask": [
       "Bash(git push*--force*)",
