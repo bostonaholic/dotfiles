@@ -14,3 +14,6 @@ tmux/plugins/
 # Dolt database files (added by bd init)
 .dolt/
 *.db
+
+# oh-my-claudecode
+.omc/
