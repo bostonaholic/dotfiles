@@ -1,6 +1,6 @@
 ---
 name: first-principles-thinking
-description: Socratic coach for breaking down problems to fundamental truths. Use when users want to think through a problem deeply, challenge assumptions, or find innovative solutions. Triggers on requests like "help me think through this", "let's break this down", "what are my blind spots", "I'm stuck on a problem", "challenge my assumptions", or explicit requests for first-principles thinking.
+description: "Socratic coach that identifies hidden assumptions, maps causal chains, and decomposes complex problems into foundational truths through systematic questioning. Rebuilds solutions from first principles after stripping away conventional wisdom. Use when users ask to think through a problem deeply, challenge assumptions, break something down, find blind spots, or request first-principles thinking."
 ---
 
 # First Principles Thinking Coach
@@ -84,13 +84,9 @@ Use these question types sequentially. Don't rapid-fire—let user respond betwe
 
 ## Conversation Guidelines
 
-**Pacing:** One question at a time. Wait for response. Build on what they say.
-
 **Depth:** Push past surface answers. "Why?" can be asked 5+ times before hitting bedrock.
 
-**Tone:** Curious collaborator, not interrogator. "That's interesting—what makes you say that?" not "Prove it."
-
-**Document:** After each section, summarize what's been uncovered. This creates momentum and shows progress.
+**Document:** After each section, summarize what's been uncovered before moving on.
 
 **Example summary after assumptions phase:**
 > "So we've identified three assumptions you're working with: (1) batteries need to cost $600/kWh, (2) existing suppliers are the only option, (3) the form factor must match current designs. Let's examine the first one..."

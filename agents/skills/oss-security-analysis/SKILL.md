@@ -1,6 +1,6 @@
 ---
 name: oss-security-analysis
-description: This skill should be used when the user asks to "audit this repo", "is this safe to run", "security audit", "check this clone", "audit security", "check for vulnerabilities", "scan for malicious code", "analyze security risks", "detect data exfiltration", or mentions security patterns, threat detection, or codebase safety assessment.
+description: "Performs end-to-end security audits on open-source repositories by scanning for malicious code patterns, detecting data exfiltration risks, inspecting install scripts for hidden execution, analyzing dependency vulnerabilities, and generating scored risk reports with remediation recommendations. Use when the user asks to audit a repo, check if code is safe to run, scan for vulnerabilities, detect malicious code, or assess codebase security."
 ---
 
 # OSS Security Analysis Skill
@@ -92,57 +92,29 @@ patterns, consult `references/detection-patterns.md`.
 
 #### Detection Categories
 
-##### Network and Data Exfiltration
+Scan for these pattern families — context determines severity (e.g., HTTP requests in a network library are expected; in a date formatter, suspicious):
 
-Patterns indicating unauthorized data transmission:
+- **Network/exfiltration** — outbound HTTP to external URLs, WebSocket connections, hardcoded IPs/domains, encoded data transmission
+- **File system** — reads of credential files (`~/.ssh`, `~/.aws`, `~/.env`), browser data access, unexpected writes
+- **Code execution** — `eval`/`exec`/`Function` constructor, shell spawning (`subprocess`, `spawn`, `popen`), dynamic imports, deserialization of untrusted data
+- **Obfuscation** — Base64-encoded strings (especially URLs or commands), hex payloads, string concatenation hiding keywords, minified code without source maps
+- **Credentials** — hardcoded API keys/tokens/passwords, keychain/credential store access, clipboard monitoring
 
-- Outbound HTTP/HTTPS requests to external URLs
-- WebSocket connections to unknown endpoints
-- DNS lookups to suspicious domains
-- Email sending capabilities
-- File upload mechanisms
-- Encoded/encrypted data transmission
-- Hardcoded IP addresses or domains
+#### Quick Scan Commands
 
-##### File System Access
+```bash
+# Network exfiltration indicators
+rg -n 'fetch\(|axios\.|http\.get|urllib|requests\.(get|post)|WebSocket' --type-add 'src:*.{js,ts,py,rb}' -t src .
 
-Patterns indicating sensitive file access:
+# Credential file access
+rg -n '\.ssh|\.aws|\.env|\.gnupg|\.npmrc|credential' --type-add 'src:*.{js,ts,py,rb}' -t src .
 
-- Reading credential files (~/.ssh, ~/.aws, ~/.env, tokens)
-- Accessing browser data (cookies, history, saved passwords)
-- Reading system configuration files
-- Unexpected file write operations
-- Access to other applications' data directories
+# Dynamic code execution
+rg -n '\beval\b|\bexec\b|Function\(|child_process|subprocess|popen' --type-add 'src:*.{js,ts,py,rb}' -t src .
 
-##### Code Execution Risks
-
-Patterns enabling arbitrary code execution:
-
-- Dynamic code evaluation (eval, exec, Function constructor)
-- Shell command spawning (subprocess, spawn, popen)
-- Dynamic imports or require statements
-- Deserialization of untrusted data
-- Template injection vulnerabilities
-
-##### Obfuscation and Evasion
-
-Patterns hiding malicious intent:
-
-- Base64 encoded strings (especially URLs or commands)
-- Hex-encoded payloads
-- String concatenation to hide keywords
-- Minified code without source maps
-- Encrypted or packed code sections
-- Anti-debugging techniques
-
-##### Credential and Secret Handling
-
-Patterns exposing sensitive data:
-
-- Hardcoded API keys, tokens, or passwords
-- Environment variable access patterns
-- Keychain/credential store access
-- Clipboard monitoring
+# Obfuscation signals
+rg -n 'atob\(|btoa\(|base64|\\x[0-9a-f]{2}' --type-add 'src:*.{js,ts,py,rb}' -t src .
+```
 
 ### Phase 5: Report Generation
 
