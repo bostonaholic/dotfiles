@@ -1,6 +1,6 @@
 ---
 name: jq
-description: This skill should be used when the user asks to "parse JSON", "filter JSON", "transform JSON", "extract fields from JSON", "query JSON data", "format JSON output", "convert JSON to CSV", "reshape JSON", "merge JSON files", or when working with JSON data on the command line. Covers jq filters, built-in functions, and advanced patterns.
+description: "Writes, explains, and debugs jq commands for parsing, filtering, transforming, and reshaping JSON data on the command line. Covers filter construction, built-in functions, format conversions (JSON to CSV/TSV), multi-file operations, and advanced patterns. Use when the user asks to parse, filter, transform, extract, query, format, convert, reshape, or merge JSON data using jq."
 ---
 
 # jq — Command-Line JSON Processor
@@ -11,44 +11,17 @@ writing custom scripts for JSON manipulation in shell pipelines.
 
 ## Core Concepts
 
-### Filters and Pipes
-
-Every jq program is a filter. Filters connect with `|` (pipe) and produce
-zero or more outputs. The `.` filter is identity (passes input through).
+Filters connect with `|` (pipe) and produce zero or more outputs. `.` is identity.
 
 ```bash
-# Field access
-echo '{"name":"Ada"}' | jq '.name'
-
-# Nested access
+# Field access and nesting
 echo '{"user":{"id":1}}' | jq '.user.id'
 
-# Pipe filters together
-echo '{"items":[1,2,3]}' | jq '.items | add'
-```
-
-### Array Operations
-
-```bash
-# Index and slice
-echo '[10,20,30]' | jq '.[1]'        # 20
-echo '[10,20,30]' | jq '.[1:3]'      # [20,30]
-
-# Iterate all elements
-echo '[1,2,3]' | jq '.[]'            # 1 2 3 (separate outputs)
-
-# Map and select
+# Array iteration and filtering
 echo '[1,2,3,4]' | jq 'map(select(. > 2))'  # [3,4]
-```
 
-### Object Construction
-
-```bash
-# Build new objects
+# Object construction
 echo '{"first":"Ada","last":"Lovelace","age":36}' | jq '{name: .first, surname: .last}'
-
-# Shorthand (key = field name)
-echo '{"name":"Ada","age":36}' | jq '{name, age}'
 
 # Computed keys
 echo '{"key":"color","val":"blue"}' | jq '{(.key): .val}'

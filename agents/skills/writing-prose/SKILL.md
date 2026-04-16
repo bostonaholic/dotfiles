@@ -1,6 +1,6 @@
 ---
 name: writing-prose
-description: Use when writing documentation, READMEs, explanations, blog posts, or any prose meant for humans to read
+description: "Guides tone, structure, and clarity for human-readable content by applying conversational writing principles, cutting unnecessary words, choosing concrete language over abstractions, and formatting prose for readability. Use when writing documentation, READMEs, explanations, blog posts, or any prose meant for humans to read."
 ---
 
 # Writing Prose
@@ -64,15 +64,6 @@ These signal bad prose—rewrite immediately:
 - **Passive voice hiding agency** — "Mistakes were made"
 - **Unnecessary qualifications** — Unless they express genuine uncertainty
 
-## The Sound-Truth Connection
-
-Writing that sounds good is more likely to be right. Rewriting for flow
-forces better ideas—you can't consciously make ideas worse while making
-prose better.
-
-If a sentence sounds clumsy, the idea is probably muddled.
-Fix the thinking, not just the words.
-
 ## Anti-Patterns
 
 ### Formal for Formality's Sake
@@ -127,13 +118,6 @@ Qualifications aren't weaknesses—they're precision tools:
 
 Bad qualification hedges against criticism.
 Good qualification sharpens the claim.
-
-## The Goal: Saltintesta
-
-From Italian "saltimbocca" (leaps into mouth)—ideas should leap into the
-reader's head. They barely notice the words that got them there.
-
-Simple language lets readers focus on ideas, not parsing prose.
 
 ## Quick Reference
 

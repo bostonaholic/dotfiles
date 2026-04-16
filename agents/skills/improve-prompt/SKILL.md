@@ -2,7 +2,7 @@
 name: improve-prompt
 user-invokable: true
 argument-hint: "<prompt text or file path containing the prompt to improve>"
-description: This skill should be used when the user asks to "improve a prompt", "make this prompt better", "optimize this prompt", "refine this system prompt", or wants to apply concept elevation to compress and clarify LLM instructions.
+description: "Rewrites and restructures LLM prompts to reduce token count, eliminate redundancy, and improve instruction clarity using concept elevation. Compresses disparate instructions into higher-level principles for more concise, adaptable prompts. Use when the user asks to improve a prompt, make a prompt better, optimize a prompt, refine a system prompt, or apply concept elevation."
 ---
 
 # Improve Prompt Using Concept Elevation
@@ -11,7 +11,7 @@ Apply concept elevation to make prompts more concise, clear, and effective.
 
 ## Concept Elevation
 
-Concept elevation takes stock of disparate yet connected instructions in a prompt, then finds higher-level, clearer ways to express the sum of the ideas in a compressed form. This makes the LLM more adaptable to new situations instead of relying solely on specific examples or instructions.
+Replace clusters of specific instructions with the single higher-level principle they share — making prompts shorter, clearer, and more adaptable to novel situations.
 
 ## Process
 
@@ -36,3 +36,20 @@ The improved prompt should be:
 - Clearer (less ambiguity, fewer edge cases left unaddressed)
 - More adaptable (principles over rigid examples)
 - Preserving of all original intent (nothing silently dropped)
+
+## Example
+
+**Before** (verbose, repetitive):
+```
+When writing code, always add comments. Make sure every function has a
+docstring. Include type hints on all parameters. Add inline comments for
+complex logic. Document return values. Explain any non-obvious algorithms.
+```
+
+**After** (elevated):
+```
+Write self-documenting code: type-annotate parameters and returns, docstring
+every function, and comment non-obvious logic.
+```
+
+Six instructions compressed to one principle — same coverage, fewer tokens, more adaptable to edge cases not explicitly listed.
