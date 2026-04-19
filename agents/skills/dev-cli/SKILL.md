@@ -67,6 +67,7 @@ up:                              # Array of setup tasks (run by dev up)
   - env                          # Copy env files from main worktree (worktrees only)
   - mysql                        # Ensure MySQL is running
   - redis                        # Ensure Redis is running
+  - docker-compose               # Ensure docker compose services are running
   - claude                       # Ensure Claude desktop app is installed
   - claude-code                  # Ensure Claude Code CLI is installed
   - database                      # Run bin/rails db:prepare (or custom bootstrap/migrate)
@@ -112,26 +113,64 @@ commands:                        # Custom commands (dev <name>)
 
 ### Custom Commands
 
-The `commands:` key defines project-specific commands beyond the built-in set. Each entry becomes invocable as `dev <name>`.
+To add a custom command, use the **`commands:` top-level key** in `dev.yml`. This is the only place custom commands belong — do NOT add them under `up:`, `check:`, or any other key.
 
-**String shorthand:**
 ```yaml
+# CORRECT — custom commands go under commands:
 commands:
   deploy: "scripts/deploy.sh"
-  seed: "bin/rails db:seed"
+
+# WRONG — these are NOT custom commands
+up:
+  - deploy: "scripts/deploy.sh"     # up: is for setup tasks only
+check:
+  deploy: "scripts/deploy.sh"       # check: is for linters only
+
+# WRONG — custom commands are NOT their own top-level key
+deploy: "scripts/deploy.sh"         # this defines a built-in override, not a custom command
+seed: "bin/rails db:seed"           # unknown top-level keys are ignored
 ```
 
-**Hash form with subcommands:**
+Each entry under `commands:` becomes invocable as `dev <name>`.
+
+**String shorthand** — for simple one-liner commands:
+```yaml
+commands:
+  deploy: "scripts/deploy.sh"                   # dev deploy
+  seed: "bin/rails db:seed"                      # dev seed
+  lint-fix: "bundle exec rubocop -A"             # dev lint-fix
+  storybook: "yarn storybook"                    # dev storybook
+  db-dump: "pg_dump mydb > dump.sql"             # dev db-dump
+```
+
+**Hash form** — when you need env vars, a description, or subcommands:
 ```yaml
 commands:
   migrate:
     run: "bin/rails db:migrate"
+    desc: "Run database migrations"
     env:
       RAILS_ENV: development
     subcommands:
-      rollback: "bin/rails db:rollback"    # dev migrate rollback
-      status: "bin/rails db:migrate:status" # dev migrate status
+      rollback: "bin/rails db:rollback"          # dev migrate rollback
+      status: "bin/rails db:migrate:status"      # dev migrate status
+      redo: "bin/rails db:migrate:redo"          # dev migrate redo
+  deploy:
+    run: "scripts/deploy.sh production"
+    desc: "Deploy to production"
+    subcommands:
+      staging: "scripts/deploy.sh staging"       # dev deploy staging
+      canary: "scripts/deploy.sh canary"         # dev deploy canary
 ```
+
+**When to use `commands:` vs other keys:**
+
+| Want to... | Use |
+|------------|-----|
+| Add a setup/provisioning step | `up:` (custom task with met?/meet) |
+| Add a linter or static check | `check:` |
+| Add a URL to open | `open:` |
+| Add any other project command | **`commands:`** |
 
 Custom commands use the same Runnable schema as `build`/`server`/`test`/`console` — they support `run`, `env`, `build_first`, `desc`, and subcommands. They also require `dev up` to have been run first (gated on `.dev/` directory).
 
@@ -147,10 +186,10 @@ test: "bin/rails test"
 **Hash form with subcommands:**
 ```yaml
 test:
+  build_first: true                   # Run dev build first (default: false) — list first since it runs first
   run: "bun run test:unit"           # Base command (dev test)
   env:                                # Optional env vars
     NODE_ENV: test
-  build_first: false                  # Run dev build first (default: false)
   desc: "Run unit tests"             # Optional description
   subcommands:
     watch: "bun run test"            # Subcommand: dev test watch
@@ -158,7 +197,9 @@ test:
     e2e: "bun run test:e2e"          # Subcommand: dev test e2e
 ```
 
-**Known keys:** `run`, `env`, `build_first`, `desc`, `implemented`, `subcommands`.
+**Key ordering rule:** Always list `build_first` before `run` — it executes before the command, so placing it first makes the execution order obvious at a glance.
+
+**Known keys:** `build_first`, `run`, `env`, `desc`, `implemented`, `subcommands`.
 
 Set `implemented: false` to disable a command (`dev console` will say "not configured").
 
@@ -175,6 +216,7 @@ Set `implemented: false` to disable a command (`dev console` will say "not confi
 | `npm` | none | `npm install` |
 | `mysql` | none | Starts MySQL via `brew services start mysql` |
 | `redis` | none | Starts Redis via `brew services start redis` |
+| `docker-compose` | none | Runs `docker compose up -d --wait` to start all services defined in `docker-compose.yml` / `compose.yml`. Pre-checks that Docker is running and a compose file exists. No Homebrew dependency — Docker Desktop (or equivalent) must already be installed. |
 | `claude` | none | Installs Claude desktop app via `brew install --cask claude` |
 | `claude-code` | none | Installs Claude Code CLI via `brew install --cask claude-code` |
 | `database` | `bootstrap`, `migrate` (both optional) | Bare: runs `bin/rails db:prepare`. With args: tries `migrate` first, falls back to `bootstrap` |
