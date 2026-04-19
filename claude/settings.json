@@ -3,6 +3,10 @@
     "MAX_THINKING_TOKENS": "31999",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
+  "statusLine": {
+    "type": "command",
+    "command": "node ${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hud/omc-hud.mjs"
+  },
   "enabledPlugins": {
     "beads@beads-marketplace": true,
     "code-simplifier@claude-plugins-official": true,
@@ -11,7 +15,8 @@
     "typescript-lsp@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
-    "oh-my-claudecode@omc": true
+    "oh-my-claudecode@omc": true,
+    "ruby-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "omc": {
@@ -24,10 +29,6 @@
   "alwaysThinkingEnabled": true,
   "skipDangerousModePermissionPrompt": true,
   "teammateMode": "tmux",
-  "statusLine": {
-    "type": "command",
-    "command": "node ${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hud/omc-hud.mjs"
-  },
   "omcHud": {
     "preset": "full",
     "elements": {
