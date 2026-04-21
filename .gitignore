@@ -15,5 +15,8 @@ tmux/plugins/
 .dolt/
 *.db
 
+# Beads export state (machine-local sync cursor)
+.beads/export-state.json
+
 # oh-my-claudecode
 .omc/
