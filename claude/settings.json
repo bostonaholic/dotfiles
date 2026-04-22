@@ -16,13 +16,20 @@
     "frontend-design@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "oh-my-claudecode@omc": true,
-    "ruby-lsp@claude-plugins-official": true
+    "ruby-lsp@claude-plugins-official": true,
+    "team@team-dev": true
   },
   "extraKnownMarketplaces": {
     "omc": {
       "source": {
         "source": "git",
         "url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
+      }
+    },
+    "team-dev": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/matthew/code/bostonaholic/team"
       }
     }
   },
