@@ -13,6 +13,11 @@ AGENTS.md is an open format designed to provide coding agents with the context a
 
 AGENTS.md is a Markdown file that serves as a "README for agents" - a dedicated, predictable place to provide context and instructions to help AI coding agents work on your project. It complements README.md by containing detailed technical context that coding agents need but might clutter a human-focused README.
 
+## Writing Style
+
+**NEVER use emdashes (—) in the AGENTS.md file you generate.** Use commas,
+periods, colons, semicolons, or parentheses instead.
+
 ## Key Principles
 
 - **Agent-focused**: Contains detailed technical instructions for automated tools

@@ -13,6 +13,7 @@ last versioned release.
 - **ONLY USER-FACING CHANGES** — internal refactors, CI config, test-only changes, and release bookkeeping do not belong in the changelog
 - **NEVER DUPLICATE** — check the existing `[Unreleased]` section before adding entries
 - **DESCRIBE IMPACT, NOT IMPLEMENTATION** — write what changed for the user, not what the commit did
+- **NEVER USE EMDASHES (—) IN CHANGELOG ENTRIES** — use commas, periods, colons, semicolons, or parentheses instead
 
 ## Procedure
 

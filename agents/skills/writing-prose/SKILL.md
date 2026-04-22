@@ -17,7 +17,7 @@ If not, rewrite it.
 Usefulness = Correctness × Novelty × Importance × Strength
 
 - **Correct**: True, but not so vague it says nothing
-- **Novel**: Unknown to reader—surprising or unarticulated
+- **Novel**: Unknown to reader, surprising or unarticulated
 - **Important**: Actually matters to them
 - **Strong**: As bold as possible without becoming false
 
@@ -25,10 +25,10 @@ These multiply. Zero in any dimension = zero value.
 
 ## The Process
 
-1. **Draft fast** — Get ideas down without editing
-2. **Read aloud** — Catches awkward phrasing instantly
-3. **Cut ruthlessly** — Delete weak sentences, abandon weak paragraphs
-4. **Repeat** — Rewrite until no passage feels uncertain
+1. **Draft fast**: Get ideas down without editing
+2. **Read aloud**: Catches awkward phrasing instantly
+3. **Cut ruthlessly**: Delete weak sentences, abandon weak paragraphs
+4. **Repeat**: Rewrite until no passage feels uncertain
 
 ## Sentence-Level Checklist
 
@@ -38,6 +38,11 @@ For each sentence ask:
 - [ ] Can I cut any words?
 - [ ] Is this the simplest way to say it?
 - [ ] Does it sound good when read aloud?
+
+## Punctuation
+
+**NEVER use emdashes (—).** Use commas, periods, colons, semicolons, or
+parentheses instead. Rewrite any sentence that seems to need an emdash.
 
 ## Word Choice
 
@@ -55,19 +60,19 @@ For each sentence ask:
 
 ## Red Flags
 
-These signal bad prose—rewrite immediately:
+These signal bad prose. Rewrite immediately:
 
-- **Formal register shift** — "The mercurial Spaniard" instead of how
+- **Formal register shift**: "The mercurial Spaniard" instead of how
   you'd actually describe someone
-- **Hedging stacks** — "It could potentially perhaps be argued that..."
-- **Impressive-sounding emptiness** — Long sentences that say little
-- **Passive voice hiding agency** — "Mistakes were made"
-- **Unnecessary qualifications** — Unless they express genuine uncertainty
+- **Hedging stacks**: "It could potentially perhaps be argued that..."
+- **Impressive-sounding emptiness**: Long sentences that say little
+- **Passive voice hiding agency**: "Mistakes were made"
+- **Unnecessary qualifications**: Unless they express genuine uncertainty
 
 ## The Sound-Truth Connection
 
 Writing that sounds good is more likely to be right. Rewriting for flow
-forces better ideas—you can't consciously make ideas worse while making
+forces better ideas. You can't consciously make ideas worse while making
 prose better.
 
 If a sentence sounds clumsy, the idea is probably muddled.
@@ -119,7 +124,7 @@ This approach is better because [specific reason].
 
 ## Qualifications Done Right
 
-Qualifications aren't weaknesses—they're precision tools:
+Qualifications are not weaknesses; they are precision tools:
 
 - **Certainty level**: "I think" vs "I'm confident" vs "This is definitely"
 - **Scope**: "In most cases" vs "Always"
@@ -130,7 +135,7 @@ Good qualification sharpens the claim.
 
 ## The Goal: Saltintesta
 
-From Italian "saltimbocca" (leaps into mouth)—ideas should leap into the
+From Italian "saltimbocca" (leaps into mouth). Ideas should leap into the
 reader's head. They barely notice the words that got them there.
 
 Simple language lets readers focus on ideas, not parsing prose.

@@ -148,6 +148,9 @@ Define success criteria. Loop until verified.
   instead of hardcoding specific technologies like Rails or Next.js. Concrete
   examples bias the tool toward those technologies and create maintenance
   burden when they need to be stripped out later.
+- **Never use emdashes.** Do not use emdashes (`—`) in any output, file, or
+  message you produce. Use commas, periods, colons, semicolons, or
+  parentheses instead. If a sentence seems to need an emdash, rewrite it.
 
 ## Confidence Disclosure
 
