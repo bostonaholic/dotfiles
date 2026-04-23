@@ -21,7 +21,7 @@ symlinks:
   claude/commands: ~/.claude/commands
   claude/CLAUDE.md: ~/.claude/CLAUDE.md
   claude/settings.json: ~/.claude/settings.json
-  claude/statusline.clj: ~/.claude/statusline.clj
+  claude/statusline.sh: ~/.claude/statusline.sh
 
   # Obsidian
   obsidian/skills/define: ~/Documents/obsidian-vault/.claude/skills/define
