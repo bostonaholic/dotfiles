@@ -12,10 +12,6 @@ description: Use when writing, reviewing, or improving system prompts for AI too
 A system prompt is a contract between you and the model. Every line must earn
 its place. If you can't test it, cut it.
 
-**NEVER use emdashes (—) in prompts you write.** Use commas, periods, colons,
-semicolons, or parentheses instead. Rewrite any sentence that seems to need an
-emdash.
-
 ## Universal Section Order
 
 Models weight earlier content more heavily. Follow this order:

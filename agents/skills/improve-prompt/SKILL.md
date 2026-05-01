@@ -9,9 +9,6 @@ description: This skill should be used when the user asks to "improve a prompt",
 
 Apply concept elevation to make prompts more concise, clear, and effective.
 
-**NEVER use emdashes (—) in the improved prompt.** Use commas, periods,
-colons, semicolons, or parentheses instead.
-
 ## Concept Elevation
 
 Concept elevation takes stock of disparate yet connected instructions in a prompt, then finds higher-level, clearer ways to express the sum of the ideas in a compressed form. This makes the LLM more adaptable to new situations instead of relying solely on specific examples or instructions.
