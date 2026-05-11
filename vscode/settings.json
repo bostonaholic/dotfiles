@@ -14,5 +14,8 @@
     "containers.orchestratorClient": "com.microsoft.visualstudio.orchestrators.dockercompose",
     "editor.minimap.enabled": false,
     "workbench.iconTheme": "catppuccin-latte",
-    "chat.viewSessions.orientation": "stacked"
+    "chat.viewSessions.orientation": "stacked",
+    "rubyLsp.rubyVersionManager": {
+        "identifier": "rbenv"
+    }
 }
