@@ -240,6 +240,14 @@ cmd_cd() {
     fi
 
     validate_name "$name"
+
+    local main_branch
+    main_branch=$(git -C "$root" symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|^origin/||') || main_branch="main"
+    if [ "$name" = "$main_branch" ]; then
+        echo "$root"
+        return 0
+    fi
+
     local worktree_dir="$root/.worktrees/$name"
 
     if [ ! -d "$worktree_dir" ]; then
