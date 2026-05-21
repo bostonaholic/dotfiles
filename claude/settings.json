@@ -35,6 +35,7 @@
   "alwaysThinkingEnabled": true,
   "skipDangerousModePermissionPrompt": true,
   "teammateMode": "tmux",
+  "agentPushNotifEnabled": true,
   "omcHud": {
     "preset": "full",
     "elements": {
