@@ -42,5 +42,6 @@
       "agentsFormat": "multiline"
     }
   },
-  "theme": "light"
+  "theme": "light",
+  "remoteControlAtStartup": true
 }
