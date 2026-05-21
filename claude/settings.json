@@ -8,7 +8,6 @@
     "command": "node ${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hud/omc-hud.mjs"
   },
   "enabledPlugins": {
-    "beads@beads-marketplace": true,
     "code-simplifier@claude-plugins-official": true,
     "playwright@claude-plugins-official": true,
     "plugin-dev@claude-plugins-official": true,
