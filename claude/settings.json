@@ -37,7 +37,7 @@
   "teammateMode": "tmux",
   "agentPushNotifEnabled": true,
   "omcHud": {
-    "preset": "full",
+    "preset": "dense",
     "elements": {
       "agentsFormat": "multiline"
     }
