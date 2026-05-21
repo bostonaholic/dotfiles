@@ -41,5 +41,6 @@
     "elements": {
       "agentsFormat": "multiline"
     }
-  }
+  },
+  "theme": "light"
 }
