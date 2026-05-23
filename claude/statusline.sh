@@ -2,7 +2,7 @@
 # Status line for Claude Code - Bash implementation
 #
 # Example output:
-#   📁 dotfiles 🌿 (main *↑2) 🧠 [████░░░░░░ 35%] 💰 $0.1234 ⚡ Opus 4.5
+#   📁 dotfiles 🌿 (main *↑2) 🧠 [████░░░░░░ 35%] 💰 $0.1234 ✨ Opus 4.5
 #
 # Usage:
 #   echo '{"workspace":...}' | ./statusline.sh
@@ -149,7 +149,7 @@ format_model() {
   model=$(get_model_name)
   [[ -z "$model" ]] && model="unknown"
 
-  printf ' ⚡ %s' "$(colorize "$MAGENTA" "$model")"
+  printf ' ✨ %s' "$(colorize "$MAGENTA" "$model")"
 }
 
 INSPIRATIONAL_PHRASES=(

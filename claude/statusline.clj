@@ -2,7 +2,7 @@
 ;; Status line for Claude Code - Clojure/Babashka implementation
 ;;
 ;; Example output:
-;;   📁 dotfiles 🌿 (main *↑2) 🧠 [████░░░░░░ 35%] 💰 $0.1234 ⚡ Opus 4.5
+;;   📁 dotfiles 🌿 (main *↑2) 🧠 [████░░░░░░ 35%] 💰 $0.1234 ✨ Opus 4.5
 ;;
 ;; Usage:
 ;;   echo '{"workspace":...}' | ./statusline.clj
@@ -116,7 +116,7 @@
       (str " 🎨 " (colorize :cyan (str "[" style "]"))))))
 
 (defn format-model [data]
-  (str " ⚡ " (colorize :magenta (get-model-name data))))
+  (str " ✨ " (colorize :magenta (get-model-name data))))
 
 (def inspirational-phrases
   ["Build something people want today"
