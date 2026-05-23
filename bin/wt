@@ -60,17 +60,41 @@ ensure_worktrees_dir() {
     fi
 }
 
-# List worktree names from .worktrees/ (for fzf selection)
+# List worktree names by directory basename (for fzf selection),
+# excluding the main worktree at the repo root.
 list_worktree_names() {
     local root="$1"
-    git -C "$root" worktree list --porcelain 2>/dev/null | awk -v prefix="$root/.worktrees/" '
+    git -C "$root" worktree list --porcelain 2>/dev/null | awk -v root="$root" '
         /^worktree / {
             path = substr($0, 10)
-            if (index(path, prefix) == 1) {
-                print substr(path, length(prefix) + 1)
-            }
+            if (path == root) next
+            n = split(path, parts, "/")
+            print parts[n]
         }
     '
+}
+
+# Resolve a worktree directory by its basename, searching all git worktrees.
+# Falls back to the conventional $root/.worktrees/$name location if no match,
+# so worktrees created elsewhere (e.g. .claude/worktrees/) are still found.
+resolve_worktree_dir() {
+    local root="$1" name="$2"
+    local match
+    match=$(git -C "$root" worktree list --porcelain 2>/dev/null | awk -v name="$name" '
+        /^worktree / {
+            path = substr($0, 10)
+            n = split(path, parts, "/")
+            if (parts[n] == name) {
+                print path
+                exit
+            }
+        }
+    ')
+    if [ -n "$match" ]; then
+        echo "$match"
+    else
+        echo "$root/.worktrees/$name"
+    fi
 }
 
 # Prompt user to select a worktree via fzf
@@ -204,7 +228,8 @@ cmd_rm() {
         echo "Error: Cannot remove the main branch '$main_branch'." >&2
         exit 1
     fi
-    local worktree_dir="$root/.worktrees/$name"
+    local worktree_dir
+    worktree_dir=$(resolve_worktree_dir "$root" "$name")
 
     if [ ! -d "$worktree_dir" ]; then
         echo "Worktree not found: $name" >&2
@@ -248,7 +273,8 @@ cmd_cd() {
         return 0
     fi
 
-    local worktree_dir="$root/.worktrees/$name"
+    local worktree_dir
+    worktree_dir=$(resolve_worktree_dir "$root" "$name")
 
     if [ ! -d "$worktree_dir" ]; then
         echo "Worktree not found: $name" >&2

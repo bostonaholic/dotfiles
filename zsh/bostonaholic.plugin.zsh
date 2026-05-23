@@ -109,12 +109,12 @@ function _wt() {
                 rm)
                     if root=$(command wt _root 2>/dev/null); then
                         local -a worktrees flags
-                        worktrees=(${(f)"$(git -C "$root" worktree list --porcelain 2>/dev/null | awk -v prefix="$root/.worktrees/" '
+                        worktrees=(${(f)"$(git -C "$root" worktree list --porcelain 2>/dev/null | awk -v root="$root" '
                             /^worktree / {
                                 path = substr($0, 10)
-                                if (index(path, prefix) == 1) {
-                                    print substr(path, length(prefix) + 1)
-                                }
+                                if (path == root) next
+                                n = split(path, parts, "/")
+                                print parts[n]
                             }
                         ')"})
                         flags=(
@@ -129,12 +129,12 @@ function _wt() {
                 cd|path)
                     if root=$(command wt _root 2>/dev/null); then
                         local -a worktrees
-                        worktrees=(${(f)"$(git -C "$root" worktree list --porcelain 2>/dev/null | awk -v prefix="$root/.worktrees/" '
+                        worktrees=(${(f)"$(git -C "$root" worktree list --porcelain 2>/dev/null | awk -v root="$root" '
                             /^worktree / {
                                 path = substr($0, 10)
-                                if (index(path, prefix) == 1) {
-                                    print substr(path, length(prefix) + 1)
-                                }
+                                if (path == root) next
+                                n = split(path, parts, "/")
+                                print parts[n]
                             }
                         ')"})
                         _describe -t worktrees 'worktree' worktrees
