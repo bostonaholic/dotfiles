@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+################################################################################
+# test -- run the dotfiles test suite
+#
+# DESCRIPTION:
+#   Discovers and runs every executable test in tests/ (tests/test_*.sh).
+#   Each test script is self-contained and exits 0 on success, non-zero on
+#   failure. Reports a per-test summary and exits non-zero if any test fails.
+#
+#   Run automatically before `git push` via the pre-push hook
+#   (see .pre-commit-config.yaml), or on demand:
+#
+# USAGE:
+#   scripts/test
+#
+# EXIT CODE:
+#   0 - All test scripts passed (or none found)
+#   1 - One or more test scripts failed
+#
+################################################################################
+
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+TESTS_DIR="$REPO_ROOT/tests"
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+BOLD='\033[1m'
+NC='\033[0m'
+
+# Collect test scripts (sorted for stable ordering). nullglob so an empty
+# tests/ directory yields an empty list rather than a literal glob.
+shopt -s nullglob
+mapfile -t tests < <(printf '%s\n' "$TESTS_DIR"/test_*.sh | sort)
+shopt -u nullglob
+
+if [[ ${#tests[@]} -eq 0 ]]; then
+    echo -e "${YELLOW}No tests found in $TESTS_DIR${NC}"
+    exit 0
+fi
+
+passed=0
+failed=0
+failed_names=()
+
+echo -e "${BOLD}Running ${#tests[@]} test script(s) from tests/${NC}"
+echo ""
+
+for t in "${tests[@]}"; do
+    name="$(basename "$t")"
+    echo -e "${BOLD}── $name ${NC}"
+    if bash "$t"; then
+        passed=$((passed + 1))
+    else
+        failed=$((failed + 1))
+        failed_names+=("$name")
+    fi
+    echo ""
+done
+
+echo -e "${BOLD}=== Suite Summary ===${NC}"
+echo -e "  scripts ${GREEN}passed: $passed${NC}  ${RED}failed: $failed${NC}  total: ${#tests[@]}"
+
+if [[ $failed -gt 0 ]]; then
+    echo -e "  ${RED}failing:${NC} ${failed_names[*]}"
+    echo ""
+    echo -e "${RED}Test suite failed.${NC}"
+    exit 1
+fi
+
+echo ""
+echo -e "${GREEN}All test scripts passed.${NC}"

@@ -9,7 +9,7 @@
 #   After implementation, all tests should PASS.
 #
 # USAGE:
-#   ./scripts/test_zsh_audit.sh
+#   ./tests/test_zsh_audit.sh   (or run the whole suite via: scripts/test)
 #
 # EXIT CODE:
 #   0 - All tests passed

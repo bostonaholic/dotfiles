@@ -12,7 +12,7 @@
 #     - 2e44842  worktrees outside .worktrees/ are resolved by basename
 #
 # USAGE:
-#   ./scripts/test_wt.sh
+#   ./tests/test_wt.sh        (or run the whole suite via: scripts/test)
 #
 # EXIT CODE:
 #   0 - All tests passed

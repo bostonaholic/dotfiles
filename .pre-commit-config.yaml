@@ -1,5 +1,9 @@
 # Pre-commit hooks configuration
 # See https://pre-commit.com for more information
+#
+# Install both stages with:  pre-commit install
+# (beads' `bd hooks install` then wraps these; see dotfiles.yaml)
+default_install_hook_types: [pre-commit, pre-push]
 repos:
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.10.0.1
@@ -7,5 +11,17 @@ repos:
       - id: shellcheck
         name: ShellCheck
         description: Run shellcheck to validate shell scripts
+        stages: [pre-commit]
         args: ['-x', '-S', 'warning', '--source-path=scripts']
         exclude: '^zsh/|\.zsh$'
+
+  - repo: local
+    hooks:
+      - id: tests
+        name: Run test suite (tests/test_*.sh)
+        description: Run the dotfiles test suite before pushing
+        entry: scripts/test
+        language: script
+        stages: [pre-push]
+        pass_filenames: false
+        always_run: true
