@@ -70,8 +70,10 @@ brew 'tldr'    # man
 # Languages: Clojure
 # =============================================================================
 
+tap 'borkdude/brew'
 tap 'clojure/tools'
 
+brew 'borkdude/brew/clj-kondo'
 brew 'clojure/tools/clojure'
 brew 'leiningen'
 brew 'planck'
