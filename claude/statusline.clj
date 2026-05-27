@@ -53,6 +53,14 @@
 (defn get-git-info [cwd]
   (when (git-repo? cwd)
     (let [root (sh "git" "-C" cwd "rev-parse" "--show-toplevel")
+          ;; Repo name from the common git dir so worktrees show the parent
+          ;; repo's name (e.g. "dotfiles") rather than the worktree directory,
+          ;; whose basename is usually the branch name. Falls back to the
+          ;; worktree root if --git-common-dir is unavailable.
+          common-dir (sh "git" "-C" cwd "rev-parse" "--path-format=absolute" "--git-common-dir")
+          repo-name (if common-dir
+                      (last (butlast (str/split common-dir #"/")))
+                      (when root (last (str/split root #"/"))))
           branch (or (sh "git" "-C" cwd "symbolic-ref" "--short" "HEAD") "detached")
           dirty? (or (not (sh "git" "-C" cwd "diff" "--quiet"))
                      (not (sh "git" "-C" cwd "diff" "--cached" "--quiet")))
@@ -61,7 +69,7 @@
                   (count (str/split-lines ahead-output))
                   0)]
       {:root root
-       :name (when root (last (str/split root #"/")))
+       :name repo-name
        :branch branch
        :dirty? dirty?
        :ahead ahead})))

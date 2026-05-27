@@ -50,7 +50,15 @@ get_git_info() {
   git_repo "$cwd" || return 1
 
   GIT_ROOT=$(git -C "$cwd" rev-parse --show-toplevel 2>/dev/null || echo "")
-  GIT_NAME=$(basename "$GIT_ROOT")
+  # Repo name from the common git dir so worktrees show the parent repo's name
+  # (e.g. "dotfiles") rather than the worktree directory, whose basename is
+  # usually the branch name. Falls back to the worktree root if unavailable.
+  GIT_COMMON_DIR=$(git -C "$cwd" rev-parse --path-format=absolute --git-common-dir 2>/dev/null || echo "")
+  if [[ -n "$GIT_COMMON_DIR" ]]; then
+    GIT_NAME=$(basename "$(dirname "$GIT_COMMON_DIR")")
+  else
+    GIT_NAME=$(basename "$GIT_ROOT")
+  fi
   GIT_BRANCH=$(git -C "$cwd" symbolic-ref --short HEAD 2>/dev/null || echo "detached")
 
   GIT_DIRTY=""
