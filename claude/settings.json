@@ -8,6 +8,7 @@
     "command": "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/statusline.sh"
   },
   "enabledPlugins": {
+    "beads@beads-marketplace": true,
     "code-simplifier@claude-plugins-official": true,
     "playwright@claude-plugins-official": true,
     "plugin-dev@claude-plugins-official": true,
