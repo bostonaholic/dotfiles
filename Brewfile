@@ -13,7 +13,7 @@ cask_args appdir: '~/Applications', fontdir: '/Library/Fonts'
 # =============================================================================
 
 brew 'beads' # AI-supervised issue tracker
-cask 'claude-code'
+cask 'claude-code@latest'
 cask 'codex'
 brew 'gemini-cli'
 
