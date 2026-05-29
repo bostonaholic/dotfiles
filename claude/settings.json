@@ -28,8 +28,8 @@
   },
   "alwaysThinkingEnabled": true,
   "skipDangerousModePermissionPrompt": true,
-  "teammateMode": "tmux",
-  "agentPushNotifEnabled": true,
   "theme": "light",
-  "remoteControlAtStartup": true
+  "teammateMode": "tmux",
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true
 }
