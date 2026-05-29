@@ -17,5 +17,6 @@
     "chat.viewSessions.orientation": "stacked",
     "rubyLsp.rubyVersionManager": {
         "identifier": "rbenv"
-    }
+    },
+    "git.detectWorktrees": true
 }
