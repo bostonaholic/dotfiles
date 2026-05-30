@@ -1,0 +1,5 @@
+# Silence zoxide's "configuration issue" doctor banner. It fires on every
+# non-interactive shell (e.g. Claude Code's Bash tool re-sources config per
+# call), even though zoxide is already initialized correctly at the end of
+# zshrc. Lives in .zshenv so it applies to non-interactive shells too.
+export _ZO_DOCTOR=0

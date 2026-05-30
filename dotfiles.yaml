@@ -38,6 +38,7 @@ symlinks:
   agents/skills: ~/.agents/skills
 
   # Shell
+  zsh/zshenv: ~/.zshenv
   zsh/zshrc: ~/.zshrc
   zsh/zprofile: ~/.zprofile
   zsh/bostonaholic.plugin.zsh: ~/.oh-my-zsh/custom/plugins/bostonaholic/bostonaholic.plugin.zsh
