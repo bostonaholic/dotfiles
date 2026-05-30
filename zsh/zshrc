@@ -83,7 +83,6 @@ plugins=(
     fzf-tab
     starship
     tmux
-    zoxide
 
     # Version Control
     gh
@@ -172,4 +171,11 @@ export SSH_AUTH_SOCK=~/.1password/agent.sock
 # Added for dev
 if [[ -d "$HOME/code/bostonaholic/dev/bin" ]]; then
   export PATH="$HOME/code/bostonaholic/dev/bin:$PATH"
+fi
+
+# zoxide must be initialized at the very end of the shell config so nothing
+# (oh-my-zsh plugins, compinit, etc.) re-initializes chpwd_functions afterward
+# and drops zoxide's hook.
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init --cmd cd zsh)"
 fi
