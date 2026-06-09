@@ -27,6 +27,13 @@
 
 set -euo pipefail
 
+# Isolate the sandbox from any inherited git repository environment. Git hooks
+# (e.g. pre-push) export GIT_DIR/GIT_WORK_TREE/GIT_INDEX_FILE/etc; left set,
+# `git init "$REPO"` would re-init the caller's repo instead of the sandbox and
+# corrupt its config. Clear git's own list of repo-local env vars up front.
+# shellcheck disable=SC2046  # intentional word-splitting: one var name per word
+unset $(git rev-parse --local-env-vars) 2>/dev/null || true
+
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SL_SH="${STATUSLINE_SH:-$REPO_ROOT/claude/statusline.sh}"
 
