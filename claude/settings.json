@@ -26,6 +26,8 @@
       }
     }
   },
+  "fastMode": true,
+  "fastModePerSessionOptIn": false,
   "alwaysThinkingEnabled": true,
   "skipDangerousModePermissionPrompt": true,
   "theme": "light",
