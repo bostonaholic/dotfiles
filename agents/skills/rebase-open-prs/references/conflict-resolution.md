@@ -111,13 +111,18 @@ fail-loud principle, a flagged PR a human can finish beats a forced bad rebase.
 
 ## Per-PR result contract
 
-Return a compact structured result to the orchestrator:
+**The durable result file is the system of record — not the returned message.**
+Before cleanup and before returning, ALWAYS write `$RUN_DIR/<pr>.json` (valid
+JSON via `jq -n`, per step 7 of the per-PR procedure) to the shared run dir the
+orchestrator passed in — never inside the worktree, which cleanup deletes. The
+orchestrator reconciles outcomes from this file plus git remote state, so a
+dropped completion notification never loses your work.
 
-```text
-PR #<n> (<branch>)
-status: pushed | already-up-to-date | conflicts-flagged | push-rejected | skipped | error
-conflicts: <count of files resolved>
-verify: passed | skipped | failed(<why>)
-worktree: created|reused, cleaned-up: yes|no
-note: <one line — e.g. which files needed judgment, why flagged>
-```
+JSON fields: `pr`, `branch`, `base`, `status`, `conflicts` (count of files
+resolved), `verify` (`passed|skipped|failed(why)`), `worktree`
+(`created|reused`), `head` (post-rebase HEAD OID), `note` (one line — e.g.
+which files needed judgment, why flagged). `status` is one of:
+`pushed | already-up-to-date | conflicts-flagged | push-rejected | skipped | error`.
+
+Returning the same summary as a message is a convenience for the orchestrator's
+live view; if the harness drops it, reconciliation still recovers the outcome.
