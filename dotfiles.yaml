@@ -131,6 +131,8 @@ packages:
       skill: skill-creator
     - source: https://github.com/mattpocock/skills
       skill: grill-me
+    - source: https://github.com/blader/humanizer
+      skill: humanizer
 
   # Claude Code plugins - installed via 'claude plugin install'
   # Format: plugin-name@marketplace-name
