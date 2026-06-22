@@ -12,6 +12,18 @@ description: Use when writing documentation, READMEs, explanations, blog posts, 
 Every sentence must pass this test: "Would I say this to a friend?"
 If not, rewrite it.
 
+## Brevity
+
+AI-assisted writing runs longer than the writer would have produced by hand:
+paragraph after paragraph of plausible-sounding text that says little. Length
+is itself a tell, and every extra word taxes the reader.
+
+Cut to what you'd write if you had to say it out loud to a busy person. This is
+not terseness: keep every idea the reader needs, drop the words that carry
+none. If a cut loses meaning, keep the words. If it only loses padding, cut.
+
+**Test:** Is this longer than I'd have written without help? If yes, cut.
+
 ## Core Formula
 
 Usefulness = Correctness × Novelty × Importance × Strength
