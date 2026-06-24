@@ -96,10 +96,12 @@ format_project() {
 format_git_info() {
   [[ -z "${GIT_BRANCH:-}" ]] && return
 
-  local branch_info="$GIT_BRANCH ${GIT_DIRTY}"
+  local git_status="${GIT_DIRTY}"
   if [[ "$GIT_AHEAD" -gt 0 ]]; then
-    branch_info="${branch_info}↑${GIT_AHEAD}"
+    git_status="${git_status}↑${GIT_AHEAD}"
   fi
+  local branch_info="$GIT_BRANCH"
+  [[ -n "$git_status" ]] && branch_info="${branch_info} ${git_status}"
 
   printf ' 🌿 %s%s%s' \
     "$(colorize "$GRAY" "(")" \
