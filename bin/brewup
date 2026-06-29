@@ -26,9 +26,15 @@
 #   execution will stop on any error. This helps catch issues during
 #   the update process.
 #
+#   HOMEBREW_NO_ASK disables Homebrew's upgrade confirmation prompt
+#   (ask mode is the default in Homebrew 6.x) so this runs unattended.
+#
 ################################################################################
 
 set -eux -o pipefail
+
+# Run non-interactively: never prompt for upgrade confirmation.
+export HOMEBREW_NO_ASK=1
 
 (
     cd "$(dirname "$0")"
