@@ -1,0 +1,30 @@
+model = "gpt-5.6-sol"
+model_reasoning_effort = "xhigh"
+[projects."/Users/matthew/code/bostonaholic/team"]
+trust_level = "trusted"
+
+[projects."/Users/matthew"]
+trust_level = "trusted"
+
+[projects."/Users/matthew/dotfiles"]
+trust_level = "trusted"
+
+[projects."/Users/matthew/code/bostonaholic/matthewboston.com"]
+trust_level = "trusted"
+
+[projects."/Users/matthew/code/bostonaholic/dev"]
+trust_level = "trusted"
+
+[projects."/Users/matthew/Library/Application Support/com.conductor.app/bin"]
+trust_level = "trusted"
+
+[notice.model_migrations]
+"gpt-5.3-codex" = "gpt-5.4"
+"gpt-5.4" = "gpt-5.5"
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
+"gpt-5.6-sol" = 2

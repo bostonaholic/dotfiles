@@ -30,6 +30,9 @@ symlinks:
   # Gemini CLI
   gemini/settings.json: ~/.gemini/settings.json
 
+  # Codex CLI
+  codex/config.toml: ~/.codex/config.toml
+
   # Pi (coding agent)
   pi/agent/settings.json: ~/.pi/agent/settings.json
 
