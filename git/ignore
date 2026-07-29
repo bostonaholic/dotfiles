@@ -21,6 +21,7 @@ scratch*
 .envrc
 
 **/.claude/settings.local.json
+**/.claude/worktrees/
 .claude-code-mcp.log
 
 .dev/
