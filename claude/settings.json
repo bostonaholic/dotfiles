@@ -11,14 +11,7 @@
     "command": "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/statusline.sh"
   },
   "enabledPlugins": {
-    "beads@beads-marketplace": true,
-    "code-simplifier@claude-plugins-official": true,
     "playwright@claude-plugins-official": true,
-    "plugin-dev@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
-    "ruby-lsp@claude-plugins-official": true,
     "team@team-dev": true
   },
   "extraKnownMarketplaces": {
