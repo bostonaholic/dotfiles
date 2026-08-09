@@ -18,6 +18,9 @@ trust_level = "trusted"
 [projects."/Users/matthew/Library/Application Support/com.conductor.app/bin"]
 trust_level = "trusted"
 
+[projects."/Users/matthew/code/bostonaholic/fuckingshipit.com"]
+trust_level = "trusted"
+
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
 "gpt-5.4" = "gpt-5.5"
@@ -28,3 +31,6 @@ enabled = true
 [tui.model_availability_nux]
 "gpt-5.5" = 4
 "gpt-5.6-sol" = 2
+
+[apps.connector_76869538009648d5b282a4bb21c3d157.tools."github.create_pull_request"]
+approval_mode = "approve"
