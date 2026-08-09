@@ -23,6 +23,7 @@
     }
   },
   "alwaysThinkingEnabled": true,
+  "effortLevel": "xhigh",
   "fastModePerSessionOptIn": false,
   "skipDangerousModePermissionPrompt": true,
   "theme": "light",
