@@ -1,0 +1,3 @@
+interface:
+  display_name: "react-doctor"
+  short_description: "Diagnose and fix React codebase health issues"
