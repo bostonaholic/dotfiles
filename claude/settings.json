@@ -25,6 +25,7 @@
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "fastModePerSessionOptIn": false,
+  "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
   "theme": "light",
   "teammateMode": "auto",
