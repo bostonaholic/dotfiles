@@ -34,7 +34,7 @@
   "alwaysThinkingEnabled": true,
   "skipDangerousModePermissionPrompt": true,
   "theme": "light",
-  "teammateMode": "tmux",
+  "teammateMode": "auto",
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true
 }
