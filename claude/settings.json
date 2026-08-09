@@ -22,9 +22,8 @@
       }
     }
   },
-  "fastMode": true,
-  "fastModePerSessionOptIn": false,
   "alwaysThinkingEnabled": true,
+  "fastModePerSessionOptIn": false,
   "skipDangerousModePermissionPrompt": true,
   "theme": "light",
   "teammateMode": "auto",
