@@ -20,6 +20,17 @@ Receives from command:
 
 - `gh-cli` - PR discovery and merging
 
+## Terminal States
+
+Every PR ends in exactly one state. Infrastructure failures never borrow a safety state.
+
+- **MERGED** (or **WOULD MERGE** in dry-run): every check passed.
+- **SKIPPED**: we successfully determined this PR should not be merged — test failures, non-trivial breaking changes, fixes could not be applied.
+- **ERRORED**: we failed to determine anything — unparseable worker output, worker non-response, worker crash, or harness error. Never merge an ERRORED PR, and never report it as a skip.
+- **RECREATED**: Dependabot will replace the PR; the new one is picked up on the next run.
+
+**Phase result ledger:** record each phase's result for a PR the moment that phase completes (analysis, breaking-change investigation, fixes, tests, security). A later phase erroring does not erase earlier results. When a phase errors, report which phase failed and what the completed phases already established. Established evidence never promotes a PR to merge on its own — a PR whose test phase ERRORED stays unmerged.
+
 ## Orchestration Workflow
 
 ### Phase 1: Discover Dependabot PRs
@@ -387,6 +398,7 @@ If not security fix, skip this step.
 - pr-analyzer: safe = true
 - test-runner: passed = true
 - dependabot-security-checker: verified (if applicable)
+- No phase ERRORED — an errored phase blocks the merge even when earlier phases established safety
 
 ### Decision: MERGE
 
@@ -495,6 +507,14 @@ After processing all PRs (including rebased ones), generate summary:
   - PR #129: webpack 5.x → 6.0.0 (MAJOR, trivial fixes applied)
     Fixed: updated config key in webpack.config.js
 
+❌ Errored: 1 PR (nothing determined - NOT a safety decision)
+  - PR #132: openai 6.45.0 → 7.1.0 (MAJOR)
+    Failed phase: test-runner (unparseable output after 1 retry)
+    Established before failure: pr-analyzer flagged MAJOR;
+      breaking-change-investigator verified codebase not affected
+    Raw output (first 200 chars): Sure! I'll run the test suite for PR #132 now. Let me
+      start by checking out the branch...
+
 ⏭️  Skipped: 2 PRs
   - PR #126: rspec 3.11.0 → 3.12.0 (MINOR - test failures)
     Diagnostics: 3 tests failed due to deprecated API usage
@@ -511,6 +531,7 @@ After processing all PRs (including rebased ones), generate summary:
 
 Total Time: 12m 18s
 Next Actions:
+  - Re-run errored PRs (no determination was reached): /safely-merge-dependabots 132
   - Review skipped PRs manually: gh pr view 126, gh pr view 130
   - Retry timed-out rebases: /safely-merge-dependabots 128
   - Re-run to pick up recreated PRs: /safely-merge-dependabots
@@ -547,14 +568,35 @@ No PRs were actually merged (dry-run mode).
 To merge, run: /safely-merge-dependabots
 ```
 
+The **Errored** section appears in both reports whenever any PR ERRORED.
+
+#### Pipeline failure invariant
+
+If zero PRs were merged (or, in dry-run mode, marked WOULD MERGE) **and** one or more PRs
+ERRORED, the run failed. Do not present it as a tidy list of skips. Lead the summary with the
+failure banner, then the normal sections:
+
+```text
+═══════════════════════════════════════════════════════════
+        PIPELINE FAILURE - 0 merged, 9 errored
+═══════════════════════════════════════════════════════════
+
+Nothing was determined for 9 of 9 PRs and nothing was merged.
+Failed phase: test-runner (unparseable output on every PR, after retry).
+This is an orchestrator failure, not a verdict on the PRs. Diagnostics below.
+```
+
+Never report a run that merged nothing and errored on something as a success, and never end
+such a run silently — the summary is required output, not an option.
+
 ## Error Handling
 
-**Worker agent fails to respond:**
+**Worker agent fails to respond (or crashes):**
 
 - Log error
-- Record PR as "needs manual review"
+- Record PR as ERRORED, noting the phase that failed
 - Continue to next PR
-- Include in skip report
+- Include in the **Errored** section — never in the skip report
 
 **GitHub API errors:**
 
@@ -564,15 +606,27 @@ To merge, run: /safely-merge-dependabots
 
 **Worker returns invalid JSON:**
 
-- Log parsing error
-- Record PR as "needs manual review"
-- Continue to next PR
+- Log parsing error, keeping the first 200 characters of the raw output as the diagnostic
+- Re-dispatch that same worker **once**, appending to the prompt: "Return ONLY valid JSON
+  matching the schema above. No prose, no explanation, no markdown fences."
+- If the retry parses, continue the pipeline normally
+- If the retry also fails to parse, record PR as ERRORED for that phase and continue to next PR
+- One retry only — no backoff, no third attempt
+- Report:
+
+```text
+  ├─ Tests: worker returned unparseable output, retrying once...
+  └─ Decision: ERRORED - test-runner returned unparseable output (retried once)
+      Established before failure: {results of completed phases}
+      Raw output (first 200 chars): {raw}
+```
 
 **Breaking change investigation fails:**
 
 - Log error
-- Fall back to skip (same as before these improvements)
-- Report: "Could not determine breaking change impact, skipping for safety"
+- Do not merge (same safety outcome as before these improvements)
+- Record PR as ERRORED, failed phase: breaking-change-investigator
+- Report: "Could not determine breaking change impact, not merged"
 
 **Fix application fails (Step 2.2b):**
 
@@ -676,6 +730,7 @@ Phase 4: Final Summary
   Merged with fixes: 1 PR (#125)
   Recreated: 1 PR (#131 - re-run to process new PR)
   Skipped: 0 PRs
+  Errored: 0 PRs
   Total time: 7m 42s
 ```
 
