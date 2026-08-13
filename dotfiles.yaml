@@ -5,6 +5,7 @@ directories:
   - ~/.agents
   - ~/.claude
   - ~/.cursor
+  - ~/.gemini/antigravity-cli
   - ~/.lein
   - ~/.gnupg
   - ~/.pi/agent
@@ -27,8 +28,8 @@ symlinks:
   obsidian/skills/define: ~/Documents/obsidian-vault/.claude/skills/define
   obsidian/skills/summarize: ~/Documents/obsidian-vault/.claude/skills/summarize
 
-  # Gemini CLI
-  gemini/settings.json: ~/.gemini/settings.json
+  # Antigravity CLI (config lives under ~/.gemini/, replaces Gemini CLI)
+  antigravity/settings.json: ~/.gemini/antigravity-cli/settings.json
 
   # Codex CLI
   codex/config.toml: ~/.codex/config.toml
