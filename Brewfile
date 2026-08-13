@@ -12,10 +12,10 @@ cask_args appdir: '~/Applications', fontdir: '/Library/Fonts'
 # AI Coding Assistants
 # =============================================================================
 
-brew 'beads' # AI-supervised issue tracker
+cask 'antigravity-cli' # Google Antigravity, replaces gemini-cli
+brew 'beads'           # AI-supervised issue tracker
 cask 'claude-code@latest'
 cask 'codex'
-brew 'gemini-cli'
 
 # =============================================================================
 # Editors
