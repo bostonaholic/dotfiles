@@ -2,7 +2,7 @@
 # Status line for Claude Code - Bash implementation
 #
 # Example output:
-#   📁 dotfiles 🌿 (main *↑2) 🧠 [████░░░░░░ 35%] 💰 $0.1234 ✨ Opus 4.5
+#   📁 dotfiles 🌿 (main *↑2) 🧠 [████░░░░░░ 35%] 💰 $0.1234 ✨ Opus 4.5 🆔 4bc3e347-1fe9-4921-a638-4a5a53a2cbee
 #
 # Usage:
 #   echo '{"workspace":...}' | ./statusline.sh
@@ -32,6 +32,7 @@ jq_num() { echo "$INPUT" | jq "$1 // 0"; }
 
 # Data extraction
 get_model_name() { jq_raw '.model.display_name'; }
+get_session_id() { jq_raw '.session_id'; }
 get_current_dir() { jq_raw '.workspace.current_dir'; }
 get_cost() { jq_raw '.context_window.total_cost_usd'; }
 get_context_window_size() { jq_num '.context_window.context_window_size'; }
@@ -162,6 +163,14 @@ format_model() {
   printf ' ✨ %s' "$(colorize "$MAGENTA" "$model")"
 }
 
+format_session() {
+  local session_id
+  session_id=$(get_session_id)
+  [[ -z "$session_id" ]] && return
+
+  printf ' 🆔 %s' "$(colorize "$GRAY" "$session_id")"
+}
+
 INSPIRATIONAL_PHRASES=(
   "Build something people want today"
   "Simplicity is the ultimate sophistication"
@@ -201,13 +210,14 @@ main() {
     get_git_info "$cwd" 2>/dev/null || true
   fi
 
-  printf '%s%s%s%s%s%s • %s\n' \
+  printf '%s%s%s%s%s%s%s • %s\n' \
     "$(format_project)" \
     "$(format_git_info)" \
     "$(format_context)" \
     "$(format_cost)" \
     "$(format_style)" \
     "$(format_model)" \
+    "$(format_session)" \
     "$(format_inspiration)"
 }
 
