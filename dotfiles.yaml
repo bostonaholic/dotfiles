@@ -41,6 +41,13 @@ symlinks:
   agents/skills: ~/.claude/skills
   agents/skills: ~/.agents/skills
 
+  # Global agent instructions (shared across coding agents)
+  agents/AGENTS.md: ~/.agents/AGENTS.md
+  agents/AGENTS.md: ~/.codex/AGENTS.md          # Codex CLI
+  agents/AGENTS.md: ~/.gemini/AGENTS.md         # Antigravity (cross-tool global rules)
+  agents/AGENTS.md: ~/.config/opencode/AGENTS.md # OpenCode
+  agents/AGENTS.md: ~/.pi/agent/AGENTS.md       # Pi
+
   # Shell
   zsh/zshenv: ~/.zshenv
   zsh/zshrc: ~/.zshrc
