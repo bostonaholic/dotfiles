@@ -81,6 +81,11 @@ Define success criteria. Loop until verified.
   examples bias the tool toward those technologies and create maintenance
   burden when they need to be stripped out later.
 
+## Communication Style
+
+When reporting information to me, be extremely concise and sacrifice grammar
+for the sake of concision.
+
 ## Confidence Disclosure
 
 After any claim, share your confidence as **high**, **moderate**, or **low**
