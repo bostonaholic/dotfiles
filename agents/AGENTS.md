@@ -127,6 +127,43 @@ results.
 
 ## Git Workflow
 
+### Signed Commits (No Exceptions)
+
+**Never create an unsigned commit.** Every commit must carry a valid
+signature. There is no "just this once" — this rule has no exceptions.
+
+- Before committing, confirm signing is enabled: `git config --get
+  commit.gpgsign` must return `true`. If it does not, fix the config instead
+  of committing unsigned.
+- Never pass `--no-gpg-sign`, and never set `commit.gpgsign=false` (globally,
+  per-repo, or inline with `-c`) to force a commit through.
+- After committing, verify: `git log -1 --show-signature` must report a good
+  signature. A missing or bad signature means the commit failed — amend and
+  re-sign it (`git commit --amend --no-edit -S`) before doing anything else.
+- Annotated tags follow the same rule (`tag.gpgsign = true`).
+- **If a commit cannot be signed, STOP.** Do not commit unsigned, do not work
+  around it, do not defer it to later. Report to the user:
+  1. The exact command that failed, with its verbatim error output.
+  2. The diagnosed cause — what specifically is broken.
+  3. Recommended resolution steps, most likely fix first.
+
+  Then wait for the user to decide how to proceed.
+
+Signing setup on this machine: SSH-format signatures (`gpg.format = ssh`)
+produced by the 1Password signing agent (`gpg.ssh.program` → `op-ssh-sign`),
+key in `user.signingkey`, verified against `~/.config/git/allowed_signers`.
+
+Diagnosing signing failures — match the error, then recommend the fix:
+
+| Symptom | Likely cause | Recommended resolution |
+| ------- | ------------ | ---------------------- |
+| `error: cannot run .../op-ssh-sign: No such file or directory` | 1Password missing, or its signing binary moved | Install/reinstall 1Password, or point `gpg.ssh.program` at the current `op-ssh-sign` path |
+| Signing prompt hangs, times out, or is denied | 1Password locked, or the signing request was not approved | Unlock 1Password, approve the signing prompt, retry the commit |
+| `error: Load key ...: invalid format` / `no signing key available` | `user.signingkey` unset, or does not match `gpg.format` | Set `user.signingkey` to the SSH public key (or key path) matching the configured format |
+| `gpg failed to sign the data` under `gpg.format = openpgp` | `gpg-agent` not running, no TTY, or expired/revoked key | Start `gpg-agent`, `export GPG_TTY=$(tty)`, or renew the expired key |
+| Commit is signed locally but GitHub shows "Unverified" | Public key not registered on GitHub as a *signing* key | Add the key under GitHub → SSH and GPG keys as a **Signing** key (separate from Authentication) |
+| Commits unsigned inside a worktree, container, or CI | Signing config or agent unavailable in that environment | Report the gap and ask the user — never fall back to unsigned commits |
+
 - **Never create merge commits.** Always keep git history linear. When
   integrating branches (including worktree branches), use `git rebase` or
   `git cherry-pick` to replay commits onto the target, then fast-forward.
