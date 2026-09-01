@@ -103,8 +103,10 @@ to your confidence level — be assertive when confident, hedged when uncertain.
 - **Be efficient.** Batch operations where possible. Don't read files one by one
   when you can search or glob. Avoid excessive methodical approaches that slow
   down simple tasks.
-- **Shell alias awareness:** `rm` is aliased to `rm -i`. Use `\rm` or
-  `command rm` to avoid interactive prompts that block automation.
+- **Shell alias awareness:** aliases that shadow standard commands (`ls` to
+  `eza`, `rm` to `rm -i`) are gated on `ZSH_INTERACTIVE_ALIASES` in
+  `zsh/zshenv`, so agent shells get the real commands. If one still leaks
+  through, put it behind that guard rather than working around it.
 - **Check off PR test plans in-place.** When validating a PR's test plan,
   update the PR body (`gh pr edit`) to check off each item as it passes.
   Don't just report results in chat — the PR itself is the source of truth.

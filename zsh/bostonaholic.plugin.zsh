@@ -11,9 +11,11 @@ export LESS="--quit-if-one-screen --no-init $LESS"
 alias ..="cd .."
 
 # Claude with fallback: tries claude-swarm first, falls back to normal claude if it fails
-alias claude="caffeinate -di claude --dangerously-skip-permissions"
-alias cc="claude"
-alias cw="claude --worktree"
+if (( ZSH_INTERACTIVE_ALIASES )); then
+    alias claude="caffeinate -di claude --dangerously-skip-permissions"
+    alias cc="claude"
+    alias cw="claude --worktree"
+fi
 
 alias π="pi"
 
@@ -24,7 +26,9 @@ alias rand="date | md5"
 
 alias camera_restart="sudo killall VDCAssistant"
 
-alias ip="curl https://icanhazip.com"
+if (( ZSH_INTERACTIVE_ALIASES )); then
+    alias ip="curl https://icanhazip.com"
+fi
 
 alias iso8601_date="date +%Y-%m-%dT%H:%M:%S%z"
 
@@ -32,16 +36,19 @@ alias upcase="tr '[:lower:]' '[:upper:]'"
 alias downcase="tr '[:upper:]' '[:lower:]'"
 
 # Modern CLI tools
-alias cat="bat --style=plain --paging=never"
-alias df="duf --sort size"
-alias du="dua"
-alias find="fd"
-alias grep="rg"
 alias lg="lazygit"
-alias ls="eza --all --group-directories-first --icons --no-quotes --tree --level 1"
-alias man="tldr"
-alias ping="gping"
-alias top="btop"
+
+if (( ZSH_INTERACTIVE_ALIASES )); then
+    alias cat="bat --style=plain --paging=never"
+    alias df="duf --sort size"
+    alias du="dua"
+    alias find="fd"
+    alias grep="rg"
+    alias ls="eza --all --group-directories-first --icons --no-quotes --tree --level 1"
+    alias man="tldr"
+    alias ping="gping"
+    alias top="btop"
+fi
 
 # Git
 alias gti=git

@@ -77,7 +77,6 @@ plugins=(
     bostonaholic
 
     # Shell & Terminal
-    common-aliases
     direnv
     fzf
     fzf-tab
@@ -126,6 +125,13 @@ plugins=(
     asdf
     brew
 )
+
+# rm -i, grep --color, and global aliases (G, H, T, L, ...). Appended rather
+# than listed above so it still overrides the bostonaholic plugin.
+if (( ZSH_INTERACTIVE_ALIASES )); then
+    plugins+=(common-aliases)
+fi
+
 export plugins
 
 # shellcheck disable=SC1091
@@ -176,6 +182,7 @@ fi
 # zoxide must be initialized at the very end of the shell config so nothing
 # (oh-my-zsh plugins, compinit, etc.) re-initializes chpwd_functions afterward
 # and drops zoxide's hook.
-if (( $+commands[zoxide] )); then
+# zoxide's `cd` jumps to a frecent directory rather than failing on a bad path.
+if (( ZSH_INTERACTIVE_ALIASES )) && (( $+commands[zoxide] )); then
   eval "$(zoxide init --cmd cd zsh)"
 fi
