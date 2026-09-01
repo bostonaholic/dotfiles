@@ -11,9 +11,13 @@ export LESS="--quit-if-one-screen --no-init $LESS"
 alias ..="cd .."
 
 # Claude with fallback: tries claude-swarm first, falls back to normal claude if it fails
-alias claude="caffeinate -di claude --dangerously-skip-permissions"
-alias cc="claude"
-alias cw="claude --worktree"
+# Human-only: `cc` shadows the C compiler, and nothing should silently inherit
+# --dangerously-skip-permissions from a wrapper it never asked for.
+if (( ZSH_HUMAN_SHELL )); then
+    alias claude="caffeinate -di claude --dangerously-skip-permissions"
+    alias cc="claude"
+    alias cw="claude --worktree"
+fi
 
 alias π="pi"
 
@@ -24,7 +28,10 @@ alias rand="date | md5"
 
 alias camera_restart="sudo killall VDCAssistant"
 
-alias ip="curl https://icanhazip.com"
+# Human-only: shadows the `ip` network tool.
+if (( ZSH_HUMAN_SHELL )); then
+    alias ip="curl https://icanhazip.com"
+fi
 
 alias iso8601_date="date +%Y-%m-%dT%H:%M:%S%z"
 
@@ -32,16 +39,22 @@ alias upcase="tr '[:lower:]' '[:upper:]'"
 alias downcase="tr '[:upper:]' '[:lower:]'"
 
 # Modern CLI tools
-alias cat="bat --style=plain --paging=never"
-alias df="duf --sort size"
-alias du="dua"
-alias find="fd"
-alias grep="rg"
 alias lg="lazygit"
-alias ls="eza --all --group-directories-first --icons --no-quotes --tree --level 1"
-alias man="tldr"
-alias ping="gping"
-alias top="btop"
+
+# Each of these replaces a standard command with a tool that takes different
+# flags and prints a different format, so install them only for a human at a
+# prompt. See ZSH_HUMAN_SHELL in .zshenv.
+if (( ZSH_HUMAN_SHELL )); then
+    alias cat="bat --style=plain --paging=never"
+    alias df="duf --sort size"
+    alias du="dua"
+    alias find="fd"
+    alias grep="rg"
+    alias ls="eza --all --group-directories-first --icons --no-quotes --tree --level 1"
+    alias man="tldr"
+    alias ping="gping"
+    alias top="btop"
+fi
 
 # Git
 alias gti=git

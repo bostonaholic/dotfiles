@@ -29,9 +29,10 @@ This project's zsh files live in `zsh/` and are symlinked to `$HOME` via
 | `zsh/zprofile` | `~/.zprofile` | Login shells (once, at login) |
 | `zsh/zshrc` | `~/.zshrc` | Interactive shells (every new terminal) |
 | `zsh/bostonaholic.plugin.zsh` | `~/.oh-my-zsh/custom/plugins/bostonaholic/bostonaholic.plugin.zsh` | Interactive shells (loaded by oh-my-zsh via `plugins=()` in zshrc) |
+| `zsh/zshenv` | `~/.zshenv` | Every shell, including scripts and agent shells |
 
-Note: This project does not currently have `.zshenv`, `.zlogin`, or `.zlogout`
-files. Create them only if a change genuinely requires that execution context.
+Note: This project does not currently have `.zlogin` or `.zlogout` files.
+Create them only if a change genuinely requires that execution context.
 
 ## Source Order
 
@@ -77,12 +78,15 @@ Put here:
 
 Current contents: aliases (cat/bat, ls/eza, grep/rg, etc.), wt() git worktree wrapper + completions, utility functions.
 
-### `.zshenv` (create only if needed)
+### `zsh/zshenv` (every shell)
 
-Would be appropriate for:
+Put here:
 - Variables that **must** be available in non-interactive, non-login script contexts
 - `$ZDOTDIR` to relocate zsh config files
 - Rarely needed -- most exported variables belong in `.zprofile`
+
+Current contents: `_ZO_DOCTOR` (silences zoxide's banner) and
+`ZSH_HUMAN_SHELL` (the human-terminal guard described below).
 
 ### `.zlogin` / `.zlogout` (create only if needed)
 
@@ -116,3 +120,21 @@ Is it an exported variable or PATH entry?
 3. **Don't duplicate oh-my-zsh built-ins.** Check if a plugin already provides the alias or function before adding one.
 4. **Keep `zshrc` focused on framework/plugin config.** User aliases and functions go in the plugin file, not zshrc.
 5. **PATH in zprofile, not zshrc.** PATH entries set in zshrc won't be available to programs started outside an interactive shell.
+6. **Guard anything that shadows a standard command.** Coding agents shell out through this config expecting POSIX behavior, so an alias like `ls=eza` or `rm='rm -i'` breaks them. Wrap it in `if (( ZSH_HUMAN_SHELL )); then ... fi` (the flag is set in `zsh/zshenv`) and cover it in `tests/test_shell_guard.sh`.
+
+## Human-Terminal Guard
+
+`zsh/zshenv` sets `ZSH_HUMAN_SHELL` to 1 only when a person is driving the
+shell: an interactive session with no coding-agent marker (`CLAUDECODE`,
+`AI_AGENT`, `CURSOR_AGENT`, ...) in the environment. Interactivity alone is not
+enough -- agents capture this config from an interactive shell.
+
+Already behind the guard:
+
+| Where | What |
+|-------|------|
+| `zsh/bostonaholic.plugin.zsh` | `cat`, `df`, `du`, `find`, `grep`, `ls`, `man`, `ping`, `top`, `ip`, `claude`/`cc`/`cw` |
+| `zsh/zshrc` | the `common-aliases` oh-my-zsh plugin, zoxide's `cd` |
+
+Aliases that invent a new name (`lg`, `gti`, `rgrep`) shadow nothing and need
+no guard.

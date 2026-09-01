@@ -77,7 +77,6 @@ plugins=(
     bostonaholic
 
     # Shell & Terminal
-    common-aliases
     direnv
     fzf
     fzf-tab
@@ -126,6 +125,16 @@ plugins=(
     asdf
     brew
 )
+
+# common-aliases shadows standard commands (rm -i, cp -i, mv -i, grep --color)
+# and defines global aliases (G, H, T, L, NUL, ...) that rewrite any command
+# line containing those bare words. Both are fine with a human at the prompt
+# and hostile to anything scripting through this shell, so load it last (it
+# intentionally overrides the bostonaholic plugin) and only for humans.
+if (( ZSH_HUMAN_SHELL )); then
+    plugins+=(common-aliases)
+fi
+
 export plugins
 
 # shellcheck disable=SC1091
@@ -176,6 +185,9 @@ fi
 # zoxide must be initialized at the very end of the shell config so nothing
 # (oh-my-zsh plugins, compinit, etc.) re-initializes chpwd_functions afterward
 # and drops zoxide's hook.
-if (( $+commands[zoxide] )); then
+# Human-only: zoxide's `cd` jumps to a frecent directory when its argument is
+# not a real path, so a script that mistypes a directory lands somewhere else
+# instead of failing.
+if (( ZSH_HUMAN_SHELL )) && (( $+commands[zoxide] )); then
   eval "$(zoxide init --cmd cd zsh)"
 fi
