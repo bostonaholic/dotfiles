@@ -19,7 +19,6 @@ symlinks:
 
   # Claude
   claude/agents: ~/.claude/agents
-  claude/commands: ~/.claude/commands
   claude/CLAUDE.md: ~/.claude/CLAUDE.md
   claude/settings.json: ~/.claude/settings.json
   claude/statusline.sh: ~/.claude/statusline.sh
