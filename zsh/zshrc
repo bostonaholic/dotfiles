@@ -126,12 +126,9 @@ plugins=(
     brew
 )
 
-# common-aliases shadows standard commands (rm -i, cp -i, mv -i, grep --color)
-# and defines global aliases (G, H, T, L, NUL, ...) that rewrite any command
-# line containing those bare words. Both are fine with a human at the prompt
-# and hostile to anything scripting through this shell, so load it last (it
-# intentionally overrides the bostonaholic plugin) and only for humans.
-if (( ZSH_HUMAN_SHELL )); then
+# rm -i, grep --color, and global aliases (G, H, T, L, ...). Appended rather
+# than listed above so it still overrides the bostonaholic plugin.
+if (( ZSH_INTERACTIVE_ALIASES )); then
     plugins+=(common-aliases)
 fi
 
@@ -185,9 +182,7 @@ fi
 # zoxide must be initialized at the very end of the shell config so nothing
 # (oh-my-zsh plugins, compinit, etc.) re-initializes chpwd_functions afterward
 # and drops zoxide's hook.
-# Human-only: zoxide's `cd` jumps to a frecent directory when its argument is
-# not a real path, so a script that mistypes a directory lands somewhere else
-# instead of failing.
-if (( ZSH_HUMAN_SHELL )) && (( $+commands[zoxide] )); then
+# zoxide's `cd` jumps to a frecent directory rather than failing on a bad path.
+if (( ZSH_INTERACTIVE_ALIASES )) && (( $+commands[zoxide] )); then
   eval "$(zoxide init --cmd cd zsh)"
 fi

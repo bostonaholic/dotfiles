@@ -1,15 +1,15 @@
 #!/bin/bash
 ################################################################################
-# Human-Shell Guard -- Acceptance Tests
+# Interactive Alias Guard -- Acceptance Tests
 #
 # DESCRIPTION:
 #   Verifies that aliases which shadow standard commands (ls, cat, grep, cc,
-#   ...) are installed only when ZSH_HUMAN_SHELL is 1, i.e. when a person is
-#   driving the shell. Coding agents shell out through this config and expect
-#   POSIX behavior, so those aliases must be absent for them.
+#   ...) are installed only when ZSH_INTERACTIVE_ALIASES is 1. Each case
+#   sources zsh/zshenv and zsh/bostonaholic.plugin.zsh in an isolated ZDOTDIR
+#   and reports the resulting flag and alias table.
 #
-#   Each case sources zsh/zshenv and zsh/bostonaholic.plugin.zsh in an isolated
-#   ZDOTDIR and reports the resulting flag and aliases.
+#   The interactive cases need a pty, which script(1) can only allocate when
+#   this script's own stdin is a terminal. They skip otherwise.
 #
 # USAGE:
 #   ./tests/test_shell_guard.sh   (or run the whole suite via: scripts/test)
@@ -49,49 +49,49 @@ skip() {
     skip_count=$((skip_count + 1))
 }
 
-# Shadowing aliases the guard is responsible for. `wt`/`compdef` noise from the
-# plugin is irrelevant here, so only the alias table is inspected.
+AGENT_MARKERS=(CLAUDECODE CLAUDE_CODE_ENTRYPOINT AI_AGENT CURSOR_AGENT CODEX_SANDBOX)
 SHADOWED=(ls cat grep find man top ping df du cc ip)
 
 SCRATCH="$(mktemp -d)"
 trap 'rm -rf "$SCRATCH"' EXIT
 
-# The probe sources the two files under test and prints "flag:<0|1>" followed
-# by one "alias:<name>" line per shadowing alias that ended up defined.
+# Prints "flag:<0|1>" then one "alias:<name>" line per shadowing alias defined.
 PROBE="$SCRATCH/probe.zsh"
 {
     printf 'source %q/zsh/zshenv\n' "$REPO_ROOT"
     printf 'source %q/zsh/bostonaholic.plugin.zsh 2>/dev/null\n' "$REPO_ROOT"
-    printf 'print "flag:$ZSH_HUMAN_SHELL"\n'
+    printf 'print "flag:$ZSH_INTERACTIVE_ALIASES"\n'
     printf 'for a in %s; do alias $a >/dev/null 2>&1 && print "alias:$a"; done\n' "${SHADOWED[*]}"
     printf 'true\n'
 } > "$PROBE"
 
-# Run the probe in a non-interactive zsh.
 run_plain() {
     env "$@" ZDOTDIR="$SCRATCH" /bin/zsh -c "source $PROBE" 2>/dev/null
 }
 
-# Run the probe in an interactive zsh attached to a pty. zsh refuses to enable
-# interactive mode without one, so script(1) supplies it; it also echoes the
-# terminal EOF character, which is stripped along with the CRs it inserts.
+# zsh refuses to enable interactive mode without a pty, so script(1) supplies
+# one. It also echoes the terminal EOF character into its output.
 run_interactive() {
     env "$@" ZDOTDIR="$SCRATCH" \
         script -q /dev/null /bin/zsh -i -c "source $PROBE" 2>/dev/null |
         tr -d '\r\004'
 }
 
-# script(1) prefixes its first line of output with the echoed EOF character
-# rendered as "^D", so neither field is anchored to the start of the line.
-flag_of() { sed -n 's/.*flag://p' <<<"$1" | head -1; }
+has_pty() { [[ -t 0 ]]; }
+
+# Neither field is anchored, to tolerate script(1)'s echoed EOF character.
+flag_of() { awk -F'flag:' 'NF > 1 { print $2; exit }' <<<"$1"; }
 aliases_of() { sed -n 's/.*alias://p' <<<"$1" | sort | tr '\n' ' '; }
 
-echo "=== Human-Shell Guard -- Acceptance Tests ==="
+cleared() { printf -- '-u %s ' "${AGENT_MARKERS[@]}"; }
+all_shadowed() { printf '%s\n' "${SHADOWED[@]}" | sort | tr '\n' ' '; }
+
+echo "=== Interactive Alias Guard -- Acceptance Tests ==="
 echo "    Repo: $REPO_ROOT"
 echo ""
 
 # ---------------------------------------------------------------------------
-# T1: A non-interactive shell is not a human shell and gets no shadowing alias
+# T1: A non-interactive shell gets no shadowing alias
 # ---------------------------------------------------------------------------
 echo "T1: non-interactive shell has no shadowing aliases"
 out="$(run_plain CLAUDECODE=1)"
@@ -102,48 +102,59 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# T2: An interactive shell with an agent marker is still not a human shell.
-#     This is the case that matters: agents capture this config from an
-#     interactive shell, so interactivity alone cannot be the test.
+# T2: Clearing every marker is not enough on its own -- interactivity is
+#     required too, so scripts and cron never pick these up
 # ---------------------------------------------------------------------------
-echo "T2: interactive shell with CLAUDECODE set has no shadowing aliases"
-if [[ "$(uname -s)" != "Darwin" ]]; then
-    skip "T2" "needs BSD script(1) for a pty"
+echo "T2: non-interactive shell with no agent marker still has none"
+# shellcheck disable=SC2046  # word splitting of the -u flag list is intended
+out="$(run_plain $(cleared))"
+if [[ "$(flag_of "$out")" == "0" && -z "$(aliases_of "$out")" ]]; then
+    pass "T2"
+else
+    fail "T2" "flag=$(flag_of "$out") aliases=$(aliases_of "$out")"
+fi
+
+# ---------------------------------------------------------------------------
+# T3: The case that matters -- agents capture this config from an interactive
+#     shell, so interactivity alone cannot be the test
+# ---------------------------------------------------------------------------
+echo "T3: interactive shell with an agent marker has no shadowing aliases"
+if ! has_pty; then
+    skip "T3" "no tty on stdin"
 else
     out="$(run_interactive CLAUDECODE=1)"
     if [[ "$(flag_of "$out")" == "0" && -z "$(aliases_of "$out")" ]]; then
-        pass "T2"
-    else
-        fail "T2" "flag=$(flag_of "$out") aliases=$(aliases_of "$out")"
-    fi
-fi
-
-# ---------------------------------------------------------------------------
-# T3: An interactive shell with no agent marker is a human shell and gets
-#     every shadowing alias
-# ---------------------------------------------------------------------------
-echo "T3: interactive shell with no agent marker gets the shadowing aliases"
-if [[ "$(uname -s)" != "Darwin" ]]; then
-    skip "T3" "needs BSD script(1) for a pty"
-else
-    out="$(run_interactive -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u AI_AGENT \
-                           -u CURSOR_AGENT -u CODEX_SANDBOX)"
-    expected="$(printf '%s\n' "${SHADOWED[@]}" | sort | tr '\n' ' ')"
-    if [[ "$(flag_of "$out")" == "1" && "$(aliases_of "$out")" == "$expected" ]]; then
         pass "T3"
     else
-        fail "T3" "flag=$(flag_of "$out") aliases=$(aliases_of "$out") expected=$expected"
+        fail "T3" "flag=$(flag_of "$out") aliases=$(aliases_of "$out")"
     fi
 fi
 
 # ---------------------------------------------------------------------------
-# T4: common-aliases (rm -i, global aliases) is loaded behind the same guard
+# T4: An interactive shell with no agent marker gets every shadowing alias
 # ---------------------------------------------------------------------------
-echo "T4: common-aliases is loaded only for human shells"
-if grep -q '^plugins+=(common-aliases)$' <(sed -n '/if (( ZSH_HUMAN_SHELL ))/,/^fi$/p' "$REPO_ROOT/zsh/zshrc" | sed 's/^ *//'); then
-    pass "T4"
+echo "T4: interactive shell with no agent marker gets the shadowing aliases"
+if ! has_pty; then
+    skip "T4" "no tty on stdin"
 else
-    fail "T4" "zsh/zshrc does not add common-aliases inside a ZSH_HUMAN_SHELL guard"
+    # shellcheck disable=SC2046  # word splitting of the -u flag list is intended
+    out="$(run_interactive $(cleared))"
+    if [[ "$(flag_of "$out")" == "1" && "$(aliases_of "$out")" == "$(all_shadowed)" ]]; then
+        pass "T4"
+    else
+        fail "T4" "flag=$(flag_of "$out") aliases=$(aliases_of "$out") expected=$(all_shadowed)"
+    fi
+fi
+
+# ---------------------------------------------------------------------------
+# T5: common-aliases (rm -i, global aliases) is loaded behind the same guard
+# ---------------------------------------------------------------------------
+echo "T5: common-aliases is loaded behind the guard"
+guarded="$(sed -n '/if (( ZSH_INTERACTIVE_ALIASES ))/,/^fi$/p' "$REPO_ROOT/zsh/zshrc" | sed 's/^ *//')"
+if grep -q '^plugins+=(common-aliases)$' <<<"$guarded"; then
+    pass "T5"
+else
+    fail "T5" "zsh/zshrc does not add common-aliases inside a ZSH_INTERACTIVE_ALIASES guard"
 fi
 
 echo ""

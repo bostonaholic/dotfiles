@@ -4,18 +4,11 @@
 # zshrc. Lives in .zshenv so it applies to non-interactive shells too.
 export _ZO_DOCTOR=0
 
-# ZSH_HUMAN_SHELL -- 1 when a person is driving this shell, 0 otherwise.
-#
-# Aliases that shadow standard commands (ls -> eza, cat -> bat, rm -> rm -i)
-# are a convenience at a prompt and a hazard everywhere else. Coding agents
-# shell out through this config expecting POSIX behavior, so `ls -la` becomes
-# `eza --tree -la`, `rm -rf` blocks on a confirmation prompt, and a global
-# alias like `G` rewrites a command line the agent never meant to change.
-#
-# Guard anything that shadows a real command with this flag. To teach it about
-# another agent, add that agent's environment marker to the list below.
-typeset -g ZSH_HUMAN_SHELL=0
+# Aliases that shadow standard commands belong at a prompt, not in shells that
+# tools drive through this config expecting POSIX behavior. Interactivity alone
+# is not enough -- agents capture this config from an interactive shell.
+typeset -g ZSH_INTERACTIVE_ALIASES=0
 if [[ -o interactive ]] &&
    [[ -z "${CLAUDECODE-}${CLAUDE_CODE_ENTRYPOINT-}${AI_AGENT-}${CURSOR_AGENT-}${CODEX_SANDBOX-}" ]]; then
-  ZSH_HUMAN_SHELL=1
+  ZSH_INTERACTIVE_ALIASES=1
 fi

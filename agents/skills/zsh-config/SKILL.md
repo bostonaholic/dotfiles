@@ -86,7 +86,7 @@ Put here:
 - Rarely needed -- most exported variables belong in `.zprofile`
 
 Current contents: `_ZO_DOCTOR` (silences zoxide's banner) and
-`ZSH_HUMAN_SHELL` (the human-terminal guard described below).
+`ZSH_INTERACTIVE_ALIASES` (the guard described below).
 
 ### `.zlogin` / `.zlogout` (create only if needed)
 
@@ -120,14 +120,14 @@ Is it an exported variable or PATH entry?
 3. **Don't duplicate oh-my-zsh built-ins.** Check if a plugin already provides the alias or function before adding one.
 4. **Keep `zshrc` focused on framework/plugin config.** User aliases and functions go in the plugin file, not zshrc.
 5. **PATH in zprofile, not zshrc.** PATH entries set in zshrc won't be available to programs started outside an interactive shell.
-6. **Guard anything that shadows a standard command.** Coding agents shell out through this config expecting POSIX behavior, so an alias like `ls=eza` or `rm='rm -i'` breaks them. Wrap it in `if (( ZSH_HUMAN_SHELL )); then ... fi` (the flag is set in `zsh/zshenv`) and cover it in `tests/test_shell_guard.sh`.
+6. **Guard anything that shadows a standard command.** An alias like `ls=eza` or `rm='rm -i'` breaks anything that shells out through this config. Wrap it in `if (( ZSH_INTERACTIVE_ALIASES )); then ... fi` (the flag is set in `zsh/zshenv`) and cover it in `tests/test_shell_guard.sh`.
 
-## Human-Terminal Guard
+## Interactive Alias Guard
 
-`zsh/zshenv` sets `ZSH_HUMAN_SHELL` to 1 only when a person is driving the
-shell: an interactive session with no coding-agent marker (`CLAUDECODE`,
-`AI_AGENT`, `CURSOR_AGENT`, ...) in the environment. Interactivity alone is not
-enough -- agents capture this config from an interactive shell.
+`zsh/zshenv` sets `ZSH_INTERACTIVE_ALIASES` to 1 only for an interactive shell
+with no coding-agent marker (`CLAUDECODE`, `AI_AGENT`, `CURSOR_AGENT`, ...) in
+the environment. Interactivity alone is not enough -- agents capture this
+config from an interactive shell and replay it into non-interactive ones.
 
 Already behind the guard:
 
