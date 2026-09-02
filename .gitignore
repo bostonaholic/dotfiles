@@ -11,6 +11,23 @@ vendor/
 ####################################
 tmux/plugins/
 
+# Third-party agent skills #
+############################
+# agents/skills is symlinked to ~/.claude/skills and ~/.agents/skills, so
+# 'npx skills add -g' writes upstream skills straight into this repo. They are
+# declared in packages.agent_skills; scripts/install_agent_skills reinstalls
+# them. Track the declaration, not the vendored copy.
+agents/skills/create-agentsmd/
+agents/skills/find-skills/
+agents/skills/first-principles-thinking/
+agents/skills/frontend-design/
+agents/skills/grill-me/
+agents/skills/humanizer/
+agents/skills/skill-creator/
+
+# Skills sourced from a sibling repo via symlink
+agents/skills/team
+
 # Dolt database files (added by bd init)
 .dolt/
 *.db
