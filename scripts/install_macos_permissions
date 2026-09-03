@@ -1,0 +1,159 @@
+#!/bin/bash
+################################################################################
+# Check macOS Full Disk Access Grants
+#
+# DESCRIPTION:
+#   Verifies that every app listed under macos.full_disk_access in
+#   dotfiles.yaml has Full Disk Access (FDA) and walks you through granting it
+#   when it is missing.
+#
+#   macOS attributes a child process's file access to the app that launched it
+#   (Conductor, a terminal, an IDE). The "would like to access data from other
+#   apps" Allow only lasts for that one process, so agents spawned by the app
+#   keep prompting. FDA is the durable grant, but Apple provides no way to set
+#   it from a script, so this only reports status and opens the settings pane.
+#
+# USAGE:
+#   Called by install.sh (post_install), or run directly:
+#   ./install_macos_permissions
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, do not open System Settings (default: false)
+#   VERBOSE  - If true, show apps skipped because they are not installed
+#              (default: false)
+#
+# WHAT IT DOES:
+#   1. Reads the app list from macos.full_disk_access in dotfiles.yaml
+#   2. Reads the FDA rows from the system TCC database (read-only; only works
+#      when the app hosting this shell already has FDA)
+#   3. Prints granted / missing / unverifiable per app
+#   4. Opens System Settings > Privacy & Security > Full Disk Access and prints
+#      the manual steps when anything is not granted
+#
+# DEPENDENCIES:
+#   - macOS
+#   - yq
+#   - sqlite3 (ships with macOS)
+#
+# EXIT CODE:
+#   0 - All apps granted, nothing to check, or status unverifiable
+#   1 - At least one app is confirmed to be missing Full Disk Access
+#
+################################################################################
+
+set -euo pipefail
+
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+readonly TCC_DB="/Library/Application Support/com.apple.TCC/TCC.db"
+readonly FDA_PANE="x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension?Privacy_AllFiles"
+
+# Prints "bundle_id|auth_value" for every Full Disk Access row in the system
+# TCC database. Fails when sqlite3 is missing or when the app hosting this
+# shell lacks FDA itself (macOS refuses to open the database).
+read_fda_rows() {
+    if ! command -v sqlite3 >/dev/null 2>&1; then
+        echo "sqlite3 not found"
+        return 1
+    fi
+    sqlite3 -readonly "$TCC_DB" \
+        "select client, auth_value from access
+         where service = 'kTCCServiceSystemPolicyAllFiles' and client_type = 0"
+}
+
+# $1 - newline-separated app paths that still need Full Disk Access
+show_instructions() {
+    if [[ $DRY_RUN == true ]]; then
+        log "[DRY RUN] Would open System Settings > Privacy & Security > Full Disk Access"
+    else
+        log "Opening System Settings > Privacy & Security > Full Disk Access..."
+        open "$FDA_PANE" || warn "Could not open System Settings; open it manually"
+    fi
+    echo "  1. Click '+' (authenticate if asked) and add each app below, or drag it in from Finder:"
+    while IFS= read -r app; do
+        [[ -n "$app" ]] && echo "       $app"
+    done <<<"$1"
+    echo "  2. Make sure each app's toggle is ON."
+    echo "  3. Fully quit (Cmd+Q) and relaunch each app. Full Disk Access only applies to"
+    echo "     newly launched processes, including the agents and CLIs the app spawns."
+    echo "  4. Re-run: $DOTFILES_DIR/scripts/install_macos_permissions"
+}
+
+main() {
+    if [[ "$OSTYPE" != darwin* ]]; then
+        debug "Not macOS, skipping"
+        return 0
+    fi
+
+    log "Checking Full Disk Access grants..."
+
+    local apps
+    apps=$(yq eval '.macos.full_disk_access[]' "$CONFIG_FILE")
+    if [[ -z "$apps" ]]; then
+        log "No apps listed under macos.full_disk_access in dotfiles.yaml"
+        return 0
+    fi
+
+    # One read-only snapshot of the FDA table. If it cannot be read, every app
+    # is reported as unverifiable rather than guessed.
+    local rows verifiable=true
+    if ! rows=$(read_fda_rows 2>&1); then
+        verifiable=false
+        if [[ "$rows" == *"authorization denied"* ]]; then
+            warn "Cannot read the TCC database: the app hosting this shell lacks Full Disk Access, so grants cannot be verified"
+        else
+            warn "Cannot read the TCC database: $rows"
+        fi
+    fi
+
+    local app name bundle_id auth missing=0 todo=""
+    while IFS= read -r app; do
+        [[ -n "$app" ]] || continue
+        app="${app/#\~/$HOME}"
+        name=$(basename "$app")
+
+        if [[ ! -d "$app" ]]; then
+            debug "Not installed, skipping: $app"
+            continue
+        fi
+
+        if ! bundle_id=$(defaults read "$app/Contents/Info.plist" CFBundleIdentifier 2>/dev/null); then
+            warn "  skipped       $name (no CFBundleIdentifier)"
+            continue
+        fi
+
+        if [[ $verifiable == false ]]; then
+            log "  unverifiable  $name ($bundle_id)"
+            todo+="$app"$'\n'
+            continue
+        fi
+
+        auth=$(awk -F'|' -v id="$bundle_id" '$1 == id { print $2; exit }' <<<"$rows")
+        if [[ "$auth" == "2" ]]; then
+            success "  granted       $name ($bundle_id)"
+        elif [[ -z "$auth" ]]; then
+            warn "  missing       $name ($bundle_id) -- not in the Full Disk Access list"
+            missing=$((missing + 1))
+            todo+="$app"$'\n'
+        else
+            warn "  missing       $name ($bundle_id) -- listed but toggled off"
+            missing=$((missing + 1))
+            todo+="$app"$'\n'
+        fi
+    done <<<"$apps"
+
+    if [[ -z "$todo" ]]; then
+        success "All listed apps have Full Disk Access"
+        return 0
+    fi
+
+    show_instructions "$todo"
+
+    if [[ $missing -gt 0 ]]; then
+        return 1
+    fi
+    return 0
+}
+
+main "$@"

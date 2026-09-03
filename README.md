@@ -111,6 +111,47 @@ needed.
 2. Check **"Use a different font for non-ASCII text"**
 3. Set non-ASCII font to **"Symbols Nerd Font Mono"**
 
+### Full Disk Access (macOS privacy prompts)
+
+macOS shows "*App* would like to access data from other apps" (or "... access
+files on a network volume") whenever a coding agent launched from that app runs
+`find`, `mdfind`, `claude`, `agy`, and so on. macOS attributes a child
+process's file access to the app that launched it (Conductor, a terminal, an
+IDE). Clicking Allow covers only that one process, there is no System Settings
+toggle for it, and the next spawned command asks again.
+
+Full Disk Access (FDA) is the durable fix. It is keyed to the app's bundle id
+and code signature, so it survives updates, and it covers every process the
+app spawns. Apple offers no way to grant it from a script (`tccutil` can only
+reset, privacy profiles require MDM, and the TCC database is SIP-protected),
+so it is a one-time manual toggle per app.
+
+`dotfiles.yaml` lists the apps that must have FDA under `macos.full_disk_access`.
+`scripts/install_macos_permissions` runs at the end of `./install.sh` (or
+directly), prints `granted`, `missing`, or `unverifiable` per app, opens
+System Settings on the Full Disk Access pane, and prints the steps:
+
+1. Click **+** and add each listed app (or drag it in from Finder).
+2. Make sure each app's toggle is **on**.
+3. Fully quit (Cmd+Q) and relaunch the app. FDA applies only to newly launched
+   processes, including the agents it spawns.
+4. Re-run `scripts/install_macos_permissions`.
+
+Status can only be verified from a terminal that already has FDA itself.
+Otherwise every app reports `unverifiable` and the pane still opens.
+
+To allowlist another app, append its `.app` path to `macos.full_disk_access`
+and re-run the script. To find which app is prompting, query the unified log
+(use the full path: this shell config shadows `log` with a function):
+
+```bash
+/usr/bin/log show --last 1d --style compact \
+  --predicate 'process == "tccd" AND eventMessage CONTAINS "AUTHREQ_PROMPTING"'
+```
+
+`Sub:{...}` / `responsible_path=` is the app to allowlist; `binary_path=` is
+the child command that tripped the check.
+
 ### Copilot.vim
 
 ```vimscript
