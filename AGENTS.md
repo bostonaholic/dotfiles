@@ -36,6 +36,7 @@ shellcheck scripts/*
 | Agent skills | `agents/skills/*/SKILL.md` |
 | Obsidian skills | `obsidian/skills/*/SKILL.md` |
 | Install scripts | `scripts/install_*` |
+| macOS Full Disk Access allowlist | `dotfiles.yaml` under `macos.full_disk_access` |
 
 ## Modification Workflow
 
@@ -64,6 +65,18 @@ shellcheck scripts/*
 2. Run `./scripts/install_claude_plugins`
 3. Commit `dotfiles.yaml`
 
+### Allowlisting an App for macOS Privacy Prompts
+
+When "X would like to access data from other apps" keeps appearing:
+
+1. Find the responsible app:
+   `/usr/bin/log show --last 1d --style compact --predicate 'process == "tccd" AND eventMessage CONTAINS "AUTHREQ_PROMPTING"'`
+   (`responsible_path=` is the app; `binary_path=` is the child that tripped it)
+2. Add the app's `.app` path to `macos.full_disk_access` in `dotfiles.yaml`
+3. Run `./scripts/install_macos_permissions`, follow the printed steps, then
+   Cmd+Q and relaunch the app
+4. Commit `dotfiles.yaml`
+
 ## Anti-Patterns
 
 | Do Not | Instead |
@@ -73,6 +86,7 @@ shellcheck scripts/*
 | Run `npm install -g X` | Add to `dotfiles.yaml`, run install.sh |
 | Edit files in `~/.config/` | Edit source files in repo, run install.sh |
 | Create backup copies manually | install.sh handles backups automatically |
+| Run `tccutil reset` or edit `TCC.db` | Add the app to `macos.full_disk_access`, toggle Full Disk Access in System Settings |
 
 ## Shell Scripts
 

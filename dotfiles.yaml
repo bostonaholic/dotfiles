@@ -156,6 +156,22 @@ packages:
 
       - typescript-lsp@claude-plugins-official
 
+# macOS privacy (TCC). Apps that must have Full Disk Access. Child processes
+# (find, mdfind, claude, agy, ...) inherit the TCC identity of the app that
+# launched them, so granting FDA to the host app stops the "would like to
+# access data from other apps" prompts. FDA cannot be granted from a script;
+# scripts/install_macos_permissions checks status and walks you through it.
+macos:
+  full_disk_access:
+    - /Applications/Conductor.app
+    - /Applications/Claude.app
+    - ~/Applications/Ghostty.app
+    - /Applications/iTerm.app
+    - /Applications/Warp.app
+    - /Applications/Cursor.app
+    - /Applications/Visual Studio Code.app
+    - /System/Applications/Utilities/Terminal.app
+
 scripts:
   pre_install:
     - description: "Validate sudo credentials"
@@ -214,6 +230,11 @@ scripts:
 
     - description: "Apply macOS settings"
       command: "macos/macos"
+      condition: '[[ "$OSTYPE" == "darwin"* ]]'
+      optional: true
+
+    - description: "Check Full Disk Access grants (macOS privacy prompts)"
+      command: "scripts/install_macos_permissions"
       condition: '[[ "$OSTYPE" == "darwin"* ]]'
       optional: true
 
