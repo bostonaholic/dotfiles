@@ -158,15 +158,18 @@ signature. There is no "just this once" — this rule has no exceptions.
   Then wait for the user to decide how to proceed.
 
 Signing setup on this machine: SSH-format signatures (`gpg.format = ssh`)
-produced by the 1Password signing agent (`gpg.ssh.program` → `op-ssh-sign`),
-key in `user.signingkey`, verified against `~/.config/git/allowed_signers`.
+produced by the stock `ssh-keygen` signer using a dedicated on-disk key
+(`user.signingkey` → `~/.ssh/git-signing-ed25519`), verified against
+`~/.config/git/allowed_signers`. Signing deliberately does **not** go through
+the 1Password SSH agent, so commits succeed while 1Password is locked — which
+matters for long-running agents. 1Password still handles SSH authentication.
 
 Diagnosing signing failures — match the error, then recommend the fix:
 
 | Symptom | Likely cause | Recommended resolution |
 | ------- | ------------ | ---------------------- |
-| `error: cannot run .../op-ssh-sign: No such file or directory` | 1Password missing, or its signing binary moved | Install/reinstall 1Password, or point `gpg.ssh.program` at the current `op-ssh-sign` path |
-| Signing prompt hangs, times out, or is denied | 1Password locked, or the signing request was not approved | Unlock 1Password, approve the signing prompt, retry the commit |
+| `error: Load key "~/.ssh/git-signing-ed25519": No such file or directory` | Signing key absent on this machine | Generate `ssh-keygen -t ed25519 -f ~/.ssh/git-signing-ed25519 -N ""`, add the public key to `git/allowed_signers` and to GitHub as a Signing key |
+| Signing hangs waiting on a 1Password prompt | `gpg.ssh.program` was reintroduced, pointing signing back at `op-ssh-sign` | Remove `gpg.ssh.program` from `git/config` — signing must not depend on 1Password's lock state |
 | `error: Load key ...: invalid format` / `no signing key available` | `user.signingkey` unset, or does not match `gpg.format` | Set `user.signingkey` to the SSH public key (or key path) matching the configured format |
 | `gpg failed to sign the data` under `gpg.format = openpgp` | `gpg-agent` not running, no TTY, or expired/revoked key | Start `gpg-agent`, `export GPG_TTY=$(tty)`, or renew the expired key |
 | Commit is signed locally but GitHub shows "Unverified" | Public key not registered on GitHub as a *signing* key | Add the key under GitHub → SSH and GPG keys as a **Signing** key (separate from Authentication) |
