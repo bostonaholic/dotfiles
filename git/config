@@ -3,14 +3,13 @@
 [user]
 	name = Matthew Boston
 	email = matthew@matthewboston.com
-    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE/Td3mQW2mRE16TknR3WX8SRfn1Xm2xTwrPBsm32QWn
+	signingkey = ~/.ssh/git-signing-ed25519
 [github]
 	user = bostonaholic
 [gpg]
 	format = ssh
 [gpg "ssh"]
 	allowedSignersFile = ~/.config/git/allowed_signers
-    program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 [help]
 	autocorrect = 1
 [color]
