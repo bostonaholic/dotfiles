@@ -151,10 +151,12 @@ packages:
   claude:
     plugins:
       - beads@beads-marketplace
+      - cloudflare@cloudflare
       - code-simplifier@claude-plugins-official
       - playwright@claude-plugins-official
 
       - typescript-lsp@claude-plugins-official
+      - vercel@claude-plugins-official
 
 # macOS privacy (TCC). Apps that must have Full Disk Access. Child processes
 # (find, mdfind, claude, agy, ...) inherit the TCC identity of the app that

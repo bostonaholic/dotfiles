@@ -25,6 +25,25 @@ agents/skills/grill-me/
 agents/skills/humanizer/
 agents/skills/skill-creator/
 
+# Skills vendored by the cloudflare Claude Code plugin #
+########################################################
+# Identical copies of the skills shipped by cloudflare@cloudflare (declared in
+# packages.claude.plugins). 'npx skills add -g' / the plugin write through the
+# ~/.claude/skills symlink into this repo. Track the plugin, not the copy.
+agents/skills/agents-sdk/
+agents/skills/cloudflare/
+agents/skills/cloudflare-email-service/
+agents/skills/cloudflare-one/
+agents/skills/cloudflare-one-migrations/
+agents/skills/durable-objects/
+agents/skills/sandbox-migrate-to-next/
+agents/skills/sandbox-next/
+agents/skills/sandbox-stable/
+agents/skills/turnstile-spin/
+agents/skills/web-perf/
+agents/skills/workers-best-practices/
+agents/skills/wrangler/
+
 # Skills sourced from a sibling repo via symlink
 agents/skills/team
 
