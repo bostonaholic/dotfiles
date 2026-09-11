@@ -36,6 +36,9 @@ symlinks:
   # Pi (coding agent)
   pi/agent/settings.json: ~/.pi/agent/settings.json
 
+  # OpenCode (coding agent)
+  opencode/opencode.jsonc: ~/.config/opencode/opencode.jsonc
+
   # Agent Skills (cross-tool standard using https://agentskills.io)
   agents/skills: ~/.claude/skills
   agents/skills: ~/.agents/skills

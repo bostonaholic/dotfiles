@@ -1,0 +1,5 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  // Auto-approve every tool.
+  "permission": "allow"
+}
