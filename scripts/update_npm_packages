@@ -12,12 +12,13 @@
 #
 # WHAT IT DOES:
 #   1. Checks if npm is installed, skips if not found
-#   2. Runs 'npm outdated -g' to find outdated packages
-#   3. Updates each outdated package individually
+#   2. Runs 'npm outdated -g --json' to find outdated packages
+#   3. Updates each outdated package individually by name
 #   4. Reports results for each package
 #
 # DEPENDENCIES:
 #   - npm (skips if not installed)
+#   - jq (skips if not installed)
 #   - Internet connection
 #
 # NOTES:
@@ -38,23 +39,33 @@ main() {
         return
     fi
 
+    if ! command -v jq &> /dev/null; then
+        warn "jq not installed, skipping package updates"
+        return
+    fi
+
     log "Checking for npm package updates..."
 
-    # Get list of outdated global packages
-    outdated=$(npm outdated -g --parseable 2>/dev/null || true)
+    # Get list of outdated global packages as JSON. npm exits 1 when any
+    # package is outdated, so the failure is expected here.
+    outdated=$(npm outdated -g --json 2>/dev/null || true)
 
+    # Extract package names (JSON object keys). npm update -g rejects
+    # versioned arguments with EUPDATEARGS, so only bare names are passed.
+    packages=""
     if [[ -n "$outdated" ]]; then
+        packages=$(jq -r 'keys[]' <<<"$outdated")
+    fi
+
+    if [[ -n "$packages" ]]; then
         log "Updating npm global packages..."
         # Update each outdated package
-        while IFS= read -r line; do
-            if [[ -n "$line" ]]; then
-                package=$(echo "$line" | cut -d: -f4)
-                if [[ -n "$package" ]]; then
-                    log "Updating: $package"
-                    npm update -g "$package" 2>/dev/null || warn "Failed to update $package"
-                fi
+        while IFS= read -r package; do
+            if [[ -n "$package" ]]; then
+                log "Updating: $package"
+                npm update -g "$package" 2>/dev/null || warn "Failed to update $package"
             fi
-        done <<< "$outdated"
+        done <<< "$packages"
         success "npm packages updated"
     else
         success "All npm packages are up to date"
