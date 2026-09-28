@@ -37,7 +37,6 @@ get_session_id() { jq_raw '.session_id'; }
 get_current_dir() { jq_raw '.workspace.current_dir'; }
 get_cost() { jq_raw '.context_window.total_cost_usd'; }
 get_context_window_size() { jq_num '.context_window.context_window_size'; }
-get_output_style() { jq_raw '.output_style.name'; }
 get_input_tokens() { jq_num '.context_window.current_usage.input_tokens'; }
 get_cache_creation() { jq_num '.context_window.current_usage.cache_creation_input_tokens'; }
 get_cache_read() { jq_num '.context_window.current_usage.cache_read_input_tokens'; }
@@ -148,14 +147,6 @@ format_cost() {
   printf ' 💰 %s' "$(colorize "$YELLOW" "$(printf '$%.4f' "$cost")")"
 }
 
-format_style() {
-  local style
-  style=$(get_output_style)
-  [[ -z "$style" || "$style" == "default" ]] && return
-
-  printf ' 🎨 %s' "$(colorize "$CYAN" "[${style}]")"
-}
-
 format_model() {
   local model
   model=$(get_model_name)
@@ -215,12 +206,11 @@ main() {
     get_git_info "$cwd" 2>/dev/null || true
   fi
 
-  printf '%s%s%s%s%s%s%s • %s\n' \
+  printf '%s%s%s%s%s%s • %s\n' \
     "$(format_project)" \
     "$(format_git_info)" \
     "$(format_context)" \
     "$(format_cost)" \
-    "$(format_style)" \
     "$(format_model)" \
     "$(format_session)" \
     "$(format_inspiration)"
