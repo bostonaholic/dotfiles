@@ -194,7 +194,7 @@ scripts:
     - description: "Install tmux plugins (TPM)"
       command: "scripts/install_tmux_plugins"
 
-    - description: "Install agent skills (Skillfile)"
+    - description: "Install agent skills"
       command: "Skillfile"
       condition: "command -v npx"
 
