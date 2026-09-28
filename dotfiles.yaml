@@ -128,8 +128,7 @@ packages:
         source: "git+https://github.com/github/spec-kit.git"
 
   # Agent skills are declared in Skillfile (repo root), installed via
-  # 'npx skills add'. Run: ./Skillfile to install, ./scripts/update_agent_skills
-  # to update.
+  # 'npx skills add'. install.sh and update.sh both run ./Skillfile.
 
   # Claude Code plugins - installed via 'claude plugin install'
   # Format: plugin-name@marketplace-name

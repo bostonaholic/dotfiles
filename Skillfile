@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Skillfile — every third-party agent skill, installed globally.
 #
-# Run: ./Skillfile          Update: ./scripts/update_agent_skills
+# Run: ./Skillfile   (install.sh and update.sh both invoke this)
 #
 # Vendored skills land in ~/.agents/skills, which install.sh symlinks to
 # agents/skills in this repo; the copies are gitignored. Managed elsewhere:
