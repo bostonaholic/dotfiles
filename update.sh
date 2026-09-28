@@ -19,6 +19,7 @@
 #   - rbenv plugins
 #   - Global npm packages
 #   - uv tools
+#   - Agent skills (via Skillfile)
 #
 # DEPENDENCIES:
 #   - git (required)
@@ -90,7 +91,7 @@ echo && "$DOTFILES_DIR/scripts/update_npm_packages"
 echo && "$DOTFILES_DIR/scripts/update_uv_tools"
 
 # Agent skills
-echo && "$DOTFILES_DIR/scripts/update_agent_skills"
+echo && "$DOTFILES_DIR/Skillfile"
 
 echo
 success "All updates completed!"

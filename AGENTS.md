@@ -34,6 +34,7 @@ shellcheck scripts/*
 | Claude commands | `claude/commands/*.md` |
 | Claude agents | `claude/agents/*.md` |
 | Agent skills | `agents/skills/*/SKILL.md` |
+| Third-party skill sources | `Skillfile` |
 | Obsidian skills | `obsidian/skills/*/SKILL.md` |
 | Install scripts | `scripts/install_*` |
 | macOS Full Disk Access allowlist | `dotfiles.yaml` under `macos.full_disk_access` |
@@ -65,6 +66,12 @@ shellcheck scripts/*
 2. Run `./scripts/install_claude_plugins`
 3. Commit `dotfiles.yaml`
 
+### Adding an Agent Skill
+
+1. Add an `npx skills add` line to `Skillfile`
+2. Run `./Skillfile`
+3. Commit `Skillfile` (vendored copies under `agents/skills/` are gitignored)
+
 ### Allowlisting an App for macOS Privacy Prompts
 
 When "X would like to access data from other apps" keeps appearing:
@@ -84,6 +91,7 @@ When "X would like to access data from other apps" keeps appearing:
 | Run `ln -s` directly | Add to `dotfiles.yaml`, run install.sh |
 | Run `brew install X` | Add to `Brewfile`, run `brew bundle` |
 | Run `npm install -g X` | Add to `dotfiles.yaml`, run install.sh |
+| Run `npx skills add` ad hoc | Add to `Skillfile`, run `./Skillfile` |
 | Edit files in `~/.config/` | Edit source files in repo, run install.sh |
 | Create backup copies manually | install.sh handles backups automatically |
 | Run `tccutil reset` or edit `TCC.db` | Add the app to `macos.full_disk_access`, toggle Full Disk Access in System Settings |

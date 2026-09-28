@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Skillfile — every third-party agent skill, installed globally.
+#
+# Run: ./Skillfile   (install.sh and update.sh both invoke this)
+#
+# Vendored skills land in ~/.agents/skills, which install.sh symlinks to
+# agents/skills in this repo; the copies are gitignored. Managed elsewhere:
+#   - personal skills are tracked in agents/skills/ (not installed here)
+#   - Claude-app-synced skills live in agents/skills/synced/ (gitignored)
+#   - cloudflare plugin skills are declared in dotfiles.yaml (claude.plugins)
+
+set -euo pipefail
+
+echo "Installing agent skills..."
+
+# Anthropic official (frontend-design, skill-creator)
+npx skills add anthropics/skills --skill frontend-design --skill skill-creator -g -y
+
+# Vercel (find-skills)
+npx skills add vercel-labs/skills --skill find-skills -g -y
+
+# GitHub Copilot (create-agentsmd)
+npx skills add github/awesome-copilot --skill create-agentsmd -g -y
+
+# Matt Pocock (grill-me)
+npx skills add mattpocock/skills --skill grill-me -g -y
+
+# Akshat (first-principles-thinking)
+npx skills add akshat10/skills --skill first-principles-thinking -g -y
+
+# Blader (humanizer)
+npx skills add blader/humanizer --skill humanizer -g -y
+
+# Microsoft (playwright-cli)
+npx skills add microsoft/playwright-cli --skill playwright-cli -g -y
+
+# Book to Skill (book-to-skill)
+npx skills add virgiliojr94/book-to-skill --all -g -y
+
+echo "Done. Run 'npx skills list -g' to verify."

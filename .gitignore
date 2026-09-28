@@ -15,14 +15,16 @@ tmux/plugins/
 ############################
 # agents/skills is symlinked to ~/.claude/skills and ~/.agents/skills, so
 # 'npx skills add -g' writes upstream skills straight into this repo. They are
-# declared in packages.agent_skills; scripts/install_agent_skills reinstalls
-# them. Track the declaration, not the vendored copy.
+# declared in Skillfile; ./Skillfile reinstalls them. Track the declaration,
+# not the vendored copy.
+agents/skills/book-to-skill/
 agents/skills/create-agentsmd/
 agents/skills/find-skills/
 agents/skills/first-principles-thinking/
 agents/skills/frontend-design/
 agents/skills/grill-me/
 agents/skills/humanizer/
+agents/skills/playwright-cli/
 agents/skills/skill-creator/
 
 # Skills vendored by the cloudflare Claude Code plugin #
@@ -46,6 +48,14 @@ agents/skills/wrangler/
 
 # Skills sourced from a sibling repo via symlink
 agents/skills/team
+
+# Skills synced by the Claude app (machine-local manifest.json) #
+################################################################
+agents/skills/synced/
+
+# Skills generated locally by book-to-skill #
+#############################################
+agents/skills/pricing-creativity/
 
 # Dolt database files (added by bd init)
 .dolt/
