@@ -127,9 +127,6 @@ packages:
       - name: specify-cli
         source: "git+https://github.com/github/spec-kit.git"
 
-  # Agent skills are declared in Skillfile (repo root), installed via
-  # 'npx skills add'. install.sh and update.sh both run ./Skillfile.
-
   # Claude Code plugins - installed via 'claude plugin install'
   # Format: plugin-name@marketplace-name
   # Run: ./scripts/install_claude_plugins to install
