@@ -6,7 +6,6 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/statusline.sh"
@@ -25,6 +24,11 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
+  "modelSettings": {
+    "opus": {
+      "effortLevel": "medium"
+    }
+  },
   "fastModePerSessionOptIn": false,
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
