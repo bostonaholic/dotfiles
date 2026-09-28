@@ -133,11 +133,7 @@ packages:
   # Run: ./scripts/update_claude_plugins to update
   claude:
     plugins:
-      - beads@beads-marketplace
       - cloudflare@cloudflare
-      - code-simplifier@claude-plugins-official
-      - playwright@claude-plugins-official
-
       - typescript-lsp@claude-plugins-official
       - vercel@claude-plugins-official
 
