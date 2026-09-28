@@ -2,7 +2,7 @@
 # Status line for Claude Code - Bash implementation
 #
 # Example output:
-#   📁 dotfiles 🌿 (main *↑2) 🧠 [████░░░░░░ 35%] 💰 $0.1234 ✨ Opus 4.5 🆔 4bc3e347-1fe9-4921-a638-4a5a53a2cbee
+#   📁 dotfiles 🌿 (main *↑2) 🧠 [████░░░░░░ 35%] 💰 $0.1234 ✨ Opus 4.5 (high) 🆔 4bc3e347-1fe9-4921-a638-4a5a53a2cbee
 #
 # Usage:
 #   echo '{"workspace":...}' | ./statusline.sh
@@ -32,6 +32,7 @@ jq_num() { echo "$INPUT" | jq "$1 // 0"; }
 
 # Data extraction
 get_model_name() { jq_raw '.model.display_name'; }
+get_effort_level() { jq_raw '.effort.level'; }
 get_session_id() { jq_raw '.session_id'; }
 get_current_dir() { jq_raw '.workspace.current_dir'; }
 get_cost() { jq_raw '.context_window.total_cost_usd'; }
@@ -159,6 +160,10 @@ format_model() {
   local model
   model=$(get_model_name)
   [[ -z "$model" ]] && model="unknown"
+
+  local effort
+  effort=$(get_effort_level)
+  [[ -n "$effort" ]] && model="${model} (${effort})"
 
   printf ' ✨ %s' "$(colorize "$MAGENTA" "$model")"
 }
