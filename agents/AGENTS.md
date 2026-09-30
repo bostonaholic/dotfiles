@@ -148,7 +148,11 @@ signature. There is no "just this once" — this rule has no exceptions.
 - After committing, verify: `git log -1 --show-signature` must report a good
   signature. A missing or bad signature means the commit failed — amend and
   re-sign it (`git commit --amend --no-edit -S`) before doing anything else.
-- Annotated tags follow the same rule (`tag.gpgsign = true`).
+- Tags follow the same rule. Create them with `git tag -s`, never `git tag -a`:
+  `-a` overrides `tag.forceSignAnnotated` and silently makes an unsigned tag.
+  Before pushing, verify with `git tag -v <tag>` and require its exit status
+  to be 0. Never grep its output for "signature", because the failure message
+  "no signature found" matches too.
 - **If a commit cannot be signed, STOP.** Do not commit unsigned, do not work
   around it, do not defer it to later. Report to the user:
   1. The exact command that failed, with its verbatim error output.
