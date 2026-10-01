@@ -33,8 +33,8 @@ shellcheck scripts/*
 | Git config | `git/config` |
 | Claude commands | `claude/commands/*.md` |
 | Claude agents | `claude/agents/*.md` |
-| Agent skills | `~/code/bostonaholic/skills/skills/*/SKILL.md` (separate repo) |
-| Third-party skill sources | `Skillfile` |
+| Agent skills (personal) | [bostonaholic/skills](https://github.com/bostonaholic/skills) repo |
+| Skill sources (personal + third-party) | `Skillfile` |
 | Obsidian skills | `obsidian/skills/*/SKILL.md` |
 | Install scripts | `scripts/install_*` |
 | macOS Full Disk Access allowlist | `dotfiles.yaml` under `macos.full_disk_access` |
@@ -70,7 +70,7 @@ shellcheck scripts/*
 
 1. Add an `npx skills add` line to `Skillfile`
 2. Run `./Skillfile`
-3. Commit `Skillfile` (vendored copies land in the skills repo, gitignored there)
+3. Commit `Skillfile`
 
 ### Allowlisting an App for macOS Privacy Prompts
 
@@ -154,11 +154,15 @@ Changes to `claude/` are immediately effective (symlinked to `~/.claude/`).
 - Agents: `claude/agents/*.md` - Subagent system prompts
 - Settings: `claude/settings.json` - Preferences and hooks
 
-Skills live in the [bostonaholic/skills](https://github.com/bostonaholic/skills)
-repo (cloned to `~/code/bostonaholic/skills`); its `skills/` directory is
-symlinked to both `~/.claude/skills/` and `~/.agents/skills/` for cross-tool
-compatibility (Claude Code, Gemini CLI, Codex, OpenCode). Obsidian-specific skills live in `obsidian/skills/` and are
-symlinked only to the Obsidian vault.
+Personal skills live in [bostonaholic/skills](https://github.com/bostonaholic/skills),
+cloned to `~/code/bostonaholic/skills`. `Skillfile` installs them for Codex only;
+`scripts/install_claude_local_plugins` registers that checkout as the
+`bostonaholic-skills@bostonaholic` plugin for Claude Code. Third-party skills in
+`Skillfile` retain their configured agent targets. `~/.agents/skills/` and
+`~/.claude/skills/` are separate directories, not links into this repository.
+To change a personal skill, edit the skills repo, rerun `./Skillfile` for Codex,
+and reload the Claude plugin. Obsidian-specific skills live in
+`obsidian/skills/` and are symlinked only to the Obsidian vault.
 
 ## Commit Conventions
 
