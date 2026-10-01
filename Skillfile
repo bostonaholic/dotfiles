@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
-# Skillfile — every third-party agent skill, installed globally.
+# Skillfile — every agent skill, installed globally.
 #
 # Run: ./Skillfile   (install.sh and update.sh both invoke this)
 #
-# Vendored skills land in ~/.agents/skills, which install.sh symlinks to
-# skills/ in the bostonaholic/skills repo; the copies are gitignored there.
+# Skills land in ~/.agents/skills; install.sh symlinks ~/.claude/skills to it.
 # Managed elsewhere:
-#   - personal skills are tracked in bostonaholic/skills (not installed here)
-#   - Claude-app-synced skills live in skills/synced/ there (gitignored)
+#   - Claude-app-synced skills live in ~/.agents/skills/synced/ (machine-local)
 #   - cloudflare plugin skills are declared in dotfiles.yaml (claude.plugins)
 
 set -euo pipefail
 
 echo "Installing agent skills..."
+
+# Personal skills (all)
+npx skills add bostonaholic/skills --skill '*' -g -y
 
 # Anthropic official (frontend-design, skill-creator)
 npx skills add anthropics/skills --skill frontend-design --skill skill-creator -g -y
