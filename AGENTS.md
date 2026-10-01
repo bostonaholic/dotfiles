@@ -33,7 +33,7 @@ shellcheck scripts/*
 | Git config | `git/config` |
 | Claude commands | `claude/commands/*.md` |
 | Claude agents | `claude/agents/*.md` |
-| Agent skills | `agents/skills/*/SKILL.md` |
+| Agent skills | `~/code/bostonaholic/skills/skills/*/SKILL.md` (separate repo) |
 | Third-party skill sources | `Skillfile` |
 | Obsidian skills | `obsidian/skills/*/SKILL.md` |
 | Install scripts | `scripts/install_*` |
@@ -70,7 +70,7 @@ shellcheck scripts/*
 
 1. Add an `npx skills add` line to `Skillfile`
 2. Run `./Skillfile`
-3. Commit `Skillfile` (vendored copies under `agents/skills/` are gitignored)
+3. Commit `Skillfile` (vendored copies land in the skills repo, gitignored there)
 
 ### Allowlisting an App for macOS Privacy Prompts
 
@@ -134,7 +134,6 @@ dotfiles/
   zsh/              # Shell configuration
   git/              # Git config and helpers
   agents/           # Cross-tool agent configuration
-    skills/         # Skill definitions (agentskills.io standard)
   obsidian/         # Obsidian vault configuration
     skills/         # Obsidian-only skills (symlinked to vault)
   claude/           # Claude Code configuration
@@ -155,9 +154,10 @@ Changes to `claude/` are immediately effective (symlinked to `~/.claude/`).
 - Agents: `claude/agents/*.md` - Subagent system prompts
 - Settings: `claude/settings.json` - Preferences and hooks
 
-Skills live in `agents/skills/` and are symlinked to both `~/.claude/skills/`
-and `~/.agents/skills/` for cross-tool compatibility (Claude Code, Gemini CLI,
-Codex, OpenCode). Obsidian-specific skills live in `obsidian/skills/` and are
+Skills live in the [bostonaholic/skills](https://github.com/bostonaholic/skills)
+repo (cloned to `~/code/bostonaholic/skills`); its `skills/` directory is
+symlinked to both `~/.claude/skills/` and `~/.agents/skills/` for cross-tool
+compatibility (Claude Code, Gemini CLI, Codex, OpenCode). Obsidian-specific skills live in `obsidian/skills/` and are
 symlinked only to the Obsidian vault.
 
 ## Commit Conventions

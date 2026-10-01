@@ -40,8 +40,9 @@ symlinks:
   opencode/opencode.jsonc: ~/.config/opencode/opencode.jsonc
 
   # Agent Skills (cross-tool standard using https://agentskills.io)
-  agents/skills: ~/.claude/skills
-  agents/skills: ~/.agents/skills
+  # Source lives in the bostonaholic/skills repo, not this one.
+  ~/code/bostonaholic/skills/skills: ~/.claude/skills
+  ~/code/bostonaholic/skills/skills: ~/.agents/skills
 
   # Global agent instructions (shared across coding agents)
   agents/AGENTS.md: ~/.agents/AGENTS.md

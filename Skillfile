@@ -4,9 +4,10 @@
 # Run: ./Skillfile   (install.sh and update.sh both invoke this)
 #
 # Vendored skills land in ~/.agents/skills, which install.sh symlinks to
-# agents/skills in this repo; the copies are gitignored. Managed elsewhere:
-#   - personal skills are tracked in agents/skills/ (not installed here)
-#   - Claude-app-synced skills live in agents/skills/synced/ (gitignored)
+# skills/ in the bostonaholic/skills repo; the copies are gitignored there.
+# Managed elsewhere:
+#   - personal skills are tracked in bostonaholic/skills (not installed here)
+#   - Claude-app-synced skills live in skills/synced/ there (gitignored)
 #   - cloudflare plugin skills are declared in dotfiles.yaml (claude.plugins)
 
 set -euo pipefail
