@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Skillfile — every third-party agent skill, installed globally.
+# Skillfile — third-party and personal agent skills, installed globally.
 #
 # Run: ./Skillfile   (install.sh and update.sh both invoke this)
 #

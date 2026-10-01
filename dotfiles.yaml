@@ -3,6 +3,7 @@
 
 directories:
   - ~/.agents
+  - ~/.agents/skills
   - ~/.claude
   - ~/.claude/skills
   - ~/.cursor
@@ -40,9 +41,6 @@ symlinks:
 
   # OpenCode (coding agent)
   opencode/opencode.jsonc: ~/.config/opencode/opencode.jsonc
-
-  # Agent Skills (cross-tool standard using https://agentskills.io)
-  agents/skills: ~/.agents/skills
 
   # Global agent instructions (shared across coding agents)
   agents/AGENTS.md: ~/.agents/AGENTS.md
