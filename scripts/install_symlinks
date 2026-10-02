@@ -60,9 +60,10 @@ create_symlink() {
     local source=$1
     local target=$2
 
-    # Expand home directory
+    # Expand home directory; relative sources live in this repo
     target=$(eval echo "$target")
-    source="$DOTFILES_DIR/$source"
+    source=$(eval echo "$source")
+    [[ "$source" == /* ]] || source="$DOTFILES_DIR/$source"
 
     # Check if source exists
     if [[ ! -e "$source" ]]; then

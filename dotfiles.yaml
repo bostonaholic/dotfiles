@@ -3,6 +3,7 @@
 
 directories:
   - ~/.agents
+  - ~/.agents/skills
   - ~/.claude
   - ~/.cursor
   - ~/.gemini/antigravity-cli
@@ -40,8 +41,9 @@ symlinks:
   opencode/opencode.jsonc: ~/.config/opencode/opencode.jsonc
 
   # Agent Skills (cross-tool standard using https://agentskills.io)
-  agents/skills: ~/.claude/skills
-  agents/skills: ~/.agents/skills
+  # ~/.agents/skills holds every skill, installed by Skillfile; Claude Code
+  # reads the same directory.
+  ~/.agents/skills: ~/.claude/skills
 
   # Global agent instructions (shared across coding agents)
   agents/AGENTS.md: ~/.agents/AGENTS.md
