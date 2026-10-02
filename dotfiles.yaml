@@ -4,6 +4,7 @@
 directories:
   - ~/.agents
   - ~/.claude
+  - ~/.claude/skills
   - ~/.cursor
   - ~/.gemini/antigravity-cli
   - ~/.lein
@@ -40,7 +41,6 @@ symlinks:
   opencode/opencode.jsonc: ~/.config/opencode/opencode.jsonc
 
   # Agent Skills (cross-tool standard using https://agentskills.io)
-  agents/skills: ~/.claude/skills
   agents/skills: ~/.agents/skills
 
   # Global agent instructions (shared across coding agents)
