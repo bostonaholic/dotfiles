@@ -2,7 +2,6 @@
 # See https://pre-commit.com for more information
 #
 # Install both stages with:  pre-commit install
-# (beads' `bd hooks install` then wraps these; see dotfiles.yaml)
 default_install_hook_types: [pre-commit, pre-push]
 repos:
   - repo: https://github.com/shellcheck-py/shellcheck-py

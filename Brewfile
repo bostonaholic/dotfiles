@@ -13,7 +13,6 @@ cask_args appdir: '~/Applications', fontdir: '/Library/Fonts'
 # =============================================================================
 
 cask 'antigravity-cli' # Google Antigravity, replaces gemini-cli
-brew 'beads'           # AI-supervised issue tracker
 cask 'claude-code@latest'
 cask 'codex'
 

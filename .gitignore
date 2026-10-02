@@ -60,10 +60,3 @@ agents/skills/synced/
 # Skills generated locally by book-to-skill #
 #############################################
 agents/skills/pricing-creativity/
-
-# Dolt database files (added by bd init)
-.dolt/
-*.db
-
-# Beads export state (machine-local sync cursor)
-.beads/export-state.json
