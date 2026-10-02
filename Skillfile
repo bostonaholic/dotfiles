@@ -37,7 +37,7 @@ npx skills add microsoft/playwright-cli --skill playwright-cli -g -y
 # Book to Skill (book-to-skill)
 npx skills add virgiliojr94/book-to-skill --all -g -y
 
-# Local personal skills for Claude Code
-npx skills add "$HOME/code/bostonaholic/skills" --skill '*' --agent claude-code -g -y
+# Local personal skills for Claude Code and Codex
+npx skills add "$HOME/code/bostonaholic/skills" --skill '*' --agent claude-code codex -g -y
 
 echo "Done. Run 'npx skills list -g' to verify."
