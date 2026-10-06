@@ -19,7 +19,11 @@
 #      provides subagents; the bostonaholic plugin does)
 #   3. Moves skill copies that plugins now provide out of ~/.agents/skills
 #      into ~/.agents/skills-retired, so no harness sees them twice
-#   4. Runs update_claude_plugins and update_codex_plugins, which register the
+#   4. Does the same for ~/.codex/skills, Codex's older user skill directory:
+#      an entry moves to ~/.codex/skills-retired when a plugin provides it or
+#      ~/.agents/skills holds the same name. Codex's .system built-ins and
+#      unrelated entries stay
+#   5. Runs update_claude_plugins and update_codex_plugins, which register the
 #      GitHub marketplaces (repointing an existing local team-dev), install
 #      every declared plugin, and update them to the latest release
 #
@@ -36,6 +40,8 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 
 SKILLS_DIR="$HOME/.agents/skills"
 RETIRED_DIR="$HOME/.agents/skills-retired"
+CODEX_SKILLS_DIR="$HOME/.codex/skills"
+CODEX_RETIRED_DIR="$HOME/.codex/skills-retired"
 
 # Copies that plugins now provide: personal and Team skills under their old
 # names, cloudflare and Loops (Codex plugins), and pricing-creativity.
@@ -93,20 +99,44 @@ unlink_claude_agents() {
     fi
 }
 
-retire_skill_copies() {
-    local moved=0 name
-    [[ -d "$SKILLS_DIR" ]] || { success "  ✓ no $SKILLS_DIR"; return; }
-    for name in "${RETIRED_SKILLS[@]}"; do
-        [[ -e "$SKILLS_DIR/$name" ]] || continue
-        if [[ -e "$RETIRED_DIR/$name" ]]; then
-            error "  ✗ $RETIRED_DIR/$name already exists; move $SKILLS_DIR/$name by hand"
+# A dangling symlink still counts: it is an entry the harness tries to load.
+present() {
+    [[ -e "$1" || -L "$1" ]]
+}
+
+# Moves each entry named on stdin from <dir> into <retired>.
+retire_from() {
+    local dir=$1 retired=$2 moved=0 name
+    if [[ ! -d "$dir" ]]; then
+        cat > /dev/null
+        success "  ✓ no $dir"
+        return
+    fi
+    while IFS= read -r name; do
+        [[ -n "$name" ]] && present "$dir/$name" || continue
+        if present "$retired/$name"; then
+            error "  ✗ $retired/$name already exists; move $dir/$name by hand"
             return 1
         fi
-        run mkdir -p "$RETIRED_DIR"
-        run mv "$SKILLS_DIR/$name" "$RETIRED_DIR/$name"
+        run mkdir -p "$retired"
+        run mv "$dir/$name" "$retired/$name"
         moved=$((moved + 1))
     done
-    success "  ✓ retired $moved skill copies to $RETIRED_DIR"
+    success "  ✓ retired $moved skill copies to $retired"
+}
+
+# Names in ~/.codex/skills that a plugin provides or ~/.agents/skills
+# duplicates. The glob skips dot entries, so .system is never listed.
+codex_skill_duplicates() {
+    local entry name
+    [[ -d "$CODEX_SKILLS_DIR" ]] || return 0
+    for entry in "$CODEX_SKILLS_DIR"/*; do
+        present "$entry" || continue
+        name=${entry##*/}
+        if [[ " ${RETIRED_SKILLS[*]} " == *" $name "* ]] || present "$SKILLS_DIR/$name"; then
+            printf '%s\n' "$name"
+        fi
+    done
 }
 
 main() {
@@ -114,7 +144,8 @@ main() {
 
     remove_stale_claude_plugin
     unlink_claude_agents
-    retire_skill_copies
+    printf '%s\n' "${RETIRED_SKILLS[@]}" | retire_from "$SKILLS_DIR" "$RETIRED_DIR"
+    codex_skill_duplicates | retire_from "$CODEX_SKILLS_DIR" "$CODEX_RETIRED_DIR"
 
     "$DOTFILES_DIR/scripts/update_claude_plugins"
     "$DOTFILES_DIR/scripts/update_codex_plugins"
