@@ -2,5 +2,6 @@
   "lastChangelogVersion": "0.72.1",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-6",
-  "defaultThinkingLevel": "medium"
+  "defaultThinkingLevel": "medium",
+  "theme": "light"
 }

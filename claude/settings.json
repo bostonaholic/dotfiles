@@ -6,6 +6,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
+  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/statusline.sh"
@@ -62,6 +63,12 @@
   "effortLevel": "xhigh",
   "modelSettings": {
     "opus": {
+      "effortLevel": "medium"
+    },
+    "claude-fable-5-1": {
+      "effortLevel": "high"
+    },
+    "claude-opus-5-5": {
       "effortLevel": "medium"
     }
   },
