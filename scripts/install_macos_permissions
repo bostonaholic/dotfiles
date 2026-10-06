@@ -19,8 +19,8 @@
 #
 # ENVIRONMENT VARIABLES:
 #   DRY_RUN  - If set, do not open System Settings (default: unset)
-#   VERBOSE  - If true, show apps skipped because they are not installed
-#              (default: false)
+#   VERBOSE  - If set, show apps skipped because they are not installed
+#              (default: unset)
 #
 # WHAT IT DOES:
 #   1. Reads the app list from macos.full_disk_access in dotfiles.yaml

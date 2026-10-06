@@ -45,8 +45,8 @@ BACKUP_DIR="${HOME}/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 readonly BACKUP_DIR
 
 # Additional options
-FORCE=false
-BACKUP=true
+FORCE=""
+NO_BACKUP=""
 COMPONENTS=""
 SKIP_SCRIPTS=false
 
@@ -101,19 +101,19 @@ parse_args() {
                 shift
                 ;;
             -f|--force)
-                FORCE=true
+                FORCE=1
                 shift
                 ;;
             -v|--verbose)
-                VERBOSE=true
+                VERBOSE=1
                 shift
                 ;;
             -y|--yes)
-                FORCE=true
+                FORCE=1
                 shift
                 ;;
             --no-backup)
-                BACKUP=false
+                NO_BACKUP=1
                 shift
                 ;;
             --only)
@@ -200,7 +200,7 @@ create_symlinks() {
     fi
 
     # Export options for the script
-    export DRY_RUN FORCE VERBOSE BACKUP BACKUP_DIR
+    export DRY_RUN FORCE VERBOSE NO_BACKUP BACKUP_DIR
     "$DOTFILES_DIR/scripts/install_symlinks"
 }
 
@@ -326,7 +326,7 @@ main() {
     echo
 
     [[ -n $DRY_RUN ]] && warn "Running in DRY RUN mode - no changes will be made"
-    [[ $FORCE == true ]] && warn "Force mode enabled - will overwrite existing files"
+    [[ -n $FORCE ]] && warn "Force mode enabled - will overwrite existing files"
     [[ -n "$COMPONENTS" ]] && log "Installing only: $COMPONENTS"
     echo
 
@@ -362,7 +362,7 @@ main() {
     log "===================================="
     if [[ -z $DRY_RUN ]]; then
         success "✨ Installation complete!"
-        [[ $BACKUP == true ]] && [[ -d "$BACKUP_DIR" ]] && log "📁 Backups saved to: $BACKUP_DIR"
+        [[ -z $NO_BACKUP ]] && [[ -d "$BACKUP_DIR" ]] && log "📁 Backups saved to: $BACKUP_DIR"
     else
         success "Dry run complete. No changes were made."
         log "Run without --dry-run to apply changes."

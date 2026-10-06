@@ -12,7 +12,7 @@
 #
 # ENVIRONMENT VARIABLES:
 #   DRY_RUN  - If set, preview changes without making them (default: unset)
-#   VERBOSE  - If true, show detailed output (default: false)
+#   VERBOSE  - If set, show detailed output (default: unset)
 #
 # WHAT IT DOES:
 #   1. Clones the powerline/fonts repository into a temp directory

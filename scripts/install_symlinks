@@ -13,16 +13,16 @@
 #
 # ENVIRONMENT VARIABLES:
 #   DRY_RUN      - If set, preview changes without making them (default: unset)
-#   FORCE        - If true, overwrite without prompting (default: false)
-#   VERBOSE      - If true, show detailed output (default: false)
-#   BACKUP       - If true, backup existing files (default: true)
+#   FORCE        - If set, overwrite without prompting (default: unset)
+#   VERBOSE      - If set, show detailed output (default: unset)
+#   NO_BACKUP    - If set, skip backing up existing files (default: unset)
 #   BACKUP_DIR   - Directory for backups (default: ~/.dotfiles_backup/TIMESTAMP)
 #
 # BEHAVIOR:
 #   - Checks if symlinks already exist and are correct
-#   - Backs up existing files before overwriting (if BACKUP=true)
+#   - Backs up existing files before overwriting (unless NO_BACKUP is set)
 #   - Creates parent directories as needed
-#   - Prompts before overwriting (unless FORCE=true)
+#   - Prompts before overwriting (unless FORCE is set)
 #   - Reports statistics on symlinks created/skipped/failed
 #
 # DEPENDENCIES:
@@ -39,14 +39,14 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 BACKUP_DIR="${BACKUP_DIR:-${HOME}/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)}"
 
 # Additional options from environment or defaults
-FORCE="${FORCE:-false}"
-BACKUP="${BACKUP:-true}"
+FORCE="${FORCE:-}"
+NO_BACKUP="${NO_BACKUP:-}"
 
 # Backup file if it exists
 backup_file() {
     local file=$1
 
-    if [[ -e "$file" && $BACKUP == true && -z $DRY_RUN ]]; then
+    if [[ -e "$file" && -z $NO_BACKUP && -z $DRY_RUN ]]; then
         local backup_path
         backup_path="$BACKUP_DIR/$(basename "$file")"
         mkdir -p "$(dirname "$backup_path")"
@@ -81,7 +81,7 @@ create_symlink() {
             fi
         fi
 
-        if [[ $FORCE == false && -z $DRY_RUN ]]; then
+        if [[ -z $FORCE && -z $DRY_RUN ]]; then
             # Make sure prompt is visible by flushing output
             printf "\n"
             read -p "$(echo -e "${YELLOW}Overwrite $target? [y/N]${NC} ")" -n 1 -r
@@ -172,7 +172,7 @@ symlink_directory_contents() {
                 fi
             fi
 
-            if [[ $FORCE == false && -z $DRY_RUN ]]; then
+            if [[ -z $FORCE && -z $DRY_RUN ]]; then
                 printf "\n"
                 read -p "$(echo -e "${YELLOW}Overwrite $target_file? [y/N]${NC} ")" -n 1 -r
                 echo

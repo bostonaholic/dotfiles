@@ -79,7 +79,7 @@ chmod +x "$SCRATCH/bin/open"
 run_script() {
     printf '%s\n' "$1" > "$SCRATCH/dotfiles.yaml"
     set +e
-    output=$(PATH="$SCRATCH/bin:$PATH" DOTFILES_DIR="$SCRATCH" DRY_RUN=1 VERBOSE=true \
+    output=$(PATH="$SCRATCH/bin:$PATH" DOTFILES_DIR="$SCRATCH" DRY_RUN=1 VERBOSE=1 \
         bash "$SCRIPT" 2>&1)
     status=$?
     set -e

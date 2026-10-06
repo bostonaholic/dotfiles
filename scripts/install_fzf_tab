@@ -12,7 +12,7 @@
 #
 # ENVIRONMENT VARIABLES:
 #   DRY_RUN      - If set, preview changes without making them (default: unset)
-#   VERBOSE      - If true, show detailed output (default: false)
+#   VERBOSE      - If set, show detailed output (default: unset)
 #   ZSH_CUSTOM   - Oh My Zsh custom directory (default: ~/.oh-my-zsh/custom)
 #
 # WHAT IT DOES:

@@ -20,14 +20,15 @@
 #   CONFIG_FILE   - Absolute path to dotfiles.yaml
 #   DRY_RUN       - Preview mode when set to any non-empty value
 #                   (default: unset, inherits from environment)
-#   VERBOSE       - Verbose output (default: false, inherits from environment)
+#   VERBOSE       - Verbose output when set to any non-empty value
+#                   (default: unset, inherits from environment)
 #
 # PROVIDED FUNCTIONS:
 #   log()         - Info message   [INFO]
 #   success()     - Success message [DONE]
 #   warn()        - Warning message [WARN]
 #   error()       - Error message   [ERROR] (prints only, does NOT exit)
-#   debug()       - Debug message   [DEBUG] (only when VERBOSE=true)
+#   debug()       - Debug message   [DEBUG] (only when VERBOSE is set)
 #
 ################################################################################
 
@@ -60,10 +61,10 @@ readonly CONFIG_FILE
 export CONFIG_FILE
 
 # Options from environment or defaults
-# DRY_RUN is on when set to any non-empty value. Scripts test it only with
-# -n / -z, so every value is either a preview or a real run, never both.
+# DRY_RUN and VERBOSE are on when set to any non-empty value. Scripts test
+# them only with -n / -z, so every value is either on or off, never both.
 DRY_RUN="${DRY_RUN:-}"
-VERBOSE="${VERBOSE:-false}"
+VERBOSE="${VERBOSE:-}"
 
 # Logging functions
 log()     { echo -e "${_LIB_BLUE}[INFO]${_LIB_NC}  $1"; }
@@ -71,7 +72,7 @@ success() { echo -e "${_LIB_GREEN}[DONE]${_LIB_NC}  $1"; }
 warn()    { echo -e "${_LIB_YELLOW}[WARN]${_LIB_NC}  $1"; }
 error()   { echo -e "${_LIB_RED}[ERROR]${_LIB_NC} $1"; }
 debug() {
-    if [[ $VERBOSE == true ]]; then
+    if [[ -n $VERBOSE ]]; then
         echo -e "${_LIB_BLUE}[DEBUG]${_LIB_NC} $1"
     fi
 }
