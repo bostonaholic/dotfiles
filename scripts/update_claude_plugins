@@ -73,6 +73,10 @@ main() {
     while IFS= read -r plugin; do
         if [[ -n "$plugin" ]]; then
             total=$((total + 1))
+            if [[ $DRY_RUN == true ]]; then
+                log "[DRY RUN] Would update Claude plugin: $plugin"
+                continue
+            fi
             log "Updating plugin: $plugin"
 
             # Capture output to check if update was needed
