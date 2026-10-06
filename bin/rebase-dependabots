@@ -4,7 +4,7 @@
 #
 # DESCRIPTION:
 #   Runs Claude Code in headless mode to comment "@dependabot rebase" on all
-#   open Dependabot PRs. Wraps the /rebase-dependabots slash command for
+#   open Dependabot PRs. Wraps the /bostonaholic:rebasing-dependabot-prs slash command for
 #   non-interactive execution.
 #
 # USAGE:
@@ -48,7 +48,7 @@ done
 
 args="${claude_args[*]:-}"
 
-prompt="/bostonaholic:rebase-dependabots ${args}"
+prompt="/bostonaholic:rebasing-dependabot-prs ${args}"
 
 echo "Starting headless Dependabot rebase..."
 echo "Arguments: ${args:-<none, discovering all PRs>}"
