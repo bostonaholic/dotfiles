@@ -32,9 +32,6 @@ symlinks:
   # Antigravity CLI (config lives under ~/.gemini/, replaces Gemini CLI)
   antigravity/settings.json: ~/.gemini/antigravity-cli/settings.json
 
-  # Codex CLI
-  codex/config.toml: ~/.codex/config.toml
-
   # Pi (coding agent)
   pi/agent/settings.json: ~/.pi/agent/settings.json
 
@@ -152,7 +149,7 @@ packages:
 
   # Codex CLI: 'codex plugin marketplace add' + 'codex plugin add'
   # Plugins from Codex's built-in openai-curated-remote catalog need no
-  # marketplace entry, and Codex records them outside config.toml.
+  # marketplace entry.
   # Run: ./scripts/install_codex_plugins to install
   # Run: ./scripts/update_codex_plugins to update (installs any missing first)
   codex:
