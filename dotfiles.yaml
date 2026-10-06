@@ -125,15 +125,40 @@ packages:
       - name: specify-cli
         source: "git+https://github.com/github/spec-kit.git"
 
-  # Claude Code plugins - installed via 'claude plugin install'
-  # Format: plugin-name@marketplace-name
+  # Agent plugins, installed with each harness's native plugin commands from
+  # GitHub marketplaces, never from a local checkout.
+  # marketplaces: GitHub owner/repo; plugins: plugin-name@marketplace-name
+  #
+  # Claude Code: 'claude plugin marketplace add' + 'claude plugin install'
   # Run: ./scripts/install_claude_plugins to install
-  # Run: ./scripts/update_claude_plugins to update
+  # Run: ./scripts/update_claude_plugins to update (installs any missing first)
   claude:
+    marketplaces:
+      - anthropics/claude-plugins-official
+      - cloudflare/skills
+      - bostonaholic/team
+      - bostonaholic/skills
+      - bostonaholic/dev
     plugins:
       - cloudflare@cloudflare
       - typescript-lsp@claude-plugins-official
       - vercel@claude-plugins-official
+      - team@team-dev
+      - bostonaholic@skills
+      - dev@dev
+
+  # Codex CLI: 'codex plugin marketplace add' + 'codex plugin add'
+  # Run: ./scripts/install_codex_plugins to install
+  # Run: ./scripts/update_codex_plugins to update (installs any missing first)
+  codex:
+    marketplaces:
+      - bostonaholic/team
+      - bostonaholic/skills
+      - bostonaholic/dev
+    plugins:
+      - team@team-dev
+      - bostonaholic@skills
+      - dev@dev
 
 # macOS privacy (TCC). Apps that must have Full Disk Access. Child processes
 # (find, mdfind, claude, agy, ...) inherit the TCC identity of the app that
@@ -192,8 +217,9 @@ scripts:
       command: "Skillfile"
       condition: "command -v npx"
 
-    - description: "Symlink local Claude Code plugins"
-      command: "scripts/install_claude_local_plugins"
+    - description: "Install Codex plugins"
+      command: "scripts/install_codex_plugins"
+      condition: "command -v codex"
 
     - description: "Install pre-commit hooks"
       command: "pre-commit install"

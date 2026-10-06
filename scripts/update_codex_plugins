@@ -1,0 +1,59 @@
+#!/bin/bash
+################################################################################
+# Update Codex Plugins
+#
+# DESCRIPTION:
+#   Updates the Codex plugins listed in dotfiles.yaml configuration. Codex
+#   installs a plugin from its marketplace's snapshot, so this refreshes every
+#   Git marketplace snapshot, then reinstalls each plugin from it. A
+#   marketplace or plugin newly added to dotfiles.yaml is installed the same way.
+#
+# USAGE:
+#   Called by update.sh, or run directly:
+#   ./update_codex_plugins
+#
+# WHAT IT DOES:
+#   1. Checks if codex CLI is installed, skips if not found
+#   2. Refreshes Git marketplace snapshots with 'codex plugin marketplace upgrade'
+#   3. Runs install_codex_plugins, which registers any missing marketplace and
+#      installs each plugin at its snapshot's version
+#
+# DEPENDENCIES:
+#   - codex CLI (skips if not installed)
+#   - yq (for parsing YAML, via install_codex_plugins)
+#   - Internet connection
+#
+# NOTES:
+#   Restart Codex to load updated plugins.
+#
+################################################################################
+
+set -euo pipefail
+
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+main() {
+    if ! command -v codex &> /dev/null; then
+        warn "codex CLI not installed, skipping plugin updates"
+        return
+    fi
+
+    log "Updating Codex plugins..."
+
+    if [[ $DRY_RUN == true ]]; then
+        log "[DRY RUN] Would refresh Codex marketplace snapshots"
+    elif codex plugin marketplace upgrade >/dev/null 2>&1; then
+        success "  ✓ Marketplace snapshots refreshed"
+    else
+        warn "  ✗ Failed to refresh marketplace snapshots"
+    fi
+
+    "$DOTFILES_DIR/scripts/install_codex_plugins"
+    log "⚠️  Restart Codex to apply plugin updates"
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

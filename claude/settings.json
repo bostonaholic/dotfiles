@@ -12,13 +12,42 @@
   },
   "enabledPlugins": {
     "playwright@claude-plugins-official": true,
-    "team@team-dev": true
+    "team@team-dev": true,
+    "bostonaholic@skills": true,
+    "dev@dev": true,
+    "cloudflare@cloudflare": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "team-dev": {
       "source": {
-        "source": "directory",
-        "path": "/Users/matthew/code/bostonaholic/team"
+        "source": "github",
+        "repo": "bostonaholic/team"
+      }
+    },
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "cloudflare": {
+      "source": {
+        "source": "github",
+        "repo": "cloudflare/skills"
+      }
+    },
+    "skills": {
+      "source": {
+        "source": "github",
+        "repo": "bostonaholic/skills"
+      }
+    },
+    "dev": {
+      "source": {
+        "source": "github",
+        "repo": "bostonaholic/dev"
       }
     }
   },

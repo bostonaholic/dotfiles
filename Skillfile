@@ -3,8 +3,9 @@
 #
 # Run: ./Skillfile   (install.sh and update.sh both invoke this)
 #
-# Third-party skills install for Claude Code and Codex. Local personal skills
-# install for Codex only; Claude Code loads them from the local plugin.
+# Third-party skills install for Claude Code and Codex. Personal skills
+# (bostonaholic/skills, bostonaholic/dev) and Team install as native plugins
+# for both harnesses from dotfiles.yaml (packages.claude, packages.codex).
 # Claude-app-synced skills live in ~/.claude/skills/synced/.
 # Managed elsewhere:
 #   - cloudflare plugin skills are declared in dotfiles.yaml (claude.plugins)
@@ -36,9 +37,5 @@ npx skills add microsoft/playwright-cli --skill playwright-cli --agent claude-co
 
 # Book to Skill (book-to-skill)
 npx skills add virgiliojr94/book-to-skill --all -g -y
-
-# Local personal skills for Codex (Claude Code installs them as a plugin)
-npx skills add "$HOME/code/bostonaholic/skills/skills" --skill '*' --agent codex -g -y
-npx skills add "$HOME/code/bostonaholic/dev/skills" --skill '*' --agent codex -g -y
 
 echo "Done. Run 'npx skills list -g' to verify."

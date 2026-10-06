@@ -153,17 +153,23 @@ Changes to `claude/` are immediately effective (symlinked to `~/.claude/`).
 - Agents: ship with the `bostonaholic` plugin from `bostonaholic/skills`
 - Settings: `claude/settings.json` - Preferences and hooks
 
-Personal skills live in [bostonaholic/skills](https://github.com/bostonaholic/skills),
-cloned to `~/code/bostonaholic/skills`. `Skillfile` installs them for Codex only;
-`scripts/install_claude_local_plugins` registers that checkout as the
-`bostonaholic@skills` plugin for Claude Code. The dev CLI skill ships from
-[bostonaholic/dev](https://github.com/bostonaholic/dev), cloned to
-`~/code/bostonaholic/dev`, and installs the same way: `Skillfile` for Codex and
-the `dev@dev` plugin for Claude Code. Third-party skills in
-`Skillfile` retain their configured agent targets. `~/.agents/skills/` and
-`~/.claude/skills/` are separate directories, not links into this repository.
-To change a personal skill, edit the skills repo, rerun `./Skillfile` for Codex,
-and reload the Claude plugin. Obsidian-specific skills live in
+Personal skills ship from [bostonaholic/skills](https://github.com/bostonaholic/skills)
+as the `bostonaholic@skills` plugin, the dev CLI skill from
+[bostonaholic/dev](https://github.com/bostonaholic/dev) as `dev@dev`, and Team
+from [bostonaholic/team](https://github.com/bostonaholic/team) as
+`team@team-dev`. Each installs with the harness's native plugin commands from
+its GitHub marketplace, never from a local checkout. `dotfiles.yaml` declares
+them per harness (`packages.claude`, `packages.codex`):
+`scripts/install_{claude,codex}_plugins` registers the marketplaces and installs
+the plugins, and `scripts/update_{claude,codex}_plugins` installs anything
+missing, then updates every plugin to its latest release. `claude/settings.json`
+and `codex/config.toml` declare the same marketplaces and enabled plugins, so
+installing leaves them unchanged. Antigravity and OpenCode have no native
+remote install for Team, so dotfiles does not install it there.
+Third-party skills in `Skillfile` retain their configured agent targets.
+`~/.agents/skills/` and `~/.claude/skills/` are separate directories, not links
+into this repository. To change a personal skill or Team, edit and release it
+in its own repository; `update.sh` picks up the release. Obsidian-specific skills live in
 `obsidian/skills/` and are symlinked only to the Obsidian vault.
 
 ## Commit Conventions

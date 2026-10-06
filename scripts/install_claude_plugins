@@ -3,7 +3,9 @@
 # Install Claude Code Plugins
 #
 # DESCRIPTION:
-#   Installs Claude Code plugins listed in dotfiles.yaml configuration.
+#   Registers the GitHub marketplaces and installs the Claude Code plugins
+#   listed in dotfiles.yaml configuration. Safe to re-run: a marketplace that
+#   is already registered, or a plugin that is already installed, counts as done.
 #
 # USAGE:
 #   Called by install.sh, or run directly:
@@ -16,9 +18,11 @@
 # WHAT IT DOES:
 #   1. Checks if claude CLI is installed, skips if not found
 #   2. Updates marketplace metadata to get latest plugin versions
-#   3. Reads plugin list from packages.claude.plugins in dotfiles.yaml
-#   4. Installs each plugin using 'claude plugin install'
-#   5. Reports statistics on plugins installed
+#   3. Registers each GitHub marketplace in packages.claude.marketplaces
+#      (owner/repo) with 'claude plugin marketplace add'
+#   4. Reads plugin list from packages.claude.plugins in dotfiles.yaml
+#   5. Installs each plugin using 'claude plugin install'
+#   6. Reports statistics on plugins installed
 #
 # DEPENDENCIES:
 #   - claude CLI (skips if not installed)
@@ -66,6 +70,22 @@ main() {
         claude plugin marketplace update >/dev/null 2>&1 || warn "Failed to update marketplace"
     fi
 
+    # Register GitHub marketplaces before installing plugins from them
+    local marketplaces
+    marketplaces=$(yq eval '.packages.claude.marketplaces[]' "$CONFIG_FILE" 2>/dev/null | tr -d '"')
+
+    while IFS= read -r marketplace; do
+        if [[ -n "$marketplace" ]]; then
+            if [[ $DRY_RUN == true ]]; then
+                log "[DRY RUN] Would register Claude marketplace: $marketplace"
+            elif claude plugin marketplace add "$marketplace" >/dev/null 2>&1; then
+                success "  ✓ marketplace $marketplace registered"
+            else
+                error "  ✗ marketplace $marketplace failed to register"
+            fi
+        fi
+    done <<< "$marketplaces"
+
     # Parse plugins from YAML using yq
     local plugins
     plugins=$(yq eval '.packages.claude.plugins[]' "$CONFIG_FILE" 2>/dev/null | tr -d '"')
@@ -81,7 +101,9 @@ main() {
                 log "[DRY RUN] Would install Claude plugin: $plugin"
             else
                 log "Installing Claude plugin: $plugin"
-                if claude plugin install "$plugin" --scope user 2>&1 | grep -q "Successfully installed"; then
+                local output
+                output=$(claude plugin install "$plugin" --scope user 2>&1 || true)
+                if grep -q "Successfully installed\|is already installed" <<< "$output"; then
                     installed=$((installed + 1))
                     success "  ✓ $plugin installed"
                 else
