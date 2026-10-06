@@ -32,7 +32,7 @@ shellcheck scripts/*
 | Custom zsh plugin | `zsh/bostonaholic.plugin.zsh` |
 | Git config | `git/config` |
 | Claude commands | `claude/commands/*.md` |
-| Claude agents | `claude/agents/*.md` |
+| Claude agents | [bostonaholic/skills](https://github.com/bostonaholic/skills) repo, `agents/*.md` |
 | Agent skills (personal) | [bostonaholic/skills](https://github.com/bostonaholic/skills) repo |
 | Skill sources (personal + third-party) | `Skillfile` |
 | Obsidian skills | `obsidian/skills/*/SKILL.md` |
@@ -138,7 +138,6 @@ dotfiles/
     skills/         # Obsidian-only skills (symlinked to vault)
   claude/           # Claude Code configuration
     commands/       # Slash commands
-    agents/         # Subagent definitions
     settings.json   # Claude Code settings
   vim/              # Vim configuration
   ruby/             # Ruby gems and pry config
@@ -151,7 +150,7 @@ dotfiles/
 Changes to `claude/` are immediately effective (symlinked to `~/.claude/`).
 
 - Commands: `claude/commands/*.md` - Slash command definitions
-- Agents: `claude/agents/*.md` - Subagent system prompts
+- Agents: ship with the `bostonaholic` plugin from `bostonaholic/skills`
 - Settings: `claude/settings.json` - Preferences and hooks
 
 Personal skills live in [bostonaholic/skills](https://github.com/bostonaholic/skills),

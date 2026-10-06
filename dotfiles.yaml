@@ -20,7 +20,6 @@ symlinks:
   bin: ~/bin
 
   # Claude
-  claude/agents: ~/.claude/agents
   claude/CLAUDE.md: ~/.claude/CLAUDE.md
   claude/keybindings.json: ~/.claude/keybindings.json
   claude/settings.json: ~/.claude/settings.json
