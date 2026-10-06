@@ -12,14 +12,14 @@
     "command": "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/statusline.sh"
   },
   "enabledPlugins": {
+    "cloudflare@cloudflare": true,
     "playwright@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true,
+    "bostonaholic@claude-mods": true,
+    "typescript-lsp@claude-plugins-official": true,
     "team@team-dev": true,
     "bostonaholic@skills": true,
-    "dev@dev": true,
-    "cloudflare@cloudflare": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "vercel@claude-plugins-official": true,
-    "bostonaholic@claude-mods": true
+    "dev@dev": true
   },
   "extraKnownMarketplaces": {
     "team-dev": {
