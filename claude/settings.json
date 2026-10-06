@@ -19,7 +19,8 @@
     "typescript-lsp@claude-plugins-official": true,
     "team@team-dev": true,
     "bostonaholic@skills": true,
-    "dev@dev": true
+    "dev@dev": true,
+    "i-have-adhd@i-have-adhd": true
   },
   "extraKnownMarketplaces": {
     "cloudflare": {
@@ -56,6 +57,12 @@
       "source": {
         "source": "github",
         "repo": "bostonaholic/dev"
+      }
+    },
+    "i-have-adhd": {
+      "source": {
+        "source": "github",
+        "repo": "ayghri/i-have-adhd"
       }
     }
   },

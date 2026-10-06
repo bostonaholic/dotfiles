@@ -3,5 +3,8 @@
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-6",
   "defaultThinkingLevel": "medium",
-  "theme": "light"
+  "theme": "light",
+  "packages": [
+    "https://github.com/ayghri/i-have-adhd"
+  ]
 }
