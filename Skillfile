@@ -39,5 +39,6 @@ npx skills add virgiliojr94/book-to-skill --all -g -y
 
 # Local personal skills for Codex (Claude Code installs them as a plugin)
 npx skills add "$HOME/code/bostonaholic/skills/skills" --skill '*' --agent codex -g -y
+npx skills add "$HOME/code/bostonaholic/dev/skills" --skill '*' --agent codex -g -y
 
 echo "Done. Run 'npx skills list -g' to verify."
