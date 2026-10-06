@@ -11,8 +11,8 @@
 #   ./install_rbenv_plugins
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If true, preview changes without making them (default: false)
-#   VERBOSE  - If true, show detailed output (default: false)
+#   DRY_RUN  - If set, preview changes without making them (default: unset)
+#   VERBOSE  - If set, show detailed output (default: unset)
 #
 # PLUGINS INSTALLED:
 #   - rbenv-default-gems: Automatically installs gems when installing new Ruby
@@ -43,7 +43,7 @@ main() {
 
     RBENV_ROOT="${RBENV_ROOT:-$HOME/.rbenv}"
 
-    if [[ $DRY_RUN == false ]]; then
+    if [[ -z $DRY_RUN ]]; then
         mkdir -p "$RBENV_ROOT/plugins"
     fi
 
@@ -62,7 +62,7 @@ main() {
             continue
         fi
 
-        if [[ $DRY_RUN == true ]]; then
+        if [[ -n $DRY_RUN ]]; then
             log "[DRY RUN] Would install rbenv plugin: $plugin_name"
         else
             log "Installing rbenv plugin: $plugin_name"
@@ -70,7 +70,7 @@ main() {
         fi
     done
 
-    if [[ $DRY_RUN == false ]]; then
+    if [[ -z $DRY_RUN ]]; then
         rbenv rehash
     fi
 

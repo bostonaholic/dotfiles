@@ -11,8 +11,8 @@
 #   ./install_spacemacs
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If true, preview changes without making them (default: false)
-#   VERBOSE  - If true, show detailed output (default: false)
+#   DRY_RUN  - If set, preview changes without making them (default: unset)
+#   VERBOSE  - If set, show detailed output (default: unset)
 #
 # WHAT IT DOES:
 #   1. Checks if ~/.emacs.d directory exists
@@ -45,7 +45,7 @@ main() {
         return
     fi
 
-    if [[ $DRY_RUN == true ]]; then
+    if [[ -n $DRY_RUN ]]; then
         log "[DRY RUN] Would install Spacemacs"
         return
     fi

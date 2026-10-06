@@ -12,8 +12,8 @@
 #   ./install_claude_plugins
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If true, preview changes without making them (default: false)
-#   VERBOSE  - If true, show detailed output (default: false)
+#   DRY_RUN  - If set, preview changes without making them (default: unset)
+#   VERBOSE  - If set, show detailed output (default: unset)
 #
 # WHAT IT DOES:
 #   1. Checks if claude CLI is installed, skips if not found
@@ -65,7 +65,7 @@ main() {
     log "Claude version: $(claude --version)"
 
     # Update marketplace metadata first
-    if [[ $DRY_RUN == false ]]; then
+    if [[ -z $DRY_RUN ]]; then
         log "Updating plugin marketplace metadata..."
         claude plugin marketplace update >/dev/null 2>&1 || warn "Failed to update marketplace"
     fi
@@ -76,7 +76,7 @@ main() {
 
     while IFS= read -r marketplace; do
         if [[ -n "$marketplace" ]]; then
-            if [[ $DRY_RUN == true ]]; then
+            if [[ -n $DRY_RUN ]]; then
                 log "[DRY RUN] Would register Claude marketplace: $marketplace"
             elif claude plugin marketplace add "$marketplace" >/dev/null 2>&1; then
                 success "  ✓ marketplace $marketplace registered"
@@ -97,7 +97,7 @@ main() {
     while IFS= read -r plugin; do
         if [[ -n "$plugin" ]]; then
             total=$((total + 1))
-            if [[ $DRY_RUN == true ]]; then
+            if [[ -n $DRY_RUN ]]; then
                 log "[DRY RUN] Would install Claude plugin: $plugin"
             else
                 log "Installing Claude plugin: $plugin"
@@ -114,7 +114,7 @@ main() {
         fi
     done <<< "$plugins"
 
-    if [[ $DRY_RUN == false ]]; then
+    if [[ -z $DRY_RUN ]]; then
         if [[ $failed -gt 0 ]]; then
             warn "Claude plugins: $installed/$total installed, $failed failed"
         else

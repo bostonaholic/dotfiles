@@ -14,7 +14,7 @@
 #     installed, not failed.
 #   - The updater installs a plugin newly declared in dotfiles.yaml before
 #     updating, so an existing machine picks it up from update.sh.
-#   - DRY_RUN=true registers, installs, and updates nothing.
+#   - DRY_RUN=1 registers, installs, and updates nothing.
 #
 # USAGE:
 #   ./tests/test_claude_plugins.sh   (or run the whole suite via: scripts/test)
@@ -163,7 +163,7 @@ fi
 
 # 4. Dry run: nothing registered or installed.
 reset_state
-out=$(run_script install_claude_plugins DRY_RUN=true || true)
+out=$(run_script install_claude_plugins DRY_RUN=1 || true)
 if ! grep -q '^plugin \(marketplace add\|install\)' "$SCRATCH/state/calls.log" 2>/dev/null \
     && grep -q "Would register Claude marketplace: example/skills" <<< "$out"; then
     pass "dry run registers and installs nothing"
@@ -173,7 +173,7 @@ fi
 
 # 5. Dry-run update: nothing installed or updated.
 reset_state
-out=$(run_script update_claude_plugins DRY_RUN=true || true)
+out=$(run_script update_claude_plugins DRY_RUN=1 || true)
 if ! grep -q '^plugin \(marketplace add\|install\|update\)' "$SCRATCH/state/calls.log" 2>/dev/null \
     && grep -q "Would update Claude plugin: example@skills" <<< "$out"; then
     pass "dry-run update installs and updates nothing"

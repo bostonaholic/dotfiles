@@ -41,7 +41,7 @@ main() {
 
     log "Updating Codex plugins..."
 
-    if [[ $DRY_RUN == true ]]; then
+    if [[ -n $DRY_RUN ]]; then
         log "[DRY RUN] Would refresh Codex marketplace snapshots"
     elif codex plugin marketplace upgrade >/dev/null 2>&1; then
         success "  ✓ Marketplace snapshots refreshed"

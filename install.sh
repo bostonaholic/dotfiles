@@ -45,8 +45,8 @@ BACKUP_DIR="${HOME}/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 readonly BACKUP_DIR
 
 # Additional options
-FORCE=false
-BACKUP=true
+FORCE=""
+NO_BACKUP=""
 COMPONENTS=""
 SKIP_SCRIPTS=false
 
@@ -97,23 +97,23 @@ parse_args() {
                 exit 0
                 ;;
             -n|--dry-run)
-                DRY_RUN=true
+                DRY_RUN=1
                 shift
                 ;;
             -f|--force)
-                FORCE=true
+                FORCE=1
                 shift
                 ;;
             -v|--verbose)
-                VERBOSE=true
+                VERBOSE=1
                 shift
                 ;;
             -y|--yes)
-                FORCE=true
+                FORCE=1
                 shift
                 ;;
             --no-backup)
-                BACKUP=false
+                NO_BACKUP=1
                 shift
                 ;;
             --only)
@@ -170,7 +170,7 @@ check_dependencies() {
         fi
 
         # Install yq
-        if [[ $DRY_RUN == true ]]; then
+        if [[ -n $DRY_RUN ]]; then
             log "[DRY RUN] Would install yq via Homebrew"
         else
             brew install yq
@@ -200,7 +200,7 @@ create_symlinks() {
     fi
 
     # Export options for the script
-    export DRY_RUN FORCE VERBOSE BACKUP BACKUP_DIR
+    export DRY_RUN FORCE VERBOSE NO_BACKUP BACKUP_DIR
     "$DOTFILES_DIR/scripts/install_symlinks"
 }
 
@@ -295,7 +295,7 @@ run_scripts() {
         fi
 
         ran=$((ran + 1))
-        if [[ $DRY_RUN == true ]]; then
+        if [[ -n $DRY_RUN ]]; then
             log "[DRY RUN] Would run: $desc"
         else
             log "$desc..."
@@ -325,8 +325,8 @@ main() {
     log "Dotfiles directory: $DOTFILES_DIR"
     echo
 
-    [[ $DRY_RUN == true ]] && warn "Running in DRY RUN mode - no changes will be made"
-    [[ $FORCE == true ]] && warn "Force mode enabled - will overwrite existing files"
+    [[ -n $DRY_RUN ]] && warn "Running in DRY RUN mode - no changes will be made"
+    [[ -n $FORCE ]] && warn "Force mode enabled - will overwrite existing files"
     [[ -n "$COMPONENTS" ]] && log "Installing only: $COMPONENTS"
     echo
 
@@ -360,9 +360,9 @@ main() {
     echo
 
     log "===================================="
-    if [[ $DRY_RUN == false ]]; then
+    if [[ -z $DRY_RUN ]]; then
         success "✨ Installation complete!"
-        [[ $BACKUP == true ]] && [[ -d "$BACKUP_DIR" ]] && log "📁 Backups saved to: $BACKUP_DIR"
+        [[ -z $NO_BACKUP ]] && [[ -d "$BACKUP_DIR" ]] && log "📁 Backups saved to: $BACKUP_DIR"
     else
         success "Dry run complete. No changes were made."
         log "Run without --dry-run to apply changes."

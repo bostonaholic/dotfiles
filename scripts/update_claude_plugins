@@ -73,7 +73,7 @@ main() {
     while IFS= read -r plugin; do
         if [[ -n "$plugin" ]]; then
             total=$((total + 1))
-            if [[ $DRY_RUN == true ]]; then
+            if [[ -n $DRY_RUN ]]; then
                 log "[DRY RUN] Would update Claude plugin: $plugin"
                 continue
             fi

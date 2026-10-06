@@ -14,7 +14,7 @@
 #     counts each as installed.
 #   - The updater refreshes marketplace snapshots before reinstalling, so each
 #     plugin installs at its marketplace's latest version.
-#   - DRY_RUN=true registers, refreshes, and installs nothing.
+#   - DRY_RUN=1 registers, refreshes, and installs nothing.
 #
 # USAGE:
 #   ./tests/test_codex_plugins.sh   (or run the whole suite via: scripts/test)
@@ -160,7 +160,7 @@ fi
 
 # 4. Dry run: nothing registered, refreshed, or installed.
 reset_state
-out=$(run_script update_codex_plugins DRY_RUN=true || true)
+out=$(run_script update_codex_plugins DRY_RUN=1 || true)
 if ! grep -q '^plugin \(marketplace add\|marketplace upgrade\|add\)' "$SCRATCH/state/calls.log" 2>/dev/null \
     && grep -q "Would install Codex plugin: team@team-dev" <<< "$out"; then
     pass "dry run registers, refreshes, and installs nothing"

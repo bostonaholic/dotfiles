@@ -10,8 +10,8 @@
 #   ./install_tmux_plugins
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If true, preview changes without making them (default: false)
-#   VERBOSE  - If true, show detailed output (default: false)
+#   DRY_RUN  - If set, preview changes without making them (default: unset)
+#   VERBOSE  - If set, show detailed output (default: unset)
 #
 # WHAT IT DOES:
 #   1. Clones TPM from GitHub if not already installed
@@ -36,7 +36,7 @@ main() {
 
     # Install TPM if not present
     if [[ ! -d "$TPM_DIR" ]]; then
-        if [[ $DRY_RUN == true ]]; then
+        if [[ -n $DRY_RUN ]]; then
             log "[DRY RUN] Would clone TPM to $TPM_DIR"
         else
             log "Cloning TPM..."
@@ -51,7 +51,7 @@ main() {
     # which is normally set by tpm/tpm when running inside tmux. For headless CLI
     # installs, we create a temporary detached session to keep the server alive
     # while setting the env var and running install_plugins.
-    if [[ $DRY_RUN == true ]]; then
+    if [[ -n $DRY_RUN ]]; then
         log "[DRY RUN] Would install tmux plugins via TPM"
     else
         log "Installing tmux plugins via TPM..."

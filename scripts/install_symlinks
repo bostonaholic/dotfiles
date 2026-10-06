@@ -12,17 +12,17 @@
 #   ./install_symlinks
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN      - If true, preview changes without making them (default: false)
-#   FORCE        - If true, overwrite without prompting (default: false)
-#   VERBOSE      - If true, show detailed output (default: false)
-#   BACKUP       - If true, backup existing files (default: true)
+#   DRY_RUN      - If set, preview changes without making them (default: unset)
+#   FORCE        - If set, overwrite without prompting (default: unset)
+#   VERBOSE      - If set, show detailed output (default: unset)
+#   NO_BACKUP    - If set, skip backing up existing files (default: unset)
 #   BACKUP_DIR   - Directory for backups (default: ~/.dotfiles_backup/TIMESTAMP)
 #
 # BEHAVIOR:
 #   - Checks if symlinks already exist and are correct
-#   - Backs up existing files before overwriting (if BACKUP=true)
+#   - Backs up existing files before overwriting (unless NO_BACKUP is set)
 #   - Creates parent directories as needed
-#   - Prompts before overwriting (unless FORCE=true)
+#   - Prompts before overwriting (unless FORCE is set)
 #   - Reports statistics on symlinks created/skipped/failed
 #
 # DEPENDENCIES:
@@ -39,14 +39,14 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 BACKUP_DIR="${BACKUP_DIR:-${HOME}/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)}"
 
 # Additional options from environment or defaults
-FORCE="${FORCE:-false}"
-BACKUP="${BACKUP:-true}"
+FORCE="${FORCE:-}"
+NO_BACKUP="${NO_BACKUP:-}"
 
 # Backup file if it exists
 backup_file() {
     local file=$1
 
-    if [[ -e "$file" && $BACKUP == true && $DRY_RUN == false ]]; then
+    if [[ -e "$file" && -z $NO_BACKUP && -z $DRY_RUN ]]; then
         local backup_path
         backup_path="$BACKUP_DIR/$(basename "$file")"
         mkdir -p "$(dirname "$backup_path")"
@@ -81,7 +81,7 @@ create_symlink() {
             fi
         fi
 
-        if [[ $FORCE == false && $DRY_RUN == false ]]; then
+        if [[ -z $FORCE && -z $DRY_RUN ]]; then
             # Make sure prompt is visible by flushing output
             printf "\n"
             read -p "$(echo -e "${YELLOW}Overwrite $target? [y/N]${NC} ")" -n 1 -r
@@ -92,12 +92,12 @@ create_symlink() {
             fi
         fi
 
-        if [[ $DRY_RUN == false ]]; then
+        if [[ -z $DRY_RUN ]]; then
             backup_file "$target"
             log "Backed up existing file: $target"
         fi
 
-        if [[ $DRY_RUN == false ]]; then
+        if [[ -z $DRY_RUN ]]; then
             rm -rf "$target"
         fi
     fi
@@ -106,7 +106,7 @@ create_symlink() {
     local target_dir
     target_dir=$(dirname "$target")
     if [[ ! -d "$target_dir" ]]; then
-        if [[ $DRY_RUN == true ]]; then
+        if [[ -n $DRY_RUN ]]; then
             log "[DRY RUN] Would create directory: $target_dir"
         else
             debug "Creating parent directory: $target_dir"
@@ -115,7 +115,7 @@ create_symlink() {
     fi
 
     # Create symlink
-    if [[ $DRY_RUN == true ]]; then
+    if [[ -n $DRY_RUN ]]; then
         log "[DRY RUN] Would symlink: $source -> $target"
     else
         log "Creating symlink: $target -> $source"
@@ -172,7 +172,7 @@ symlink_directory_contents() {
                 fi
             fi
 
-            if [[ $FORCE == false && $DRY_RUN == false ]]; then
+            if [[ -z $FORCE && -z $DRY_RUN ]]; then
                 printf "\n"
                 read -p "$(echo -e "${YELLOW}Overwrite $target_file? [y/N]${NC} ")" -n 1 -r
                 echo
@@ -183,14 +183,14 @@ symlink_directory_contents() {
                 fi
             fi
 
-            if [[ $DRY_RUN == false ]]; then
+            if [[ -z $DRY_RUN ]]; then
                 backup_file "$target_file"
                 rm -rf "$target_file"
             fi
         fi
 
         # Create symlink
-        if [[ $DRY_RUN == true ]]; then
+        if [[ -n $DRY_RUN ]]; then
             log "[DRY RUN] Would symlink: $source_file -> $target_file"
         else
             log "Creating symlink: $target_file -> $source_file"

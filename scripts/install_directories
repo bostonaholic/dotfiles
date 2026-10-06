@@ -11,8 +11,8 @@
 #   ./install_directories
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If true, preview changes without making them (default: false)
-#   VERBOSE  - If true, show detailed output (default: false)
+#   DRY_RUN  - If set, preview changes without making them (default: unset)
+#   VERBOSE  - If set, show detailed output (default: unset)
 #
 # WHAT IT DOES:
 #   1. Reads directory list from 'directories' key in dotfiles.yaml
@@ -57,7 +57,7 @@ main() {
             total=$((total + 1))
             dir=$(eval echo "$dir")  # Expand variables
             if [[ ! -d "$dir" ]]; then
-                if [[ $DRY_RUN == true ]]; then
+                if [[ -n $DRY_RUN ]]; then
                     log "[DRY RUN] Would create directory: $dir"
                 else
                     log "Creating directory: $dir"
@@ -73,7 +73,7 @@ main() {
 
     if [[ $total -eq 0 ]]; then
         log "No directories to process"
-    elif [[ $DRY_RUN == false ]]; then
+    elif [[ -z $DRY_RUN ]]; then
         success "Directories created: $created new, $skipped already existed (total: $total)"
     else
         success "Directories checked: $total directories would be processed"

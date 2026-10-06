@@ -18,9 +18,9 @@
 #   ./install_macos_permissions
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If true, do not open System Settings (default: false)
-#   VERBOSE  - If true, show apps skipped because they are not installed
-#              (default: false)
+#   DRY_RUN  - If set, do not open System Settings (default: unset)
+#   VERBOSE  - If set, show apps skipped because they are not installed
+#              (default: unset)
 #
 # WHAT IT DOES:
 #   1. Reads the app list from macos.full_disk_access in dotfiles.yaml
@@ -64,7 +64,7 @@ read_fda_rows() {
 
 # $1 - newline-separated app paths that still need Full Disk Access
 show_instructions() {
-    if [[ $DRY_RUN == true ]]; then
+    if [[ -n $DRY_RUN ]]; then
         log "[DRY RUN] Would open System Settings > Privacy & Security > Full Disk Access"
     else
         log "Opening System Settings > Privacy & Security > Full Disk Access..."
