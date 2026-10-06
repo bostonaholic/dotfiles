@@ -169,7 +169,9 @@ remote install for Team, so dotfiles does not install it there.
 Third-party skills in `Skillfile` retain their configured agent targets.
 `~/.agents/skills/` and `~/.claude/skills/` are separate directories, not links
 into this repository. To change a personal skill or Team, edit and release it
-in its own repository; `update.sh` picks up the release. Obsidian-specific skills live in
+in its own repository; `update.sh` picks up the release. A machine set up before this layout runs
+`scripts/migrate_native_plugins` once: it removes the stale local plugin
+registration, retires the skill copies plugins now provide, and installs. Obsidian-specific skills live in
 `obsidian/skills/` and are symlinked only to the Obsidian vault.
 
 ## Commit Conventions

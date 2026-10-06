@@ -1,0 +1,128 @@
+#!/bin/bash
+################################################################################
+# Migrate to Native Plugins (one-time)
+#
+# DESCRIPTION:
+#   Moves a machine set up before Team, bostonaholic/skills, and
+#   bostonaholic/dev became native plugins onto the new setup, without gaps
+#   or duplicates. Safe to re-run: each step checks before it acts, and
+#   nothing is deleted except the ~/.claude/agents symlink.
+#
+# USAGE:
+#   ~/dotfiles/scripts/migrate_native_plugins
+#   DRY_RUN=true ~/dotfiles/scripts/migrate_native_plugins   # preview only
+#
+# WHAT IT DOES:
+#   1. Uninstalls the stale bostonaholic-skills@bostonaholic Claude plugin and
+#      removes its local-directory 'bostonaholic' marketplace
+#   2. Unlinks ~/.claude/agents when it is a symlink (dotfiles no longer
+#      provides subagents; the bostonaholic plugin does)
+#   3. Moves skill copies that plugins now provide out of ~/.agents/skills
+#      into ~/.agents/skills-retired, so no harness sees them twice
+#   4. Runs update_claude_plugins and update_codex_plugins, which register the
+#      GitHub marketplaces (repointing an existing local team-dev), install
+#      every declared plugin, and update them to the latest release
+#
+# EXIT CODE:
+#   0 - Migration finished (re-run anytime)
+#   1 - A step failed; the message names it
+#
+################################################################################
+
+set -euo pipefail
+
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+SKILLS_DIR="$HOME/.agents/skills"
+RETIRED_DIR="$HOME/.agents/skills-retired"
+
+# Copies that plugins now provide: personal and Team skills under their old
+# names, cloudflare and Loops (Codex plugins), and pricing-creativity.
+RETIRED_SKILLS=(
+    agent-prompt audit-complexity audit-tests code-review eng-design-doc-review
+    groom-backlog how no-comments paparazzi pr-open-comments pr-rebase
+    pr-screenshots pr-watch-as-author pr-watch-as-reviewer prove retro shipit why
+    bd-go bd-scan be-extremely-fucking-brief dev-cli gh-cli improve-prompt jq learn
+    mermaid oss-security-analysis react-doctor rebase-dependabots rebase-open-prs
+    redo review-rails review-ruby safely-merge-dependabots simplifying-ruby-code
+    skill-cutter system-prompt writing-prose zsh-config
+    agents-sdk cloudflare cloudflare-email-service cloudflare-one
+    cloudflare-one-migrations durable-objects sandbox-migrate-to-next sandbox-next
+    sandbox-stable turnstile-spin web-perf workers-best-practices wrangler
+    loops-api loops-cli loops-email-sending-best-practices loops-lmx
+    pricing-creativity
+)
+
+run() {
+    if [[ $DRY_RUN == true ]]; then
+        log "[DRY RUN] Would run: $*"
+    else
+        "$@"
+    fi
+}
+
+remove_stale_claude_plugin() {
+    if ! command -v claude &> /dev/null; then
+        warn "claude CLI not found; skipping stale Claude plugin cleanup"
+        return
+    fi
+    if claude plugin list 2>/dev/null | grep -q 'bostonaholic-skills@bostonaholic'; then
+        log "Uninstalling stale plugin bostonaholic-skills@bostonaholic"
+        run claude plugin uninstall bostonaholic-skills@bostonaholic
+    else
+        success "  ✓ no stale bostonaholic-skills@bostonaholic plugin"
+    fi
+    if claude plugin marketplace list 2>/dev/null | awk '$1 == "❯" && $2 == "bostonaholic" { found=1 } END { exit !found }'; then
+        log "Removing stale local marketplace 'bostonaholic'"
+        run claude plugin marketplace remove bostonaholic
+    else
+        success "  ✓ no stale 'bostonaholic' marketplace"
+    fi
+}
+
+unlink_claude_agents() {
+    local link="$HOME/.claude/agents"
+    if [[ -L "$link" ]]; then
+        log "Unlinking $link -> $(readlink "$link")"
+        run rm "$link"
+    elif [[ -e "$link" ]]; then
+        warn "$link is a real directory, not the old dotfiles symlink; leaving it"
+    else
+        success "  ✓ no ~/.claude/agents symlink"
+    fi
+}
+
+retire_skill_copies() {
+    local moved=0 name
+    [[ -d "$SKILLS_DIR" ]] || { success "  ✓ no $SKILLS_DIR"; return; }
+    for name in "${RETIRED_SKILLS[@]}"; do
+        [[ -e "$SKILLS_DIR/$name" ]] || continue
+        if [[ -e "$RETIRED_DIR/$name" ]]; then
+            error "  ✗ $RETIRED_DIR/$name already exists; move $SKILLS_DIR/$name by hand"
+            return 1
+        fi
+        run mkdir -p "$RETIRED_DIR"
+        run mv "$SKILLS_DIR/$name" "$RETIRED_DIR/$name"
+        moved=$((moved + 1))
+    done
+    success "  ✓ retired $moved skill copies to $RETIRED_DIR"
+}
+
+main() {
+    log "Migrating to native plugins..."
+
+    remove_stale_claude_plugin
+    unlink_claude_agents
+    retire_skill_copies
+
+    "$DOTFILES_DIR/scripts/update_claude_plugins"
+    "$DOTFILES_DIR/scripts/update_codex_plugins"
+
+    success "Migration complete. Restart Claude Code and Codex."
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi
