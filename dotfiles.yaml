@@ -152,10 +152,14 @@ packages:
   # Run: ./scripts/update_codex_plugins to update (installs any missing first)
   codex:
     marketplaces:
+      - cloudflare/skills
+      - loops-so/skills
       - bostonaholic/team
       - bostonaholic/skills
       - bostonaholic/dev
     plugins:
+      - cloudflare@cloudflare
+      - loops@loops-plugins
       - team@team-dev
       - bostonaholic@skills
       - dev@dev

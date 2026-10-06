@@ -47,6 +47,14 @@ source = "https://github.com/bostonaholic/skills.git"
 source_type = "git"
 source = "https://github.com/bostonaholic/dev.git"
 
+[marketplaces.cloudflare]
+source_type = "git"
+source = "https://github.com/cloudflare/skills.git"
+
+[marketplaces.loops-plugins]
+source_type = "git"
+source = "https://github.com/loops-so/skills.git"
+
 [plugins."team@team-dev"]
 enabled = true
 
@@ -54,4 +62,10 @@ enabled = true
 enabled = true
 
 [plugins."dev@dev"]
+enabled = true
+
+[plugins."cloudflare@cloudflare"]
+enabled = true
+
+[plugins."loops@loops-plugins"]
 enabled = true
