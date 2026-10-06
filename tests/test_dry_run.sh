@@ -1,23 +1,22 @@
 #!/usr/bin/env bash
 ################################################################################
-# DRY_RUN validation -- Regression Tests
+# DRY_RUN -- Regression Tests
 #
 # DESCRIPTION:
-#   Scripts gate real work on `[[ $DRY_RUN == 1 ]]` and
-#   `[[ $DRY_RUN == 0 ]]` separately, so a value that is neither (true, yes)
-#   would skip the previews yet still run the real commands. scripts/lib.sh
-#   rejects any DRY_RUN other than 1 or 0.
+#   DRY_RUN is on when set to any non-empty value and off when unset or
+#   empty. Scripts test it only with -n / -z, so no value can skip the
+#   previews yet still run the real commands.
 #
 #   Runs each plugin script against a stubbed `claude` and `codex` and a
 #   fixture dotfiles.yaml, so it never touches the real plugin state.
 #
 #   Coverage:
-#   - DRY_RUN=1 previews and runs no plugin or marketplace command.
-#   - DRY_RUN=true and DRY_RUN=yes exit non-zero with an error naming DRY_RUN
-#     and run no plugin or marketplace command.
+#   - DRY_RUN=1, true, yes and 0 all preview and run no plugin or
+#     marketplace command.
+#   - An empty DRY_RUN runs the real plugin commands.
 #
 # USAGE:
-#   ./tests/test_dry_run_validation.sh   (or run the whole suite via: scripts/test)
+#   ./tests/test_dry_run.sh   (or run the whole suite via: scripts/test)
 #
 # EXIT CODE:
 #   0 - All tests passed
@@ -89,7 +88,7 @@ STUB
     chmod +x "$SCRATCH/bin/$cli"
 done
 
-echo "DRY_RUN validation"
+echo "DRY_RUN"
 
 run_script() {
     rm -f "$SCRATCH/state/"*
@@ -99,26 +98,21 @@ run_script() {
 }
 
 for script in install_claude_plugins update_claude_plugins install_codex_plugins update_codex_plugins; do
-    run_script "$script" 1
-    if [[ $status -eq 0 && -z "$calls" ]] && grep -q "Would " <<< "$out"; then
-        pass "$script previews under DRY_RUN=1 without running a plugin command"
-    else
-        fail "$script previews under DRY_RUN=1 without running a plugin command" "exit $status: $out$calls"
-    fi
-
-    for value in true yes; do
+    for value in 1 true yes 0; do
         run_script "$script" "$value"
-        if [[ $status -ne 0 ]] && grep -q "DRY_RUN" <<< "$out"; then
-            pass "$script rejects DRY_RUN=$value"
+        if [[ $status -eq 0 && -z "$calls" ]] && grep -q "Would " <<< "$out"; then
+            pass "$script previews under DRY_RUN=$value without running a plugin command"
         else
-            fail "$script rejects DRY_RUN=$value" "exit $status: $out"
-        fi
-        if [[ -z "$calls" ]]; then
-            pass "$script runs no plugin command under DRY_RUN=$value"
-        else
-            fail "$script runs no plugin command under DRY_RUN=$value" "$calls"
+            fail "$script previews under DRY_RUN=$value without running a plugin command" "exit $status: $out$calls"
         fi
     done
+
+    run_script "$script" ""
+    if [[ -n "$calls" ]]; then
+        pass "$script runs plugin commands when DRY_RUN is empty"
+    else
+        fail "$script runs plugin commands when DRY_RUN is empty" "exit $status: $out"
+    fi
 done
 
 summary

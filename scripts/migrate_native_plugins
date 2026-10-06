@@ -61,7 +61,7 @@ RETIRED_SKILLS=(
 )
 
 run() {
-    if [[ $DRY_RUN == 1 ]]; then
+    if [[ -n $DRY_RUN ]]; then
         log "[DRY RUN] Would run: $*"
     else
         "$@"

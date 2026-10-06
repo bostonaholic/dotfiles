@@ -18,8 +18,8 @@
 # PROVIDED VARIABLES:
 #   DOTFILES_DIR  - Absolute path to the dotfiles repository root
 #   CONFIG_FILE   - Absolute path to dotfiles.yaml
-#   DRY_RUN       - Preview mode: 1 or 0, anything else exits 1
-#                   (default: 0, inherits from environment)
+#   DRY_RUN       - Preview mode when set to any non-empty value
+#                   (default: unset, inherits from environment)
 #   VERBOSE       - Verbose output (default: false, inherits from environment)
 #
 # PROVIDED FUNCTIONS:
@@ -60,7 +60,9 @@ readonly CONFIG_FILE
 export CONFIG_FILE
 
 # Options from environment or defaults
-DRY_RUN="${DRY_RUN:-0}"
+# DRY_RUN is on when set to any non-empty value. Scripts test it only with
+# -n / -z, so every value is either a preview or a real run, never both.
+DRY_RUN="${DRY_RUN:-}"
 VERBOSE="${VERBOSE:-false}"
 
 # Logging functions
@@ -73,10 +75,3 @@ debug() {
         echo -e "${_LIB_BLUE}[DEBUG]${_LIB_NC} $1"
     fi
 }
-
-# Scripts test `== 1` and `== 0` separately, so any other value would
-# skip the dry-run previews yet still make real changes.
-if [[ $DRY_RUN != 1 && $DRY_RUN != 0 ]]; then
-    error "DRY_RUN must be '1' or '0', got '$DRY_RUN'"
-    exit 1
-fi

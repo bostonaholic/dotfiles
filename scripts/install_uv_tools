@@ -11,7 +11,7 @@
 #   ./install_uv_tools
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If 1, preview changes without making them (default: 0)
+#   DRY_RUN  - If set, preview changes without making them (default: unset)
 #   VERBOSE  - If true, show detailed output (default: false)
 #
 # WHAT IT DOES:
@@ -69,7 +69,7 @@ main() {
 
         if [[ -n "$name" && -n "$source" ]]; then
             total=$((total + 1))
-            if [[ $DRY_RUN == 1 ]]; then
+            if [[ -n $DRY_RUN ]]; then
                 log "[DRY RUN] Would install uv tool: $name from $source"
             else
                 log "Installing uv tool: $name from $source"
@@ -83,7 +83,7 @@ main() {
         fi
     done
 
-    if [[ $DRY_RUN == 0 ]]; then
+    if [[ -z $DRY_RUN ]]; then
         success "uv tools installed: $installed/$total tools"
     else
         success "uv tools checked: $total tools would be installed"

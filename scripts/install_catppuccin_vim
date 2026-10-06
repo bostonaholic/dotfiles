@@ -11,7 +11,7 @@
 #   ./install_catppuccin_vim
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If 1, preview changes without making them (default: 0)
+#   DRY_RUN  - If set, preview changes without making them (default: unset)
 #   VERBOSE  - If true, show detailed output (default: false)
 #
 # DEPENDENCIES:
@@ -33,7 +33,7 @@ main() {
         return
     fi
 
-    if [[ $DRY_RUN == 1 ]]; then
+    if [[ -n $DRY_RUN ]]; then
         log "[DRY RUN] Would install Catppuccin vim theme"
         return
     fi

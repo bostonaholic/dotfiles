@@ -11,7 +11,7 @@
 #   ./install_oh-my-zsh
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If 1, preview changes without making them (default: 0)
+#   DRY_RUN  - If set, preview changes without making them (default: unset)
 #   VERBOSE  - If true, show detailed output (default: false)
 #
 # WHAT IT DOES:
@@ -42,7 +42,7 @@ main() {
         return
     fi
 
-    if [[ $DRY_RUN == 1 ]]; then
+    if [[ -n $DRY_RUN ]]; then
         log "[DRY RUN] Would install oh-my-zsh"
         return
     fi

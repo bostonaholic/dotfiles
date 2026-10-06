@@ -14,7 +14,7 @@
 #   ./install_codex_plugins
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If 1, preview changes without making them (default: 0)
+#   DRY_RUN  - If set, preview changes without making them (default: unset)
 #   VERBOSE  - If true, show detailed output (default: false)
 #
 # WHAT IT DOES:
@@ -56,7 +56,7 @@ main() {
 
     while IFS= read -r marketplace; do
         if [[ -n "$marketplace" ]]; then
-            if [[ $DRY_RUN == 1 ]]; then
+            if [[ -n $DRY_RUN ]]; then
                 log "[DRY RUN] Would register Codex marketplace: $marketplace"
             elif codex plugin marketplace add "$marketplace" >/dev/null 2>&1; then
                 success "  ✓ marketplace $marketplace registered"
@@ -76,7 +76,7 @@ main() {
     while IFS= read -r plugin; do
         if [[ -n "$plugin" ]]; then
             total=$((total + 1))
-            if [[ $DRY_RUN == 1 ]]; then
+            if [[ -n $DRY_RUN ]]; then
                 log "[DRY RUN] Would install Codex plugin: $plugin"
             else
                 log "Installing Codex plugin: $plugin"
@@ -95,7 +95,7 @@ main() {
         fi
     done <<< "$plugins"
 
-    if [[ $DRY_RUN == 0 ]]; then
+    if [[ -z $DRY_RUN ]]; then
         if [[ $failed -gt 0 ]]; then
             warn "Codex plugins: $installed/$total installed, $failed failed"
         else

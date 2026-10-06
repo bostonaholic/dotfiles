@@ -11,7 +11,7 @@
 #   ./install_nodenv
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If 1, preview changes without making them (default: 0)
+#   DRY_RUN  - If set, preview changes without making them (default: unset)
 #   VERBOSE  - If true, show detailed output (default: false)
 #
 # WHAT IT DOES:
@@ -39,7 +39,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 install_global_node() {
     local version=$1
 
-    if [[ $DRY_RUN == 1 ]]; then
+    if [[ -n $DRY_RUN ]]; then
         log "[DRY RUN] Would install Node.js $version via nodenv"
         return
     fi
@@ -56,7 +56,7 @@ main() {
     version=$(<"$DOTFILES_DIR/node/node-version")
 
     if [[ ! -d "$HOME/.nodenv" ]]; then
-        if [[ $DRY_RUN == 1 ]]; then
+        if [[ -n $DRY_RUN ]]; then
             log "[DRY RUN] Would install nodenv via Homebrew"
             log "[DRY RUN] Would install Node.js $version"
             return
