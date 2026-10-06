@@ -19,7 +19,6 @@ symlinks:
   bin: ~/bin
 
   # Claude
-  claude/agents: ~/.claude/agents
   claude/CLAUDE.md: ~/.claude/CLAUDE.md
   claude/settings.json: ~/.claude/settings.json
   claude/statusline.sh: ~/.claude/statusline.sh
