@@ -139,15 +139,20 @@ packages:
       - bostonaholic/team
       - bostonaholic/skills
       - bostonaholic/dev
+      - bostonaholic/claude-mods
     plugins:
       - cloudflare@cloudflare
       - typescript-lsp@claude-plugins-official
       - vercel@claude-plugins-official
+      - playwright@claude-plugins-official
       - team@team-dev
       - bostonaholic@skills
       - dev@dev
+      - bostonaholic@claude-mods
 
   # Codex CLI: 'codex plugin marketplace add' + 'codex plugin add'
+  # Plugins from Codex's built-in openai-curated-remote catalog need no
+  # marketplace entry, and Codex records them outside config.toml.
   # Run: ./scripts/install_codex_plugins to install
   # Run: ./scripts/update_codex_plugins to update (installs any missing first)
   codex:
@@ -163,6 +168,7 @@ packages:
       - team@team-dev
       - bostonaholic@skills
       - dev@dev
+      - vercel@openai-curated-remote
 
 # macOS privacy (TCC). Apps that must have Full Disk Access. Child processes
 # (find, mdfind, claude, agy, ...) inherit the TCC identity of the app that

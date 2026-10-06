@@ -17,7 +17,8 @@
     "dev@dev": true,
     "cloudflare@cloudflare": true,
     "typescript-lsp@claude-plugins-official": true,
-    "vercel@claude-plugins-official": true
+    "vercel@claude-plugins-official": true,
+    "bostonaholic@claude-mods": true
   },
   "extraKnownMarketplaces": {
     "team-dev": {
@@ -48,6 +49,12 @@
       "source": {
         "source": "github",
         "repo": "bostonaholic/dev"
+      }
+    },
+    "claude-mods": {
+      "source": {
+        "source": "github",
+        "repo": "bostonaholic/claude-mods"
       }
     }
   },
