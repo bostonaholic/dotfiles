@@ -84,7 +84,7 @@ create_symlink() {
         if [[ -z $FORCE && -z $DRY_RUN ]]; then
             # Make sure prompt is visible by flushing output
             printf "\n"
-            read -p "$(echo -e "${YELLOW}Overwrite $target? [y/N]${NC} ")" -n 1 -r
+            read -p "$(echo -e "${_LIB_YELLOW}Overwrite $target? [y/N]${_LIB_NC} ")" -n 1 -r
             echo
             if [[ ! $REPLY =~ ^[Yy]$ ]]; then
                 warn "Skipping $target"
@@ -174,7 +174,7 @@ symlink_directory_contents() {
 
             if [[ -z $FORCE && -z $DRY_RUN ]]; then
                 printf "\n"
-                read -p "$(echo -e "${YELLOW}Overwrite $target_file? [y/N]${NC} ")" -n 1 -r
+                read -p "$(echo -e "${_LIB_YELLOW}Overwrite $target_file? [y/N]${_LIB_NC} ")" -n 1 -r
                 echo
                 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
                     warn "Skipping $target_file"
