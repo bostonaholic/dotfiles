@@ -4,8 +4,8 @@
 #
 # DESCRIPTION:
 #   Exercises scripts/install_symlinks against a fake HOME and a fixture
-#   dotfiles.yaml whose one target already exists as a regular file, so it
-#   never touches real files.
+#   dotfiles.yaml whose targets (one symlinks entry, one symlink_contents
+#   entry) already exist as regular files, so it never touches real files.
 #
 #   FORCE, NO_BACKUP and VERBOSE are on when set to any non-empty value and
 #   off when unset or empty.
@@ -14,7 +14,8 @@
 #   - FORCE=1 and FORCE=false overwrite without prompting and back up the
 #     old file.
 #   - FORCE=1 with NO_BACKUP=1 overwrites without a backup.
-#   - An empty FORCE prompts, and answering no keeps the old file.
+#   - An empty FORCE prompts for both entries, and answering no keeps the old
+#     files. Building the prompts references no undefined variable.
 #   - VERBOSE=1 prints debug output; an empty VERBOSE does not.
 #
 # USAGE:
@@ -62,23 +63,28 @@ fi
 SCRATCH="$(mktemp -d)"
 trap 'rm -rf "$SCRATCH"' EXIT
 
-mkdir -p "$SCRATCH/dotfiles"
+mkdir -p "$SCRATCH/dotfiles/dir"
 echo "new" > "$SCRATCH/dotfiles/source"
+echo "new" > "$SCRATCH/dotfiles/dir/file"
 cat > "$SCRATCH/dotfiles/dotfiles.yaml" <<'YAML'
 symlinks:
   source: ~/target
+symlink_contents:
+  dir: ~/dir
 YAML
 
 TARGET="$SCRATCH/home/target"
+CONTENTS_TARGET="$SCRATCH/home/dir/file"
 BACKUP="$SCRATCH/backup/target"
 
-# Fresh HOME whose target is a regular file, then run install_symlinks with the
-# given env assignments, answering "n" to any overwrite prompt.
+# Fresh HOME whose targets are regular files, then run install_symlinks with
+# the given env assignments, answering "n" to every overwrite prompt.
 run_symlinks() {
     rm -rf "${SCRATCH:?}/home" "${SCRATCH:?}/backup"
-    mkdir -p "$SCRATCH/home"
+    mkdir -p "$SCRATCH/home/dir"
     echo "old" > "$TARGET"
-    out=$(echo n | env -i HOME="$SCRATCH/home" PATH="$PATH" DOTFILES_DIR="$SCRATCH/dotfiles" \
+    echo "old" > "$CONTENTS_TARGET"
+    out=$(printf 'n\nn\n' | env -i HOME="$SCRATCH/home" PATH="$PATH" DOTFILES_DIR="$SCRATCH/dotfiles" \
         BACKUP_DIR="$SCRATCH/backup" "$@" bash "$REPO_ROOT/scripts/install_symlinks" 2>&1) \
         && status=0 || status=$?
 }
@@ -102,11 +108,12 @@ else
 fi
 
 run_symlinks FORCE=
-if [[ $status -eq 0 && ! -L "$TARGET" && "$(cat "$TARGET")" == "old" ]] \
-    && grep -q "Skipping" <<< "$out"; then
-    pass "empty FORCE prompts and keeps the file on no"
+if [[ $status -eq 0 && "$(cat "$TARGET")" == "old" && "$(cat "$CONTENTS_TARGET")" == "old" ]] \
+    && [[ ! -L "$TARGET" && ! -L "$CONTENTS_TARGET" ]] \
+    && [[ $(grep -c "Skipping" <<< "$out") -eq 2 ]] && ! grep -q "unbound variable" <<< "$out"; then
+    pass "empty FORCE prompts for both entries and keeps the files on no"
 else
-    fail "empty FORCE prompts and keeps the file on no" "exit $status: $out"
+    fail "empty FORCE prompts for both entries and keeps the files on no" "exit $status: $out"
 fi
 
 run_symlinks FORCE=1 VERBOSE=1
