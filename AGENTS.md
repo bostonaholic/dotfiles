@@ -163,8 +163,9 @@ them per harness (`packages.claude`, `packages.codex`):
 `scripts/install_{claude,codex}_plugins` registers the marketplaces and installs
 the plugins, and `scripts/update_{claude,codex}_plugins` installs anything
 missing, then updates every plugin to its latest release. `claude/settings.json`
-and `codex/config.toml` declare the same marketplaces and enabled plugins, so
-installing leaves them unchanged. Antigravity and OpenCode have no native
+declares the same marketplaces and enabled plugins, so installing leaves it
+unchanged. Codex keeps its config in a machine-local `~/.codex/config.toml`
+that dotfiles does not track. Antigravity and OpenCode have no native
 remote install for Team, so dotfiles does not install it there.
 Third-party skills in `Skillfile` retain their configured agent targets.
 `~/.agents/skills/` and `~/.claude/skills/` are separate directories, not links

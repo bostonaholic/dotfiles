@@ -30,8 +30,8 @@
 #   - dotfiles.yaml configuration file
 #
 # NOTES:
-#   codex/config.toml declares the same marketplaces and enabled plugins in
-#   the layout Codex writes, so a run leaves the tracked file unchanged.
+#   Codex records installed marketplaces and plugins in ~/.codex/config.toml,
+#   which is machine-local and not tracked in dotfiles.
 #
 ################################################################################
 
