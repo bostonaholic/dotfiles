@@ -48,7 +48,7 @@ done
 
 args="${claude_args[*]:-}"
 
-prompt="Run /rebase-dependabots ${args}"
+prompt="/bostonaholic:rebase-dependabots ${args}"
 
 echo "Starting headless Dependabot rebase..."
 echo "Arguments: ${args:-<none, discovering all PRs>}"

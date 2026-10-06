@@ -156,7 +156,7 @@ Changes to `claude/` are immediately effective (symlinked to `~/.claude/`).
 Personal skills live in [bostonaholic/skills](https://github.com/bostonaholic/skills),
 cloned to `~/code/bostonaholic/skills`. `Skillfile` installs them for Codex only;
 `scripts/install_claude_local_plugins` registers that checkout as the
-`bostonaholic-skills@bostonaholic` plugin for Claude Code. Third-party skills in
+`bostonaholic@skills` plugin for Claude Code. Third-party skills in
 `Skillfile` retain their configured agent targets. `~/.agents/skills/` and
 `~/.claude/skills/` are separate directories, not links into this repository.
 To change a personal skill, edit the skills repo, rerun `./Skillfile` for Codex,

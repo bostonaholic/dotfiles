@@ -7,7 +7,7 @@ set -euo pipefail
 declare -A LOCAL_PLUGINS=(
   # source_dir -> plugin@marketplace
   ["$HOME/code/bostonaholic/team"]="team@team-dev"
-  ["$HOME/code/bostonaholic/skills"]="bostonaholic-skills@bostonaholic"
+  ["$HOME/code/bostonaholic/skills"]="bostonaholic@skills"
 )
 
 for source in "${!LOCAL_PLUGINS[@]}"; do

@@ -50,7 +50,7 @@ done
 
 args="${claude_args[*]:-}"
 
-prompt="Run /safely-merge-dependabots ${args}"
+prompt="/bostonaholic:safely-merge-dependabots ${args}"
 
 echo "Starting headless Dependabot merge..."
 echo "Arguments: ${args:-<none, discovering all PRs>}"
