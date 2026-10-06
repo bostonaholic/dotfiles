@@ -22,10 +22,10 @@
     "dev@dev": true
   },
   "extraKnownMarketplaces": {
-    "team-dev": {
+    "cloudflare": {
       "source": {
         "source": "github",
-        "repo": "bostonaholic/team"
+        "repo": "cloudflare/skills"
       }
     },
     "claude-plugins-official": {
@@ -34,10 +34,16 @@
         "repo": "anthropics/claude-plugins-official"
       }
     },
-    "cloudflare": {
+    "claude-mods": {
       "source": {
         "source": "github",
-        "repo": "cloudflare/skills"
+        "repo": "bostonaholic/claude-mods"
+      }
+    },
+    "team-dev": {
+      "source": {
+        "source": "github",
+        "repo": "bostonaholic/team"
       }
     },
     "skills": {
@@ -50,12 +56,6 @@
       "source": {
         "source": "github",
         "repo": "bostonaholic/dev"
-      }
-    },
-    "claude-mods": {
-      "source": {
-        "source": "github",
-        "repo": "bostonaholic/claude-mods"
       }
     }
   },
