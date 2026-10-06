@@ -18,7 +18,8 @@
 # PROVIDED VARIABLES:
 #   DOTFILES_DIR  - Absolute path to the dotfiles repository root
 #   CONFIG_FILE   - Absolute path to dotfiles.yaml
-#   DRY_RUN       - Preview mode (default: false, inherits from environment)
+#   DRY_RUN       - Preview mode: true or false, anything else exits 1
+#                   (default: false, inherits from environment)
 #   VERBOSE       - Verbose output (default: false, inherits from environment)
 #
 # PROVIDED FUNCTIONS:
@@ -72,3 +73,10 @@ debug() {
         echo -e "${_LIB_BLUE}[DEBUG]${_LIB_NC} $1"
     fi
 }
+
+# Scripts test `== true` and `== false` separately, so any other value would
+# skip the dry-run previews yet still make real changes.
+if [[ $DRY_RUN != true && $DRY_RUN != false ]]; then
+    error "DRY_RUN must be 'true' or 'false', got '$DRY_RUN'"
+    exit 1
+fi
