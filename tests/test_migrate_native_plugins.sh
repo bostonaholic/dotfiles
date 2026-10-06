@@ -12,6 +12,10 @@
 #     marketplace are removed.
 #   - ~/.claude/agents is unlinked only when it is a symlink.
 #   - Listed skill copies move to ~/.agents/skills-retired; others stay.
+#   - In ~/.codex/skills, entries a plugin provides or ~/.agents/skills
+#     duplicates (dangling symlinks included) move to ~/.codex/skills-retired;
+#     .system and unrelated entries stay.
+#   - Runs under /bin/bash, the script's shebang (bash 3.2 on macOS).
 #   - A second run changes nothing and succeeds.
 #   - A name already in skills-retired stops the run instead of overwriting.
 #   - DRY_RUN=true changes nothing.
@@ -100,17 +104,24 @@ setup_home() {
         mkdir -p "$SCRATCH/home/.agents/skills/$name"
         echo "$name" > "$SCRATCH/home/.agents/skills/$name/SKILL.md"
     done
+    mkdir -p "$SCRATCH/home/.codex/skills/.system/builtin" "$SCRATCH/home/.codex/skills/gh-cli" \
+        "$SCRATCH/home/.codex/skills/humanizer" "$SCRATCH/home/.codex/skills/my-own"
+    ln -s "$SCRATCH/home/.agents/skills/react-doctor" "$SCRATCH/home/.codex/skills/react-doctor"
     printf 'bostonaholic-skills@bostonaholic\nbostonaholic@claude-mods\n' > "$SCRATCH/state/claude-plugins"
     printf 'bostonaholic\nclaude-mods\n' > "$SCRATCH/state/claude-markets"
 }
 
 run_migration() {
     env -i HOME="$SCRATCH/home" PATH="$SCRATCH/bin:$PATH" DOTFILES_DIR="$SCRATCH/dotfiles" "$@" \
-        bash "$REPO_ROOT/scripts/migrate_native_plugins" 2>&1
+        "${MIGRATE_BASH:-/bin/bash}" "$REPO_ROOT/scripts/migrate_native_plugins" 2>&1
 }
 
 listing() {
     (cd "$SCRATCH/home/.agents/$1" 2>/dev/null && ls | tr '\n' ' ')
+}
+
+codex_listing() {
+    (cd "$SCRATCH/home/.codex/$1" 2>/dev/null && ls -A | tr '\n' ' ')
 }
 
 echo "migrate_native_plugins"
@@ -137,10 +148,20 @@ else
     fail "retires listed copies and keeps the rest" "skills: $(listing skills) | retired: $(listing skills-retired)"
 fi
 
+if [[ "$(codex_listing skills)" == ".system my-own " \
+    && "$(codex_listing skills-retired)" == "gh-cli humanizer react-doctor " \
+    && -L "$SCRATCH/home/.codex/skills-retired/react-doctor" ]]; then
+    pass "retires ~/.codex/skills copies plugins or ~/.agents/skills provide, keeps .system and the rest"
+else
+    fail "retires ~/.codex/skills copies plugins or ~/.agents/skills provide, keeps .system and the rest" \
+        "skills: $(codex_listing skills) | retired: $(codex_listing skills-retired)"
+fi
+
 # 2. Second run: idempotent.
 out=$(run_migration) && status=0 || status=$?
-if [[ $status -eq 0 ]] && grep -q "retired 0 skill copies" <<< "$out" \
-    && [[ "$(listing skills)" == "frontend-design humanizer " ]]; then
+if [[ $status -eq 0 ]] && [[ $(grep -c "retired 0 skill copies" <<< "$out") -eq 2 ]] \
+    && [[ "$(listing skills)" == "frontend-design humanizer " ]] \
+    && [[ "$(codex_listing skills)" == ".system my-own " ]]; then
     pass "a second run changes nothing and succeeds"
 else
     fail "a second run changes nothing and succeeds" "$out"
@@ -168,7 +189,8 @@ fi
 # 5. Dry run changes nothing.
 setup_home
 out=$(run_migration DRY_RUN=true) && status=0 || status=$?
-if [[ -L "$SCRATCH/home/.claude/agents" && "$(listing skills-retired)" == "" ]] \
+if [[ -L "$SCRATCH/home/.claude/agents" && "$(listing skills-retired)" == "" \
+    && "$(codex_listing skills-retired)" == "" ]] \
     && grep -q bostonaholic-skills "$SCRATCH/state/claude-plugins"; then
     pass "dry run changes nothing"
 else
