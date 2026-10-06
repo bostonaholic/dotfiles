@@ -4,7 +4,8 @@
 #
 # DESCRIPTION:
 #   Updates Claude Code plugins listed in dotfiles.yaml configuration.
-#   First updates marketplace metadata, then updates each configured plugin.
+#   First runs install_claude_plugins, so a marketplace or plugin newly added
+#   to dotfiles.yaml is registered and installed, then updates each plugin.
 #
 # USAGE:
 #   Called by update.sh, or run directly:
@@ -12,7 +13,8 @@
 #
 # WHAT IT DOES:
 #   1. Checks if claude CLI is installed, skips if not found
-#   2. Updates marketplace metadata to get latest plugin versions
+#   2. Runs install_claude_plugins (registers marketplaces, installs missing
+#      plugins, and refreshes marketplace metadata)
 #   3. Reads plugin list from packages.claude.plugins in dotfiles.yaml
 #   4. Updates each plugin using 'claude plugin update'
 #   5. Reports results for each plugin
@@ -55,15 +57,10 @@ main() {
         return
     fi
 
-    log "Updating Claude Code plugins..."
+    # Install anything declared but missing; this also refreshes marketplace metadata
+    "$DOTFILES_DIR/scripts/install_claude_plugins"
 
-    # Update marketplace metadata first
-    log "Updating plugin marketplace metadata..."
-    if claude plugin marketplace update >/dev/null 2>&1; then
-        success "  ✓ Marketplace metadata updated"
-    else
-        warn "  ✗ Failed to update marketplace metadata"
-    fi
+    log "Updating Claude Code plugins..."
 
     # Parse plugins from YAML using yq
     local plugins
@@ -76,6 +73,10 @@ main() {
     while IFS= read -r plugin; do
         if [[ -n "$plugin" ]]; then
             total=$((total + 1))
+            if [[ $DRY_RUN == true ]]; then
+                log "[DRY RUN] Would update Claude plugin: $plugin"
+                continue
+            fi
             log "Updating plugin: $plugin"
 
             # Capture output to check if update was needed

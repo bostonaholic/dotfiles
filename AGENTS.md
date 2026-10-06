@@ -32,9 +32,9 @@ shellcheck scripts/*
 | Custom zsh plugin | `zsh/bostonaholic.plugin.zsh` |
 | Git config | `git/config` |
 | Claude commands | `claude/commands/*.md` |
-| Claude agents | `claude/agents/*.md` |
-| Agent skills | `agents/skills/*/SKILL.md` |
-| Third-party skill sources | `Skillfile` |
+| Claude agents | [bostonaholic/skills](https://github.com/bostonaholic/skills) repo, `agents/*.md` |
+| Agent skills (personal) | [bostonaholic/skills](https://github.com/bostonaholic/skills) repo |
+| Skill sources (personal + third-party) | `Skillfile` |
 | Obsidian skills | `obsidian/skills/*/SKILL.md` |
 | Install scripts | `scripts/install_*` |
 | macOS Full Disk Access allowlist | `dotfiles.yaml` under `macos.full_disk_access` |
@@ -70,7 +70,7 @@ shellcheck scripts/*
 
 1. Add an `npx skills add` line to `Skillfile`
 2. Run `./Skillfile`
-3. Commit `Skillfile` (vendored copies under `agents/skills/` are gitignored)
+3. Commit `Skillfile`
 
 ### Allowlisting an App for macOS Privacy Prompts
 
@@ -134,12 +134,10 @@ dotfiles/
   zsh/              # Shell configuration
   git/              # Git config and helpers
   agents/           # Cross-tool agent configuration
-    skills/         # Skill definitions (agentskills.io standard)
   obsidian/         # Obsidian vault configuration
     skills/         # Obsidian-only skills (symlinked to vault)
   claude/           # Claude Code configuration
     commands/       # Slash commands
-    agents/         # Subagent definitions
     settings.json   # Claude Code settings
   vim/              # Vim configuration
   ruby/             # Ruby gems and pry config
@@ -152,13 +150,29 @@ dotfiles/
 Changes to `claude/` are immediately effective (symlinked to `~/.claude/`).
 
 - Commands: `claude/commands/*.md` - Slash command definitions
-- Agents: `claude/agents/*.md` - Subagent system prompts
+- Agents: ship with the `bostonaholic` plugin from `bostonaholic/skills`
 - Settings: `claude/settings.json` - Preferences and hooks
 
-Skills live in `agents/skills/` and are symlinked to both `~/.claude/skills/`
-and `~/.agents/skills/` for cross-tool compatibility (Claude Code, Gemini CLI,
-Codex, OpenCode). Obsidian-specific skills live in `obsidian/skills/` and are
-symlinked only to the Obsidian vault.
+Personal skills ship from [bostonaholic/skills](https://github.com/bostonaholic/skills)
+as the `bostonaholic@skills` plugin, the dev CLI skill from
+[bostonaholic/dev](https://github.com/bostonaholic/dev) as `dev@dev`, and Team
+from [bostonaholic/team](https://github.com/bostonaholic/team) as
+`team@team-dev`. Each installs with the harness's native plugin commands from
+its GitHub marketplace, never from a local checkout. `dotfiles.yaml` declares
+them per harness (`packages.claude`, `packages.codex`):
+`scripts/install_{claude,codex}_plugins` registers the marketplaces and installs
+the plugins, and `scripts/update_{claude,codex}_plugins` installs anything
+missing, then updates every plugin to its latest release. `claude/settings.json`
+and `codex/config.toml` declare the same marketplaces and enabled plugins, so
+installing leaves them unchanged. Antigravity and OpenCode have no native
+remote install for Team, so dotfiles does not install it there.
+Third-party skills in `Skillfile` retain their configured agent targets.
+`~/.agents/skills/` and `~/.claude/skills/` are separate directories, not links
+into this repository. To change a personal skill or Team, edit and release it
+in its own repository; `update.sh` picks up the release. A machine set up before this layout runs
+`scripts/migrate_native_plugins` once: it removes the stale local plugin
+registration, retires the skill copies plugins now provide, and installs. Obsidian-specific skills live in
+`obsidian/skills/` and are symlinked only to the Obsidian vault.
 
 ## Commit Conventions
 

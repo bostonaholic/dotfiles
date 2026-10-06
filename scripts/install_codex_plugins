@@ -1,0 +1,112 @@
+#!/bin/bash
+################################################################################
+# Install Codex Plugins
+#
+# DESCRIPTION:
+#   Registers the GitHub marketplaces and installs the Codex plugins listed in
+#   dotfiles.yaml configuration, with Codex's native plugin commands. Safe to
+#   re-run: both commands succeed when the marketplace or plugin is already
+#   present.
+#
+# USAGE:
+#   Called by install.sh (scripts list) and update_codex_plugins, or run
+#   directly:
+#   ./install_codex_plugins
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   VERBOSE  - If true, show detailed output (default: false)
+#
+# WHAT IT DOES:
+#   1. Checks if codex CLI is installed, skips if not found
+#   2. Registers each GitHub marketplace in packages.codex.marketplaces
+#      (owner/repo) with 'codex plugin marketplace add'
+#   3. Installs each plugin in packages.codex.plugins with 'codex plugin add'
+#   4. Reports statistics on plugins installed
+#
+# DEPENDENCIES:
+#   - codex CLI (skips if not installed)
+#   - yq (for parsing YAML)
+#   - dotfiles.yaml configuration file
+#
+# NOTES:
+#   codex/config.toml declares the same marketplaces and enabled plugins in
+#   the layout Codex writes, so a run leaves the tracked file unchanged.
+#
+################################################################################
+
+set -euo pipefail
+
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+main() {
+    log "Installing Codex plugins..."
+
+    if ! command -v codex &> /dev/null; then
+        warn "codex CLI not found. Skipping plugin installation"
+        warn "Install Codex first, then run: $0"
+        return
+    fi
+
+    log "Codex version: $(codex --version)"
+
+    local marketplaces
+    marketplaces=$(yq eval '.packages.codex.marketplaces[]' "$CONFIG_FILE" 2>/dev/null | tr -d '"')
+
+    while IFS= read -r marketplace; do
+        if [[ -n "$marketplace" ]]; then
+            if [[ $DRY_RUN == true ]]; then
+                log "[DRY RUN] Would register Codex marketplace: $marketplace"
+            elif codex plugin marketplace add "$marketplace" >/dev/null 2>&1; then
+                success "  ✓ marketplace $marketplace registered"
+            else
+                error "  ✗ marketplace $marketplace failed to register"
+            fi
+        fi
+    done <<< "$marketplaces"
+
+    local plugins
+    plugins=$(yq eval '.packages.codex.plugins[]' "$CONFIG_FILE" 2>/dev/null | tr -d '"')
+
+    local installed=0
+    local failed=0
+    local total=0
+
+    while IFS= read -r plugin; do
+        if [[ -n "$plugin" ]]; then
+            total=$((total + 1))
+            if [[ $DRY_RUN == true ]]; then
+                log "[DRY RUN] Would install Codex plugin: $plugin"
+            else
+                log "Installing Codex plugin: $plugin"
+                local output version
+                if output=$(codex plugin add "$plugin" 2>&1); then
+                    # The install root ends in the installed version directory.
+                    version=$(sed -n 's#^Installed plugin root: .*/##p' <<< "$output")
+                    installed=$((installed + 1))
+                    success "  ✓ $plugin installed${version:+ ($version)}"
+                else
+                    failed=$((failed + 1))
+                    error "  ✗ $plugin failed to install"
+                    debug "$output"
+                fi
+            fi
+        fi
+    done <<< "$plugins"
+
+    if [[ $DRY_RUN == false ]]; then
+        if [[ $failed -gt 0 ]]; then
+            warn "Codex plugins: $installed/$total installed, $failed failed"
+        else
+            success "Codex plugins: $installed/$total installed"
+        fi
+    else
+        success "Codex plugins checked: $total plugins would be installed"
+    fi
+}
+
+# Run if executed directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

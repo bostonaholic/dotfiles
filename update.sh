@@ -14,6 +14,7 @@
 #   - Dotfiles repository (git refresh)
 #   - Homebrew and all Homebrew packages
 #   - Claude CLI plugins
+#   - Codex CLI plugins
 #   - Vim runtime (if installed)
 #   - Spacemacs (if installed)
 #   - rbenv plugins
@@ -57,6 +58,9 @@ fi
 
 # Update Claude plugins
 echo && "$DOTFILES_DIR/scripts/update_claude_plugins"
+
+# Update Codex plugins
+echo && "$DOTFILES_DIR/scripts/update_codex_plugins"
 
 # Vimrc
 # https://github.com/amix/vimrc

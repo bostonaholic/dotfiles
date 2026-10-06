@@ -34,3 +34,38 @@ enabled = true
 
 [apps.connector_76869538009648d5b282a4bb21c3d157.tools."github.create_pull_request"]
 approval_mode = "approve"
+
+[marketplaces.team-dev]
+source_type = "git"
+source = "https://github.com/bostonaholic/team.git"
+
+[marketplaces.skills]
+source_type = "git"
+source = "https://github.com/bostonaholic/skills.git"
+
+[marketplaces.dev]
+source_type = "git"
+source = "https://github.com/bostonaholic/dev.git"
+
+[marketplaces.cloudflare]
+source_type = "git"
+source = "https://github.com/cloudflare/skills.git"
+
+[marketplaces.loops-plugins]
+source_type = "git"
+source = "https://github.com/loops-so/skills.git"
+
+[plugins."team@team-dev"]
+enabled = true
+
+[plugins."bostonaholic@skills"]
+enabled = true
+
+[plugins."dev@dev"]
+enabled = true
+
+[plugins."cloudflare@cloudflare"]
+enabled = true
+
+[plugins."loops@loops-plugins"]
+enabled = true

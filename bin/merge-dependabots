@@ -4,7 +4,7 @@
 #
 # DESCRIPTION:
 #   Runs Claude Code in headless mode to discover, analyze, and safely merge
-#   Dependabot PRs. Wraps the /safely-merge-dependabots slash command for
+#   Dependabot PRs. Wraps the /bostonaholic:merging-dependabot-prs slash command for
 #   non-interactive execution.
 #
 # USAGE:
@@ -12,14 +12,12 @@
 #
 # OPTIONS:
 #   --dry-run           Analyze only, don't merge anything
-#   --timeout <duration> Override test timeout (default: 10m)
 #   -q, --quiet         Suppress progress output (only show final result)
 #
 # EXAMPLES:
 #   merge-dependabots                      # Merge all safe Dependabot PRs
 #   merge-dependabots --dry-run            # Preview what would be merged
 #   merge-dependabots 123 124              # Process specific PRs
-#   merge-dependabots --timeout 20m        # Longer test timeout
 #   merge-dependabots --quiet              # No progress, just final output
 #
 # DEPENDENCIES:
@@ -50,7 +48,7 @@ done
 
 args="${claude_args[*]:-}"
 
-prompt="Run /safely-merge-dependabots ${args}"
+prompt="/bostonaholic:merging-dependabot-prs ${args}"
 
 echo "Starting headless Dependabot merge..."
 echo "Arguments: ${args:-<none, discovering all PRs>}"
