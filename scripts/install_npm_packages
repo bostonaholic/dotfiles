@@ -11,7 +11,7 @@
 #   ./install_npm_packages
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   DRY_RUN  - If 1, preview changes without making them (default: 0)
 #   VERBOSE  - If true, show detailed output (default: false)
 #
 # WHAT IT DOES:
@@ -57,7 +57,7 @@ main() {
     while IFS= read -r package; do
         if [[ -n "$package" ]]; then
             total=$((total + 1))
-            if [[ $DRY_RUN == true ]]; then
+            if [[ $DRY_RUN == 1 ]]; then
                 log "[DRY RUN] Would install npm package: $package"
             else
                 log "Installing npm package: $package"
@@ -72,12 +72,12 @@ main() {
     done <<< "$packages"
 
     # Rehash if using nodenv
-    if command -v nodenv &> /dev/null && [[ $DRY_RUN == false ]]; then
+    if command -v nodenv &> /dev/null && [[ $DRY_RUN == 0 ]]; then
         log "Rehashing nodenv..."
         nodenv rehash
     fi
 
-    if [[ $DRY_RUN == false ]]; then
+    if [[ $DRY_RUN == 0 ]]; then
         success "npm packages installed: $installed/$total packages"
     else
         success "npm packages checked: $total packages would be installed"

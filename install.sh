@@ -97,7 +97,7 @@ parse_args() {
                 exit 0
                 ;;
             -n|--dry-run)
-                DRY_RUN=true
+                DRY_RUN=1
                 shift
                 ;;
             -f|--force)
@@ -170,7 +170,7 @@ check_dependencies() {
         fi
 
         # Install yq
-        if [[ $DRY_RUN == true ]]; then
+        if [[ $DRY_RUN == 1 ]]; then
             log "[DRY RUN] Would install yq via Homebrew"
         else
             brew install yq
@@ -295,7 +295,7 @@ run_scripts() {
         fi
 
         ran=$((ran + 1))
-        if [[ $DRY_RUN == true ]]; then
+        if [[ $DRY_RUN == 1 ]]; then
             log "[DRY RUN] Would run: $desc"
         else
             log "$desc..."
@@ -325,7 +325,7 @@ main() {
     log "Dotfiles directory: $DOTFILES_DIR"
     echo
 
-    [[ $DRY_RUN == true ]] && warn "Running in DRY RUN mode - no changes will be made"
+    [[ $DRY_RUN == 1 ]] && warn "Running in DRY RUN mode - no changes will be made"
     [[ $FORCE == true ]] && warn "Force mode enabled - will overwrite existing files"
     [[ -n "$COMPONENTS" ]] && log "Installing only: $COMPONENTS"
     echo
@@ -360,7 +360,7 @@ main() {
     echo
 
     log "===================================="
-    if [[ $DRY_RUN == false ]]; then
+    if [[ $DRY_RUN == 0 ]]; then
         success "✨ Installation complete!"
         [[ $BACKUP == true ]] && [[ -d "$BACKUP_DIR" ]] && log "📁 Backups saved to: $BACKUP_DIR"
     else

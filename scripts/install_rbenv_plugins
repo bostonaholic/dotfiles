@@ -11,7 +11,7 @@
 #   ./install_rbenv_plugins
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   DRY_RUN  - If 1, preview changes without making them (default: 0)
 #   VERBOSE  - If true, show detailed output (default: false)
 #
 # PLUGINS INSTALLED:
@@ -43,7 +43,7 @@ main() {
 
     RBENV_ROOT="${RBENV_ROOT:-$HOME/.rbenv}"
 
-    if [[ $DRY_RUN == false ]]; then
+    if [[ $DRY_RUN == 0 ]]; then
         mkdir -p "$RBENV_ROOT/plugins"
     fi
 
@@ -62,7 +62,7 @@ main() {
             continue
         fi
 
-        if [[ $DRY_RUN == true ]]; then
+        if [[ $DRY_RUN == 1 ]]; then
             log "[DRY RUN] Would install rbenv plugin: $plugin_name"
         else
             log "Installing rbenv plugin: $plugin_name"
@@ -70,7 +70,7 @@ main() {
         fi
     done
 
-    if [[ $DRY_RUN == false ]]; then
+    if [[ $DRY_RUN == 0 ]]; then
         rbenv rehash
     fi
 

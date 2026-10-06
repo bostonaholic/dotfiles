@@ -18,7 +18,7 @@
 #   - Runs under /bin/bash, the script's shebang (bash 3.2 on macOS).
 #   - A second run changes nothing and succeeds.
 #   - A name already in skills-retired stops the run instead of overwriting.
-#   - DRY_RUN=true changes nothing.
+#   - DRY_RUN=1 changes nothing.
 #
 # USAGE:
 #   ./tests/test_migrate_native_plugins.sh   (or via: scripts/test)
@@ -188,7 +188,7 @@ fi
 
 # 5. Dry run changes nothing.
 setup_home
-out=$(run_migration DRY_RUN=true) && status=0 || status=$?
+out=$(run_migration DRY_RUN=1) && status=0 || status=$?
 if [[ -L "$SCRATCH/home/.claude/agents" && "$(listing skills-retired)" == "" \
     && "$(codex_listing skills-retired)" == "" ]] \
     && grep -q bostonaholic-skills "$SCRATCH/state/claude-plugins"; then

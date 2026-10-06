@@ -11,7 +11,7 @@
 #   ./install_pipx_packages
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   DRY_RUN  - If 1, preview changes without making them (default: 0)
 #   VERBOSE  - If true, show detailed output (default: false)
 #
 # WHAT IT DOES:
@@ -60,7 +60,7 @@ main() {
     while IFS= read -r package; do
         if [[ -n "$package" ]]; then
             total=$((total + 1))
-            if [[ $DRY_RUN == true ]]; then
+            if [[ $DRY_RUN == 1 ]]; then
                 log "[DRY RUN] Would install pipx package: $package"
             else
                 log "Installing pipx package: $package"
@@ -80,7 +80,7 @@ main() {
         fi
     done <<< "$packages"
 
-    if [[ $DRY_RUN == false ]]; then
+    if [[ $DRY_RUN == 0 ]]; then
         success "pipx packages: $installed/$total installed"
     else
         success "pipx packages checked: $total packages would be installed"

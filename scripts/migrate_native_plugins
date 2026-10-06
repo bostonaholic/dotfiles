@@ -10,7 +10,7 @@
 #
 # USAGE:
 #   ~/dotfiles/scripts/migrate_native_plugins
-#   DRY_RUN=true ~/dotfiles/scripts/migrate_native_plugins   # preview only
+#   DRY_RUN=1 ~/dotfiles/scripts/migrate_native_plugins   # preview only
 #
 # WHAT IT DOES:
 #   1. Uninstalls the stale bostonaholic-skills@bostonaholic Claude plugin and
@@ -61,7 +61,7 @@ RETIRED_SKILLS=(
 )
 
 run() {
-    if [[ $DRY_RUN == true ]]; then
+    if [[ $DRY_RUN == 1 ]]; then
         log "[DRY RUN] Would run: $*"
     else
         "$@"

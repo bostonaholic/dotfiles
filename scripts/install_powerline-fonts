@@ -11,7 +11,7 @@
 #   ./install_powerline-fonts
 #
 # ENVIRONMENT VARIABLES:
-#   DRY_RUN  - If true, preview changes without making them (default: false)
+#   DRY_RUN  - If 1, preview changes without making them (default: 0)
 #   VERBOSE  - If true, show detailed output (default: false)
 #
 # WHAT IT DOES:
@@ -35,7 +35,7 @@ set -euo pipefail
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 
 main() {
-    if [[ $DRY_RUN == true ]]; then
+    if [[ $DRY_RUN == 1 ]]; then
         log "[DRY RUN] Would install Powerline fonts"
         return
     fi
