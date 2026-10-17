@@ -14,6 +14,8 @@
 #   - --dir wins over an inherited DOTFILES_DIR
 #   - An existing checkout is updated with `git pull --ff-only`
 #   - Unknown flags, non-macOS hosts, and non-git target dirs fail
+#   - Under a real terminal, install.sh gets the terminal as stdin and bash
+#     exits after main instead of waiting on the keyboard
 #
 # USAGE:
 #   ./tests/test_bootstrap.sh   (or run the whole suite via: scripts/test)
@@ -163,6 +165,59 @@ elif grep -q "not a git checkout" "$SCRATCH/out.log"; then
     pass "non-git target dir exits non-zero"
 else
     fail "non-git target dir exits non-zero" "$(cat "$SCRATCH/out.log")"
+fi
+
+# Run under a pseudo-terminal, so /dev/tty exists the way it does for a person
+# running `curl ... | bash`. Exits 124 if the command is still running at 10s.
+cat > "$SCRATCH/pty_run.py" <<'PTY'
+import os, pty, select, sys, time
+pid, fd = pty.fork()
+if pid == 0:
+    os.execvp(sys.argv[1], sys.argv[1:])
+out, deadline = b"", time.time() + 10
+while time.time() < deadline:
+    done, status = os.waitpid(pid, os.WNOHANG)
+    if done:
+        sys.stdout.write(out.decode(errors="replace"))
+        sys.exit(os.waitstatus_to_exitcode(status))
+    if select.select([fd], [], [], 0.2)[0]:
+        try:
+            out += os.read(fd, 4096)
+        except OSError:
+            time.sleep(0.1)
+os.kill(pid, 9)
+sys.stdout.write(out.decode(errors="replace"))
+sys.exit(124)
+PTY
+
+if command -v python3 >/dev/null 2>&1; then
+    # Clone a probe install.sh that reports whether its stdin is a terminal.
+    cat > "$SCRATCH/bin/git" <<'STUB'
+#!/bin/bash
+dir="${!#}"
+mkdir -p "$dir/.git"
+printf '#!/bin/bash\nif [ -t 0 ]; then echo "stdin: tty"; else echo "stdin: pipe"; fi\n' > "$dir/install.sh"
+chmod +x "$dir/install.sh"
+STUB
+
+    status=0
+    out="$(python3 "$SCRATCH/pty_run.py" /bin/bash -c \
+        "cat '$BOOTSTRAP' | PATH='$SCRATCH/bin':\$PATH DOTFILES_DIR='$SCRATCH/tty' /bin/bash -s -- --minimal")" \
+        || status=$?
+    if [[ $status -eq 124 ]]; then
+        fail "piped from a terminal, exits after main" "still running after 10s: $out"
+    elif [[ $status -ne 0 ]]; then
+        fail "piped from a terminal, exits after main" "exit $status: $out"
+    else
+        pass "piped from a terminal, exits after main"
+    fi
+    if [[ "$out" == *"stdin: tty"* ]]; then
+        pass "piped from a terminal, install.sh reads the terminal"
+    else
+        fail "piped from a terminal, install.sh reads the terminal" "$out"
+    fi
+else
+    echo "  SKIP  python3 not installed (terminal tests)"
 fi
 
 summary
