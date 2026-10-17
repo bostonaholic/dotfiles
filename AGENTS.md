@@ -37,6 +37,7 @@ shellcheck scripts/*
 | Skill sources (personal + third-party) | `Skillfile` |
 | Obsidian skills | `obsidian/skills/*/SKILL.md` |
 | Install scripts | `scripts/install_*` |
+| Fresh-machine bootstrap (init.bostonaholic.dev) | `bootstrap.sh`, `.github/workflows/pages.yml` |
 | macOS Full Disk Access allowlist | `dotfiles.yaml` under `macos.full_disk_access` |
 
 ## Modification Workflow
@@ -128,6 +129,7 @@ markdownlint "**/*.md"
 dotfiles/
   dotfiles.yaml     # Source of truth for all config
   install.sh        # Idempotent installer
+  bootstrap.sh      # curl | bash entry point served at init.bostonaholic.dev
   update.sh         # Pull updates, refresh packages
   Brewfile          # Homebrew packages
   scripts/          # Install and update scripts
