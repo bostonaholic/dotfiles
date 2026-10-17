@@ -60,9 +60,16 @@ USAGE
   fi
 
   # Piped into bash, stdin is the script itself, so install.sh and Homebrew
-  # prompts would read garbage. Point stdin back at the terminal.
-  if [ ! -t 0 ] && { : </dev/tty; } 2>/dev/null; then
-    exec </dev/tty
+  # prompts would read garbage. Give install.sh the terminal instead. Never
+  # `exec </dev/tty` here: bash reads its next command from stdin after main
+  # returns, so it would sit waiting on the keyboard.
+  local INSTALL_STDIN=/dev/stdin
+  if [ ! -t 0 ]; then
+    if { : </dev/tty; } 2>/dev/null; then
+      INSTALL_STDIN=/dev/tty
+    else
+      INSTALL_STDIN=/dev/null
+    fi
   fi
 
   # On a fresh Mac, git is a stub until the Command Line Tools are installed.
@@ -86,7 +93,8 @@ USAGE
 
   echo ""
   # install.sh honors an inherited DOTFILES_DIR, so pin it to this checkout.
-  DOTFILES_DIR="$REPO_DIR" "$REPO_DIR/install.sh" --only "$COMPONENTS" ${INSTALL_ARGS[@]+"${INSTALL_ARGS[@]}"}
+  DOTFILES_DIR="$REPO_DIR" "$REPO_DIR/install.sh" --only "$COMPONENTS" ${INSTALL_ARGS[@]+"${INSTALL_ARGS[@]}"} \
+    <"$INSTALL_STDIN"
 
   echo ""
   echo "Bootstrap complete. Repo at $REPO_DIR"
