@@ -1,5 +1,4 @@
 #!/bin/bash
-# <plaintext> (tells browsers to show the rest of this page as plain text)
 #
 # Fresh-machine bootstrap. Clones the dotfiles repo and runs install.sh.
 #

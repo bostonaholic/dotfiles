@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>init.bostonaholic.dev</title>
+<meta name="description" content="One command to set up a fresh Mac with Matthew Boston's dotfiles.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    color-scheme: dark;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --bg: #000;
+    --panel: #0a0a0a;
+    --panel-hover: #0e0e0e;
+    --border: #1f1f1f;
+    --border-hover: #333;
+    --text: #c9c9c9;
+    --text-strong: #e0e0e0;
+  }
+  /* The published page starts with a bash heredoc line (see site/build). The
+     browser renders that line as a bare text node in <body>; font-size: 0
+     collapses it, and <main> restores the real size. */
+  body {
+    margin: 0; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 0; background: var(--bg); color: var(--text);
+  }
+  main {
+    font: 15px/1.6 var(--mono);
+    padding: 48px 16px; width: 100%; max-width: 640px; box-sizing: border-box; text-align: center;
+  }
+  .logo { font-size: 64px; line-height: 1; color: #fff; margin-bottom: 22px; }
+  h1 { font: inherit; opacity: .85; margin: 0 0 12px; }
+  h2 {
+    font: inherit; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase;
+    opacity: .35; margin: 40px 0 14px; text-align: left;
+  }
+  p { opacity: .5; font-size: .85rem; margin: 12px 0 0; }
+  a { color: inherit; }
+  code {
+    padding: 16px 20px; border-radius: 8px;
+    background: var(--panel); border: 1px solid var(--border);
+    font: 15px/1.4 var(--mono); color: var(--text-strong);
+  }
+  .cmd {
+    position: relative; display: block; width: 100%; box-sizing: border-box;
+    margin-top: 16px; padding: 16px 20px; border-radius: 8px;
+    background: var(--panel); border: 1px solid var(--border); color: var(--text-strong);
+    font: 15px/1.4 var(--mono); cursor: pointer;
+    -webkit-appearance: none; appearance: none;
+    transition: border-color .15s, background-color .15s;
+  }
+  .cmd:hover { background: var(--panel-hover); border-color: var(--border-hover); }
+  .cmd:focus-visible { outline: 1px solid #555; outline-offset: 2px; }
+  .cmd code { padding: 0; border: 0; background: none; font: inherit; color: inherit; }
+  .state {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase; opacity: .3;
+  }
+  .cmd.copied .state { opacity: .75; color: #fff; }
+  dl {
+    margin: 0; text-align: left;
+    display: grid; grid-template-columns: max-content 1fr; gap: 10px 18px; align-items: baseline;
+  }
+  dd { margin: 0; opacity: .5; font-size: .85rem; }
+  code.flag { display: inline-block; padding: 4px 9px; border-radius: 5px; font-size: 13px; white-space: nowrap; }
+  .usage { text-align: left; font-size: .8rem; opacity: .35; margin-top: 16px; }
+  .usage code { padding: 0; border: 0; background: none; color: inherit; font-size: 13px; }
+  @media (max-width: 520px) { .state { display: none; } }
+  @media (max-width: 480px) {
+    dl { grid-template-columns: 1fr; gap: 4px; }
+    dd { margin-bottom: 10px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="logo" aria-hidden="true">~</div>
+  <h1>There's no place like ~</h1>
+  <p>In one command, take a fresh Mac and make it just how Matthew likes it.</p>
+  <button type="button" class="cmd" id="cmd" data-cmd="curl init.bostonaholic.dev | bash"
+          aria-label="Copy command to clipboard"><code>curl init.bostonaholic.dev | bash</code><span class="state" id="state">copy</span></button>
+
+  <h2>Options</h2>
+  <dl>
+    <dt><code class="flag">--minimal</code></dt>
+    <dd>Dotfiles only. Skips packages, plugins, and scripts.</dd>
+    <dt><code class="flag">--no-apps</code></dt>
+    <dd>Skips Homebrew packages.</dd>
+    <dt><code class="flag">--no-plugins</code></dt>
+    <dd>Skips Claude Code plugins.</dd>
+    <dt><code class="flag">--dir PATH</code></dt>
+    <dd>Clones somewhere other than ~/dotfiles.</dd>
+    <dt><code class="flag">--dry-run</code></dt>
+    <dd>Clones, then previews install.sh without changing anything.</dd>
+    <dt><code class="flag">--yes</code></dt>
+    <dd>Answers yes to every install.sh prompt.</dd>
+  </dl>
+  <p class="usage">Pass them after <code>-s --</code>, like <code>curl init.bostonaholic.dev | bash -s -- --minimal</code></p>
+
+  <p><a href="https://github.com/bostonaholic/dotfiles">bostonaholic/dotfiles</a> ·
+     <a href="https://github.com/bostonaholic/dotfiles/blob/main/bootstrap.sh">read the script</a></p>
+</main>
+<script>
+(function () {
+  var btn = document.getElementById("cmd");
+  var state = document.getElementById("state");
+  var timer;
+
+  btn.addEventListener("click", function () {
+    copy(btn.dataset.cmd).then(function (ok) {
+      state.textContent = ok ? "copied" : "select it";
+      btn.classList.toggle("copied", ok);
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        state.textContent = "copy";
+        btn.classList.remove("copied");
+      }, 1600);
+    });
+  });
+
+  function copy(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(
+        function () { return true; },
+        function () { return legacyCopy(text); }
+      );
+    }
+    return Promise.resolve(legacyCopy(text));
+  }
+
+  // Plain http:// pages never get the async clipboard API.
+  function legacyCopy(text) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.top = "-1000px";
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) {
+      return false;
+    }
+  }
+})();
+</script>
+</body>
+</html>
