@@ -2,6 +2,32 @@
 
 ## Setup
 
+### Bootstrap a fresh Mac
+
+```bash
+curl -fsSL https://init.bostonaholic.dev | bash
+```
+
+This clones the repo into `~/dotfiles` and runs `install.sh`. Pass options
+after `bash -s --`:
+
+```bash
+curl -fsSL https://init.bostonaholic.dev | bash -s -- --minimal
+```
+
+| Option | Effect |
+| ------ | ------ |
+| `--minimal` | Only clone and create symlinks |
+| `--no-apps` | Skip Homebrew packages |
+| `--no-plugins` | Skip Claude Code plugins |
+| `--dir PATH` | Clone into `PATH` instead of `~/dotfiles` |
+| `-n`, `--dry-run` | Clone, then preview `install.sh` |
+| `-y`, `--yes` | Answer yes to all `install.sh` prompts |
+
+The script is [`bootstrap.sh`](bootstrap.sh), published to GitHub Pages by
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml) on every push to
+`main`.
+
 ### Clone the repository
 
 ```bash
