@@ -24,9 +24,12 @@ curl -fsSL https://init.bostonaholic.dev | bash -s -- --minimal
 | `-n`, `--dry-run` | Clone, then preview `install.sh` |
 | `-y`, `--yes` | Answer yes to all `install.sh` prompts |
 
-The script is [`bootstrap.sh`](bootstrap.sh), published to GitHub Pages by
-[`.github/workflows/pages.yml`](.github/workflows/pages.yml) on every push to
-`main`.
+The script is [`bootstrap.sh`](bootstrap.sh). [`site/build`](site/build) joins
+it with the landing page in [`site/index.html`](site/index.html) into one file
+that browsers render as a page and `bash` runs as the script.
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml) publishes it to
+GitHub Pages on every push to `main`. Preview locally with `site/build` and
+open `_site/index.html`.
 
 ### Clone the repository
 

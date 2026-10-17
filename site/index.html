@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>init.bostonaholic.dev</title>
+<meta name="description" content="One command to set up a fresh Mac with Matthew Boston's dotfiles.">
+<style>
+  /* The page is a man page, INIT(1): black on white, or white on black when
+     the system is in dark mode, set in the Mac's own terminal font. */
+  :root {
+    --paper: #fff;
+    --ink: #000;
+    --ink-dim: #595959;
+    --select: #e6e6e6;
+    --rule: #d0d0d0;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --indent: 7ch;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --paper: #000;
+      --ink: #fff;
+      --ink-dim: #a6a6a6;
+      --select: #262626;
+      --rule: #333;
+    }
+  }
+  ::selection { background: var(--select); }
+
+  /* The published page starts with a bash heredoc line (see site/build). The
+     browser renders that line as a bare text node in <body>; font-size: 0
+     collapses it, and <main> restores the real size. */
+  body { margin: 0; font-size: 0; background: var(--paper); color: var(--ink); }
+  main {
+    font: 16px/1.55 var(--mono);
+    max-width: 80ch; margin: 0 auto; padding: 32px 24px 48px;
+  }
+
+  .running {
+    display: flex; justify-content: space-between; gap: 2ch;
+    color: var(--ink-dim);
+  }
+  .running.head { margin-bottom: 40px; }
+  .running.foot { margin-top: 56px; padding-top: 12px; border-top: 1px solid var(--rule); }
+
+  h1, h2 { font: inherit; font-weight: 700; margin: 32px 0 4px; }
+  h1 { margin-top: 0; }
+  section > p, section > dl, .examples { margin: 0 0 0 var(--indent); }
+  p + p { margin-top: 12px; }
+  b { font-weight: 700; }
+  u { text-underline-offset: 3px; }
+  a { color: inherit; text-underline-offset: 3px; }
+  a:hover { background: var(--select); }
+
+  .synopsis { margin-left: var(--indent); container-type: inline-size; }
+  .cmd {
+    display: block; margin: 4px 0 0 -0.4ch; padding: 4px 0.4ch;
+    border: 0; background: none; color: inherit; cursor: copy; text-align: left;
+    /* Sized to the column so the 33-character command stays on one line. */
+    font: 700 clamp(14px, 100cqw / 21, 36px)/1.25 var(--mono); letter-spacing: -0.01em;
+  }
+  .cmd:hover, .cmd.copied { background: var(--select); }
+  .cmd:focus-visible, a:focus-visible { outline: 2px dashed var(--ink); outline-offset: 3px; }
+  .hint { margin: 6px 0 0; color: var(--ink-dim); }
+  .alt { margin: 20px 0 0; }
+
+  dt { margin-top: 12px; }
+  dt:first-child { margin-top: 0; }
+  dd { margin: 0 0 0 var(--indent); }
+  .examples dt { color: var(--ink-dim); }
+  .examples dd { margin-left: 0; }
+
+  @media (max-width: 560px) {
+    :root { --indent: 3ch; }
+    main { font-size: 14px; padding: 20px 16px 32px; }
+    .running .manual { display: none; }
+    .running.head { margin-bottom: 28px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header class="running head">
+    <span>INIT(1)</span><span class="manual">bostonaholic's dotfiles</span><span>INIT(1)</span>
+  </header>
+
+  <section>
+    <h1>NAME</h1>
+    <p>init.bostonaholic.dev - there's no place like ~</p>
+  </section>
+
+  <section>
+    <h2>SYNOPSIS</h2>
+    <div class="synopsis">
+      <button type="button" class="cmd" id="cmd" data-cmd="curl init.bostonaholic.dev | bash"
+              aria-describedby="hint">curl init.bostonaholic.dev | bash</button>
+      <p class="hint" id="hint" aria-live="polite">Click to copy.</p>
+      <p class="alt"><b>curl</b> init.bostonaholic.dev | <b>bash</b> -s -- [<u>options</u>]</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>DESCRIPTION</h2>
+    <p>Sets up a fresh Mac with Matthew Boston's dotfiles. Clones
+       <a href="https://github.com/bostonaholic/dotfiles">bostonaholic/dotfiles</a>
+       into ~/dotfiles, or updates it if it is already there, then runs
+       install.sh: symlinks, Homebrew packages, npm, pipx and uv tools,
+       Claude Code plugins, and setup scripts.</p>
+    <p>Installs the Xcode Command Line Tools first if they are missing. Safe to
+       run again; install.sh only changes what is out of date.</p>
+  </section>
+
+  <section>
+    <h2>OPTIONS</h2>
+    <dl>
+      <dt><b>--minimal</b></dt>
+      <dd>Dotfiles only. Skips packages, plugins, and scripts.</dd>
+      <dt><b>--no-apps</b></dt>
+      <dd>Skips Homebrew packages.</dd>
+      <dt><b>--no-plugins</b></dt>
+      <dd>Skips Claude Code plugins.</dd>
+      <dt><b>--dir</b> <u>path</u></dt>
+      <dd>Clones into <u>path</u> instead of ~/dotfiles.</dd>
+      <dt><b>-n</b>, <b>--dry-run</b></dt>
+      <dd>Clones, then previews install.sh without changing anything.</dd>
+      <dt><b>-y</b>, <b>--yes</b></dt>
+      <dd>Answers yes to every install.sh prompt.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>ENVIRONMENT</h2>
+    <dl>
+      <dt><b>DOTFILES_REPO</b></dt>
+      <dd>Repository to clone. Default: https://github.com/bostonaholic/dotfiles.git</dd>
+      <dt><b>DOTFILES_DIR</b></dt>
+      <dd>Where to clone it. Default: ~/dotfiles</dd>
+      <dt><b>DOTFILES_BRANCH</b></dt>
+      <dd>Branch to check out. Default: main</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>EXAMPLES</h2>
+    <dl class="examples">
+      <dt>Preview everything without changing the machine:</dt>
+      <dd>curl init.bostonaholic.dev | bash -s -- --dry-run</dd>
+      <dt>Link the dotfiles and nothing else:</dt>
+      <dd>curl init.bostonaholic.dev | bash -s -- --minimal</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>SEE ALSO</h2>
+    <p><a href="https://github.com/bostonaholic/dotfiles/blob/main/bootstrap.sh">bootstrap.sh</a>,
+       <a href="https://github.com/bostonaholic/dotfiles/blob/main/install.sh">install.sh</a>,
+       <a href="https://github.com/bostonaholic/dotfiles/blob/main/dotfiles.yaml">dotfiles.yaml</a></p>
+  </section>
+
+  <footer class="running foot">
+    <span>bostonaholic/dotfiles</span><span>INIT(1)</span>
+  </footer>
+</main>
+<script>
+(function () {
+  var btn = document.getElementById("cmd");
+  var hint = document.getElementById("hint");
+  var timer;
+
+  btn.addEventListener("click", function () {
+    copy(btn.dataset.cmd).then(function (ok) {
+      hint.textContent = ok ? "Copied. Paste it into Terminal." : "Copy failed. Select the command and copy it.";
+      btn.classList.toggle("copied", ok);
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        hint.textContent = "Click to copy.";
+        btn.classList.remove("copied");
+      }, 2400);
+    });
+  });
+
+  function copy(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(
+        function () { return true; },
+        function () { return legacyCopy(text); }
+      );
+    }
+    return Promise.resolve(legacyCopy(text));
+  }
+
+  // Plain http:// pages never get the async clipboard API.
+  function legacyCopy(text) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.top = "-1000px";
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) {
+      return false;
+    }
+  }
+})();
+</script>
+</body>
+</html>

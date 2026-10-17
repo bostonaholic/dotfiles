@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+################################################################################
+# site/build -- assemble the init.bostonaholic.dev page
+#
+# DESCRIPTION:
+#   GitHub Pages serves one file at the site root to both browsers and
+#   `curl init.bostonaholic.dev | bash`, so that file must be a valid HTML page
+#   and a valid bash script at the same time:
+#
+#     : <<'__INIT_PAGE__'      bash: no-op heredoc that swallows the page
+#     <!DOCTYPE html>...       browser: the landing page (site/index.html)
+#     <!--                     browser: hide everything below
+#     __INIT_PAGE__            bash: heredoc ends
+#     ...bootstrap.sh...       bash: the real script
+#     # -->                    browser: comment ends; bash: a comment
+#
+# USAGE:
+#   site/build [OUT_DIR]     (default: _site)
+#
+################################################################################
+
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+OUT_DIR="${1:-$ROOT/_site}"
+PAGE="$ROOT/site/index.html"
+SCRIPT="$ROOT/bootstrap.sh"
+MARKER="__INIT_PAGE__"
+
+# Either of these would end the heredoc or the HTML comment early.
+if grep -qx "$MARKER" "$PAGE"; then
+    echo "site/build: $PAGE contains a line '$MARKER'" >&2
+    exit 1
+fi
+if grep -qE -- '--!?>' "$SCRIPT"; then
+    echo "site/build: $SCRIPT contains '-->', which would end the HTML comment" >&2
+    exit 1
+fi
+
+mkdir -p "$OUT_DIR"
+{
+    printf ": <<'%s'\n" "$MARKER"
+    cat "$PAGE"
+    printf '<!--\n%s\n' "$MARKER"
+    cat "$SCRIPT"
+    printf '# -->\n'
+} > "$OUT_DIR/index.html"
+
+echo "site/build: wrote $OUT_DIR/index.html"
