@@ -55,23 +55,38 @@
   a:hover { background: var(--select); }
 
   .synopsis { margin-left: var(--indent); container-type: inline-size; }
+  .cmd-wrap { position: relative; margin-top: 4px; }
   .cmd {
-    display: block; margin: 4px 0 0 -0.4ch; padding: 4px 0.4ch;
+    display: flex; align-items: center; gap: 0.4em;
+    margin-left: -0.4ch; padding: 4px 0.4ch;
     border: 0; background: none; color: inherit; cursor: copy; text-align: left;
-    /* Sized to the column so the 37-character command stays on one line: each
-       character is about 0.61em wide, so 37 of them need 100cqw / 23. Change
-       the divisor if the command's length changes. */
-    font: 700 clamp(11px, 100cqw / 23, 36px)/1.25 var(--mono); letter-spacing: -0.01em;
+    /* Sized to the column so the 37-character command and its icon stay on
+       one line: each character is about 0.61em wide, so 37 of them plus the
+       icon need 100cqw / 25. Change the divisor if the command's length
+       changes. */
+    font: 700 clamp(11px, 100cqw / 25, 36px)/1.25 var(--mono); letter-spacing: -0.01em;
     white-space: nowrap;
   }
-  .cmd:hover, .cmd.copied { background: var(--select); }
+  .cmd:hover { background: var(--select); }
+  .cmd.copied { background: var(--ink); color: var(--paper); }
   .cmd:focus-visible, a:focus-visible { outline: 2px dashed var(--ink); outline-offset: 3px; }
-  /* Announces copy results to screen readers without showing text. */
-  .sr-only {
-    position: absolute; width: 1px; height: 1px; overflow: hidden;
-    clip: rect(0 0 0 0); white-space: nowrap;
+
+  /* The copy icon shows on hover and focus (always on touch screens) and
+     turns into a check once the command is on the clipboard. */
+  .cmd svg {
+    width: 0.75em; height: 0.75em; flex: none;
+    fill: none; stroke: currentColor; stroke-width: 2.5;
+    stroke-linecap: round; stroke-linejoin: round;
+    opacity: 0; transition: opacity .15s;
   }
-  .alt { margin: 20px 0 0; }
+  .cmd:hover svg, .cmd:focus-visible svg, .cmd.copied svg { opacity: 1; }
+  @media (hover: none) { .cmd svg { opacity: 1; } }
+  .cmd .icon-check, .cmd.copied .icon-copy { display: none; }
+  .cmd.copied .icon-check { display: block; }
+
+  .copy-status { position: absolute; top: 100%; left: 0; margin: 4px 0 0; font-weight: 700; }
+  .alt { margin: 32px 0 0; }
+  @media (prefers-reduced-motion: reduce) { .cmd svg { transition: none; } }
 
   dt { margin-top: 12px; }
   dt:first-child { margin-top: 0; }
@@ -101,9 +116,11 @@
   <section>
     <h2>SYNOPSIS</h2>
     <div class="synopsis">
-      <button type="button" class="cmd" id="cmd" data-cmd="curl dotfiles.bostonaholic.dev | bash"
-              aria-label="Copy curl dotfiles.bostonaholic.dev | bash">curl dotfiles.bostonaholic.dev | bash</button>
-      <span class="sr-only" id="status" aria-live="polite"></span>
+      <div class="cmd-wrap">
+        <button type="button" class="cmd" id="cmd" data-cmd="curl dotfiles.bostonaholic.dev | bash"
+                aria-label="Copy curl dotfiles.bostonaholic.dev | bash"><span>curl dotfiles.bostonaholic.dev | bash</span><svg class="icon-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg><svg class="icon-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg></button>
+        <p class="copy-status" id="status" aria-live="polite"></p>
+      </div>
       <p class="alt"><b>curl</b> dotfiles.bostonaholic.dev | <b>bash</b> -s -- [<u>options</u>]</p>
     </div>
   </section>
@@ -178,7 +195,7 @@
 
   btn.addEventListener("click", function () {
     copy(btn.dataset.cmd).then(function (ok) {
-      status.textContent = ok ? "Copied." : "Copy failed. Select the command and copy it.";
+      status.textContent = ok ? "Copied to clipboard." : "Couldn't copy. Select the command and copy it.";
       btn.classList.toggle("copied", ok);
       clearTimeout(timer);
       timer = setTimeout(function () {
