@@ -66,7 +66,11 @@
   }
   .cmd:hover, .cmd.copied { background: var(--select); }
   .cmd:focus-visible, a:focus-visible { outline: 2px dashed var(--ink); outline-offset: 3px; }
-  .hint { margin: 6px 0 0; color: var(--ink-dim); }
+  /* Announces copy results to screen readers without showing text. */
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+  }
   .alt { margin: 20px 0 0; }
 
   dt { margin-top: 12px; }
@@ -98,8 +102,8 @@
     <h2>SYNOPSIS</h2>
     <div class="synopsis">
       <button type="button" class="cmd" id="cmd" data-cmd="curl dotfiles.bostonaholic.dev | bash"
-              aria-describedby="hint">curl dotfiles.bostonaholic.dev | bash</button>
-      <p class="hint" id="hint" aria-live="polite">Click to copy.</p>
+              aria-label="Copy curl dotfiles.bostonaholic.dev | bash">curl dotfiles.bostonaholic.dev | bash</button>
+      <span class="sr-only" id="status" aria-live="polite"></span>
       <p class="alt"><b>curl</b> dotfiles.bostonaholic.dev | <b>bash</b> -s -- [<u>options</u>]</p>
     </div>
   </section>
@@ -169,16 +173,16 @@
 <script>
 (function () {
   var btn = document.getElementById("cmd");
-  var hint = document.getElementById("hint");
+  var status = document.getElementById("status");
   var timer;
 
   btn.addEventListener("click", function () {
     copy(btn.dataset.cmd).then(function (ok) {
-      hint.textContent = ok ? "Copied. Paste it into Terminal." : "Copy failed. Select the command and copy it.";
+      status.textContent = ok ? "Copied." : "Copy failed. Select the command and copy it.";
       btn.classList.toggle("copied", ok);
       clearTimeout(timer);
       timer = setTimeout(function () {
-        hint.textContent = "Click to copy.";
+        status.textContent = "";
         btn.classList.remove("copied");
       }, 2400);
     });
