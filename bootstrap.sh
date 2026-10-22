@@ -2,8 +2,8 @@
 #
 # Fresh-machine bootstrap. Clones the dotfiles repo and runs install.sh.
 #
-#   curl init.bostonaholic.dev | bash
-#   curl -fsSL https://init.bostonaholic.dev | bash -s -- --minimal
+#   curl dotfiles.bostonaholic.dev | bash
+#   curl -fsSL https://dotfiles.bostonaholic.dev | bash -s -- --minimal
 #
 # Everything lives inside main() and is called on the last line, so a truncated
 # download or an error page from the host can never run half of this.
@@ -19,7 +19,7 @@ main() {
 
   usage() {
     cat <<'USAGE'
-Usage: curl init.bostonaholic.dev | bash -s -- [options]
+Usage: curl dotfiles.bostonaholic.dev | bash -s -- [options]
 
   --minimal      Only clone and create symlinks (no packages, no plugins, no scripts)
   --no-apps      Skip Homebrew packages

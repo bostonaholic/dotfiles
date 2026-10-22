@@ -5,14 +5,14 @@
 ### Bootstrap a fresh Mac
 
 ```bash
-curl -fsSL https://init.bostonaholic.dev | bash
+curl -fsSL https://dotfiles.bostonaholic.dev | bash
 ```
 
 This clones the repo into `~/dotfiles` and runs `install.sh`. Pass options
 after `bash -s --`:
 
 ```bash
-curl -fsSL https://init.bostonaholic.dev | bash -s -- --minimal
+curl -fsSL https://dotfiles.bostonaholic.dev | bash -s -- --minimal
 ```
 
 | Option | Effect |

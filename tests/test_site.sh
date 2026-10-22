@@ -4,7 +4,7 @@
 #
 # DESCRIPTION:
 #   site/build joins site/index.html and bootstrap.sh into the one file served
-#   at init.bostonaholic.dev. It must stay both a web page and a runnable
+#   at dotfiles.bostonaholic.dev. It must stay both a web page and a runnable
 #   script, so these tests check each side of the published file.
 #
 #   Coverage:
@@ -64,7 +64,7 @@ else
     fail "opens with the bash heredoc, then the HTML page" "$(head -2 "$BUILT")"
 fi
 
-if /bin/bash -s -- --help < "$BUILT" 2>&1 | grep -q "^Usage: curl init.bostonaholic.dev"; then
+if /bin/bash -s -- --help < "$BUILT" 2>&1 | grep -q "^Usage: curl dotfiles.bostonaholic.dev"; then
     pass "piped into /bin/bash, runs bootstrap.sh"
 else
     fail "piped into /bin/bash, runs bootstrap.sh" "$(/bin/bash -s -- --help < "$BUILT" 2>&1 | head -3)"
