@@ -58,8 +58,11 @@
   .cmd {
     display: block; margin: 4px 0 0 -0.4ch; padding: 4px 0.4ch;
     border: 0; background: none; color: inherit; cursor: copy; text-align: left;
-    /* Sized to the column so the 33-character command stays on one line. */
-    font: 700 clamp(14px, 100cqw / 21, 36px)/1.25 var(--mono); letter-spacing: -0.01em;
+    /* Sized to the column so the 37-character command stays on one line: each
+       character is about 0.61em wide, so 37 of them need 100cqw / 23. Change
+       the divisor if the command's length changes. */
+    font: 700 clamp(11px, 100cqw / 23, 36px)/1.25 var(--mono); letter-spacing: -0.01em;
+    white-space: nowrap;
   }
   .cmd:hover, .cmd.copied { background: var(--select); }
   .cmd:focus-visible, a:focus-visible { outline: 2px dashed var(--ink); outline-offset: 3px; }
