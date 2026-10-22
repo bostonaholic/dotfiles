@@ -1,9 +1,9 @@
-# Publishes init.bostonaholic.dev to GitHub Pages: site/build joins the landing
+# Publishes dotfiles.bostonaholic.dev to GitHub Pages: site/build joins the landing
 # page (site/index.html) and bootstrap.sh into one index.html that browsers
-# render as a page and `curl init.bostonaholic.dev | bash` runs as a script.
+# render as a page and `curl dotfiles.bostonaholic.dev | bash` runs as a script.
 #
 # Leave "Enforce HTTPS" off in the Pages settings: bare
-# `curl init.bostonaholic.dev` requests http:// and does not follow redirects.
+# `curl dotfiles.bostonaholic.dev` requests http:// and does not follow redirects.
 name: Publish bootstrap
 
 on:

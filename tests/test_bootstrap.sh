@@ -4,7 +4,7 @@
 #
 # DESCRIPTION:
 #   Behavioral tests for bootstrap.sh, the script served at
-#   init.bostonaholic.dev. Pipes the script into bash the way
+#   dotfiles.bostonaholic.dev. Pipes the script into bash the way
 #   `curl ... | bash -s -- [options]` does, with stubbed `uname`,
 #   `xcode-select` and `git` on PATH. The stubbed clone writes a fake
 #   install.sh that records its arguments, so nothing real is installed.

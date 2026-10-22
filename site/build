@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 ################################################################################
-# site/build -- assemble the init.bostonaholic.dev page
+# site/build -- assemble the dotfiles.bostonaholic.dev page
 #
 # DESCRIPTION:
 #   GitHub Pages serves one file at the site root to both browsers and
-#   `curl init.bostonaholic.dev | bash`, so that file must be a valid HTML page
+#   `curl dotfiles.bostonaholic.dev | bash`, so that file must be a valid HTML page
 #   and a valid bash script at the same time:
 #
 #     : <<'__INIT_PAGE__'      bash: no-op heredoc that swallows the page
