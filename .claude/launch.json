@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "site/build && cd _site && exec python3 -m http.server 8765 --bind 127.0.0.1"],
+      "port": 8765
+    }
+  ]
+}
