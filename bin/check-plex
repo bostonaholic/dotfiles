@@ -1,0 +1,54 @@
+#!/bin/bash
+################################################################################
+# Check Plex - Is Plex Media Server Reachable?
+#
+# DESCRIPTION:
+#   Hits Plex's /identity endpoint and reports whether the server is up.
+#   Useful after a reboot or Plex/Windows update on the NUC.
+#
+# USAGE:
+#   check-plex [host[:port]]
+#
+# ARGUMENTS:
+#   host  - Optional host or host:port (default: plex.home.arpa:32400)
+#
+# EXAMPLES:
+#   check-plex                   # Check plex.home.arpa
+#   check-plex 192.168.200.12    # Bypass DNS
+#
+# EXIT CODES:
+#   0 - Plex responded 200
+#   1 - No response (timeout or connection refused)
+#   2 - Responded with an unexpected HTTP status
+#
+# DEPENDENCIES:
+#   - curl
+#
+# NOTES:
+#   If DOWN, on the NUC run: nssm restart PlexMediaServer
+#
+################################################################################
+
+set -u -o pipefail
+
+target="${1:-plex.home.arpa:32400}"
+[[ "$target" == *:* ]] || target="$target:32400"
+url="http://$target/identity"
+
+status=$(curl -s -o /dev/null -m 5 -w '%{http_code}' "$url" 2>/dev/null || echo 000)
+
+case "$status" in
+  200)
+    echo "OK    plex is up at $target"
+    exit 0
+    ;;
+  000)
+    echo "DOWN  no response from $target (timeout/refused)"
+    echo "      on the NUC: nssm restart PlexMediaServer"
+    exit 1
+    ;;
+  *)
+    echo "WARN  $target answered HTTP $status"
+    exit 2
+    ;;
+esac
