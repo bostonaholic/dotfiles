@@ -27,7 +27,7 @@ symlinks:
 
   # Obsidian
   obsidian/skills/define: ~/Documents/obsidian-vault/.claude/skills/define
-  obsidian/skills/summarize: ~/Documents/obsidian-vault/.claude/skills/summarize
+  obsidian/skills/summarize-note: ~/Documents/obsidian-vault/.claude/skills/summarize-note
 
   # Antigravity CLI (config lives under ~/.gemini/, replaces Gemini CLI)
   antigravity/settings.json: ~/.gemini/antigravity-cli/settings.json

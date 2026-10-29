@@ -1,5 +1,5 @@
 ---
-name: summarize
+name: summarize-note
 description: 'This skill should be used when the user asks to "summarize a note", "summarize this article", "replace #summarize-later", "add a summary to a note", "generate takeaways", or mentions summarizing Obsidian notes. Replaces the #summarize-later tag with a high-level summary and actionable takeaways.'
 ---
 
