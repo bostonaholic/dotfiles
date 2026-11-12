@@ -20,7 +20,6 @@ symlinks:
   bin: ~/bin
 
   # Claude
-  claude/CLAUDE.md: ~/.claude/CLAUDE.md
   claude/keybindings.json: ~/.claude/keybindings.json
   claude/settings.json: ~/.claude/settings.json
   claude/statusline.sh: ~/.claude/statusline.sh
@@ -40,6 +39,7 @@ symlinks:
 
   # Global agent instructions (shared across coding agents)
   agents/AGENTS.md: ~/.agents/AGENTS.md
+  agents/AGENTS.md: ~/.claude/CLAUDE.md         # Claude Code
   agents/AGENTS.md: ~/.codex/AGENTS.md          # Codex CLI
   agents/AGENTS.md: ~/.gemini/AGENTS.md         # Antigravity (cross-tool global rules)
   agents/AGENTS.md: ~/.config/opencode/AGENTS.md # OpenCode

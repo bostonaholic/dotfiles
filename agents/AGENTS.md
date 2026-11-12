@@ -1,8 +1,8 @@
 # Global Agent Instructions
 
-Personal instructions shared across coding agents (Codex, Antigravity,
-OpenCode, Pi). Symlinked from `dotfiles/agents/AGENTS.md` to each tool's
-global location via `dotfiles.yaml`.
+Personal instructions shared across coding agents (Claude Code, Codex,
+Antigravity, OpenCode, Pi). Symlinked from `dotfiles/agents/AGENTS.md` to
+each tool's global location via `dotfiles.yaml`.
 
 ## First Principles
 
@@ -149,6 +149,11 @@ After completing parallel agent work, always present a summary table:
 
 Do not skip any agents. Include agents that failed or produced incomplete
 results.
+
+## Claude Code Integration
+
+- Project-local slash commands go in `.claude/commands/`, NOT in plugin
+  directories. Always verify the correct location before creating command files.
 
 ## Git Workflow
 
