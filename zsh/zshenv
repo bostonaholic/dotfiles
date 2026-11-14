@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+# Runs for every zsh, scripts included: environment variables only, no output.
+# PATH lives in zprofile, because /etc/zprofile's path_helper reorders it.
+
+# XDG Base Directory
+export XDG_BIN_HOME="$HOME/.local/bin"
+export XDG_CACHE_HOME="$HOME/Library/Caches"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_RUNTIME_DIR="$TMPDIR/runtime-$UID"
+export XDG_STATE_HOME="$HOME/.local/state"
+
+export EDITOR='vim'
+
+# -R shows color escapes (git diff, git log) as colors.
+# --quit-if-one-screen exits when the content fits on one screen, and
+# --no-init keeps that content on screen after less exits.
+export LESS="-R --quit-if-one-screen --no-init $LESS"

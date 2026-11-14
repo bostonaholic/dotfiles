@@ -1,13 +1,5 @@
 #!/usr/bin/env zsh
 
-# XDG Base Directory
-export XDG_BIN_HOME="$HOME/.local/bin"
-export XDG_CACHE_HOME="$HOME/Library/Caches"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_RUNTIME_DIR="$TMPDIR/runtime-$UID"
-export XDG_STATE_HOME="$HOME/.local/state"
-
 # Homebrew configuration
 export HOMEBREW_PREFIX="/opt/homebrew"
 export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
@@ -48,6 +40,11 @@ export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
 
 # Created for rust
 export PATH="$PATH:$HOME/.cargo/bin"
+
+# dev CLI
+if [[ -d "$HOME/code/bostonaholic/dev/bin" ]]; then
+  export PATH="$HOME/code/bostonaholic/dev/bin:$PATH"
+fi
 
 # Deduplicate PATH entries
 typeset -U path

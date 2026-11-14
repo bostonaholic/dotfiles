@@ -6,8 +6,7 @@ SAVEHIST=10000
 setopt extended_history hist_expire_dups_first hist_ignore_dups \
   hist_ignore_space hist_verify share_history
 
-# Misc
-export EDITOR='vim'
+# Key bindings
 bindkey -e
 
 # /etc/zshrc binds these keys in the viins keymap when EDITOR contains vi,
@@ -19,7 +18,54 @@ zmodload zsh/terminfo
 [[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" up-line-or-search
 [[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" down-line-or-search
 
-# Added for dev
-if [[ -d "$HOME/code/bostonaholic/dev/bin" ]]; then
-  export PATH="$HOME/code/bostonaholic/dev/bin:$PATH"
+# Agent guard: aliases that change what a command does belong at a prompt,
+# not in shells that agents drive. Agents capture this config from an
+# interactive shell, so interactivity alone is not enough.
+typeset -g ZSH_INTERACTIVE_ALIASES=0
+if [[ -o interactive ]] &&
+   [[ -z "${CLAUDECODE-}${CLAUDE_CODE_ENTRYPOINT-}${AI_AGENT-}${CURSOR_AGENT-}${CODEX_SANDBOX-}" ]]; then
+  ZSH_INTERACTIVE_ALIASES=1
 fi
+
+# CLI
+alias ..="cd .."
+
+# Claude
+if (( ZSH_INTERACTIVE_ALIASES )); then
+    alias claude="caffeinate -di claude --dangerously-skip-permissions"
+    alias cc="claude"
+fi
+
+alias π="pi"
+
+alias rgrep="grep --recursive"
+
+alias date_seconds="date +%s"
+alias rand="date | md5"
+
+alias camera_restart="sudo killall VDCAssistant"
+
+if (( ZSH_INTERACTIVE_ALIASES )); then
+    alias ip="curl https://icanhazip.com"
+fi
+
+alias iso8601_date="date +%Y-%m-%dT%H:%M:%S%z"
+
+alias upcase="tr '[:lower:]' '[:upper:]'"
+alias downcase="tr '[:upper:]' '[:lower:]'"
+
+# Git
+alias gti=git
+
+# Ruby
+function bundle_close() {
+    bundle exec gem pristine "$*"
+}
+
+# Python
+alias python=python3
+
+# Clojure
+function cljs() {
+    planck "$*"
+}
