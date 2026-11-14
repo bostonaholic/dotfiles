@@ -92,6 +92,7 @@
   "fastModePerSessionOptIn": false,
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
   "theme": "light",
   "teammateMode": "auto",
   "remoteControlAtStartup": true,
