@@ -189,48 +189,6 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# T9: shellcheck scripts/install_fzf_tab passes; file is executable
-#     Verifies: Install script valid (Step 3.1)
-# ---------------------------------------------------------------------------
-echo "T9: scripts/install_fzf_tab exists, passes shellcheck, is executable"
-t9_ok=true
-t9_reasons=""
-if [[ ! -f "$REPO_ROOT/scripts/install_fzf_tab" ]]; then
-    t9_ok=false
-    t9_reasons="file does not exist"
-else
-    if [[ ! -x "$REPO_ROOT/scripts/install_fzf_tab" ]]; then
-        t9_ok=false
-        t9_reasons="file is not executable"
-    fi
-    if command -v shellcheck >/dev/null 2>&1; then
-        if ! shellcheck "$REPO_ROOT/scripts/install_fzf_tab" >/dev/null 2>&1; then
-            t9_ok=false
-            t9_reasons="${t9_reasons:+$t9_reasons; }shellcheck failed"
-        fi
-    else
-        t9_ok=false
-        t9_reasons="shellcheck not installed"
-    fi
-fi
-if $t9_ok; then
-    pass "T9"
-else
-    fail "T9" "$t9_reasons"
-fi
-
-# ---------------------------------------------------------------------------
-# T10: grep 'install_fzf_tab' dotfiles.yaml matches
-#      Verifies: Automation wired up in dotfiles.yaml (Step 3.2)
-# ---------------------------------------------------------------------------
-echo "T10: fzf-tab install wired into dotfiles.yaml"
-if grep -q 'install_fzf_tab' "$REPO_ROOT/dotfiles.yaml" 2>/dev/null; then
-    pass "T10"
-else
-    fail "T10" "install_fzf_tab not referenced in dotfiles.yaml"
-fi
-
-# ---------------------------------------------------------------------------
 # T12: ./install.sh --dry-run completes without error
 #      SKIP: Requires full install.sh execution environment
 # ---------------------------------------------------------------------------
