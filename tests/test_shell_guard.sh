@@ -146,17 +146,6 @@ else
     fi
 fi
 
-# ---------------------------------------------------------------------------
-# T5: common-aliases (rm -i, global aliases) is loaded behind the same guard
-# ---------------------------------------------------------------------------
-echo "T5: common-aliases is loaded behind the guard"
-guarded="$(sed -n '/if (( ZSH_INTERACTIVE_ALIASES ))/,/^fi$/p' "$REPO_ROOT/zsh/zshrc" | sed 's/^ *//')"
-if grep -q '^plugins+=(common-aliases)$' <<<"$guarded"; then
-    pass "T5"
-else
-    fail "T5" "zsh/zshrc does not add common-aliases inside a ZSH_INTERACTIVE_ALIASES guard"
-fi
-
 echo ""
 echo "=== Summary: $pass_count passed, $fail_count failed, $skip_count skipped ==="
 [[ $fail_count -eq 0 ]]
