@@ -29,7 +29,6 @@ shellcheck scripts/*
 | Central config | `dotfiles.yaml` |
 | Homebrew packages | `Brewfile` |
 | Shell config | `zsh/zshrc`, `zsh/zprofile` |
-| Custom zsh plugin | `zsh/bostonaholic.plugin.zsh` |
 | Git config | `git/config` |
 | Claude commands | `claude/commands/*.md` |
 | Claude agents | [bostonaholic/skills](https://github.com/bostonaholic/skills) repo, `agents/*.md` |

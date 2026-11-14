@@ -170,8 +170,7 @@ Status can only be verified from a terminal that already has FDA itself.
 Otherwise every app reports `unverifiable` and the pane still opens.
 
 To allowlist another app, append its `.app` path to `macos.full_disk_access`
-and re-run the script. To find which app is prompting, query the unified log
-(use the full path: this shell config shadows `log` with a function):
+and re-run the script. To find which app is prompting, query the unified log:
 
 ```bash
 /usr/bin/log show --last 1d --style compact \
@@ -243,25 +242,4 @@ Try:
 
 ```bash
 pip3 install requests
-```
-
-### compaudit
-
-```plaintext
-zsh compinit: insecure directories, run compaudit for list.
-Ignore insecure directories and continue [y] or abort compinit [n]?
-```
-
-Try:
-
-Check which directory has the wrong permissions
-
-```bash
-compaudit
-```
-
-Then run the following to fix the permissions:
-
-```bash
-sudo chmod -R g-w <directory>
 ```

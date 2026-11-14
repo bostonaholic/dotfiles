@@ -45,7 +45,6 @@ symlinks:
   agents/AGENTS.md: ~/.pi/agent/AGENTS.md       # Pi
 
   # Shell
-  zsh/zshenv: ~/.zshenv
   zsh/zshrc: ~/.zshrc
   zsh/zprofile: ~/.zprofile
 

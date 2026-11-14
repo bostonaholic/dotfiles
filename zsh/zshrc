@@ -1,108 +1,23 @@
 #!/usr/bin/env zsh
 
-# Startup budget: under 50ms. Every tool init below is read from a cache file
-# instead of running the tool. Measure with:
-#   for i in {1..10}; do /usr/bin/time zsh -lic exit; done
-
 # History
-HISTFILE="${HOME}/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=10000
 setopt extended_history hist_expire_dups_first hist_ignore_dups \
   hist_ignore_space hist_verify share_history
 
-# Directories
-setopt auto_cd auto_pushd pushd_ignore_dups pushdminus
-
 # Misc
-setopt interactive_comments
-export CLICOLOR=1
 export EDITOR='vim'
 bindkey -e
 
-# /etc/zshrc equivalent (skipped by no_global_rcs in zshenv), minus its
-# `$(locale LC_CTYPE)` subshell: the locale here is always UTF-8.
-setopt combining_chars
-disable log
+# /etc/zshrc binds these keys in the viins keymap when EDITOR contains vi,
+# so bind them again in the emacs keymap that bindkey -e selects.
 zmodload zsh/terminfo
 [[ -n "${terminfo[kdch1]}" ]] && bindkey "${terminfo[kdch1]}" delete-char
 [[ -n "${terminfo[khome]}" ]] && bindkey "${terminfo[khome]}" beginning-of-line
 [[ -n "${terminfo[kend]}" ]] && bindkey "${terminfo[kend]}" end-of-line
 [[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" up-line-or-search
 [[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" down-line-or-search
-[[ -r "/etc/zshrc_${TERM_PROGRAM}" ]] && source "/etc/zshrc_${TERM_PROGRAM}"
-
-_zsh_cache="${XDG_CACHE_HOME:-${HOME}/Library/Caches}/zsh"
-[[ -d "${_zsh_cache}" ]] || mkdir -p "${_zsh_cache}"
-
-# Sources the output of `$@` from a cache file, regenerating the file when the
-# tool's binary is newer than it. Tool init scripts change only on upgrade.
-_cached_init() {
-  local bin="${commands[$1]}"
-  [[ -n "${bin}" ]] || return 1
-  local cache="${_zsh_cache}/${1}-init.zsh"
-  if [[ ! -s "${cache}" || "${bin}" -nt "${cache}" ]]; then
-    "${@:2}" >| "${cache}"
-  fi
-  source "${cache}"
-}
-
-# Completion. compinit costs more than the rest of startup, so it runs on the
-# first Tab press. Until then, compdef calls are queued and replayed after it.
-fpath=("${HOMEBREW_PREFIX}/share/zsh-completions" "${HOMEBREW_PREFIX}/share/zsh/site-functions" $fpath)
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=*'
-zstyle ':completion:*' menu select
-
-typeset -ga _compdef_queue
-compdef() { _compdef_queue+=("${(j: :)${(@q)@}}") }
-
-# A full compinit (which scans fpath) runs at most once a day; otherwise it
-# loads the saved dump.
-_compinit_now() {
-  unfunction compdef
-  autoload -Uz compinit
-  local dump="${_zsh_cache}/zcompdump"
-  local -a fresh=("${dump}"(N.mh-24))
-  if (( ${#fresh} )); then
-    compinit -C -d "${dump}"
-  else
-    compinit -i -d "${dump}"
-    # compinit rewrites the dump only when fpath changed; mark it checked.
-    touch "${dump}"
-  fi
-  local def
-  for def in "${_compdef_queue[@]}"; do
-    eval "compdef ${def}"
-  done
-  unset _compdef_queue
-}
-
-_lazy_complete() {
-  (( ${+_comps} )) || _compinit_now
-  fzf_default_completion=expand-or-complete
-  zle expand-or-complete
-}
-zle -N _lazy_complete
-bindkey '^I' _lazy_complete
-
-# Starship's init runs `starship prompt --continuation` for PROMPT2 each time;
-# write its output into the cached script instead.
-_starship_init_script() {
-  local continuation="$(STARSHIP_SHELL=zsh starship prompt --continuation)"
-  starship init zsh --print-full-init | grep -v '^PROMPT2='
-  print -r -- "PROMPT2=${(qq)continuation}"
-}
-
-# Tools
-_cached_init starship _starship_init_script
-# fzf's Tab widget falls back to this widget. Setting it also skips fzf's
-# `$(bindkey '^I')` subshell.
-fzf_default_completion=_lazy_complete
-_cached_init fzf fzf --zsh
-_cached_init direnv direnv hook zsh
-
-# Personal aliases and functions
-source "${HOME}/dotfiles/zsh/bostonaholic.plugin.zsh"
 
 # 1Password SSH agent
 export SSH_AUTH_SOCK=~/.1password/agent.sock
@@ -110,11 +25,4 @@ export SSH_AUTH_SOCK=~/.1password/agent.sock
 # Added for dev
 if [[ -d "$HOME/code/bostonaholic/dev/bin" ]]; then
   export PATH="$HOME/code/bostonaholic/dev/bin:$PATH"
-fi
-
-# zoxide must be initialized at the very end of the shell config so nothing
-# re-initializes chpwd_functions afterward and drops zoxide's hook.
-# zoxide's `cd` jumps to a frecent directory rather than failing on a bad path.
-if (( ZSH_INTERACTIVE_ALIASES )); then
-  _cached_init zoxide zoxide init --cmd cd zsh
 fi
