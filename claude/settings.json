@@ -23,7 +23,8 @@
     "team@team-dev": true,
     "bostonaholic@skills": true,
     "dev@dev": true,
-    "i-have-adhd@i-have-adhd": true
+    "i-have-adhd@i-have-adhd": true,
+    "egm@egm": true
   },
   "extraKnownMarketplaces": {
     "cloudflare": {
@@ -66,6 +67,12 @@
       "source": {
         "source": "github",
         "repo": "ayghri/i-have-adhd"
+      }
+    },
+    "egm": {
+      "source": {
+        "source": "github",
+        "repo": "google/elephant-goldfish-model"
       }
     }
   },
