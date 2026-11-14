@@ -55,6 +55,9 @@ symlinks:
   # GitHub CLI
   gh: ~/.config/gh
 
+  # Terminal
+  tmux: ~/.config/tmux
+
   # Cursor
   cursor/rules: ~/.cursor/rules
 
@@ -195,6 +198,9 @@ scripts:
     - description: "Install nodenv"
       command: "scripts/install_nodenv"
       condition: "! command -v nodenv"
+
+    - description: "Install tmux plugins (TPM)"
+      command: "scripts/install_tmux_plugins"
 
     - description: "Install agent skills"
       command: "Skillfile"

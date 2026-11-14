@@ -7,4 +7,7 @@ vendor/
 #################
 .worktrees/
 
+# tmux plugins (installed by TPM) #
+####################################
+tmux/plugins/
 _site/
