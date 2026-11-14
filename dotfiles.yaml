@@ -208,10 +208,6 @@ scripts:
       command: "pre-commit install"
       condition: "command -v pre-commit"
 
-    - description: "Install Powerline fonts"
-      command: "scripts/install_powerline-fonts"
-      optional: true
-
     - description: "Apply macOS settings"
       command: "macos/macos"
       condition: '[[ "$OSTYPE" == "darwin"* ]]'
