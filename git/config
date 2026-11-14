@@ -56,6 +56,7 @@
 	cl = clone
 	cm = commit --message
 	aic = !git-ai-commit
+	co = checkout
 	pu = push
 
 	di = diff
