@@ -1,11 +1,13 @@
 ### ALIASES ###
 
-# History: space-prefixed commands excluded via oh-my-zsh (setopt HIST_IGNORE_SPACE)
+# History: space-prefixed commands excluded via zshrc (setopt hist_ignore_space)
 
 # --quit-if-one-screen causes it to quit if the content is less than one screen
 #   however after doing so the screen is reset and you end up not seeing the content
 # --no-init does away with that behavior
-export LESS="--quit-if-one-screen --no-init $LESS"
+# -R shows color escapes (git diff, git log) as colors. git sets it only when
+#   LESS is unset, and oh-my-zsh used to add it.
+export LESS="-R --quit-if-one-screen --no-init $LESS"
 
 # CLI
 alias ..="cd .."
