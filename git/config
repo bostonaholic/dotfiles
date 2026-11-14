@@ -70,6 +70,10 @@
 	rs = rebase --skip
 	rq = rebase --quit
 
+	remotes = remote --verbose
+
+	stashes = stash list
+
 	st = status --short --branch
 [filter "lfs"]
 	clean = git-lfs clean -- %f
