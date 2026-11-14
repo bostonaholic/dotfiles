@@ -4,6 +4,9 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "permissions": {
+    "allow": [
+      "Bash(claude plugin *)"
+    ],
     "defaultMode": "auto"
   },
   "model": "opus",
