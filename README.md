@@ -189,14 +189,6 @@ vim -c "Copilot setup"
 
 ## Tips
 
-### ssh-agent
-
-Errors with `ssh-agent`:
-
-> Error connecting to agent: No such file or directory
-
-Add `zstyle :omz:plugins:ssh-agent agent-forwarding on`
-
 ### 1Password SSH Agent
 
 ```plaintext
