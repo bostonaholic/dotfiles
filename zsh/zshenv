@@ -13,6 +13,9 @@ export XDG_STATE_HOME="$HOME/.local/state"
 
 export EDITOR='vim'
 
+# 1Password SSH agent
+export SSH_AUTH_SOCK=~/.1password/agent.sock
+
 # -R shows color escapes (git diff, git log) as colors.
 # --quit-if-one-screen exits when the content fits on one screen, and
 # --no-init keeps that content on screen after less exits.
