@@ -20,10 +20,6 @@ cask 'codex'
 # Editors
 # =============================================================================
 
-tap 'd12frosted/emacs-plus'
-
-cask 'emacs-plus-app'
-brew 'gnutls' # for Emacs TLS support
 brew 'neovim'
 brew 'vim'
 

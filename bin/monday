@@ -15,7 +15,7 @@
 #      - Dotfiles repository
 #      - Homebrew packages
 #      - Claude plugins
-#      - Vim/Spacemacs configurations
+#      - Vim configurations
 #      - Ruby/Node/Python package managers
 #   3. Waits for all updates to complete
 #
