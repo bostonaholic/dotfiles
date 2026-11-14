@@ -19,9 +19,6 @@ zmodload zsh/terminfo
 [[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" up-line-or-search
 [[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" down-line-or-search
 
-# 1Password SSH agent
-export SSH_AUTH_SOCK=~/.1password/agent.sock
-
 # Added for dev
 if [[ -d "$HOME/code/bostonaholic/dev/bin" ]]; then
   export PATH="$HOME/code/bostonaholic/dev/bin:$PATH"
