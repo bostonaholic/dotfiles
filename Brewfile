@@ -33,7 +33,6 @@ brew 'vim'
 
 cask 'ghostty'
 brew 'starship'
-brew 'tmux'
 
 # =============================================================================
 # Version Control
