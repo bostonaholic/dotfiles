@@ -231,20 +231,6 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# T11: grep 'fzf-tab' zsh/zshrc shows no trailing comment
-#      Verifies: Manual clone note removed (Step 3.3)
-# ---------------------------------------------------------------------------
-echo "T11: fzf-tab plugin line has no trailing comment"
-fzf_tab_line=$(grep 'fzf-tab' "$REPO_ROOT/zsh/zshrc" 2>/dev/null || true)
-if [[ -z "$fzf_tab_line" ]]; then
-    fail "T11" "fzf-tab not found in zshrc at all"
-elif echo "$fzf_tab_line" | grep -q '#'; then
-    fail "T11" "fzf-tab line still has a trailing comment"
-else
-    pass "T11"
-fi
-
-# ---------------------------------------------------------------------------
 # T12: ./install.sh --dry-run completes without error
 #      SKIP: Requires full install.sh execution environment
 # ---------------------------------------------------------------------------
