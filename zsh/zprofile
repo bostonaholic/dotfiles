@@ -1,30 +1,9 @@
 #!/usr/bin/env zsh
 
-# /etc/zprofile equivalent (skipped by no_global_rcs in zshenv). Builds the
-# same PATH as path_helper: /etc/paths, then /etc/paths.d/*, then the rest.
-[[ -n "$LANG" ]] || export LANG=C.UTF-8
-() {
-  local f
-  local -a system_path
-  for f in /etc/paths /etc/paths.d/*(N); do
-    system_path+=(${(f)"$(<$f)"})
-  done
-  path=($system_path $path)
-}
-
-# XDG Base Directory
-export XDG_BIN_HOME="$HOME/.local/bin"
-export XDG_CACHE_HOME="$HOME/Library/Caches"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_RUNTIME_DIR="$TMPDIR/runtime-$UID"
-export XDG_STATE_HOME="$HOME/.local/state"
-
-# Homebrew configuration (static equivalent of `brew shellenv`)
+# Homebrew configuration
 export HOMEBREW_PREFIX="/opt/homebrew"
 export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
 export HOMEBREW_REPOSITORY="/opt/homebrew"
-fpath[1,0]="/opt/homebrew/share/zsh/site-functions"
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
 [ -z "${MANPATH-}" ] || export MANPATH=":${MANPATH#:}"
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
@@ -61,6 +40,11 @@ export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
 
 # Created for rust
 export PATH="$PATH:$HOME/.cargo/bin"
+
+# dev CLI
+if [[ -d "$HOME/code/bostonaholic/dev/bin" ]]; then
+  export PATH="$HOME/code/bostonaholic/dev/bin:$PATH"
+fi
 
 # Deduplicate PATH entries
 typeset -U path

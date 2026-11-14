@@ -3,10 +3,10 @@
 # Interactive Alias Guard -- Acceptance Tests
 #
 # DESCRIPTION:
-#   Verifies that aliases which shadow standard commands (ls, cat, grep, cc,
-#   ...) are installed only when ZSH_INTERACTIVE_ALIASES is 1. Each case
-#   sources zsh/zshenv and zsh/bostonaholic.plugin.zsh in an isolated ZDOTDIR
-#   and reports the resulting flag and alias table.
+#   Verifies that aliases which change what a command does (claude, cc,
+#   ip) are installed only when ZSH_INTERACTIVE_ALIASES is 1. Each case
+#   sources zsh/zshrc in an isolated ZDOTDIR and reports the resulting flag
+#   and alias table.
 #
 #   The interactive cases need a pty, which script(1) can only allocate when
 #   this script's own stdin is a terminal. They skip otherwise.
@@ -50,7 +50,7 @@ skip() {
 }
 
 AGENT_MARKERS=(CLAUDECODE CLAUDE_CODE_ENTRYPOINT AI_AGENT CURSOR_AGENT CODEX_SANDBOX)
-SHADOWED=(ls cat grep find man top ping df du cc ip)
+SHADOWED=(claude cc ip)
 
 SCRATCH="$(mktemp -d)"
 trap 'rm -rf "$SCRATCH"' EXIT
@@ -58,8 +58,7 @@ trap 'rm -rf "$SCRATCH"' EXIT
 # Prints "flag:<0|1>" then one "alias:<name>" line per shadowing alias defined.
 PROBE="$SCRATCH/probe.zsh"
 {
-    printf 'source %q/zsh/zshenv\n' "$REPO_ROOT"
-    printf 'source %q/zsh/bostonaholic.plugin.zsh 2>/dev/null\n' "$REPO_ROOT"
+    printf 'source %q/zsh/zshrc 2>/dev/null\n' "$REPO_ROOT"
     printf 'print "flag:$ZSH_INTERACTIVE_ALIASES"\n'
     printf 'for a in %s; do alias $a >/dev/null 2>&1 && print "alias:$a"; done\n' "${SHADOWED[*]}"
     printf 'true\n'

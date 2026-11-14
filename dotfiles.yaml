@@ -52,15 +52,10 @@ symlinks:
   # Git
   git: ~/.config/git
 
-  # System monitors
-  btop: ~/.config/btop
-
   # GitHub CLI
   gh: ~/.config/gh
 
   # Terminal
-  ghostty: ~/.config/ghostty
-  starship/starship.toml: ~/.config/starship.toml
   tmux: ~/.config/tmux
 
   # Cursor
@@ -176,7 +171,6 @@ macos:
     - /Applications/Claude.app
     - ~/Applications/Ghostty.app
     - /Applications/iTerm.app
-    - /Applications/Warp.app
     - /Applications/Cursor.app
     - /Applications/Visual Studio Code.app
     - /System/Applications/Utilities/Terminal.app
@@ -221,10 +215,6 @@ scripts:
     - description: "Install pre-commit hooks"
       command: "pre-commit install"
       condition: "command -v pre-commit"
-
-    - description: "Install Powerline fonts"
-      command: "scripts/install_powerline-fonts"
-      optional: true
 
     - description: "Apply macOS settings"
       command: "macos/macos"

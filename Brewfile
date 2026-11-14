@@ -31,12 +31,7 @@ brew 'vim'
 # Terminals & Shell
 # =============================================================================
 
-cask 'ghostty'
-brew 'starship'
 brew 'tmux'
-brew 'zoxide'
-brew 'zsh'
-brew 'zsh-completions'
 
 # =============================================================================
 # Version Control
@@ -46,7 +41,6 @@ brew 'bfg'        # BFG Repo-Cleaner, like git-filter-branch
 brew 'gh'
 brew 'git'
 brew 'git-lfs'
-brew 'lazygit'
 brew 'pre-commit'
 
 # =============================================================================
@@ -54,16 +48,7 @@ brew 'pre-commit'
 # =============================================================================
 # Unix tool replacements
 
-brew 'bat'     # cat
-brew 'btop'    # top
-brew 'dua-cli' # du
-brew 'duf'     # df
-brew 'eza'     # ls
-brew 'fd'      # find
-brew 'fzf'     # ctrl-r, fuzzy finder
-brew 'gping'   # ping
 brew 'ripgrep' # grep
-brew 'tldr'    # man
 
 # =============================================================================
 # Languages: Clojure
@@ -149,9 +134,7 @@ brew 'shellcheck'
 # Traditional Unix tools (not replaced by Modern CLI tools)
 
 brew 'ack'
-brew 'autoenv'
 brew 'coreutils'
-brew 'direnv'
 brew 'rlwrap'
 brew 'tree'
 
@@ -178,7 +161,6 @@ brew 'terminal-notifier'
 # =============================================================================
 
 cask 'font-source-code-pro'
-cask 'font-symbols-only-nerd-font'
 
 # =============================================================================
 # Media: Video

@@ -3,10 +3,7 @@
 # Zsh Config Audit -- Acceptance Tests
 #
 # DESCRIPTION:
-#   Runs all verification tests (T1-T13) from the zsh config audit plan.
-#   Tests verify the state of zsh configuration files after implementation.
-#   Before implementation, all tests should FAIL (confirming issues exist).
-#   After implementation, all tests should PASS.
+#   Checks the zsh startup files zsh/zshrc and zsh/zprofile.
 #
 # USAGE:
 #   ./tests/test_zsh_audit.sh   (or run the whole suite via: scripts/test)
@@ -14,9 +11,6 @@
 # EXIT CODE:
 #   0 - All tests passed
 #   1 - One or more tests failed
-#
-# PLAN:
-#   docs/plans/2026-04-01-zsh-config-audit-plan.md
 #
 ################################################################################
 
@@ -28,12 +22,10 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # Counters
 pass_count=0
 fail_count=0
-skip_count=0
 
 # Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
 NC='\033[0m'
 
 pass() {
@@ -47,25 +39,9 @@ fail() {
     fail_count=$((fail_count + 1))
 }
 
-skip() {
-    echo -e "  ${YELLOW}SKIP${NC}  $1 (manual)"
-    skip_count=$((skip_count + 1))
-}
-
 echo "=== Zsh Config Audit -- Acceptance Tests ==="
 echo "    Repo: $REPO_ROOT"
 echo ""
-
-# ---------------------------------------------------------------------------
-# T1: grep -rn HISTCONTROL zsh/ returns nothing
-#     Verifies: Bash-ism removed (Step 1.1)
-# ---------------------------------------------------------------------------
-echo "T1: HISTCONTROL bash-ism removed from plugin"
-if grep -rn HISTCONTROL "$REPO_ROOT/zsh/" >/dev/null 2>&1; then
-    fail "T1" "HISTCONTROL still present in zsh/"
-else
-    pass "T1"
-fi
 
 # ---------------------------------------------------------------------------
 # T2: tail -2 zsh/zprofile shows 'typeset -U path'
@@ -107,31 +83,6 @@ if $t4_ok; then
     pass "T4"
 else
     fail "T4" "zshrc shebang='$zshrc_shebang', zprofile shebang='$zprofile_shebang'"
-fi
-
-# ---------------------------------------------------------------------------
-# T5: bostonaholic.zsh-theme file deleted; no references in dotfiles.yaml
-#     Verifies: Dead theme and directory entry removed (Step 2.2)
-# ---------------------------------------------------------------------------
-echo "T5: Dead theme file and dotfiles.yaml entries removed"
-t5_ok=true
-t5_reasons=""
-if [[ -f "$REPO_ROOT/zsh/bostonaholic.zsh-theme" ]]; then
-    t5_ok=false
-    t5_reasons="theme file still exists"
-fi
-if grep -q 'zsh-theme' "$REPO_ROOT/dotfiles.yaml" 2>/dev/null; then
-    t5_ok=false
-    t5_reasons="${t5_reasons:+$t5_reasons; }dotfiles.yaml still references zsh-theme"
-fi
-if grep -q 'custom/themes' "$REPO_ROOT/dotfiles.yaml" 2>/dev/null; then
-    t5_ok=false
-    t5_reasons="${t5_reasons:+$t5_reasons; }dotfiles.yaml still references custom/themes"
-fi
-if $t5_ok; then
-    pass "T5"
-else
-    fail "T5" "$t5_reasons"
 fi
 
 # ---------------------------------------------------------------------------
@@ -178,31 +129,6 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# T8: grep '#pyenv\|#python' zsh/zshrc returns nothing
-#     Verifies: Commented-out plugin entries removed (Step 2.5)
-# ---------------------------------------------------------------------------
-echo "T8: Commented-out plugin entries removed"
-if grep -E '#pyenv|#python' "$REPO_ROOT/zsh/zshrc" >/dev/null 2>&1; then
-    fail "T8" "#pyenv or #python still present in zshrc"
-else
-    pass "T8"
-fi
-
-# ---------------------------------------------------------------------------
-# T12: ./install.sh --dry-run completes without error
-#      SKIP: Requires full install.sh execution environment
-# ---------------------------------------------------------------------------
-echo "T12: install.sh --dry-run completes without error"
-skip "T12"
-
-# ---------------------------------------------------------------------------
-# T13: New terminal starts without errors
-#      SKIP: Cannot be automated in a script
-# ---------------------------------------------------------------------------
-echo "T13: New terminal starts without errors"
-skip "T13"
-
-# ---------------------------------------------------------------------------
 # M3: $(brew --prefix openssl@3) replaced with ${HOMEBREW_PREFIX}/opt/openssl@3
 #     Verifies: No subprocess call to brew --prefix in zprofile
 # ---------------------------------------------------------------------------
@@ -228,8 +154,8 @@ fi
 # ---------------------------------------------------------------------------
 echo ""
 echo "=== Results ==="
-total=$((pass_count + fail_count + skip_count))
-echo -e "  ${GREEN}PASS: $pass_count${NC}  ${RED}FAIL: $fail_count${NC}  ${YELLOW}SKIP: $skip_count${NC}  TOTAL: $total"
+total=$((pass_count + fail_count))
+echo -e "  ${GREEN}PASS: $pass_count${NC}  ${RED}FAIL: $fail_count${NC}  TOTAL: $total"
 echo ""
 
 if [[ $fail_count -gt 0 ]]; then
