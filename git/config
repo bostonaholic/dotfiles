@@ -65,6 +65,11 @@
 	recent = "!f() { GIT_NO_PAGER=1 git l -${1:-10}; }; f"
 	r = !git recent $1
 
+	ra = rebase --abort
+	rc = rebase --continue
+	rs = rebase --skip
+	rq = rebase --quit
+
 	st = status --short --branch
 [filter "lfs"]
 	clean = git-lfs clean -- %f
