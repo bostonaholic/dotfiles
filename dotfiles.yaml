@@ -169,6 +169,8 @@ macos:
   full_disk_access:
     - /Applications/Conductor.app
     - /Applications/Claude.app
+    - ~/Applications/Ghostty.app
+    - /Applications/iTerm.app
     - /Applications/Cursor.app
     - /Applications/Visual Studio Code.app
     - /System/Applications/Utilities/Terminal.app
