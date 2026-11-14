@@ -51,15 +51,8 @@ symlinks:
   # Git
   git: ~/.config/git
 
-  # System monitors
-  btop: ~/.config/btop
-
   # GitHub CLI
   gh: ~/.config/gh
-
-  # Terminal
-  ghostty: ~/.config/ghostty
-  starship/starship.toml: ~/.config/starship.toml
 
   # Cursor
   cursor/rules: ~/.cursor/rules
@@ -172,9 +165,6 @@ macos:
   full_disk_access:
     - /Applications/Conductor.app
     - /Applications/Claude.app
-    - ~/Applications/Ghostty.app
-    - /Applications/iTerm.app
-    - /Applications/Warp.app
     - /Applications/Cursor.app
     - /Applications/Visual Studio Code.app
     - /System/Applications/Utilities/Terminal.app
