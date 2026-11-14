@@ -95,12 +95,10 @@ plugins=(
     bundler
     gem
     rails
-    rbenv
     ruby
 
     # Languages: Node
     node
-    nodenv
     npm
     yarn
 
@@ -118,11 +116,9 @@ plugins=(
     ngrok
 
     # Security
-    gpg-agent
     ssh-agent
 
     # Development Tools
-    asdf
     brew
 )
 

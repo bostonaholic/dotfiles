@@ -157,20 +157,19 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# T7: pyenv guard with command -v check and standalone elif fallback;
-#     Homebrew branch uses 'pyenv root', standalone branch uses $HOME/.pyenv
-#     Verifies: pyenv guard handles Homebrew and standalone (Step 2.4)
+# T7: pyenv is configured with static exports: shims on PATH, no pyenv call
+#     at startup (`pyenv init` forks a process on every login shell)
 # ---------------------------------------------------------------------------
-echo "T7: pyenv block has defensive guard"
+echo "T7: pyenv configured without running pyenv"
 t7_ok=true
 t7_reasons=""
-if ! grep -A1 'pyenv configuration' "$REPO_ROOT/zsh/zprofile" | grep -q 'command -v pyenv'; then
+if grep -v '^[[:space:]]*#' "$REPO_ROOT/zsh/zprofile" | grep -q 'pyenv init\|$(pyenv'; then
     t7_ok=false
-    t7_reasons="missing 'command -v pyenv' guard"
+    t7_reasons="zprofile runs pyenv at startup"
 fi
-if ! grep -q 'elif.*-d.*\.pyenv' "$REPO_ROOT/zsh/zprofile" 2>/dev/null; then
+if ! grep -q 'export PATH="$PYENV_ROOT/shims:' "$REPO_ROOT/zsh/zprofile"; then
     t7_ok=false
-    t7_reasons="${t7_reasons:+$t7_reasons; }missing elif fallback for standalone ~/.pyenv"
+    t7_reasons="${t7_reasons:+$t7_reasons; }pyenv shims not added to PATH"
 fi
 if $t7_ok; then
     pass "T7"
