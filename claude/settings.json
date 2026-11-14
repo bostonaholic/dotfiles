@@ -77,7 +77,7 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "xhigh",
+  "effortLevel": "medium",
   "modelSettings": {
     "opus": {
       "effortLevel": "medium"
