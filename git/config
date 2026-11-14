@@ -75,6 +75,9 @@
 	stashes = stash list
 
 	st = status --short --branch
+
+	# Refresh the current branch with the latest changes from main
+	refresh = !git stash && git checkout main && git pull origin main && git checkout - && git rebase main && (git stash pop || true)
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
