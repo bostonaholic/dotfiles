@@ -5,7 +5,7 @@
 # DESCRIPTION:
 #   Updates all components of the dotfiles environment including the dotfiles
 #   repository itself, Homebrew packages, Claude plugins, Vim runtime,
-#   Spacemacs, rbenv plugins, npm packages, and uv tools.
+#   rbenv plugins, npm packages, and uv tools.
 #
 # USAGE:
 #   ./update.sh
@@ -16,7 +16,6 @@
 #   - Claude CLI plugins
 #   - Codex CLI plugins
 #   - Vim runtime (if installed)
-#   - Spacemacs (if installed)
 #   - rbenv plugins
 #   - Global npm packages
 #   - uv tools
@@ -26,7 +25,7 @@
 #   - git (required)
 #   - homebrew (required)
 #   - brewup script (required)
-#   - Optional: claude, vimup, spacemacsup commands
+#   - Optional: claude, vimup commands
 #
 # NOTES:
 #   This script is safe to run repeatedly. It will skip components that
@@ -70,16 +69,6 @@ if [[ -d "${HOME}/.vim_runtime" ]] && command -v vimup &>/dev/null; then
     success "Vimrc updated"
 else
     warn "Vimrc not installed or vimup not found, skipping update"
-fi
-
-# Spacemacs
-# https://github.com/syl20bnr/spacemacs
-if [[ -d "${HOME}/.emacs.d" ]] && command -v spacemacsup &>/dev/null; then
-    echo && log "Updating Spacemacs from https://github.com/syl20bnr/spacemacs..."
-    spacemacsup
-    success "Spacemacs updated"
-else
-    warn "Spacemacs not installed or spacemacsup not found, skipping update"
 fi
 
 # tmux plugins
