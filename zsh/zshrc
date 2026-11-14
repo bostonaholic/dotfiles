@@ -20,6 +20,18 @@ export CLICOLOR=1
 export EDITOR='vim'
 bindkey -e
 
+# /etc/zshrc equivalent (skipped by no_global_rcs in zshenv), minus its
+# `$(locale LC_CTYPE)` subshell: the locale here is always UTF-8.
+setopt combining_chars
+disable log
+zmodload zsh/terminfo
+[[ -n "${terminfo[kdch1]}" ]] && bindkey "${terminfo[kdch1]}" delete-char
+[[ -n "${terminfo[khome]}" ]] && bindkey "${terminfo[khome]}" beginning-of-line
+[[ -n "${terminfo[kend]}" ]] && bindkey "${terminfo[kend]}" end-of-line
+[[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" up-line-or-search
+[[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" down-line-or-search
+[[ -r "/etc/zshrc_${TERM_PROGRAM}" ]] && source "/etc/zshrc_${TERM_PROGRAM}"
+
 _zsh_cache="${XDG_CACHE_HOME:-${HOME}/Library/Caches}/zsh"
 [[ -d "${_zsh_cache}" ]] || mkdir -p "${_zsh_cache}"
 
