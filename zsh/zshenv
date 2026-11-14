@@ -1,3 +1,7 @@
+# Skip macOS's /etc/zprofile and /etc/zshrc. Each forks a process on every
+# startup (path_helper, locale); zprofile and zshrc do their work without one.
+setopt no_global_rcs
+
 # Silence zoxide's "configuration issue" doctor banner. It fires on every
 # non-interactive shell (e.g. Claude Code's Bash tool re-sources config per
 # call), even though zoxide is already initialized correctly at the end of

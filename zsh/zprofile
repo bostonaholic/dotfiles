@@ -1,5 +1,17 @@
 #!/usr/bin/env zsh
 
+# /etc/zprofile equivalent (skipped by no_global_rcs in zshenv). Builds the
+# same PATH as path_helper: /etc/paths, then /etc/paths.d/*, then the rest.
+[[ -n "$LANG" ]] || export LANG=C.UTF-8
+() {
+  local f
+  local -a system_path
+  for f in /etc/paths /etc/paths.d/*(N); do
+    system_path+=(${(f)"$(<$f)"})
+  done
+  path=($system_path $path)
+}
+
 # XDG Base Directory
 export XDG_BIN_HOME="$HOME/.local/bin"
 export XDG_CACHE_HOME="$HOME/Library/Caches"
