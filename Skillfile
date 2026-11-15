@@ -39,6 +39,6 @@ npx skills add blader/humanizer --skill humanizer --agent claude-code codex curs
 npx skills add microsoft/playwright-cli --skill playwright-cli --agent claude-code codex cursor opencode antigravity-cli pi -g -y
 
 # Book to Skill (book-to-skill)
-npx skills add virgiliojr94/book-to-skill --all -g -y
+npx skills add virgiliojr94/book-to-skill --skill book-to-skill --agent claude-code codex cursor opencode antigravity-cli pi -g -y
 
 echo "Done. Run 'npx skills list -g' to verify."
