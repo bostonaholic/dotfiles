@@ -3,7 +3,7 @@
 # Zsh Config Audit -- Acceptance Tests
 #
 # DESCRIPTION:
-#   Checks the zsh startup files zsh/zshrc and zsh/zprofile.
+#   Checks the zsh startup files zsh/zshrc and zsh/path.zsh.
 #
 # USAGE:
 #   ./tests/test_zsh_audit.sh   (or run the whole suite via: scripts/test)
@@ -44,14 +44,14 @@ echo "    Repo: $REPO_ROOT"
 echo ""
 
 # ---------------------------------------------------------------------------
-# T2: tail -2 zsh/zprofile shows 'typeset -U path'
+# T2: tail -2 zsh/path.zsh shows 'typeset -U path'
 #     Verifies: PATH deduplication added (Step 1.2)
 # ---------------------------------------------------------------------------
 echo "T2: typeset -U path added at end of zprofile"
-if tail -2 "$REPO_ROOT/zsh/zprofile" | grep -q 'typeset -U path'; then
+if tail -2 "$REPO_ROOT/zsh/path.zsh" | grep -q 'typeset -U path'; then
     pass "T2"
 else
-    fail "T2" "Last 2 lines of zsh/zprofile do not contain 'typeset -U path'"
+    fail "T2" "Last 2 lines of zsh/path.zsh do not contain 'typeset -U path'"
 fi
 
 # ---------------------------------------------------------------------------
@@ -66,38 +66,38 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# T4: head -1 zsh/zshrc and head -1 zsh/zprofile both show #!/usr/bin/env zsh
+# T4: head -1 zsh/zshrc and head -1 zsh/path.zsh both show #!/usr/bin/env zsh
 #     Verifies: Shebangs corrected (Step 2.1)
 # ---------------------------------------------------------------------------
 echo "T4: Shebangs are #!/usr/bin/env zsh"
 zshrc_shebang=$(head -1 "$REPO_ROOT/zsh/zshrc")
-zprofile_shebang=$(head -1 "$REPO_ROOT/zsh/zprofile")
+path_shebang=$(head -1 "$REPO_ROOT/zsh/path.zsh")
 t4_ok=true
 if [[ "$zshrc_shebang" != "#!/usr/bin/env zsh" ]]; then
     t4_ok=false
 fi
-if [[ "$zprofile_shebang" != "#!/usr/bin/env zsh" ]]; then
+if [[ "$path_shebang" != "#!/usr/bin/env zsh" ]]; then
     t4_ok=false
 fi
 if $t4_ok; then
     pass "T4"
 else
-    fail "T4" "zshrc shebang='$zshrc_shebang', zprofile shebang='$zprofile_shebang'"
+    fail "T4" "zshrc shebang='$zshrc_shebang', path.zsh shebang='$path_shebang'"
 fi
 
 # ---------------------------------------------------------------------------
-# T6: grep '/usr/local' zsh/zprofile returns nothing;
-#     grep 'HOMEBREW_PREFIX' zsh/zprofile matches PATH line
+# T6: grep '/usr/local' zsh/path.zsh returns nothing;
+#     grep 'HOMEBREW_PREFIX' zsh/path.zsh matches PATH line
 #     Verifies: Intel-era paths removed, curl uses $HOMEBREW_PREFIX (Step 2.3)
 # ---------------------------------------------------------------------------
 echo "T6: Intel-era /usr/local paths removed, HOMEBREW_PREFIX used"
 t6_ok=true
 t6_reasons=""
-if grep '/usr/local' "$REPO_ROOT/zsh/zprofile" >/dev/null 2>&1; then
+if grep '/usr/local' "$REPO_ROOT/zsh/path.zsh" >/dev/null 2>&1; then
     t6_ok=false
     t6_reasons="/usr/local still present in zprofile"
 fi
-if ! grep 'HOMEBREW_PREFIX' "$REPO_ROOT/zsh/zprofile" >/dev/null 2>&1; then
+if ! grep 'HOMEBREW_PREFIX' "$REPO_ROOT/zsh/path.zsh" >/dev/null 2>&1; then
     t6_ok=false
     t6_reasons="${t6_reasons:+$t6_reasons; }HOMEBREW_PREFIX not found in zprofile"
 fi
@@ -114,11 +114,11 @@ fi
 echo "T7: pyenv configured without running pyenv"
 t7_ok=true
 t7_reasons=""
-if grep -v '^[[:space:]]*#' "$REPO_ROOT/zsh/zprofile" | grep -q 'pyenv init\|$(pyenv'; then
+if grep -v '^[[:space:]]*#' "$REPO_ROOT/zsh/path.zsh" | grep -q 'pyenv init\|$(pyenv'; then
     t7_ok=false
     t7_reasons="zprofile runs pyenv at startup"
 fi
-if ! grep -q 'export PATH="$PYENV_ROOT/shims:' "$REPO_ROOT/zsh/zprofile"; then
+if ! grep -q 'export PATH="$PYENV_ROOT/shims:' "$REPO_ROOT/zsh/path.zsh"; then
     t7_ok=false
     t7_reasons="${t7_reasons:+$t7_reasons; }pyenv shims not added to PATH"
 fi
@@ -135,11 +135,11 @@ fi
 echo "M3: brew --prefix openssl@3 replaced with HOMEBREW_PREFIX variable"
 m3_ok=true
 m3_reasons=""
-if grep -q 'brew --prefix' "$REPO_ROOT/zsh/zprofile" 2>/dev/null; then
+if grep -q 'brew --prefix' "$REPO_ROOT/zsh/path.zsh" 2>/dev/null; then
     m3_ok=false
     m3_reasons="'brew --prefix openssl@3' subprocess call still present"
 fi
-if ! grep -q 'HOMEBREW_PREFIX.*/opt/openssl@3' "$REPO_ROOT/zsh/zprofile" 2>/dev/null; then
+if ! grep -q 'HOMEBREW_PREFIX.*/opt/openssl@3' "$REPO_ROOT/zsh/path.zsh" 2>/dev/null; then
     m3_ok=false
     m3_reasons="${m3_reasons:+$m3_reasons; }HOMEBREW_PREFIX/opt/openssl@3 not found"
 fi

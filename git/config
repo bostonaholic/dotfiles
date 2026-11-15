@@ -10,8 +10,6 @@
 	format = ssh
 [gpg "ssh"]
 	allowedSignersFile = ~/.config/git/allowed_signers
-[help]
-	autocorrect = 1
 [color]
 	ui = auto
 [commit]
@@ -76,8 +74,8 @@
 
 	st = status --short --branch
 
-	# Refresh the current branch with the latest changes from main
-	refresh = !git stash && git checkout main && git pull origin main && git checkout - && git rebase main && (git stash pop || true)
+	# Rebase the current branch onto the latest origin/main
+	refresh = pull --rebase --autostash origin main
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

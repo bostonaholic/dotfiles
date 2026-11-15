@@ -1,7 +1,9 @@
 #!/usr/bin/env zsh
 
 # Runs for every zsh, scripts included: environment variables only, no output.
-# PATH lives in zprofile, because /etc/zprofile's path_helper reorders it.
+
+# :A resolves the ~/.zshenv symlink, so this finds path.zsh beside this file.
+source "${${(%):-%x}:A:h}/path.zsh"
 
 # XDG Base Directory
 export XDG_BIN_HOME="$HOME/.local/bin"
@@ -17,3 +19,10 @@ export EDITOR='vim'
 # --quit-if-one-screen exits when the content fits on one screen, and
 # --no-init keeps that content on screen after less exits.
 export LESS="-R --quit-if-one-screen --no-init $LESS"
+
+# A shell driven by a coding agent has nobody to answer a prompt, so commands
+# that would open an editor, a pager or a question must return instead.
+if [[ -n "${CLAUDECODE-}${CLAUDE_CODE_ENTRYPOINT-}${AI_AGENT-}${CURSOR_AGENT-}${CODEX_SANDBOX-}" ]]; then
+  export DOTFILES_AGENT_SHELL=1
+  export GIT_EDITOR=true GIT_PAGER=cat PAGER=cat GH_PROMPT_DISABLED=1
+fi

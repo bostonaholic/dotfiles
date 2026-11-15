@@ -28,7 +28,7 @@ shellcheck scripts/*
 | ------- | -------- |
 | Central config | `dotfiles.yaml` |
 | Homebrew packages | `Brewfile` |
-| Shell config | `zsh/zshenv` (env vars, every shell), `zsh/zprofile` (PATH, login shells), `zsh/zshrc` (interactive: history, keys, aliases) |
+| Shell config | `zsh/zshenv` (env vars, every shell), `zsh/path.zsh` (PATH, sourced by `zshenv` and `zprofile`), `zsh/zshrc` (interactive: history, keys, aliases) |
 | Git config | `git/config` |
 | Claude agents | [bostonaholic/skills](https://github.com/bostonaholic/skills) repo, `agents/*.md` |
 | Agent skills (personal) | [bostonaholic/skills](https://github.com/bostonaholic/skills) repo |

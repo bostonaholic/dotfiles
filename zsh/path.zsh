@@ -1,0 +1,53 @@
+#!/usr/bin/env zsh
+
+# PATH for every zsh. Sourced twice in a login shell: by zshenv, so that
+# `zsh -c` finds Homebrew, the version-manager shims and ~/bin, and again by
+# zprofile, because /etc/zprofile's path_helper reorders PATH in between.
+
+# Homebrew configuration (absent on Linux)
+if [[ -d /opt/homebrew ]]; then
+  export HOMEBREW_PREFIX="/opt/homebrew"
+  export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+  export HOMEBREW_REPOSITORY="/opt/homebrew"
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
+  [ -z "${MANPATH-}" ] || export MANPATH=":${MANPATH#:}"
+  export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+
+  # Homebrew curl and PostgreSQL
+  export PATH="${HOMEBREW_PREFIX}/opt/curl/bin:${HOMEBREW_PREFIX}/opt/postgresql@16/bin:${PATH}"
+fi
+
+export PATH="${HOME}/bin:${PATH}"
+
+# pyenv configuration (static equivalent of `pyenv init --path`)
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
+
+# asdf, rbenv, and nodenv shims (static equivalent of their init commands)
+export RBENV_SHELL=zsh NODENV_SHELL=zsh
+export PATH="$HOME/.asdf/shims:$HOME/.rbenv/shims:$HOME/.nodenv/shims:$PATH"
+
+# ruby-build installs a non-Homebrew OpenSSL for each Ruby version installed and these are never upgraded.
+# To link Rubies to Homebrew's OpenSSL (which is upgraded) add the following to your ~/.zshrc:
+# Note: this may interfere with building old versions of Ruby (e.g <2.4) that use OpenSSL <1.1.
+if [[ -n "${HOMEBREW_PREFIX-}" ]]; then
+  # YJIT is a new JIT compiler for Ruby 3.1
+  export RUBY_CONFIGURE_OPTS="--with-yjit --with-openssl-dir=${HOMEBREW_PREFIX}/opt/openssl@3"
+fi
+
+# Created by `pipx` on 2025-12-12 04:49:42
+export PATH="$PATH:$HOME/.local/bin"
+
+# Added by Obsidian
+export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
+
+# Created for rust
+export PATH="$PATH:$HOME/.cargo/bin"
+
+# dev CLI
+if [[ -d "$HOME/code/bostonaholic/dev/bin" ]]; then
+  export PATH="$HOME/code/bostonaholic/dev/bin:$PATH"
+fi
+
+# Deduplicate PATH entries
+typeset -U path
