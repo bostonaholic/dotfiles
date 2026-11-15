@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install tools
-        run: brew install pre-commit yq
+        run: brew install bash pre-commit yq  # scripts/test needs bash 4 for mapfile
       - name: ShellCheck
         run: pre-commit run --all-files
       - name: Test suite
