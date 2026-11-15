@@ -142,7 +142,7 @@ To add a new dotfile to the installation:
 macOS shows "*App* would like to access data from other apps" (or "... access
 files on a network volume") whenever a coding agent launched from that app runs
 `find`, `mdfind`, `claude`, `agy`, and so on. macOS attributes a child
-process's file access to the app that launched it (Conductor, a terminal, an
+process's file access to the app that launched it (a terminal, an
 IDE). Clicking Allow covers only that one process, there is no System Settings
 toggle for it, and the next spawned command asks again.
 

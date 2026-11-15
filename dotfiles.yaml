@@ -157,7 +157,6 @@ packages:
 # scripts/install_macos_permissions checks status and walks you through it.
 macos:
   full_disk_access:
-    - /Applications/Conductor.app
     - /Applications/Claude.app
     - ~/Applications/Ghostty.app
     - /Applications/iTerm.app
