@@ -1,0 +1,72 @@
+#!/bin/bash
+################################################################################
+# Install MCP Servers
+#
+# DESCRIPTION:
+#   Registers the MCP servers listed under mcp.claude in dotfiles.yaml with
+#   Claude Code at user scope. Safe to re-run: a server that is already
+#   registered is left as it is.
+#
+# USAGE:
+#   Called by install.sh, or run directly:
+#   ./install_mcp_servers
+#
+# ENVIRONMENT VARIABLES:
+#   DRY_RUN  - If set, preview changes without making them (default: unset)
+#
+# WHAT IT DOES:
+#   1. Checks if claude CLI is installed, skips if not found
+#   2. Reads each name and command from mcp.claude in dotfiles.yaml
+#   3. Skips names that 'claude mcp get' already finds
+#   4. Registers the rest with 'claude mcp add --scope user', putting
+#      mcp-guardrail-proxy in front of the command when it is installed
+#
+# DEPENDENCIES:
+#   - claude CLI (skips if not installed)
+#   - yq (for parsing YAML)
+#
+################################################################################
+
+set -euo pipefail
+
+# shellcheck source=lib.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
+
+main() {
+    log "Registering MCP servers..."
+
+    if ! command -v claude &> /dev/null; then
+        warn "claude CLI not found. Skipping MCP servers"
+        return
+    fi
+
+    local -a proxy=()
+    if command -v mcp-guardrail-proxy &> /dev/null; then
+        local audit_log="${XDG_STATE_HOME:-$HOME/.local/state}/mcp-guardrail/audit.jsonl"
+        proxy=(mcp-guardrail-proxy proxy --audit-log "$audit_log" --)
+    fi
+
+    local name command failed=0
+    local -a argv
+    while IFS=$'\t' read -r name command; do
+        [[ -n "$name" ]] || continue
+        read -r -a argv <<< "$command"
+
+        if [[ -n $DRY_RUN ]]; then
+            log "[DRY RUN] Would register MCP server: $name"
+        elif claude mcp get "$name" >/dev/null 2>&1; then
+            success "  ✓ $name already registered"
+        elif claude mcp add --scope user "$name" -- ${proxy[@]+"${proxy[@]}"} "${argv[@]}" >/dev/null 2>&1; then
+            success "  ✓ $name registered"
+        else
+            failed=$((failed + 1))
+            error "  ✗ $name failed to register"
+        fi
+    done < <(yq eval '.mcp.claude // {} | to_entries[] | [.key, .value] | @tsv' "$CONFIG_FILE")
+
+    [[ $failed -eq 0 ]]
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

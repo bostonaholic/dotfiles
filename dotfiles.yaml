@@ -120,6 +120,8 @@ packages:
       - bostonaholic/skills
       - bostonaholic/dev
       - bostonaholic/claude-mods
+      - ayghri/i-have-adhd
+      - google/elephant-goldfish-model
     plugins:
       - cloudflare@cloudflare
       - typescript-lsp@claude-plugins-official
@@ -129,6 +131,8 @@ packages:
       - bostonaholic@skills
       - dev@dev
       - bostonaholic@claude-mods
+      - i-have-adhd@i-have-adhd
+      - egm@egm
 
   # Codex CLI: 'codex plugin marketplace add' + 'codex plugin add'
   # Plugins from Codex's built-in openai-curated-remote catalog need no
@@ -142,6 +146,7 @@ packages:
       - bostonaholic/team
       - bostonaholic/skills
       - bostonaholic/dev
+      - ayghri/i-have-adhd
     plugins:
       - cloudflare@cloudflare
       - loops@loops-plugins
@@ -149,6 +154,16 @@ packages:
       - bostonaholic@skills
       - dev@dev
       - vercel@openai-curated-remote
+      - i-have-adhd@i-have-adhd
+
+# MCP servers, registered at user scope with 'claude mcp add'. Each value is
+# the command that starts the server. It runs through mcp-guardrail-proxy
+# when that is installed.
+# Run: ./scripts/install_mcp_servers to register
+mcp:
+  claude:
+    playwright: npx @playwright/mcp@latest
+    github: github-mcp
 
 # macOS privacy (TCC). Apps that must have Full Disk Access. Child processes
 # (find, mdfind, claude, agy, ...) inherit the TCC identity of the app that

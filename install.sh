@@ -283,6 +283,7 @@ install_claude() {
     # Export options for the script
     export DRY_RUN VERBOSE
     "$DOTFILES_DIR/scripts/install_claude_plugins"
+    "$DOTFILES_DIR/scripts/install_mcp_servers"
 }
 
 # Run installation scripts from dotfiles.yaml
