@@ -114,16 +114,16 @@ packages:
       - ayghri/i-have-adhd
       - google/elephant-goldfish-model
     plugins:
+      - bostonaholic@claude-mods
+      - bostonaholic@skills
       - cloudflare@cloudflare
-      - typescript-lsp@claude-plugins-official
-      - vercel@claude-plugins-official
+      - dev@dev
+      - egm@egm
+      - i-have-adhd@i-have-adhd
       - playwright@claude-plugins-official
       - team@team-dev
-      - bostonaholic@skills
-      - dev@dev
-      - bostonaholic@claude-mods
-      - i-have-adhd@i-have-adhd
-      - egm@egm
+      - typescript-lsp@claude-plugins-official
+      - vercel@claude-plugins-official
 
   # Codex CLI: 'codex plugin marketplace add' + 'codex plugin add'
   # Plugins from Codex's built-in openai-curated-remote catalog need no

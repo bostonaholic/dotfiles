@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+################################################################################
+# lint_claude_plugins -- check that Claude Code plugin lists are sorted
+#
+# DESCRIPTION:
+#   Fails if either list of Claude Code plugins is out of alphabetical order:
+#   - the keys of .enabledPlugins in claude/settings.json
+#   - the entries of .packages.claude.plugins in dotfiles.yaml
+#   Order is jq's `sort` (Unicode codepoint order), so the result does not
+#   depend on the machine's locale.
+#
+# USAGE:
+#   scripts/lint_claude_plugins [settings.json] [dotfiles.yaml]
+#   Paths default to the repo's own files.
+#
+# DEPENDENCIES:
+#   - jq
+#   - yq (mikefarah)
+#
+# EXIT CODE:
+#   0 - Both lists are sorted
+#   1 - A list is unsorted, or a file could not be read
+#
+################################################################################
+
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SETTINGS="${1:-$REPO_ROOT/claude/settings.json}"
+CONFIG="${2:-$REPO_ROOT/dotfiles.yaml}"
+
+status=0
+
+# check_sorted LABEL JSON_ARRAY: print the expected order and fail if
+# JSON_ARRAY is not already sorted.
+check_sorted() {
+    local label="$1" list="$2"
+    if jq -e '. == sort' <<<"$list" >/dev/null; then
+        echo "ok: $label"
+    else
+        echo "unsorted: $label. Expected order:"
+        jq -r 'sort[] | "  " + .' <<<"$list"
+        status=1
+    fi
+}
+
+# Plain assignments, so set -e stops the script if a file or key is missing.
+enabled="$(jq -e '.enabledPlugins | keys_unsorted' "$SETTINGS")"
+declared="$(yq -e -o=json '.packages.claude.plugins' "$CONFIG")"
+
+check_sorted "$SETTINGS .enabledPlugins" "$enabled"
+check_sorted "$CONFIG .packages.claude.plugins" "$declared"
+
+exit "$status"
