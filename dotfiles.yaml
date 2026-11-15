@@ -29,10 +29,11 @@ symlinks:
   antigravity/settings.json: ~/.gemini/antigravity-cli/settings.json
 
   # Global agent instructions (shared across coding agents)
-  agents/AGENTS.md: ~/.agents/AGENTS.md
-  agents/AGENTS.md: ~/.claude/CLAUDE.md         # Claude Code
-  agents/AGENTS.md: ~/.codex/AGENTS.md          # Codex CLI
-  agents/AGENTS.md: ~/.gemini/AGENTS.md         # Antigravity (cross-tool global rules)
+  agents/AGENTS.md:
+    - ~/.agents/AGENTS.md
+    - ~/.claude/CLAUDE.md         # Claude Code
+    - ~/.codex/AGENTS.md          # Codex CLI
+    - ~/.gemini/AGENTS.md         # Antigravity (cross-tool global rules)
 
   # Shell
   zsh/zprofile: ~/.zprofile

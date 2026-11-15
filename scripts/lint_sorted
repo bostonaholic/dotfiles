@@ -121,9 +121,10 @@ check_json dotfiles.yaml '.packages.codex.marketplaces'
 check_json dotfiles.yaml '.packages.codex.plugins'
 check_json dotfiles.yaml '.mcp.claude | keys'
 check_json dotfiles.yaml '.macos.full_disk_access'
-# The symlinks map repeats a key (one source, several targets), which JSON
-# cannot hold, so it is checked as text.
-check_lines dotfiles.yaml --from '^symlinks:' --to '^[a-z]'
+# The symlinks map is sorted within its comment groups, so it is checked as
+# text. --entry matches the source lines only, not a source's target list.
+check_lines dotfiles.yaml --from '^symlinks:' --to '^[a-z]' --entry '^  [^ ]'
+check_json dotfiles.yaml '.symlinks."agents/AGENTS.md"'
 
 check_json claude/settings.json '.env | keys'
 check_json claude/settings.json '.permissions.allow'

@@ -125,6 +125,9 @@ Maps source files (in the dotfiles repo) to their destination (in your home dire
 symlinks:
   zsh/zshrc: ~/.zshrc              # Links zsh/zshrc to ~/.zshrc
   git/config: ~/.config/git/config # Links git/config to ~/.config/git/config
+  agents/AGENTS.md:                # Links one source to several targets
+    - ~/.claude/CLAUDE.md
+    - ~/.codex/AGENTS.md
 ```
 
 #### Adding New Dotfiles

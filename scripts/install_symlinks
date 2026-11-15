@@ -216,7 +216,8 @@ main() {
     # Parse symlinks from YAML using yq
     debug "Using yq to parse symlinks"
     local symlinks_data
-    if ! symlinks_data=$(yq eval '.symlinks | to_entries | .[] | [.key, .value] | @tsv' "$CONFIG_FILE" 2>&1); then
+    # A value is one target or a list of targets; emit one line per target.
+    if ! symlinks_data=$(yq eval '.symlinks | to_entries | .[] | .key as $source | ([.value] | flatten | .[]) | [$source, .] | @tsv' "$CONFIG_FILE" 2>&1); then
         warn "Failed to parse symlinks with yq: $symlinks_data"
         return
     fi
