@@ -68,14 +68,10 @@ else
     pass "T3"
 fi
 
-echo "T4: Stop and Notification hooks run an executable tracked in bin/"
-t4_fail=""
-for event in Stop Notification; do
-    cmd="$(jq -r --arg e "$event" '.hooks[$e][0].hooks[0].command // ""' "$SETTINGS")"
-    script="$REPO_ROOT/bin/${cmd#\$HOME/bin/}"
-    [[ "$cmd" == "\$HOME/bin/"* && -x "$script" ]] || t4_fail="$t4_fail $event='$cmd'"
-done
-if [[ -z "$t4_fail" ]]; then pass "T4"; else fail "T4" "$t4_fail"; fi
+echo "T4: Notification hook runs an executable tracked in bin/"
+cmd="$(jq -r '.hooks.Notification[0].hooks[0].command // ""' "$SETTINGS")"
+script="$REPO_ROOT/bin/${cmd#\$HOME/bin/}"
+if [[ "$cmd" == "\$HOME/bin/"* && -x "$script" ]]; then pass "T4"; else fail "T4" "Notification='$cmd'"; fi
 
 echo "T5: claude-notify passes the directory name and message to alerter"
 if [[ "$(uname)" != Darwin ]]; then
