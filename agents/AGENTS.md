@@ -187,9 +187,8 @@ signature. There is no "just this once" — this rule has no exceptions.
 Signing setup on this machine: SSH-format signatures (`gpg.format = ssh`)
 produced by the stock `ssh-keygen` signer using a dedicated on-disk key
 (`user.signingkey` → `~/.ssh/git-signing-ed25519`), verified against
-`~/.config/git/allowed_signers`. Signing deliberately does **not** go through
-the 1Password SSH agent, so commits succeed while 1Password is locked — which
-matters for long-running agents. 1Password still handles SSH authentication.
+`~/.config/git/allowed_signers`. SSH authentication uses the stock macOS
+`ssh-agent` with `~/.ssh/id_ed25519` (`~/.ssh/config`), not 1Password.
 
 Diagnosing signing failures — match the error, then recommend the fix:
 
