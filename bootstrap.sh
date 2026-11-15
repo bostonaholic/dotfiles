@@ -1,6 +1,8 @@
 #!/bin/bash
 #
 # Fresh-machine bootstrap. Clones the dotfiles repo and runs install.sh.
+# On Linux it installs the agent configuration only: symlinks and Claude Code
+# plugins, with no sudo, no Homebrew and no prompts.
 #
 #   curl dotfiles.bostonaholic.dev | bash
 #   curl -fsSL https://dotfiles.bostonaholic.dev | bash -s -- --minimal
@@ -54,9 +56,13 @@ USAGE
     shift
   done
 
+  # Anything but a Mac is a headless agent machine, such as a cloud session:
+  # agent configuration only, with nobody to answer a prompt.
+  local IS_MAC=1
   if [ "$(uname -s)" != "Darwin" ]; then
-    echo "This bootstrap expects a macOS machine." >&2
-    return 1
+    IS_MAC=0
+    COMPONENTS="symlinks,claude"
+    INSTALL_ARGS+=(--yes)
   fi
 
   # Piped into bash, stdin is the script itself, so install.sh and Homebrew
@@ -73,7 +79,7 @@ USAGE
   fi
 
   # On a fresh Mac, git is a stub until the Command Line Tools are installed.
-  if ! xcode-select -p >/dev/null 2>&1; then
+  if [ "$IS_MAC" = 1 ] && ! xcode-select -p >/dev/null 2>&1; then
     echo "==> Installing Xcode Command Line Tools..."
     xcode-select --install || true
     echo "Finish the Command Line Tools installer, then re-run this command." >&2

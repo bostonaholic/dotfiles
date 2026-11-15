@@ -140,6 +140,29 @@ should_install() {
     [[ ",$COMPONENTS," == *",$component,"* ]]
 }
 
+# Linux has no Homebrew here, so fetch the yq release binary into ~/.local/bin.
+install_yq_linux() {
+    local arch
+    case "$(uname -m)" in
+        x86_64)        arch=amd64 ;;
+        aarch64|arm64) arch=arm64 ;;
+        *)             die "No yq binary for architecture: $(uname -m)" ;;
+    esac
+
+    if [[ -n $DRY_RUN ]]; then
+        log "[DRY RUN] Would download yq to ~/.local/bin"
+        return
+    fi
+
+    log "yq not found. Downloading yq to ~/.local/bin..."
+    mkdir -p "$HOME/.local/bin"
+    curl -fsSL "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${arch}" \
+        -o "$HOME/.local/bin/yq"
+    chmod +x "$HOME/.local/bin/yq"
+    export PATH="$HOME/.local/bin:$PATH"
+    success "yq installed"
+}
+
 # Check dependencies
 check_dependencies() {
     log "Checking dependencies..."
@@ -153,6 +176,9 @@ check_dependencies() {
     done
 
     # Check for yq, install if missing
+    if ! command -v yq &> /dev/null && [[ "$(uname -s)" == Linux ]]; then
+        install_yq_linux
+    fi
     if ! command -v yq &> /dev/null; then
         warn "yq not found. Installing yq via Homebrew..."
 

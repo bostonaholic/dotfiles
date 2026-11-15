@@ -1,0 +1,43 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Lint and test (macOS)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: brew install pre-commit yq
+      - name: ShellCheck
+        run: pre-commit run --all-files
+      - name: Test suite
+        run: scripts/test
+
+  linux-agent-install:
+    name: Agent install (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove the runner's yq so install.sh has to fetch it
+        run: sudo rm -f "$(command -v yq)"
+      - name: Install into an empty HOME, with no input
+        run: |
+          export HOME="$RUNNER_TEMP/home"
+          mkdir -p "$HOME"
+          ./install.sh --only symlinks,claude --yes </dev/null
+      - name: Check the agent configuration is linked
+        run: |
+          home="$RUNNER_TEMP/home"
+          for link in .claude/CLAUDE.md .claude/settings.json .codex/AGENTS.md .config/git bin; do
+            [ "$(readlink -f "$home/$link")" != "$home/$link" ] && [ -e "$home/$link" ] ||
+              { echo "not linked: ~/$link"; exit 1; }
+          done
+          [ -x "$home/.local/bin/yq" ] || { echo "yq was not downloaded"; exit 1; }
