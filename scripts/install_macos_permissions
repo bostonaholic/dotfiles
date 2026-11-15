@@ -8,7 +8,7 @@
 #   when it is missing.
 #
 #   macOS attributes a child process's file access to the app that launched it
-#   (Conductor, a terminal, an IDE). The "would like to access data from other
+#   (a terminal, an IDE). The "would like to access data from other
 #   apps" Allow only lasts for that one process, so agents spawned by the app
 #   keep prompting. FDA is the durable grant, but Apple provides no way to set
 #   it from a script, so this only reports status and opens the settings pane.
