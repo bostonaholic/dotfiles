@@ -1,5 +1,8 @@
 # There's no place like ~
 
+Sets up a machine for coding agents. [VISION.md](VISION.md) states what the repo
+is for and what belongs in it.
+
 ## Setup
 
 ### Bootstrap a fresh Mac
