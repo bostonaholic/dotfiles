@@ -145,16 +145,6 @@
           }
         ]
       }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/bin/claude-notify"
-          }
-        ]
-      }
     ]
   }
 }
