@@ -3,9 +3,12 @@
 #
 # Run: ./Skillfile   (install.sh and update.sh both invoke this)
 #
-# Third-party skills install for Claude Code and Codex. Personal skills
-# (bostonaholic/skills, bostonaholic/dev) and Team install as native plugins
-# for both harnesses from dotfiles.yaml (packages.claude, packages.codex).
+# Third-party skills install for all six agent tools. The skills CLI keeps one
+# copy in ~/.agents/skills, which Codex, Cursor, OpenCode and Antigravity read
+# directly, and symlinks it into ~/.claude/skills and ~/.pi/agent/skills.
+# Personal skills (bostonaholic/skills, bostonaholic/dev) and Team install as
+# native plugins for Claude Code and Codex from dotfiles.yaml (packages.claude,
+# packages.codex).
 # Claude-app-synced skills live in ~/.claude/skills/synced/.
 # Managed elsewhere:
 #   - cloudflare plugin skills are declared in dotfiles.yaml (claude.plugins)
@@ -15,25 +18,25 @@ set -euo pipefail
 echo "Installing agent skills..."
 
 # Anthropic official (frontend-design, skill-creator)
-npx skills add anthropics/skills --skill frontend-design --skill skill-creator --agent claude-code codex -g -y
+npx skills add anthropics/skills --skill frontend-design --skill skill-creator --agent claude-code codex cursor opencode antigravity-cli pi -g -y
 
 # Vercel (find-skills)
-npx skills add vercel-labs/skills --skill find-skills --agent claude-code codex -g -y
+npx skills add vercel-labs/skills --skill find-skills --agent claude-code codex cursor opencode antigravity-cli pi -g -y
 
 # GitHub Copilot (create-agentsmd)
-npx skills add github/awesome-copilot --skill create-agentsmd --agent claude-code codex -g -y
+npx skills add github/awesome-copilot --skill create-agentsmd --agent claude-code codex cursor opencode antigravity-cli pi -g -y
 
 # Matt Pocock (grill-me)
-npx skills add mattpocock/skills --skill grill-me --agent claude-code codex -g -y
+npx skills add mattpocock/skills --skill grill-me --agent claude-code codex cursor opencode antigravity-cli pi -g -y
 
 # Akshat (first-principles-thinking)
-npx skills add akshat10/skills --skill first-principles-thinking --agent claude-code codex -g -y
+npx skills add akshat10/skills --skill first-principles-thinking --agent claude-code codex cursor opencode antigravity-cli pi -g -y
 
 # Blader (humanizer)
-npx skills add blader/humanizer --skill humanizer --agent claude-code codex -g -y
+npx skills add blader/humanizer --skill humanizer --agent claude-code codex cursor opencode antigravity-cli pi -g -y
 
 # Microsoft (playwright-cli)
-npx skills add microsoft/playwright-cli --skill playwright-cli --agent claude-code codex -g -y
+npx skills add microsoft/playwright-cli --skill playwright-cli --agent claude-code codex cursor opencode antigravity-cli pi -g -y
 
 # Book to Skill (book-to-skill)
 npx skills add virgiliojr94/book-to-skill --all -g -y
