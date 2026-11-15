@@ -30,7 +30,6 @@ shellcheck scripts/*
 | Homebrew packages | `Brewfile` |
 | Shell config | `zsh/zshenv` (env vars, every shell), `zsh/zprofile` (PATH, login shells), `zsh/zshrc` (interactive: history, keys, aliases) |
 | Git config | `git/config` |
-| Claude commands | `claude/commands/*.md` |
 | Claude agents | [bostonaholic/skills](https://github.com/bostonaholic/skills) repo, `agents/*.md` |
 | Agent skills (personal) | [bostonaholic/skills](https://github.com/bostonaholic/skills) repo |
 | Skill sources (personal + third-party) | `Skillfile` |
@@ -139,7 +138,6 @@ dotfiles/
   obsidian/         # Obsidian vault configuration
     skills/         # Obsidian-only skills (symlinked to vault)
   claude/           # Claude Code configuration
-    commands/       # Slash commands
     settings.json   # Claude Code settings
   vim/              # Vim configuration
   ruby/             # Ruby gems and pry config
@@ -151,7 +149,6 @@ dotfiles/
 
 Changes to `claude/` are immediately effective (symlinked to `~/.claude/`).
 
-- Commands: `claude/commands/*.md` - Slash command definitions
 - Agents: ship with the `bostonaholic` plugin from `bostonaholic/skills`
 - Settings: `claude/settings.json` - Preferences and hooks
 

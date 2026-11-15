@@ -12,7 +12,6 @@ directories:
   - ~/.gnupg
   - ~/.pi/agent
   - ~/.rbenv
-  - ~/Library/Application Support/Code/User
 
 symlinks:
   # Scripts
@@ -71,10 +70,7 @@ symlinks:
   node/node-version: ~/.node-version
 
   # Editors
-  nvim: ~/.config/nvim
   vim/my_configs.vim: ~/.vim_runtime/my_configs.vim
-  vscode/keybindings.json: ~/Library/Application Support/Code/User/keybindings.json
-  vscode/settings.json: ~/Library/Application Support/Code/User/settings.json
 
   # Other tools
   home/colors: ~/.colors
@@ -166,7 +162,6 @@ macos:
     - ~/Applications/Ghostty.app
     - /Applications/iTerm.app
     - /Applications/Cursor.app
-    - /Applications/Visual Studio Code.app
     - /System/Applications/Utilities/Terminal.app
 
 scripts:
