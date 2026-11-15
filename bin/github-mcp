@@ -1,0 +1,24 @@
+#!/bin/bash
+################################################################################
+# github-mcp - start the GitHub MCP server with the gh CLI's token
+#
+# DESCRIPTION:
+#   Runs GitHub's MCP server in Docker over stdio. The token comes from
+#   `gh auth token` each time the server starts, so no token is written to an
+#   MCP config file.
+#
+# USAGE:
+#   claude mcp add --scope user github -- github-mcp
+#
+# DEPENDENCIES:
+#   - gh, signed in (`gh auth login`)
+#   - docker, running
+#
+################################################################################
+
+set -euo pipefail
+
+GITHUB_PERSONAL_ACCESS_TOKEN="$(gh auth token)"
+export GITHUB_PERSONAL_ACCESS_TOKEN
+
+exec docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN ghcr.io/github/github-mcp-server
