@@ -24,6 +24,29 @@ if [[ -z "${DOTFILES_AGENT_SHELL-}" ]]; then
   command -v op >/dev/null && eval "$(op completion zsh)"
 fi
 
+# Prompt: git's own git-prompt.sh, for a person at a prompt only. The first
+# path that exists wins: Homebrew, Apple Command Line Tools, Debian/Ubuntu,
+# Fedora/RHEL, Arch. With none found, zsh keeps its default prompt.
+if [[ -o interactive && -z "${DOTFILES_AGENT_SHELL-}" ]]; then
+  for git_prompt in \
+    "${HOMEBREW_PREFIX:-/opt/homebrew}/etc/bash_completion.d/git-prompt.sh" \
+    /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh \
+    /usr/lib/git-core/git-sh-prompt \
+    /usr/share/git-core/contrib/completion/git-prompt.sh \
+    /usr/share/git/completion/git-prompt.sh; do
+    if [[ -r "$git_prompt" ]]; then
+      source "$git_prompt"
+      GIT_PS1_SHOWDIRTYSTATE=1
+      GIT_PS1_SHOWCOLORHINTS=1
+      autoload -Uz add-zsh-hook
+      dotfiles_git_prompt() { __git_ps1 "%m:%~" " %# " " (%s)"; }
+      add-zsh-hook precmd dotfiles_git_prompt
+      break
+    fi
+  done
+  unset git_prompt
+fi
+
 # Agent guard: aliases that change what a command does belong at a prompt,
 # not in shells that agents drive. Agents capture this config from an
 # interactive shell, so interactivity alone is not enough.
