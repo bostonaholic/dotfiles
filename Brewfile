@@ -110,6 +110,7 @@ cask 'ngrok'
 # Security
 # =============================================================================
 
+cask '1password-cli' # op
 brew 'gnupg'
 brew 'pinentry-mac'
 
