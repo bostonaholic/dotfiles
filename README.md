@@ -53,10 +53,6 @@ git clone git@github.com:bostonaholic/dotfiles.git ~/dotfiles
 ### Copy sample environment files
 
 ```bash
-cp $PWD/env/secret.sample.el $HOME/.secret.el
-```
-
-```bash
 cp $PWD/env/env.sample $HOME/.env
 ```
 
@@ -177,12 +173,6 @@ and re-run the script. To find which app is prompting, query the unified log:
 
 `Sub:{...}` / `responsible_path=` is the app to allowlist; `binary_path=` is
 the child command that tripped the check.
-
-### Copilot.vim
-
-```vimscript
-vim -c "Copilot setup"
-```
 
 ## Tips
 
