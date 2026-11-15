@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
   // Auto-approve every tool.
-  "permission": "allow"
+  "permission": "allow",
+  "plugin": ["/Users/matthew/.config/opencode/vendor/i-have-adhd/.opencode/plugins/i-have-adhd.mjs"]
 }
