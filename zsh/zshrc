@@ -18,6 +18,10 @@ zmodload zsh/terminfo
 [[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" up-line-or-search
 [[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" down-line-or-search
 
+# Completion
+autoload -Uz compinit && compinit
+command -v op >/dev/null && eval "$(op completion zsh)"
+
 # Agent guard: aliases that change what a command does belong at a prompt,
 # not in shells that agents drive. Agents capture this config from an
 # interactive shell, so interactivity alone is not enough.
