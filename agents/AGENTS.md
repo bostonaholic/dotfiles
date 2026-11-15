@@ -1,7 +1,7 @@
 # Global Agent Instructions
 
 Personal instructions shared across coding agents (Claude Code, Codex,
-Antigravity, OpenCode, Pi). Symlinked from `dotfiles/agents/AGENTS.md` to
+Antigravity). Symlinked from `dotfiles/agents/AGENTS.md` to
 each tool's global location via `dotfiles.yaml`.
 
 ## First Principles
