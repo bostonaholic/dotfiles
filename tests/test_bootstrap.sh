@@ -13,7 +13,7 @@
 #   - Flags map to the right install.sh --only list and pass-through args
 #   - --dir wins over an inherited DOTFILES_DIR
 #   - An existing checkout is updated with `git pull --ff-only`
-#   - Unknown flags, non-macOS hosts, and non-git target dirs fail
+#   - Unknown flags and non-git target dirs fail
 #   - Under a real terminal, install.sh gets the terminal as stdin and bash
 #     exits after main instead of waiting on the keyboard
 #
@@ -150,13 +150,9 @@ else
     fail "unknown flag exits non-zero" "$(cat "$SCRATCH/out.log")"
 fi
 
-if FAKE_UNAME=Linux run_bootstrap "$SCRATCH/d7"; then
-    fail "non-macOS host exits non-zero"
-elif [[ ! -e "$GIT_LOG" ]]; then
-    pass "non-macOS host exits non-zero"
-else
-    fail "non-macOS host exits non-zero" "git ran: $(cat "$GIT_LOG")"
-fi
+FAKE_UNAME=Linux run_bootstrap "$SCRATCH/d7"
+assert_install_args "Linux installs agent configuration without prompts" \
+    "--only symlinks,claude --yes"
 
 mkdir -p "$SCRATCH/notgit"
 if run_bootstrap "$SCRATCH/notgit"; then

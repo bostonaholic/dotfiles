@@ -110,7 +110,7 @@ else
     fail "reports exactly one status line for Terminal.app" "$output"
 fi
 
-if grep -q 'granted +Terminal\.app' <<<"$output"; then
+if grep -qE 'granted +Terminal\.app' <<<"$output"; then
     pass "no instructions when the app is already granted"
 elif grep -q '\[DRY RUN\] Would open System Settings' <<<"$output"; then
     pass "dry run prints the settings pane it would open"

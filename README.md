@@ -24,6 +24,19 @@ curl -fsSL https://dotfiles.bostonaholic.dev | bash -s -- --minimal
 | `-n`, `--dry-run` | Clone, then preview `install.sh` |
 | `-y`, `--yes` | Answer yes to all `install.sh` prompts |
 
+### Set up a Linux agent machine
+
+The same command works on Linux, for a cloud session or a container. There it
+installs the agent configuration only (symlinks and Claude Code plugins) and
+needs no sudo, no Homebrew and no input:
+
+```bash
+curl -fsSL https://dotfiles.bostonaholic.dev | bash
+```
+
+It needs `git` and `curl`. Commit signing is not set up: the signing key stays
+on the Mac.
+
 The script is [`bootstrap.sh`](bootstrap.sh). [`site/build`](site/build) joins
 it with the landing page in [`site/index.html`](site/index.html) into one file
 that browsers render as a page and `bash` runs as the script.
