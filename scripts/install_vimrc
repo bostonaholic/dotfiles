@@ -15,7 +15,8 @@
 #   VERBOSE  - If set, show detailed output (default: unset)
 #
 # WHAT IT DOES:
-#   1. Checks if ~/.vim_runtime directory exists
+#   1. Checks if ~/.vim_runtime/install_awesome_vimrc.sh exists. The directory
+#      alone proves nothing: install_symlinks creates it for my_configs.vim.
 #   2. If not present, clones the vimrc repository (shallow clone)
 #   3. Installs Python requests library (required by some plugins)
 #   4. Runs the install_awesome_vimrc.sh installer script
@@ -41,7 +42,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 main() {
     local directory="$HOME/.vim_runtime"
 
-    if [[ -d "$directory" ]]; then
+    if [[ -f "$directory/install_awesome_vimrc.sh" ]]; then
         log "Vimrc is already installed, skipping"
         return
     fi
@@ -52,7 +53,14 @@ main() {
     fi
 
     log "Installing Vimrc..."
-    git clone --depth=1 https://github.com/amix/vimrc.git "$directory"
+    # git refuses to clone into a directory that is not empty, and
+    # install_symlinks has already put my_configs.vim in this one.
+    local clone
+    clone="$(mktemp -d)"
+    git clone --depth=1 https://github.com/amix/vimrc.git "$clone"
+    mkdir -p "$directory"
+    cp -R "$clone/." "$directory/"
+    rm -rf "$clone"
     (
         cd "$directory"
         pip3 install requests

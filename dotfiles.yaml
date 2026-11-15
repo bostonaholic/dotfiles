@@ -177,7 +177,7 @@ scripts:
   post_install:
     - description: "Install vimrc"
       command: "scripts/install_vimrc"
-      condition: "! [ -d ~/.vim_runtime ]"
+      condition: "! [ -f ~/.vim_runtime/install_awesome_vimrc.sh ]"
 
     - description: "Install Catppuccin vim theme"
       command: "scripts/install_catppuccin_vim"
