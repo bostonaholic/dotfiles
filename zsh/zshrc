@@ -64,8 +64,6 @@ if (( ZSH_INTERACTIVE_ALIASES )); then
     alias cc="claude"
 fi
 
-alias π="pi"
-
 alias rgrep="grep --recursive"
 
 alias date_seconds="date +%s"

@@ -10,7 +10,6 @@ directories:
   - ~/.gemini/antigravity-cli
   - ~/.lein
   - ~/.gnupg
-  - ~/.pi/agent
   - ~/.rbenv
 
 symlinks:
@@ -29,19 +28,11 @@ symlinks:
   # Antigravity CLI (config lives under ~/.gemini/, replaces Gemini CLI)
   antigravity/settings.json: ~/.gemini/antigravity-cli/settings.json
 
-  # Pi (coding agent)
-  pi/agent/settings.json: ~/.pi/agent/settings.json
-
-  # OpenCode (coding agent)
-  opencode/opencode.jsonc: ~/.config/opencode/opencode.jsonc
-
   # Global agent instructions (shared across coding agents)
   agents/AGENTS.md: ~/.agents/AGENTS.md
   agents/AGENTS.md: ~/.claude/CLAUDE.md         # Claude Code
   agents/AGENTS.md: ~/.codex/AGENTS.md          # Codex CLI
   agents/AGENTS.md: ~/.gemini/AGENTS.md         # Antigravity (cross-tool global rules)
-  agents/AGENTS.md: ~/.config/opencode/AGENTS.md # OpenCode
-  agents/AGENTS.md: ~/.pi/agent/AGENTS.md       # Pi
 
   # Shell
   zsh/zshenv: ~/.zshenv

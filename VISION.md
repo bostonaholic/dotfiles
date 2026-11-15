@@ -7,7 +7,7 @@ code by hand is out of scope.
 
 ## Who the repo serves
 
-1. Coding agents: Claude Code, Codex, Antigravity, OpenCode, Pi and Cursor,
+1. Coding agents: Claude Code, Codex, Antigravity and Cursor,
    running on this Mac and in Linux cloud sessions.
 2. The person supervising them: starting sessions, reading diffs, getting
    notified when an agent finishes or needs input.
