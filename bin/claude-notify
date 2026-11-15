@@ -1,0 +1,29 @@
+#!/bin/bash
+################################################################################
+# claude-notify - desktop notification for a Claude Code hook event
+#
+# DESCRIPTION:
+#   Claude Code runs this from its Stop and Notification hooks (see
+#   claude/settings.json) with the event as JSON on stdin. Shows one macOS
+#   notification titled with the session's directory name, so a person
+#   supervising several agents knows which one finished or is waiting.
+#
+#   Does nothing on other systems.
+#
+# USAGE:
+#   echo '{"cwd":"/path/to/repo","message":"Needs permission"}' | claude-notify
+#
+################################################################################
+
+set -euo pipefail
+
+[[ "$(uname)" == Darwin ]] || exit 0
+
+input="$(cat)"
+cwd="$(jq -r '.cwd // ""' <<<"$input")"
+message="$(jq -r '.message // "Finished"' <<<"$input")"
+
+exec "$(dirname "$0")/alerter" \
+    -title "Claude: ${cwd##*/}" \
+    -message "$message" \
+    -group "claude-$cwd"

@@ -5,7 +5,44 @@
   },
   "permissions": {
     "allow": [
-      "Bash(claude plugin *)"
+      "Bash(claude plugin *)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git fetch *)",
+      "Bash(git rev-parse *)",
+      "Bash(git worktree list *)",
+      "Bash(gh pr view *)",
+      "Bash(gh pr list *)",
+      "Bash(gh pr checks *)",
+      "Bash(gh pr diff *)",
+      "Bash(gh run view *)",
+      "Bash(gh run list *)",
+      "Bash(rg *)",
+      "Bash(jq *)",
+      "Bash(shellcheck *)",
+      "Bash(wt ls)",
+      "Bash(wt main)",
+      "Bash(wt path *)",
+      "Bash(wt new *)"
+    ],
+    "deny": [
+      "Bash(git commit *--no-gpg-sign*)",
+      "Bash(git -c commit.gpgsign=false *)",
+      "Bash(git tag -a *)",
+      "Bash(git merge --no-ff *)",
+      "Bash(git push --force)",
+      "Bash(git push --force *)",
+      "Bash(git push * --force)",
+      "Bash(git push * --force *)",
+      "Bash(git push -f)",
+      "Bash(git push -f *)",
+      "Bash(git push * -f)",
+      "Bash(git push * -f *)",
+      "Bash(git stash)",
+      "Bash(git stash pop)",
+      "Bash(git stash pop *)"
     ],
     "defaultMode": "auto"
   },
@@ -96,5 +133,27 @@
   "theme": "light",
   "teammateMode": "auto",
   "remoteControlAtStartup": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/bin/claude-notify"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/bin/claude-notify"
+          }
+        ]
+      }
+    ]
+  }
 }
