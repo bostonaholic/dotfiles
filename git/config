@@ -44,29 +44,29 @@
 	aa = add --all
 	ap = add --patch
 
-	br = branch
-	bra = branch --all
 	bd = branch --delete
 	bdd = branch --delete --force
+	br = branch
+	bra = branch --all
 
+	aic = !git-ai-commit
 	amend = commit --amend
 	cb = clone-bare-for-worktrees
 	cl = clone
 	cm = commit --message
-	aic = !git-ai-commit
 	co = checkout
 	pu = push
 
 	di = diff
 
 	l = "!. $HOME/.config/git/helpers && pretty_git_log"
-	recent = "!f() { GIT_NO_PAGER=1 git l -${1:-10}; }; f"
 	r = !git recent $1
+	recent = "!f() { GIT_NO_PAGER=1 git l -${1:-10}; }; f"
 
 	ra = rebase --abort
 	rc = rebase --continue
-	rs = rebase --skip
 	rq = rebase --quit
+	rs = rebase --skip
 
 	remotes = remote --verbose
 

@@ -9,5 +9,5 @@ vendor/
 
 # tmux plugins (installed by TPM) #
 ####################################
-tmux/plugins/
 _site/
+tmux/plugins/

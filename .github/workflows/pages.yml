@@ -9,7 +9,7 @@ name: Publish bootstrap
 on:
   push:
     branches: [main]
-    paths: [bootstrap.sh, site/**, .github/workflows/pages.yml]
+    paths: [.github/workflows/pages.yml, bootstrap.sh, site/**]
   workflow_dispatch:
 
 permissions:

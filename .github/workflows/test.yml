@@ -9,13 +9,13 @@ permissions:
   contents: read
 
 jobs:
-  lint-claude-plugins:
-    name: Claude plugins sorted
+  lint-sorted:
+    name: Lists sorted
     runs-on: ubuntu-latest  # jq and yq come preinstalled
     steps:
       - uses: actions/checkout@v4
-      - name: Check plugin lists are alphabetical
-        run: scripts/lint_claude_plugins
+      - name: Check unordered lists are alphabetical
+        run: scripts/lint_sorted
 
   test:
     name: Lint and test (macOS)

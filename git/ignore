@@ -6,19 +6,19 @@ Thumbs.db
 
 # IntelliJ #
 ############
-.idea/
 *.iml
+.idea/
 
 # VS Code #
 ##########
-.vscode/
 .lsp/
+.vscode/
 
 # Programming #
 ##############
-scratch*
-.worktrees/
 .envrc
+.worktrees/
+scratch*
 
 **/.claude/settings.local.json
 **/.claude/worktrees/

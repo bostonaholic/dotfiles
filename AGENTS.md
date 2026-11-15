@@ -124,6 +124,14 @@ shellcheck scripts/*.sh
 markdownlint "**/*.md"
 ```
 
+## Sorted Lists
+
+Keep every list whose order has no effect in alphabetical (byte) order. In a
+file that groups entries under comments, sort within each group.
+`scripts/lint_sorted` names the lists it checks and runs in CI. Add a new
+unordered list to it. Lists that run in sequence (`scripts.post_install`,
+`PATH` entries, tmux plugins) are exempt.
+
 ## Directory Structure
 
 ```text
@@ -166,8 +174,7 @@ them per harness (`packages.claude`, `packages.codex`):
 the plugins, and `scripts/update_{claude,codex}_plugins` installs anything
 missing, then updates every plugin to its latest release. `claude/settings.json`
 declares the same marketplaces and enabled plugins, so installing leaves it
-unchanged. Both plugin lists stay in alphabetical order;
-`scripts/lint_claude_plugins` checks this in CI. Codex keeps its config in a machine-local `~/.codex/config.toml`
+unchanged. Codex keeps its config in a machine-local `~/.codex/config.toml`
 that dotfiles does not track. Antigravity has no native
 remote install for Team, so dotfiles does not install it there.
 Third-party skills in `Skillfile` retain their configured agent targets.

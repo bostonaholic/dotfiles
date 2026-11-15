@@ -117,8 +117,8 @@ brew 'pinentry-mac'
 # Development Tools
 # =============================================================================
 
-brew 'asdf'
 brew 'adr-tools'
+brew 'asdf'
 brew 'cloc'
 brew 'ctags'
 cask 'docker-desktop'
