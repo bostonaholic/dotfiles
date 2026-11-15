@@ -8,8 +8,8 @@ directories:
   - ~/.claude/skills
   - ~/.cursor
   - ~/.gemini/antigravity-cli
-  - ~/.lein
   - ~/.gnupg
+  - ~/.lein
   - ~/.rbenv
 
 symlinks:
@@ -35,9 +35,9 @@ symlinks:
   agents/AGENTS.md: ~/.gemini/AGENTS.md         # Antigravity (cross-tool global rules)
 
   # Shell
+  zsh/zprofile: ~/.zprofile
   zsh/zshenv: ~/.zshenv
   zsh/zshrc: ~/.zshrc
-  zsh/zprofile: ~/.zprofile
 
   # Git
   git: ~/.config/git
@@ -53,9 +53,9 @@ symlinks:
 
   # Ruby
   ruby/.ruby-version: ~/.ruby-version
+  ruby/default-gems: ~/.rbenv/default-gems
   ruby/pryrc: ~/.pryrc
   ruby/rspec: ~/.rspec
-  ruby/default-gems: ~/.rbenv/default-gems
 
   # Node
   node/node-version: ~/.node-version
@@ -64,15 +64,15 @@ symlinks:
   vim/my_configs.vim: ~/.vim_runtime/my_configs.vim
 
   # Other tools
-  home/colors: ~/.colors
+  clojure/profiles.clj: ~/.lein/profiles.clj
   gpg/gpg-agent.conf: ~/.gnupg/gpg-agent.conf
+  home/colors: ~/.colors
   ignore/ignore: ~/.ignore
   ignore/rgignore: ~/.rgignore
-  markdownlint/.markdownlintrc: ~/.markdownlintrc
   javascript/jsbeautifyrc: ~/.jsbeautifyrc
   javascript/jshintrc: ~/.jshintrc
-  clojure/profiles.clj: ~/.lein/profiles.clj
   keyboard/qwerty.txt: ~/qwerty.txt
+  markdownlint/.markdownlintrc: ~/.markdownlintrc
   signature/signature: ~/.signature
 
 packages:
@@ -106,12 +106,12 @@ packages:
   claude:
     marketplaces:
       - anthropics/claude-plugins-official
-      - cloudflare/skills
-      - bostonaholic/team
-      - bostonaholic/skills
-      - bostonaholic/dev
-      - bostonaholic/claude-mods
       - ayghri/i-have-adhd
+      - bostonaholic/claude-mods
+      - bostonaholic/dev
+      - bostonaholic/skills
+      - bostonaholic/team
+      - cloudflare/skills
       - google/elephant-goldfish-model
     plugins:
       - bostonaholic@claude-mods
@@ -132,20 +132,20 @@ packages:
   # Run: ./scripts/update_codex_plugins to update (installs any missing first)
   codex:
     marketplaces:
+      - ayghri/i-have-adhd
+      - bostonaholic/dev
+      - bostonaholic/skills
+      - bostonaholic/team
       - cloudflare/skills
       - loops-so/skills
-      - bostonaholic/team
-      - bostonaholic/skills
-      - bostonaholic/dev
-      - ayghri/i-have-adhd
     plugins:
+      - bostonaholic@skills
       - cloudflare@cloudflare
+      - dev@dev
+      - i-have-adhd@i-have-adhd
       - loops@loops-plugins
       - team@team-dev
-      - bostonaholic@skills
-      - dev@dev
       - vercel@openai-curated-remote
-      - i-have-adhd@i-have-adhd
 
 # MCP servers, registered at user scope with 'claude mcp add'. Each value is
 # the command that starts the server. It runs through mcp-guardrail-proxy
@@ -153,8 +153,8 @@ packages:
 # Run: ./scripts/install_mcp_servers to register
 mcp:
   claude:
-    playwright: npx @playwright/mcp@latest
     github: github-mcp
+    playwright: npx @playwright/mcp@latest
 
 # macOS privacy (TCC). Apps that must have Full Disk Access. Child processes
 # (find, mdfind, claude, agy, ...) inherit the TCC identity of the app that
@@ -164,10 +164,10 @@ mcp:
 macos:
   full_disk_access:
     - /Applications/Claude.app
-    - ~/Applications/Ghostty.app
-    - /Applications/iTerm.app
     - /Applications/Cursor.app
+    - /Applications/iTerm.app
     - /System/Applications/Utilities/Terminal.app
+    - ~/Applications/Ghostty.app
 
 scripts:
   pre_install:

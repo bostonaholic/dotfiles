@@ -1,0 +1,144 @@
+#!/usr/bin/env bash
+################################################################################
+# lint_sorted -- check that unordered lists in this repo are alphabetical
+#
+# DESCRIPTION:
+#   Fails if any list named at the bottom of this file is out of order.
+#   Only lists whose order has no effect are named there; lists that run in
+#   sequence (post_install, PATH entries, tmux plugins, ...) are left out.
+#
+#   Order is byte order (jq's `sort`, awk under LC_ALL=C): case-sensitive and
+#   independent of the machine's locale.
+#
+#   Two checkers:
+#   - check_json FILE EXPR
+#       EXPR is a yq expression giving an array of strings. yq reads both
+#       YAML and JSON.
+#   - check_lines FILE [--from RE] [--to RE] [--entry RE] [--key RE] [--flat]
+#       Checks lines of a text file. A blank line, a comment line (# or ;), or
+#       a line not matching --entry ends a group; entries are compared within
+#       a group only. --flat skips such lines instead, making one group.
+#       --from/--to limit the check to the lines after a match of --from and
+#       before the next match of --to. --key picks the part of the line to
+#       compare (default: the whole line).
+#
+# USAGE:
+#   scripts/lint_sorted
+#   Sourcing the file defines the checkers without running the repo's checks.
+#
+# DEPENDENCIES:
+#   - jq
+#   - yq (mikefarah)
+#   - awk
+#
+# EXIT CODE:
+#   0 - Every list is sorted
+#   1 - A list is unsorted, or a file or key could not be read
+#
+################################################################################
+
+set -euo pipefail
+
+status=0
+
+check_json() {
+    local file="$1" expr="$2" list
+    if ! list="$(yq -e -o=json "$expr" "$file" 2>&1)"; then
+        echo "unreadable: $file $expr: $list"
+        status=1
+    elif jq -e '. == sort' <<<"$list" >/dev/null; then
+        echo "ok: $file $expr"
+    else
+        echo "unsorted: $file $expr. Expected order:"
+        jq -r 'sort[] | "  " + .' <<<"$list"
+        status=1
+    fi
+}
+
+check_lines() {
+    local file="$1" from="" to="" entry="." key="" flat=0
+    shift
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --from) from="$2"; shift 2 ;;
+            --to) to="$2"; shift 2 ;;
+            --entry) entry="$2"; shift 2 ;;
+            --key) key="$2"; shift 2 ;;
+            --flat) flat=1; shift ;;
+            *) echo "check_lines: unknown option $1" >&2; return 2 ;;
+        esac
+    done
+
+    if [[ ! -r "$file" ]]; then
+        echo "unreadable: $file"
+        status=1
+        return 0
+    fi
+
+    # The patterns go through the environment: awk -v would rewrite their
+    # backslashes.
+    if LC_ALL=C FROM="$from" TO="$to" ENTRY="$entry" KEY="$key" FLAT="$flat" awk '
+        BEGIN {
+            from = ENVIRON["FROM"]; to = ENVIRON["TO"]; entry = ENVIRON["ENTRY"]
+            key = ENVIRON["KEY"]; flat = ENVIRON["FLAT"] + 0
+            inside = (from == ""); have = 0; count = 0; bad = 0
+        }
+        !inside { if ($0 ~ from) inside = 1; next }
+        to != "" && $0 ~ to { exit }
+        /^[ \t]*([#;]|$)/ || $0 !~ entry { if (!flat) have = 0; next }
+        {
+            k = $0
+            if (key != "" && match($0, key)) k = substr($0, RSTART, RLENGTH)
+            if (have && k < prev) {
+                printf "%s:%d: %s must come before %s\n", FILENAME, NR, k, prev
+                bad = 1
+            }
+            prev = k; have = 1; count++
+        }
+        END {
+            if (count == 0) { printf "%s: no entries found\n", FILENAME; bad = 1 }
+            exit bad
+        }
+    ' "$file"; then
+        echo "ok: $file${from:+ ($from)}"
+    else
+        status=1
+    fi
+}
+
+# Sourced (by the tests): define the checkers only.
+[[ "${BASH_SOURCE[0]}" == "$0" ]] || return 0
+
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
+check_json dotfiles.yaml '.directories'
+check_json dotfiles.yaml '.packages.npm.global_packages'
+check_json dotfiles.yaml '.packages.pipx.packages'
+check_json dotfiles.yaml '[.packages.uv.tool_packages[].name]'
+check_json dotfiles.yaml '.packages.claude.marketplaces'
+check_json dotfiles.yaml '.packages.claude.plugins'
+check_json dotfiles.yaml '.packages.codex.marketplaces'
+check_json dotfiles.yaml '.packages.codex.plugins'
+check_json dotfiles.yaml '.mcp.claude | keys'
+check_json dotfiles.yaml '.macos.full_disk_access'
+# The symlinks map repeats a key (one source, several targets), which JSON
+# cannot hold, so it is checked as text.
+check_lines dotfiles.yaml --from '^symlinks:' --to '^[a-z]'
+
+check_json claude/settings.json '.env | keys'
+check_json claude/settings.json '.permissions.allow'
+check_json claude/settings.json '.permissions.deny'
+check_json claude/settings.json '.enabledPlugins | keys'
+check_json claude/settings.json '.extraKnownMarketplaces | keys'
+check_json claude/settings.json '.modelSettings | keys'
+
+check_json .github/workflows/pages.yml '.on.push.paths'
+
+check_lines Brewfile --entry '^(brew|cask|tap) ' --key "'[^']*'"
+check_lines Skillfile --entry '^npx skills add ' --flat
+check_lines .gitignore
+check_lines git/ignore
+check_lines git/allowed_signers
+check_lines git/config --from '^\[alias\]' --to '^\['
+
+exit "$status"

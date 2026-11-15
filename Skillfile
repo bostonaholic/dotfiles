@@ -17,11 +17,14 @@ set -euo pipefail
 
 echo "Installing agent skills..."
 
+# Akshat (first-principles-thinking)
+npx skills add akshat10/skills --skill first-principles-thinking --agent claude-code codex cursor antigravity-cli -g -y
+
 # Anthropic official (frontend-design, skill-creator)
 npx skills add anthropics/skills --skill frontend-design --skill skill-creator --agent claude-code codex cursor antigravity-cli -g -y
 
-# Vercel (find-skills)
-npx skills add vercel-labs/skills --skill find-skills --agent claude-code codex cursor antigravity-cli -g -y
+# Blader (humanizer)
+npx skills add blader/humanizer --skill humanizer --agent claude-code codex cursor antigravity-cli -g -y
 
 # GitHub Copilot (create-agentsmd)
 npx skills add github/awesome-copilot --skill create-agentsmd --agent claude-code codex cursor antigravity-cli -g -y
@@ -29,14 +32,11 @@ npx skills add github/awesome-copilot --skill create-agentsmd --agent claude-cod
 # Matt Pocock (grill-me)
 npx skills add mattpocock/skills --skill grill-me --agent claude-code codex cursor antigravity-cli -g -y
 
-# Akshat (first-principles-thinking)
-npx skills add akshat10/skills --skill first-principles-thinking --agent claude-code codex cursor antigravity-cli -g -y
-
-# Blader (humanizer)
-npx skills add blader/humanizer --skill humanizer --agent claude-code codex cursor antigravity-cli -g -y
-
 # Microsoft (playwright-cli)
 npx skills add microsoft/playwright-cli --skill playwright-cli --agent claude-code codex cursor antigravity-cli -g -y
+
+# Vercel (find-skills)
+npx skills add vercel-labs/skills --skill find-skills --agent claude-code codex cursor antigravity-cli -g -y
 
 # Book to Skill (book-to-skill)
 npx skills add virgiliojr94/book-to-skill --skill book-to-skill --agent claude-code codex cursor antigravity-cli -g -y

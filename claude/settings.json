@@ -1,49 +1,49 @@
 {
   "env": {
     "ANTHROPIC_BASE_URL": "http://127.0.0.1:8787",
-    "MAX_THINKING_TOKENS": "31999",
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "MAX_THINKING_TOKENS": "31999"
   },
   "permissions": {
     "allow": [
       "Bash(claude plugin *)",
-      "Bash(git status *)",
-      "Bash(git diff *)",
-      "Bash(git log *)",
-      "Bash(git show *)",
-      "Bash(git fetch *)",
-      "Bash(git rev-parse *)",
-      "Bash(git worktree list *)",
-      "Bash(gh pr view *)",
-      "Bash(gh pr list *)",
       "Bash(gh pr checks *)",
       "Bash(gh pr diff *)",
-      "Bash(gh run view *)",
+      "Bash(gh pr list *)",
+      "Bash(gh pr view *)",
       "Bash(gh run list *)",
-      "Bash(rg *)",
+      "Bash(gh run view *)",
+      "Bash(git diff *)",
+      "Bash(git fetch *)",
+      "Bash(git log *)",
+      "Bash(git rev-parse *)",
+      "Bash(git show *)",
+      "Bash(git status *)",
+      "Bash(git worktree list *)",
       "Bash(jq *)",
+      "Bash(rg *)",
       "Bash(shellcheck *)",
       "Bash(wt ls)",
       "Bash(wt main)",
-      "Bash(wt path *)",
-      "Bash(wt new *)"
+      "Bash(wt new *)",
+      "Bash(wt path *)"
     ],
     "deny": [
-      "Bash(git commit *--no-gpg-sign*)",
       "Bash(git -c commit.gpgsign=false *)",
-      "Bash(git tag -a *)",
+      "Bash(git commit *--no-gpg-sign*)",
       "Bash(git merge --no-ff *)",
-      "Bash(git push --force)",
-      "Bash(git push --force *)",
-      "Bash(git push * --force)",
       "Bash(git push * --force *)",
-      "Bash(git push -f)",
-      "Bash(git push -f *)",
-      "Bash(git push * -f)",
+      "Bash(git push * --force)",
       "Bash(git push * -f *)",
-      "Bash(git stash)",
+      "Bash(git push * -f)",
+      "Bash(git push --force *)",
+      "Bash(git push --force)",
+      "Bash(git push -f *)",
+      "Bash(git push -f)",
+      "Bash(git stash pop *)",
       "Bash(git stash pop)",
-      "Bash(git stash pop *)"
+      "Bash(git stash)",
+      "Bash(git tag -a *)"
     ],
     "defaultMode": "auto"
   },
@@ -65,10 +65,10 @@
     "vercel@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
-    "cloudflare": {
+    "claude-mods": {
       "source": {
         "source": "github",
-        "repo": "cloudflare/skills"
+        "repo": "bostonaholic/claude-mods"
       }
     },
     "claude-plugins-official": {
@@ -77,22 +77,10 @@
         "repo": "anthropics/claude-plugins-official"
       }
     },
-    "claude-mods": {
+    "cloudflare": {
       "source": {
         "source": "github",
-        "repo": "bostonaholic/claude-mods"
-      }
-    },
-    "team-dev": {
-      "source": {
-        "source": "github",
-        "repo": "bostonaholic/team"
-      }
-    },
-    "skills": {
-      "source": {
-        "source": "github",
-        "repo": "bostonaholic/skills"
+        "repo": "cloudflare/skills"
       }
     },
     "dev": {
@@ -101,29 +89,41 @@
         "repo": "bostonaholic/dev"
       }
     },
+    "egm": {
+      "source": {
+        "source": "github",
+        "repo": "google/elephant-goldfish-model"
+      }
+    },
     "i-have-adhd": {
       "source": {
         "source": "github",
         "repo": "ayghri/i-have-adhd"
       }
     },
-    "egm": {
+    "skills": {
       "source": {
         "source": "github",
-        "repo": "google/elephant-goldfish-model"
+        "repo": "bostonaholic/skills"
+      }
+    },
+    "team-dev": {
+      "source": {
+        "source": "github",
+        "repo": "bostonaholic/team"
       }
     }
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "medium",
   "modelSettings": {
-    "opus": {
-      "effortLevel": "medium"
-    },
     "claude-fable-5-1": {
       "effortLevel": "high"
     },
     "claude-opus-5-5": {
+      "effortLevel": "medium"
+    },
+    "opus": {
       "effortLevel": "medium"
     }
   },
