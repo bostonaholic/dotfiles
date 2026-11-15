@@ -3,6 +3,9 @@
 Personal dotfiles managed via declarative YAML configuration. All changes flow
 through `dotfiles.yaml` and `install.sh`.
 
+Read [VISION.md](VISION.md) before proposing a change. Every change must meet
+its "What a change must do" list and stay clear of "What does not belong".
+
 ## Quick Reference Commands
 
 ```bash
