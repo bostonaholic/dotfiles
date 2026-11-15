@@ -50,7 +50,7 @@ skip() {
 }
 
 AGENT_MARKERS=(CLAUDECODE CLAUDE_CODE_ENTRYPOINT AI_AGENT CURSOR_AGENT CODEX_SANDBOX)
-SHADOWED=(claude cc ip)
+SHADOWED=(claude cc ip python)
 
 SCRATCH="$(mktemp -d)"
 trap 'rm -rf "$SCRATCH"' EXIT
@@ -58,6 +58,7 @@ trap 'rm -rf "$SCRATCH"' EXIT
 # Prints "flag:<0|1>" then one "alias:<name>" line per shadowing alias defined.
 PROBE="$SCRATCH/probe.zsh"
 {
+    printf 'source %q/zsh/zshenv 2>/dev/null\n' "$REPO_ROOT"
     printf 'source %q/zsh/zshrc 2>/dev/null\n' "$REPO_ROOT"
     printf 'print "flag:$ZSH_INTERACTIVE_ALIASES"\n'
     printf 'for a in %s; do alias $a >/dev/null 2>&1 && print "alias:$a"; done\n' "${SHADOWED[*]}"
@@ -143,6 +144,34 @@ else
     else
         fail "T4" "flag=$(flag_of "$out") aliases=$(aliases_of "$out") expected=$(all_shadowed)"
     fi
+fi
+
+# ---------------------------------------------------------------------------
+# T5: `zsh -c` with an empty environment reads only zshenv, and that alone
+#     must put ~/bin (and Homebrew, where installed) on PATH
+# ---------------------------------------------------------------------------
+echo "T5: non-login, non-interactive shell has ~/bin on PATH"
+ln -s "$REPO_ROOT/zsh/zshenv" "$SCRATCH/.zshenv"
+out="$(env -i HOME="$HOME" ZDOTDIR="$SCRATCH" /bin/zsh -c 'print -l $path' 2>/dev/null)"
+if grep -qx "$HOME/bin" <<<"$out" &&
+   { [[ ! -d /opt/homebrew ]] || grep -qx /opt/homebrew/bin <<<"$out"; }; then
+    pass "T5"
+else
+    fail "T5" "PATH: $(tr '\n' ':' <<<"$out")"
+fi
+
+# ---------------------------------------------------------------------------
+# T6: an agent shell gets an editor, pager and gh that return without input;
+#     a shell with no agent marker keeps the defaults
+# ---------------------------------------------------------------------------
+echo "T6: agent marker turns off editor, pager and gh prompts"
+probe6='print "${GIT_EDITOR-}|${GIT_PAGER-}|${PAGER-}|${GH_PROMPT_DISABLED-}"'
+agent="$(env -i HOME="$HOME" ZDOTDIR="$SCRATCH" CLAUDECODE=1 /bin/zsh -c "$probe6" 2>/dev/null)"
+human="$(env -i HOME="$HOME" ZDOTDIR="$SCRATCH" /bin/zsh -c "$probe6" 2>/dev/null)"
+if [[ "$agent" == "true|cat|cat|1" && "$human" == "|||" ]]; then
+    pass "T6"
+else
+    fail "T6" "agent='$agent' human='$human'"
 fi
 
 echo ""
