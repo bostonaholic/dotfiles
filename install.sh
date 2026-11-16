@@ -327,9 +327,9 @@ run_scripts() {
         else
             log "$desc..."
             if [[ "$optional" == "true" ]]; then
-                "$DOTFILES_DIR/$cmd" || warn "Optional step failed: $desc"
+                (cd "$DOTFILES_DIR" && eval "$cmd") || warn "Optional step failed: $desc"
             else
-                "$DOTFILES_DIR/$cmd"
+                (cd "$DOTFILES_DIR" && eval "$cmd")
             fi
         fi
     done

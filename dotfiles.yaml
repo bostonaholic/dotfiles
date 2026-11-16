@@ -196,7 +196,7 @@ scripts:
       command: "scripts/install_tmux_plugins"
 
     - description: "Install agent skills"
-      command: "Skillfile"
+      command: "./Skillfile"
       condition: "command -v npx"
 
     - description: "Install Codex plugins"
