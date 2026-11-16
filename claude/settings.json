@@ -109,8 +109,8 @@
     },
     "team-dev": {
       "source": {
-        "source": "github",
-        "repo": "bostonaholic/team"
+        "source": "directory",
+        "path": "/Users/matthew/code/bostonaholic/team"
       }
     }
   },
