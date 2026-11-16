@@ -130,4 +130,29 @@ else
     fail "empty VERBOSE prints no debug output" "$out"
 fi
 
+# One source with a list of targets, in its own dotfiles dir and HOME.
+mkdir -p "$SCRATCH/multi/dotfiles" "$SCRATCH/multi/home"
+echo "new" > "$SCRATCH/multi/dotfiles/source"
+cat > "$SCRATCH/multi/dotfiles/dotfiles.yaml" <<'YAML'
+symlinks:
+  source:
+    - ~/one
+    - ~/two
+YAML
+out=$(env -i HOME="$SCRATCH/multi/home" PATH="$PATH" DOTFILES_DIR="$SCRATCH/multi/dotfiles" \
+    BACKUP_DIR="$SCRATCH/multi/backup" FORCE=1 bash "$REPO_ROOT/scripts/install_symlinks" 2>&1) \
+    && status=0 || status=$?
+if [[ $status -eq 0 && -L "$SCRATCH/multi/home/one" && -L "$SCRATCH/multi/home/two" ]]; then
+    pass "a source with a list of targets is linked to each target"
+else
+    fail "a source with a list of targets is linked to each target" "exit $status: $out"
+fi
+
+repeated="$(yq '.symlinks | keys | .[]' "$REPO_ROOT/dotfiles.yaml" | sort | uniq -d)"
+if [[ -z "$repeated" ]]; then
+    pass "dotfiles.yaml declares each symlink source once"
+else
+    fail "dotfiles.yaml declares each symlink source once" "repeated: $repeated"
+fi
+
 summary
