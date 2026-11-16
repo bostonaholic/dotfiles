@@ -48,10 +48,28 @@ failed_names=()
 echo -e "${BOLD}Running ${#tests[@]} test script(s) from tests/${NC}"
 echo ""
 
+# Run every script concurrently, buffering each one's output and exit status
+# in a temp dir, then report in sorted order so output stays stable.
+results="$(mktemp -d)"
+trap 'rm -rf "$results"' EXIT
+
+for t in "${tests[@]}"; do
+    name="$(basename "$t")"
+    (
+        if bash "$t" > "$results/$name.out" 2>&1; then
+            echo 0 > "$results/$name.rc"
+        else
+            echo 1 > "$results/$name.rc"
+        fi
+    ) &
+done
+wait
+
 for t in "${tests[@]}"; do
     name="$(basename "$t")"
     echo -e "${BOLD}── $name ${NC}"
-    if bash "$t"; then
+    cat "$results/$name.out"
+    if [[ "$(cat "$results/$name.rc")" == 0 ]]; then
         passed=$((passed + 1))
     else
         failed=$((failed + 1))
