@@ -23,8 +23,8 @@
 # (These are all standard arguments to `git log`.)
 
 set -eu -o pipefail
-git --no-pager log --all --find-renames --find-copies --name-only --format='format:' "$@" \
-    | grep -Ev '^$' \
+git -c core.quotePath=false --no-pager log --all --find-renames --name-only --format='format:' "$@" \
+    | sed '/^$/d' \
     | sort \
     | uniq -c \
     | sort -nr
