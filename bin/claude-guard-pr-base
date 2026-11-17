@@ -1,0 +1,51 @@
+#!/bin/bash
+################################################################################
+# claude-guard-pr-base - stop a stacked PR that skips the GitHub stack
+#
+# DESCRIPTION:
+#   Claude Code runs this as a PreToolUse hook on Bash (see
+#   claude/settings.json) with the tool call as JSON on stdin. A
+#   `gh pr create` whose --base is not the default branch opens a stacked PR.
+#   Unless the same command runs `gh stack link`, that PR gets no GitHub
+#   stack, so the hook blocks it (exit 2) and says which skill to use.
+#
+#   Allowed: no `gh pr create`; a command that also runs `gh stack link`;
+#   every --base / -B equal to the default branch, `main`, or `master`; no
+#   base flag; a command carrying PR_BASE_OK=1 (a PR into a long-lived
+#   branch such as a release branch).
+#
+# USAGE:
+#   echo '{"cwd":"/repo","tool_input":{"command":"gh pr create --base x"}}' |
+#       claude-guard-pr-base
+#
+################################################################################
+
+set -euo pipefail
+
+input="$(cat)"
+cmd="$(jq -r '.tool_input.command // ""' <<<"$input")"
+cwd="$(jq -r '.cwd // "."' <<<"$input")"
+
+[[ "$cmd" == *"gh pr create"* ]] || exit 0
+[[ "$cmd" == *"gh stack link"* ]] && exit 0
+[[ "$cmd" == *"PR_BASE_OK=1"* ]] && exit 0
+
+default="$(git -C "$cwd" symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null || true)"
+default="${default#origin/}"
+
+while read -r base; do
+    base="${base#--base}"
+    base="${base#-B}"
+    base="${base#[= ]}"
+    base="${base//[\"\']/}"
+    [[ -z "$base" || "$base" == "$default" || "$base" == main || "$base" == master ]] && continue
+    cat >&2 <<EOF
+--base $base is not the default branch, so this opens a stacked PR with no
+GitHub stack. Open a stack layer with the opening-prs or stacking-prs skill;
+both end in \`gh stack link\`. For a PR into a long-lived branch, prefix the
+command with PR_BASE_OK=1.
+EOF
+    exit 2
+done < <(grep -oE -- "(--base[= ]|-B )[\"']?[^ \"';&|)]+" <<<"$cmd" || true)
+
+exit 0
