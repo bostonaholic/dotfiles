@@ -4,8 +4,10 @@
 #
 # DESCRIPTION:
 #   Checks claude/settings.json: the permission rules that keep an unattended
-#   agent inside the global git rules, and the hooks that notify the person.
-#   Also runs bin/claude-notify against a stub alerter.
+#   agent inside the global git rules, the hooks that notify the person, and
+#   the hook that blocks a stacked PR with no GitHub stack. Also runs
+#   bin/claude-notify against a stub alerter and bin/claude-guard-pr-base
+#   against sample commands.
 #
 # USAGE:
 #   ./tests/test_claude_settings.sh   (or run the whole suite via: scripts/test)
@@ -93,6 +95,40 @@ else
         fail "T5" "waiting='$waiting' finished='$finished'"
     fi
 fi
+
+echo "T6: PreToolUse Bash hook runs claude-guard-pr-base from bin/"
+cmd="$(jq -r '.hooks.PreToolUse[]? | select(.matcher == "Bash") | .hooks[].command' "$SETTINGS")"
+if [[ "$cmd" == "\$HOME/bin/claude-guard-pr-base" &&-x "$REPO_ROOT/bin/claude-guard-pr-base" ]]; then
+    pass "T6"
+else
+    fail "T6" "PreToolUse Bash='$cmd'"
+fi
+
+echo "T7: claude-guard-pr-base blocks a stacked gh pr create with no gh stack link"
+GUARD_REPO="$(mktemp -d)"
+trap 'rm -rf "${SCRATCH:-}" "$GUARD_REPO"' EXIT
+git -C "$GUARD_REPO" init -q
+git -C "$GUARD_REPO" symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/develop
+
+guard_exit() {
+    jq -n --arg cwd "$GUARD_REPO" --arg c "$1" '{cwd: $cwd, tool_input: {command: $c}}' |
+        "$REPO_ROOT/bin/claude-guard-pr-base" 2>/dev/null && echo 0 || echo $?
+}
+
+chained='gh pr create --draft --base main --head a --title A --body-file 1.md || exit 1
+gh pr create --draft --base a --head b --title B --body-file 2.md || exit 1'
+bad=""
+expect() { [[ "$(guard_exit "$2")" == "$1" ]] || bad="$bad [want $1: $2]"; }
+expect 2 "$chained"
+expect 2 "gh pr create --draft -B feature/api --title X"
+expect 2 "gh pr create --base='feature/api' --title X"
+expect 0 "gh pr create --draft --base main --title X"
+expect 0 "gh pr create --draft --base develop --title X"
+expect 0 "gh pr create --draft --title X"
+expect 0 "gh pr create --draft --base a --title X && GH_FORCE_TTY= gh stack link --base main --remote origin 1 2"
+expect 0 "PR_BASE_OK=1 gh pr create --base release/2.0 --title X"
+expect 0 "ls -la"
+if [[ -z "$bad" ]]; then pass "T7"; else fail "T7" "$bad"; fi
 
 echo ""
 echo "=== Summary: $pass_count passed, $fail_count failed ==="

@@ -145,6 +145,17 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/bin/claude-guard-pr-base"
+          }
+        ]
+      }
     ]
   }
 }
