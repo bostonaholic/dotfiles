@@ -3,7 +3,8 @@
 # Git AI Commit Message Generator
 #
 # DESCRIPTION:
-#   Generates commit messages using Claude AI without creating commits.
+#   Generates commit messages using Apple's on-device model (fm) without
+#   creating commits.
 #   Analyzes staged changes and outputs a conventional commit message to stdout.
 #   Non-interactive - suitable for git hooks and automation.
 #
@@ -28,14 +29,16 @@
 #
 # EXIT CODES:
 #   0 - Success (message generated)
-#   1 - Error (not in git repo, no staged changes, claude not available)
+#   1 - Error (not in git repo, no staged changes, fm not available)
+#   Other non-zero - fm failed (69: run 'sudo fm license')
 #
 # DEPENDENCIES:
 #   - git (with staged changes)
-#   - claude CLI (Anthropic's Claude CLI tool)
+#   - fm (Apple's Foundation Models CLI, macOS 27 on Apple silicon)
 #
 # NOTES:
-#   Output goes to stdout, errors/diagnostics suppressed.
+#   Output goes to stdout, errors to stderr.
+#   Input to fm is capped at 8,000 characters; longer diffs are truncated.
 #   Used by git-ai-commit for interactive workflow.
 #
 ################################################################################
@@ -55,22 +58,29 @@ if git diff --cached --quiet; then
     exit 1
 fi
 
-# Check if claude CLI is available
-if ! command -v claude &> /dev/null; then
+# Check if Apple's fm CLI is available
+if ! command -v fm &> /dev/null; then
+    echo "fm not found: requires macOS 27 on Apple silicon" >&2
     exit 1
 fi
 
-# Get the staged diff (filter out null bytes)
+# fm's 4,096-token limit covers instructions, input and answer. Cap the input
+# so the three fit.
+MAX_INPUT_CHARS=8000
+
+# Changed-file summary first, so a truncated diff still names every file
+# (filter out null bytes)
+STAT=$(git diff --cached --stat | tr -d '\000')
 DIFF=$(git diff --cached | tr -d '\000')
+INPUT="${STAT}
+
+${DIFF}"
+INPUT="${INPUT:0:MAX_INPUT_CHARS}"
 
 # Get recent commit messages for context (filter out null bytes)
-RECENT_COMMITS=$(git log --format='%s' -10 2>/dev/null | tr -d '\000' || echo "")
+RECENT_COMMITS=$(git log --format='%s' -5 2>/dev/null | tr -d '\000' || echo "")
 
-# Build the prompt with optional user context
-PROMPT_FILE=$(mktemp)
-trap 'rm -f "$PROMPT_FILE"' EXIT
-cat > "$PROMPT_FILE" <<EOF
-You are a git commit message expert. Analyze the following staged git diff and generate a concise, meaningful commit message.
+INSTRUCTIONS="You are a git commit message expert. The input is a staged git diff, preceded by a summary of changed files. Generate a concise, meaningful commit message.
 
 Follow these guidelines:
 1. Use conventional commit format: type(scope): description
@@ -82,26 +92,19 @@ Follow these guidelines:
 5. Use imperative mood (e.g., 'add' not 'added' or 'adds')
 
 Here are recent commits from this repository for style reference:
-${RECENT_COMMITS}
-EOF
+${RECENT_COMMITS}"
 
 # Add user context if provided
 if [ -n "$USER_CONTEXT" ]; then
-    cat >> "$PROMPT_FILE" <<EOF
+    INSTRUCTIONS="${INSTRUCTIONS}
 
 Additional context from the developer:
-${USER_CONTEXT}
-EOF
+${USER_CONTEXT}"
 fi
 
-# Add the diff and closing instructions
-cat >> "$PROMPT_FILE" <<EOF
+INSTRUCTIONS="${INSTRUCTIONS}
 
-Staged diff:
-${DIFF}
+Generate ONLY the raw commit message text. Do NOT wrap it in markdown code fences, backticks, or any formatting. Do NOT add explanations or commentary. Output the commit message exactly as it should appear in the git log. If the change is complex, you may use a multi-line message with a blank line separating the subject from the body."
 
-Generate ONLY the raw commit message text. Do NOT wrap it in markdown code fences, backticks, or any formatting. Do NOT add explanations or commentary. Output the commit message exactly as it should appear in the git log. If the change is complex, you may use a multi-line message with a blank line separating the subject from the body.
-EOF
-
-# Call Claude CLI and output result
-claude --model haiku --print --dangerously-skip-permissions < "$PROMPT_FILE" 2>/dev/null
+# The diff goes on stdin: fm discards stdin when given a positional prompt.
+printf '%s' "$INPUT" | fm respond --no-stream --instructions "$INSTRUCTIONS"

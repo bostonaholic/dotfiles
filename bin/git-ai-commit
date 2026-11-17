@@ -3,7 +3,8 @@
 # Git AI Commit (Interactive)
 #
 # DESCRIPTION:
-#   Generates AI-powered commit messages for staged changes using Claude CLI.
+#   Generates AI-powered commit messages for staged changes using Apple's
+#   on-device model (fm).
 #   Analyzes the diff and recent commit history to create conventional,
 #   meaningful commit messages. Provides interactive prompts to accept, edit,
 #   or reject the generated message.
@@ -22,13 +23,13 @@
 # WORKFLOW:
 #   1. Analyzes staged git diff
 #   2. Reviews recent commit messages for style consistency
-#   3. Generates commit message using Claude AI
+#   3. Generates commit message using Apple's on-device model
 #   4. Displays message and prompts: [Y]es / [N]o / [E]dit
 #   5. Creates commit or allows editing before committing
 #
 # DEPENDENCIES:
 #   - git (with staged changes)
-#   - claude CLI (Anthropic's Claude CLI tool)
+#   - fm (Apple's Foundation Models CLI, macOS 27 on Apple silicon)
 #   - git-ai-commit-msg (helper script for message generation)
 #
 # NOTES:
@@ -76,8 +77,8 @@ fi
 # Use the same directory as this script to find git-ai-commit-msg
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 printf '%sAnalyzing staged changes...%s\n' "${BLUE}" "${NC}"
-COMMIT_MSG=$("$SCRIPT_DIR/git-ai-commit-msg" "$USER_CONTEXT" 2>&1)
-EXIT_CODE=$?
+EXIT_CODE=0
+COMMIT_MSG=$("$SCRIPT_DIR/git-ai-commit-msg" "$USER_CONTEXT" 2>&1) || EXIT_CODE=$?
 
 if [ $EXIT_CODE -ne 0 ] || [ -z "$COMMIT_MSG" ]; then
     printf '%sError: Failed to generate commit message: %s%s\n' "${RED}" "$COMMIT_MSG" "${NC}" >&2
