@@ -7,8 +7,12 @@ setopt extended_history hist_expire_dups_first hist_ignore_dups \
   hist_ignore_space hist_verify share_history
 
 # Agent shells share no history file with the person, and skip loading it.
+# zsh has no default HISTFILE, so a person shell on a system that sets none
+# (Linux) gets the path macOS /etc/zshrc uses.
 if [[ -n "${DOTFILES_AGENT_SHELL-}" ]]; then
   unset HISTFILE
+elif [[ -z "${HISTFILE-}" ]]; then
+  HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history"
 fi
 
 # Key bindings
