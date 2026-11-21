@@ -1,27 +1,53 @@
 #!/usr/bin/env zsh
 
 # History
-HISTSIZE=50000
-SAVEHIST=10000
+HISTSIZE=100000
+SAVEHIST=100000
 setopt extended_history hist_expire_dups_first hist_ignore_dups \
   hist_ignore_space hist_verify share_history
+
+# Agent shells share no history file with the person, and skip loading it.
+# zsh has no default HISTFILE, so a person shell on a system that sets none
+# (Linux) gets the path macOS /etc/zshrc uses.
+if [[ -n "${DOTFILES_AGENT_SHELL-}" ]]; then
+  unset HISTFILE
+elif [[ -z "${HISTFILE-}" ]]; then
+  HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history"
+fi
 
 # Key bindings
 bindkey -e
 
 # /etc/zshrc binds these keys in the viins keymap when EDITOR contains vi,
 # so bind them again in the emacs keymap that bindkey -e selects.
+# Up and Down use the beginning-search widgets, which match the whole typed
+# prefix and leave the cursor at the end of the line. terminfo gives the
+# application-mode arrow sequences, which a terminal sends only after smkx,
+# and nothing here sends smkx, so ^[[A and ^[[B are bound as well.
 zmodload zsh/terminfo
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
 [[ -n "${terminfo[kdch1]}" ]] && bindkey "${terminfo[kdch1]}" delete-char
 [[ -n "${terminfo[khome]}" ]] && bindkey "${terminfo[khome]}" beginning-of-line
 [[ -n "${terminfo[kend]}" ]] && bindkey "${terminfo[kend]}" end-of-line
-[[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" up-line-or-search
-[[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" down-line-or-search
+[[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
+[[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
 
-# Completion, for a person at a prompt only: it costs about 0.3s per shell.
-if [[ -z "${DOTFILES_AGENT_SHELL-}" ]]; then
+# Completion, for a person at an interactive prompt only: it costs about
+# 20ms per shell. compinit can stop to ask about insecure directories,
+# so a script that sources this file must not run it. Homebrew's directory
+# goes last, so zsh's own _git wins over Homebrew's _git wrapper.
+if [[ -o interactive && -z "${DOTFILES_AGENT_SHELL-}" ]]; then
+  if [[ -n "${HOMEBREW_PREFIX-}" && -d "$HOMEBREW_PREFIX/share/zsh/site-functions" ]]; then
+    fpath+=("$HOMEBREW_PREFIX/share/zsh/site-functions")
+  fi
+  typeset -U fpath
   autoload -Uz compinit && compinit
-  command -v op >/dev/null && eval "$(op completion zsh)"
+  zstyle ':completion:*' menu select
+  zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 fi
 
 # Prompt: git's own git-prompt.sh, for a person at a prompt only. The first
