@@ -20,12 +20,21 @@ bindkey -e
 
 # /etc/zshrc binds these keys in the viins keymap when EDITOR contains vi,
 # so bind them again in the emacs keymap that bindkey -e selects.
+# Up and Down use the beginning-search widgets, which match the whole typed
+# prefix and leave the cursor at the end of the line. terminfo gives the
+# application-mode arrow sequences, which a terminal sends only after smkx,
+# and nothing here sends smkx, so ^[[A and ^[[B are bound as well.
 zmodload zsh/terminfo
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
 [[ -n "${terminfo[kdch1]}" ]] && bindkey "${terminfo[kdch1]}" delete-char
 [[ -n "${terminfo[khome]}" ]] && bindkey "${terminfo[khome]}" beginning-of-line
 [[ -n "${terminfo[kend]}" ]] && bindkey "${terminfo[kend]}" end-of-line
-[[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" up-line-or-search
-[[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" down-line-or-search
+[[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
+[[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
 
 # Completion, for a person at a prompt only: it costs about 0.3s per shell.
 if [[ -z "${DOTFILES_AGENT_SHELL-}" ]]; then
