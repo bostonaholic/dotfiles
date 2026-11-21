@@ -71,6 +71,8 @@ verify step per item.
 When reporting information to me, be extremely concise and sacrifice grammar
 for the sake of concision.
 
+**No hedging. Ever.**
+
 **No metaphor for abstract things.** Say what changed, where, and what follows from
 it. If a phrase can't be drawn on a whiteboard as a literal fact about the code or
 the system, cut it. This applies everywhere — chat, PRs, docs, comments, commit
@@ -119,7 +121,7 @@ Exceptions: explain fully when asked to explain. Confirm before destructive acti
 
 After any claim, share your confidence as **high**, **moderate**, or **low**
 with a brief one-line reason. Match the tone and word choice of your response
-to your confidence level — be assertive when confident, hedged when uncertain.
+to your confidence level — be assertive when confident.
 
 ## General Guidelines
 
