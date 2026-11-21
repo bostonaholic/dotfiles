@@ -1,10 +1,15 @@
 #!/usr/bin/env zsh
 
 # History
-HISTSIZE=50000
-SAVEHIST=10000
+HISTSIZE=100000
+SAVEHIST=100000
 setopt extended_history hist_expire_dups_first hist_ignore_dups \
   hist_ignore_space hist_verify share_history
+
+# Agent shells share no history file with the person, and skip loading it.
+if [[ -n "${DOTFILES_AGENT_SHELL-}" ]]; then
+  unset HISTFILE
+fi
 
 # Key bindings
 bindkey -e
