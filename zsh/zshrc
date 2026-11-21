@@ -36,10 +36,18 @@ zle -N down-line-or-beginning-search
 bindkey '^[[A' up-line-or-beginning-search
 bindkey '^[[B' down-line-or-beginning-search
 
-# Completion, for a person at a prompt only: it costs about 0.3s per shell.
-if [[ -z "${DOTFILES_AGENT_SHELL-}" ]]; then
+# Completion, for a person at an interactive prompt only: it costs about
+# 20ms per shell. compinit can stop to ask about insecure directories,
+# so a script that sources this file must not run it. Homebrew's directory
+# goes last, so zsh's own _git wins over Homebrew's _git wrapper.
+if [[ -o interactive && -z "${DOTFILES_AGENT_SHELL-}" ]]; then
+  if [[ -n "${HOMEBREW_PREFIX-}" && -d "$HOMEBREW_PREFIX/share/zsh/site-functions" ]]; then
+    fpath+=("$HOMEBREW_PREFIX/share/zsh/site-functions")
+  fi
+  typeset -U fpath
   autoload -Uz compinit && compinit
-  command -v op >/dev/null && eval "$(op completion zsh)"
+  zstyle ':completion:*' menu select
+  zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 fi
 
 # Prompt: git's own git-prompt.sh, for a person at a prompt only. The first
