@@ -22,6 +22,7 @@ symlinks:
   claude/statusline.sh: ~/.claude/statusline.sh
 
   # Obsidian
+  obsidian/skills/capture-note: ~/Documents/obsidian-vault/.claude/skills/capture-note
   obsidian/skills/define: ~/Documents/obsidian-vault/.claude/skills/define
   obsidian/skills/distill-note: ~/Documents/obsidian-vault/.claude/skills/distill-note
   obsidian/skills/organize-note: ~/Documents/obsidian-vault/.claude/skills/organize-note
