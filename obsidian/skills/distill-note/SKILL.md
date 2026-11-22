@@ -1,9 +1,9 @@
 ---
-name: summarize-note
-description: 'This skill should be used when the user asks to "summarize a note", "summarize this article", "replace #summarize-later", "add a summary to a note", "generate takeaways", or mentions summarizing Obsidian notes. Replaces the #summarize-later tag with a high-level summary and actionable takeaways.'
+name: distill-note
+description: 'This skill should be used when the user asks to "distill a note", "summarize a note", "summarize this article", "replace #summarize-later", "add a summary to a note", "generate takeaways", or mentions summarizing Obsidian notes. Replaces the #summarize-later tag with a high-level summary and actionable takeaways.'
 ---
 
-# Summarize Note
+# Distill Note
 
 Summarize an Obsidian note by replacing the `#summarize-later` tag with a structured summary and actionable takeaways. The only other change permitted is ensuring a `read-summary` tag is in the frontmatter (replacing `read-later` if present) — everything else (status, finished, other tags, etc.) remains untouched.
 
