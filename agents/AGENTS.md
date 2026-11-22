@@ -142,6 +142,10 @@ to your confidence level — be assertive when confident.
 - **Check off PR test plans in-place.** When validating a PR's test plan,
   update the PR body (`gh pr edit`) to check off each item as it passes.
   Don't just report results in chat — the PR itself is the source of truth.
+- **No CI items in PR test plans.** Never add a test-plan checkbox like
+  "CI passes" or "`<job>` CI job passes on this PR". Passing CI is a given,
+  and an unchecked box blocks merging. List only checks a person or agent
+  runs by hand.
 
 ## Parallel Agent Work
 
