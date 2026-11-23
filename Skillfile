@@ -29,8 +29,8 @@ npx skills add blader/humanizer --skill humanizer --agent claude-code codex curs
 # GitHub Copilot (create-agentsmd)
 npx skills add github/awesome-copilot --skill create-agentsmd --agent claude-code codex cursor antigravity-cli -g -y
 
-# Matt Pocock (grill-me)
-npx skills add mattpocock/skills --skill grill-me --agent claude-code codex cursor antigravity-cli -g -y
+# Matt Pocock (grill-me, grilling)
+npx skills add mattpocock/skills --skill grill-me --skill grilling --agent claude-code codex cursor antigravity-cli -g -y
 
 # Microsoft (playwright-cli)
 npx skills add microsoft/playwright-cli --skill playwright-cli --agent claude-code codex cursor antigravity-cli -g -y
