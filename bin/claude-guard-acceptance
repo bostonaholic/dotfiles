@@ -1,0 +1,100 @@
+#!/bin/bash
+################################################################################
+# claude-guard-acceptance - stop merging or closing work with open criteria
+#
+# DESCRIPTION:
+#   Claude Code runs this as a PreToolUse hook on Bash (see
+#   claude/settings.json) with the tool call as JSON on stdin. An issue's
+#   acceptance criteria are its definition of done, so:
+#
+#   - `gh pr merge [PR]` is blocked (exit 2) while any issue the PR closes
+#     (closingIssuesReferences) has an unchecked `- [ ]` box.
+#   - `gh issue close N` is blocked while issue N has an unchecked box,
+#     unless it closes as `--reason "not planned"`.
+#
+#   A failed gh lookup also blocks: the hook cannot prove the criteria are
+#   met, so it does not let the command through.
+#
+# USAGE:
+#   echo '{"cwd":"/repo","tool_input":{"command":"gh pr merge 94"}}' |
+#       claude-guard-acceptance
+#
+################################################################################
+
+set -euo pipefail
+
+input="$(cat)"
+cmd="$(jq -r '.tool_input.command // ""' <<<"$input")"
+cwd="$(jq -r '.cwd // "."' <<<"$input")"
+
+# Act only where gh runs as a command, not where its name appears in text such
+# as a commit message: at a line start or after ; & | ( and env assignments.
+AT_CMD='(^|[;&|(])[[:space:]]*([A-Za-z_][A-Za-z0-9_]*=[^ ]* +)*gh '
+runs() { grep -qE -- "${AT_CMD}$1" <<<"$cmd"; }
+runs 'pr merge' || runs 'issue close' || exit 0
+cd "$cwd" 2>/dev/null || true
+
+UNCHECKED='^[[:space:]]*[-*+] \[ \]'
+
+block() {
+    printf '%s\n' "$@" >&2
+    exit 2
+}
+
+# First token after "$1" in $cmd when it is not a flag (a PR or issue selector).
+selector_after() {
+    local rest="${cmd#*"$1"}"
+    rest="${rest%%[;&|$'\n']*}"
+    local tok
+    read -r tok _ <<<"$rest" || true
+    tok="$(grep -oE '^["'\'']?[A-Za-z0-9/_.:#-]+' <<<"$tok" | tr -d '"'\''' || true)"
+    [[ -n "$tok" && "$tok" != -* ]] && printf '%s' "$tok"
+}
+
+repo_flag() {
+    grep -oE -- "(--repo[= ]|-R )[\"']?[^ \"';&|)]+" <<<"$cmd" | head -n1 |
+        sed -E "s/^(--repo[= ]|-R )[\"']?//" || true
+}
+
+# Prints "<repo>#<n>: <unchecked line>" for each open box; fails if gh fails.
+open_boxes() {
+    local repo="$1" num="$2" body
+    body="$(gh issue view "$num" ${repo:+--repo "$repo"} --json body --jq .body)" ||
+        block "claude-guard-acceptance: could not read issue ${repo:+$repo}#$num, so" \
+            "its acceptance criteria cannot be confirmed. Fix gh access and retry."
+    grep -E "$UNCHECKED" <<<"$body" | sed "s|^|${repo:+$repo}#$num: |" || true
+}
+
+repo="$(repo_flag)"
+open=""
+
+if runs 'pr merge'; then
+    pr="$(selector_after "gh pr merge" || true)"
+    refs="$(gh pr view ${pr:+"$pr"} ${repo:+--repo "$repo"} --json closingIssuesReferences \
+        --jq '.closingIssuesReferences[] | "\(.repository.owner.login)/\(.repository.name) \(.number)"')" ||
+        block "claude-guard-acceptance: could not read the issues PR ${pr:-for this branch} closes," \
+            "so its acceptance criteria cannot be confirmed. Fix gh access and retry."
+    while read -r r n; do
+        [[ -n "$n" ]] || continue
+        boxes="$(open_boxes "$r" "$n")" || exit 2
+        open+="$boxes"$'\n'
+    done <<<"$refs"
+fi
+
+if runs 'issue close' &&
+    ! grep -qE -- "(--reason|-r)[= ][\"']?not planned" <<<"$cmd"; then
+    issue="$(selector_after "gh issue close" || true)"
+    if [[ -n "$issue" ]]; then
+        boxes="$(open_boxes "$repo" "$issue")" || exit 2
+        open+="$boxes"$'\n'
+    fi
+fi
+
+open="$(sed '/^$/d' <<<"$open")"
+[[ -z "$open" ]] && exit 0
+
+block "Unchecked acceptance criteria. An issue is done only when every box is" \
+    "verified and checked:" "" "$open" "" \
+    "Verify each one, check it off with \`gh issue edit <n> --body-file\` citing" \
+    "the evidence, then retry. If it cannot be met, say so to the user and do" \
+    "not merge or close. Closing as --reason \"not planned\" is allowed."

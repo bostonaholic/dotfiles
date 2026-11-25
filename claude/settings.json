@@ -154,6 +154,10 @@
           {
             "type": "command",
             "command": "$HOME/bin/claude-guard-pr-base"
+          },
+          {
+            "type": "command",
+            "command": "$HOME/bin/claude-guard-acceptance"
           }
         ]
       }

@@ -104,9 +104,10 @@ else
     fi
 fi
 
-echo "T6: PreToolUse Bash hook runs claude-guard-pr-base from bin/"
-cmd="$(jq -r '.hooks.PreToolUse[]? | select(.matcher == "Bash") | .hooks[].command' "$SETTINGS")"
-if [[ "$cmd" == "\$HOME/bin/claude-guard-pr-base" &&-x "$REPO_ROOT/bin/claude-guard-pr-base" ]]; then
+echo "T6: PreToolUse Bash hooks run claude-guard-pr-base and claude-guard-acceptance from bin/"
+cmd="$(jq -r '.hooks.PreToolUse[]? | select(.matcher == "Bash") | .hooks[].command' "$SETTINGS" | tr '\n' ' ')"
+if [[ "$cmd" == "\$HOME/bin/claude-guard-pr-base \$HOME/bin/claude-guard-acceptance " &&
+      -x "$REPO_ROOT/bin/claude-guard-pr-base" && -x "$REPO_ROOT/bin/claude-guard-acceptance" ]]; then
     pass "T6"
 else
     fail "T6" "PreToolUse Bash='$cmd'"
@@ -137,6 +138,49 @@ expect 0 "gh pr create --draft --base a --title X && GH_FORCE_TTY= gh stack link
 expect 0 "PR_BASE_OK=1 gh pr create --base release/2.0 --title X"
 expect 0 "ls -la"
 if [[ -z "$bad" ]]; then pass "T7"; else fail "T7" "$bad"; fi
+
+echo "T8: claude-guard-acceptance blocks merge or close while an issue has an unchecked box"
+GH_STUB="$(mktemp -d)"
+trap 'rm -rf "${SCRATCH:-}" "$GUARD_REPO" "$GH_STUB"' EXIT
+cat > "$GH_STUB/gh" <<'STUB'
+#!/bin/bash
+[[ -n "${GH_FAIL:-}" ]] && exit 1
+case "$1 $2 $3" in
+    "pr view 94") echo "acme/app 93" ;;
+    "pr view 95") echo "acme/app 96" ;;
+    "pr view 97") ;;
+    "issue view 93") printf '%s\n' '## Acceptance' '' '- [x] done' '- [ ] not done' ;;
+    "issue view 96") printf '%s\n' '- [x] a' '  - [x] b' ;;
+    *) exit 1 ;;
+esac
+STUB
+chmod +x "$GH_STUB/gh"
+
+accept_exit() {
+    jq -n --arg cwd "$GUARD_REPO" --arg c "$1" '{cwd: $cwd, tool_input: {command: $c}}' |
+        PATH="$GH_STUB:$PATH" GH_FAIL="${2:-}" "$REPO_ROOT/bin/claude-guard-acceptance" 2>/dev/null &&
+        echo 0 || echo $?
+}
+
+bad=""
+want() { [[ "$(accept_exit "$2" "${3:-}")" == "$1" ]] || bad="$bad [want $1: $2 ${3:-}]"; }
+want 2 "gh pr merge 94 --squash --delete-branch"
+want 2 "gh pr merge 94 --auto --squash"
+want 2 "gh issue close 93"
+want 2 "gh issue close 93 --reason completed"
+want 0 "gh pr merge 95 --squash"
+want 0 "gh pr merge 97 --squash"
+want 0 "gh issue close 96"
+want 0 "gh issue close 93 --reason \"not planned\""
+want 0 "gh issue close 93 -r 'not planned'"
+want 0 "ls -la"
+want 0 "git commit -m 'blocks gh pr merge 94 while boxes are open'"
+want 0 "echo gh issue close 93"
+want 2 "cd /x && gh pr merge 94 --squash"
+want 2 "GH_TOKEN=x gh issue close 93"
+want 2 "gh pr merge 95 --squash" fail
+want 2 "gh issue close 96" fail
+if [[ -z "$bad" ]]; then pass "T8"; else fail "T8" "$bad"; fi
 
 echo ""
 echo "=== Summary: $pass_count passed, $fail_count failed ==="

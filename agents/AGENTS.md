@@ -147,6 +147,21 @@ to your confidence level — be assertive when confident.
   and an unchecked box blocks merging. List only checks a person or agent
   runs by hand.
 
+## Acceptance Criteria
+
+- **An issue's acceptance criteria are the definition of done.** A PR that
+  implements an issue is not complete until every acceptance criterion in
+  that issue is verified and checked off in the issue body (`gh issue edit
+  --body-file`). Each checked box cites its evidence: a test name, command
+  output, or a link to a PR comment.
+- **Unverified means unchecked.** A criterion you cannot verify stays
+  unchecked. Then the PR must not say `Closes #N` (use `Refs #N`) and must
+  not merge. Tell the user which criterion is open and why.
+- **Never close an issue with an unchecked box.** The only exception is
+  closing it as `not planned`.
+- Enforced by the `bin/claude-guard-acceptance` PreToolUse hook, which blocks
+  `gh pr merge` and `gh issue close` while a linked issue has an unchecked box.
+
 ## Parallel Agent Work
 
 After completing parallel agent work, always present a summary table:
